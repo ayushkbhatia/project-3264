@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# project-3264
 
-## Getting Started
+Next.js 16 (App Router) + TypeScript + Tailwind 4. Deployed on Vercel.
 
-First, run the development server:
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy `.env.example` to `.env.local` and fill in the values. `.env.local` is
+gitignored and must stay that way.
 
-## Learn More
+## Deploys
 
-To learn more about Next.js, take a look at the following resources:
+Deploys are batched deliberately — see "Deploy policy" below.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Production**: merging to `main` builds and deploys.
+- **Previews**: skipped by default. Put `[preview]` in a commit message to
+  force a preview build for that push.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The gate lives in [`scripts/vercel-ignore-build.sh`](scripts/vercel-ignore-build.sh),
+wired via `ignoreCommand` in [`vercel.json`](vercel.json).
 
-## Deploy on Vercel
+### Deploy policy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Every deployment is billed build time, and each Vercel deployment gets its own
+ISR cache rather than reusing the previous one — so every production deploy
+leaves not-prerendered pages cold, and the next visitor or crawler pays a full
+render. Land related changes as one batch instead of merging each PR the moment
+it goes green. Exceptions that ship immediately: production is broken, a
+security fix, or an explicit ask.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Also: don't run a local production build while a hosted build is in flight —
+both hit the same database and can exhaust a pooled Postgres client limit.
+
+## Database
+
+No Supabase project is provisioned yet. When one is:
+
+1. Create the project, then set `NEXT_PUBLIC_SUPABASE_URL`,
+   `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` in Vercel
+   and in `.env.local`.
+2. `npm install @supabase/supabase-js @supabase/ssr`.
+3. Add server and browser clients under `src/lib/supabase/`.
