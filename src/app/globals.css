@@ -2,25 +2,34 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0e0e10;
+
+  /* Animation palette. `--viz-order` is the brand accent the network resolves to —
+     swap it for your own brand colour once the Claude Design renders land. */
+  --viz-chaos: #0e0e10;
+  --viz-order: #2162df;
+  --viz-surface: #fbfbfa;
+
+  --fg-muted: #8a8a86;
+  --border: #e7e5e0;
+  --radius-card: 22px;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-viz-chaos: var(--viz-chaos);
+  --color-viz-order: var(--viz-order);
+  --color-viz-surface: var(--viz-surface);
+  --color-fg-muted: var(--fg-muted);
+  --color-hairline: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
