@@ -14,6 +14,7 @@ import {
   LineBasicMaterial,
   LineSegments,
   Matrix4,
+  MeshPhysicalMaterial,
   MeshStandardMaterial,
   PCFSoftShadowMap,
   PerspectiveCamera,
@@ -51,6 +52,11 @@ export type NetworkSphereProps = {
   rotationSpeed?: number;
   /** Self-shadowing between cubes. Costs a shadow pass. */
   shadows?: boolean;
+  /** Built cubes become frosted glass on arrival. Costs a transmission pass. */
+  glass?: boolean;
+  /** Multiplier on every cube. Frosted glass only reads above roughly 1.6 — below
+   *  that the cubes are too few pixels to show any interior. */
+  nodeScale?: number;
   /** Fixes the layout so tweaks are reproducible. */
   seed?: number;
   className?: string;
@@ -91,6 +97,8 @@ export default function NetworkSphere({
   startDelay = 0.8,
   rotationSpeed = 0.05,
   shadows = true,
+  glass = true,
+  nodeScale = 1.6,
   seed = 20260910,
   className,
 }: NetworkSphereProps) {
@@ -118,6 +126,12 @@ export default function NetworkSphere({
     if (shadows) {
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = PCFSoftShadowMap;
+    }
+    if (glass) {
+      // Transmission costs a second render of the opaque scene each frame. The
+      // glass is frosted, so its backdrop is scattered past recognition anyway —
+      // half resolution is a quarter of those pixels for no visible loss.
+      renderer.transmissionResolutionScale = 0.5;
     }
     host.appendChild(renderer.domElement);
     renderer.domElement.style.display = "block";
@@ -196,7 +210,7 @@ export default function NetworkSphere({
 
       // Cubed random: mostly small nodes, a few large hubs. Range is tuned so the
       // largest cube is ~3.5% of the sphere's diameter, matching the reference.
-      scales[i] = 0.05 + Math.pow(rng(), 3) * 0.3;
+      scales[i] = (0.05 + Math.pow(rng(), 3) * 0.3) * nodeScale;
     }
 
     // ---- links ------------------------------------------------------------
@@ -320,14 +334,49 @@ export default function NetworkSphere({
     const lines = new LineSegments(edgeGeom, edgeMat);
     group.add(lines);
 
+    // Two meshes, one geometry. A node is raw stock until it lands, then it is
+    // glass — and transmission is a material-level property, so per-instance
+    // blending is not available. A node lives in exactly one of these at a time;
+    // the other holds it at zero scale. The swap lands on arrival, where the
+    // ease-out has already brought the cube to rest, so it reads as clicking into
+    // place rather than popping.
     const nodeGeom = new BoxGeometry(1, 1, 1);
-    const nodeMat = new MeshStandardMaterial({ roughness: 0.45, metalness: 0.05 });
-    const mesh = new InstancedMesh(nodeGeom, nodeMat, nodeCount);
+
+    const rawMat = new MeshStandardMaterial({ roughness: 0.5, metalness: 0.05 });
+    const rawMesh = new InstancedMesh(nodeGeom, rawMat, nodeCount);
+
+    // Glass tints what passes *through* it, so the instance colour has to be pale:
+    // a full-saturation cobalt multiplied against the transmitted backdrop renders
+    // as a solid dark cube, indistinguishable from the opaque material. The cobalt
+    // is carried by attenuation instead, which deepens with path length and so
+    // varies across cube sizes the way real coloured glass does.
+    const cGlass = new Color(orderColor).lerp(new Color("#ffffff"), 0.62);
+    const glassMat = glass
+      ? new MeshPhysicalMaterial({
+          transmission: 0.95,
+          // Frosted, not clear: roughness is what scatters the backdrop into that
+          // milky interior rather than showing a sharp refraction.
+          roughness: 0.28,
+          thickness: 0.9,
+          ior: 1.45,
+          metalness: 0,
+          attenuationColor: new Color(orderColor),
+          attenuationDistance: 0.85,
+          clearcoat: 0.6,
+          clearcoatRoughness: 0.3,
+          specularIntensity: 0.8,
+        })
+      : new MeshStandardMaterial({ roughness: 0.32, metalness: 0.05 });
+    const glassMesh = new InstancedMesh(nodeGeom, glassMat, nodeCount);
+
     if (shadows) {
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
+      rawMesh.castShadow = true;
+      rawMesh.receiveShadow = true;
+      glassMesh.castShadow = true;
+      glassMesh.receiveShadow = true;
     }
-    group.add(mesh);
+    group.add(rawMesh);
+    group.add(glassMesh);
 
     // Scratch objects, reused every frame to keep the loop allocation-free.
     const m4 = new Matrix4();
@@ -369,15 +418,25 @@ export default function NetworkSphere({
           chaosPos[i * 3 + 2] + (orderPos[i * 3 + 2] - chaosPos[i * 3 + 2]) * e,
         );
         const s = scales[i];
+        const landed = p >= 1;
+
+        // The mesh that does not own this node right now collapses it to zero
+        // scale; there is no per-instance visibility flag on InstancedMesh.
         scl.set(s, s, s);
         m4.compose(pos, quat, scl);
-        mesh.setMatrixAt(i, m4);
+        (landed ? glassMesh : rawMesh).setMatrixAt(i, m4);
+        scl.set(0, 0, 0);
+        m4.compose(pos, quat, scl);
+        (landed ? rawMesh : glassMesh).setMatrixAt(i, m4);
 
         col.copy(cChaos).lerp(cOrder, p);
-        mesh.setColorAt(i, col);
+        rawMesh.setColorAt(i, col);
+        glassMesh.setColorAt(i, cGlass);
       }
-      mesh.instanceMatrix.needsUpdate = true;
-      if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+      rawMesh.instanceMatrix.needsUpdate = true;
+      glassMesh.instanceMatrix.needsUpdate = true;
+      if (rawMesh.instanceColor) rawMesh.instanceColor.needsUpdate = true;
+      if (glassMesh.instanceColor) glassMesh.instanceColor.needsUpdate = true;
 
       let v = 0;
       for (let e = 0; e < edgeCount; e++) {
@@ -538,10 +597,12 @@ export default function NetworkSphere({
       reduceMotion.removeEventListener("change", applyMotionPreference);
       renderer.domElement.removeEventListener("webglcontextlost", onContextLost);
       nodeGeom.dispose();
-      nodeMat.dispose();
+      rawMat.dispose();
+      glassMat.dispose();
       edgeGeom.dispose();
       edgeMat.dispose();
-      mesh.dispose();
+      rawMesh.dispose();
+      glassMesh.dispose();
       renderer.dispose();
       renderer.domElement.remove();
     };
@@ -559,6 +620,8 @@ export default function NetworkSphere({
     startDelay,
     rotationSpeed,
     shadows,
+    glass,
+    nodeScale,
     seed,
   ]);
 
