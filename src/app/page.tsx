@@ -10,8 +10,8 @@ export default function Home() {
           </h1>
           <p className="max-w-md text-lg leading-relaxed text-fg-muted">
             Copy and layout land with the Claude Design renders. The hero visual on
-            the right is the finished asset — a live WebGL network that resolves from
-            tangled to ordered, then holds and reverses.
+            the right is the finished asset — a live WebGL network that assembles
+            itself once, link by link, and settles into a sphere.
           </p>
           <div className="flex flex-wrap gap-3 text-base font-medium">
             <a
