@@ -69,6 +69,7 @@ async function open(browser, url, w) {
   await page.waitForSelector(sel, { state: "attached", timeout: 20000 });
   await page.evaluate(() => document.fonts.ready);
   if (mask) await page.addStyleTag({ content: HIDE_CSS });
+  else await page.addStyleTag({ content: "nextjs-portal { display: none !important; }" });
   if (scroll != null) {
     await page.evaluate((s) => {
       const n = Number(s);
@@ -84,6 +85,14 @@ async function shoot(page, file) {
   if (full) return page.screenshot({ path: file, fullPage: true });
   if (sel === "viewport") return page.screenshot({ path: file });
   const loc = page.locator(sel).first();
+  // Lazy images (next/image) only load once scrolled near: bring the element into view and
+  // wait for every image inside it to finish decoding before capturing.
+  await loc.scrollIntoViewIfNeeded();
+  await loc.evaluate(async (el) => {
+    const imgs = [...el.querySelectorAll("img")];
+    await Promise.all(imgs.map((i) => (i.complete ? i.decode().catch(() => {}) : new Promise((r) => { i.onload = i.onerror = r; }))));
+  });
+  await page.waitForTimeout(150);
   return loc.screenshot({ path: file, animations: "disabled" });
 }
 

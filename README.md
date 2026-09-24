@@ -36,6 +36,27 @@ node qa/compare.mjs --sel "#model" --w 1280,1440,1920 --styles
 `qa/__screens__/`, and prints the diff ratio (plus a computed-style diff with `--styles`).
 The `qa/hero-*`, `qa/capabilities-*` and `qa/intro-*` suites cover the motion systems.
 
+## Private Credit page
+
+`/industries/private-credit` is a port of
+[`design_handoff_private_credit/`](design_handoff_private_credit/README.md), built the same
+way: the reference prototype (`reference/Private Credit.dc.html`) wins over the specs.
+
+- One motion instance drives the whole page: `src/motion/private-credit/private-credit.js`
+  (the handoff's module, untouched) mounted by `PrivateCreditMotionRoot` in `react.js` there.
+  Sections bind their elements by name with `useBind()`; the hosts the module fills stay empty
+  in JSX.
+- Markup lives in `src/components/private-credit/`, with the reference's inline CSS set
+  verbatim through `css()`. The page root (`[data-pc]`) runs on content-box sizing, as the
+  prototype did.
+- Fonts are self-hosted in `public/fonts` under their literal family names (the module names
+  them in inline styles and canvas fonts), for the whole site.
+- QA: serve the reference on :4101 (`.claude/launch.json`), then
+  `node qa/pc-scrub.mjs` (pinned sequences, every scrub point, four viewports),
+  `node qa/pc-intro.mjs`, `node qa/pc-lifecycle.mjs`, `node qa/pc-responsive.mjs`,
+  `node qa/pc-a11y.mjs`, and `qa/compare.mjs` with `REF_URL` / `PORT_URL` set for static
+  sections (`?t=16&intro=off` on both sides freezes the time loops and skips the intro).
+
 ## Environment
 
 Copy `.env.example` to `.env.local` and fill in the values. `.env.local` is

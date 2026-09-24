@@ -25,6 +25,20 @@
       "port": 4100
     },
     {
+      "name": "design reference: private credit",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4101",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_private_credit/reference"
+      ],
+      "port": 4101
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [

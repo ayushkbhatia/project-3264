@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
-      { source: "/:dir(img|logos)/:file*", headers: ASSET_CACHE },
+      { source: "/:dir(img|logos|fonts)/:file*", headers: ASSET_CACHE },
       // The metadata files in src/app. Their <link> and og:image URLs carry a content hash,
       // but crawlers and touch-icon lookups also fetch the bare paths.
       { source: "/:file(icon\\.svg|apple-icon\\.png|opengraph-image\\.png)", headers: ASSET_CACHE },
