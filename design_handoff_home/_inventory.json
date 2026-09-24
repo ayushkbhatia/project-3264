@@ -1,0 +1,77 @@
+{
+  "report": {
+    "intro": {
+      "lines": 230,
+      "refs": [
+        "iWrap",
+        "iCv",
+        "iGrid",
+        "iMark",
+        "iCap"
+      ],
+      "props": [
+        "playIntro",
+        "introPace",
+        "accent"
+      ],
+      "usesReact": false,
+      "usesReduced": false,
+      "usesTimers": true,
+      "threeImports": 1
+    },
+    "platform": {
+      "lines": 788,
+      "refs": [
+        "phGrid",
+        "phTrack",
+        "phPin",
+        "phStage",
+        "phP0",
+        "phP1",
+        "phP2",
+        "phLabels",
+        "phCv",
+        "phTip",
+        "phBar",
+        "phCap",
+        "phMetric",
+        "phAssess",
+        "phBuildP",
+        "phRun"
+      ],
+      "props": [
+        "accent"
+      ],
+      "usesReact": false,
+      "usesReduced": true,
+      "usesTimers": false,
+      "threeImports": 1
+    },
+    "vignettes": {
+      "lines": 150,
+      "refs": [
+        "vigA"
+      ],
+      "props": [],
+      "usesReact": false,
+      "usesReduced": true,
+      "usesTimers": true,
+      "threeImports": 0
+    },
+    "art": {
+      "lines": 112,
+      "refs": [
+        "artCv"
+      ],
+      "props": [],
+      "usesReact": false,
+      "usesReduced": true,
+      "usesTimers": false,
+      "threeImports": 1
+    }
+  },
+  "imgs": [
+    "assets/hero-valley.png",
+    "assets/footer-nocturne.png"
+  ]
+}

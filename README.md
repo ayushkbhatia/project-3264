@@ -11,6 +11,31 @@ npm run dev
 
 Open http://localhost:3000.
 
+## Home page and the design handoff
+
+The home page is a port of the Claude Design handoff in
+[`design_handoff_home/`](design_handoff_home/README.md). Its reference prototype,
+`design_handoff_home/reference/3264 Home.dc.html`, is the source of truth for layout, copy
+and motion; where the specs and the reference differ, the reference wins.
+
+- Copy lives in `src/content/home.ts`; sections in `src/components/home/`.
+- The four motion systems are the handoff's own modules in `src/motion/`, mounted through
+  `useMotionSystem` (`src/motion/react.js`). Changes made for the port are marked `PORT FIX`.
+  three.js is loaded lazily under the npm alias `three-r161` (the version the modules target).
+- `?motion=off` freezes every motion system, for deterministic screenshots.
+
+### Visual QA against the reference
+
+`.claude/launch.json` serves the reference on :4100 next to the dev server on :3000.
+
+```bash
+node qa/compare.mjs --sel "#model" --w 1280,1440,1920 --styles
+```
+
+`qa/compare.mjs` screenshots the same selector on both sides, writes ref / port / diff PNGs to
+`qa/__screens__/`, and prints the diff ratio (plus a computed-style diff with `--styles`).
+The `qa/hero-*`, `qa/capabilities-*` and `qa/intro-*` suites cover the motion systems.
+
 ## Environment
 
 Copy `.env.example` to `.env.local` and fill in the values. `.env.local` is

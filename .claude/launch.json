@@ -4,8 +4,36 @@
     {
       "name": "project-3264 dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000
+    },
+    {
+      "name": "design reference",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4100",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_home/reference"
+      ],
+      "port": 4100
+    },
+    {
+      "name": "project-3264 prod",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "next",
+        "start",
+        "-p",
+        "3100"
+      ],
+      "port": 3100
     }
   ]
 }

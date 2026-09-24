@@ -1,35 +1,195 @@
 @import "tailwindcss";
 
+/*
+ * 3264.ai design tokens. Values are copied from design_handoff_home/specs/00-foundation.md
+ * and the reference prototype; do not round them. Accent is themeable through --a.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #0e0e10;
+  --a: #157f52; /* accent. Alternates: #0E6E7A #2E4EC8 #A8501C */
+  --ink: #1a1917; /* headings, primary text, dark buttons */
+  --ink-2: #2c2b27; /* hero standfirst, model values */
+  --sec: #55544e; /* secondary prose, nav, footer links */
+  --mut: #6e6d67; /* eyebrows, labels, captions */
+  --list: #46453f; /* list items, case-study row labels */
+  --page: #f6f5f2;
+  --card: #ffffff;
+  --line: rgba(20, 20, 18, 0.13); /* borders, table rules, grid gaps */
+  --line2: rgba(20, 20, 18, 0.075); /* section dividers, inner rules */
+  --tex: 1; /* grid texture on/off multiplier */
+  --art: 1; /* hero painting on/off multiplier */
+}
 
-  /* Animation palette. `--viz-order` is the brand accent the network resolves to —
-     swap it for your own brand colour once the Claude Design renders land. */
-  --viz-chaos: #0e0e10;
-  --viz-order: #2162df;
-  --viz-surface: #fbfbfa;
-
-  --fg-muted: #8a8a86;
-  --border: #e7e5e0;
-  --radius-card: 22px;
-  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+/*
+ * Instrument Sans has no arrow glyphs. In the reference the "→" in the industry rows, the
+ * case-study figures and "32 → 64" falls through "Helvetica Neue" (which lacks it too) to the
+ * system fallback: Lucida Grande on macOS. next/font puts its metric-adjusted Arial face,
+ * "Instrument Sans Fallback", straight after the web font, so in the port the same arrows came
+ * out as a scaled Arial glyph — a different shape, 0.4px wider per arrow.
+ *
+ * This adds a second face to that fallback family covering the Arrows block only. Faces of one
+ * family with overlapping ranges are tried last-defined first, so arrows draw from Lucida
+ * Grande exactly as in the reference while every other character, and the computed
+ * font-family, are untouched. Without Lucida Grande (or if next/font renames its fallback) the
+ * face simply never applies and arrows come from Arial as before.
+ */
+@font-face {
+  font-family: "Instrument Sans Fallback";
+  src: local("Lucida Grande"), local("LucidaGrande");
+  unicode-range: U+2190-21FF;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-viz-chaos: var(--viz-chaos);
-  --color-viz-order: var(--viz-order);
-  --color-viz-surface: var(--viz-surface);
-  --color-fg-muted: var(--fg-muted);
-  --color-hairline: var(--border);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-a: var(--a);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-sec: var(--sec);
+  --color-mut: var(--mut);
+  --color-list: var(--list);
+  --color-page: var(--page);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --color-line2: var(--line2);
+  --font-sans: var(--font-instrument), "Helvetica Neue", Helvetica, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+/*
+ * Base rules live in @layer base so Tailwind utilities override them. Unlayered, `a:hover`
+ * would beat `.text-white` on the dark buttons and turn their label accent-on-accent.
+ */
+@layer base {
+  /*
+   * The prototype sets overflow-x:hidden on html AND body. In a normal document that turns
+   * <body> into a scroll container and silently breaks every position:sticky on the page
+   * (the header and the pinned capabilities pane). Clip on the viewport instead; `clip`
+   * on body never creates a scroll container.
+   */
+  html {
+    overflow-x: hidden;
+    /* The reference relies on the UA default; Tailwind preflight would make it 1.5. */
+    line-height: normal;
+    /* The sticky header is 68px plus its hairline. Anchor jumps and focus scrolling (reverse
+       Tab) stop below it instead of under it; the reference lets both land beneath it. */
+    scroll-padding-top: 69px;
+  }
+  body {
+    margin: 0;
+    overflow-x: clip;
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-instrument), "Helvetica Neue", Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--a);
+  }
+  ::selection {
+    background: var(--a);
+    color: #ffffff;
+  }
+  /* The reference has no focus ring; the handoff asks for one on every link and button. */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--a);
+    outline-offset: 2px;
+  }
+  /* Focus scrolling stops an element at the scroll-padding line; this keeps its ring (2px
+     offset + 2px outline, and a fractional header edge) clear of the header as well. It only
+     applies when the link or button itself is scrolled to, so section anchors are unaffected. */
+  a,
+  button {
+    scroll-margin-top: 5px;
+  }
+  h1,
+  h2,
+  h3 {
+    font-weight: 400;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  /*
+   * Footer columns. The reference is repeat(auto-fit, minmax(168px, 1fr)) with a left
+   * hairline on every column but the first. auto-fit alone would wrap the fifth column onto a
+   * new row still carrying its hairline (the reference does, at 752–919px), so the column count
+   * is stepped explicitly and the rule is dropped from whichever column starts a row:
+   * - below 360px, one column with no rules: two columns there split "Asset Management";
+   * - 360–559px, two columns, with the gutter spent only either side of the hairline (not 28px
+   *   on both sides of both columns) so Industries' longest links stay on one line;
+   * - 560–919px, three columns;
+   * - from 920px, the reference's five. That is where its five 168px tracks first fit, so from
+   *   there the two match. Five fixed tracks rather than auto-fit, because a classic scrollbar
+   *   would take the grid under 840px just above 920 and auto-fit would drop to four.
+   * The wider bands reset every column with :nth-child(n), which ties the narrower bands'
+   * :nth-child(2n) on specificity and wins on order, so no phone gutter leaks upward.
+   */
+  .footer-cols {
+    display: grid;
+    row-gap: 44px;
+  }
+  @media (min-width: 360px) {
+    .footer-cols {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .footer-cols > :nth-child(2n + 1) {
+      padding-right: 20px;
+    }
+    .footer-cols > :nth-child(2n) {
+      padding-left: 20px;
+      border-left: 1px solid var(--line2);
+    }
+  }
+  @media (min-width: 560px) {
+    .footer-cols {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .footer-cols > :nth-child(n) {
+      padding: 0 28px;
+      border-left: 1px solid var(--line2);
+    }
+    .footer-cols > :nth-child(3n + 1) {
+      padding-left: 0;
+      border-left: 0;
+    }
+  }
+  @media (min-width: 920px) {
+    .footer-cols {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      row-gap: 0;
+    }
+    .footer-cols > :nth-child(n) {
+      padding: 0 28px;
+      border-left: 1px solid var(--line2);
+    }
+    .footer-cols > :first-child {
+      padding: 0 28px 0 0;
+      border-left: 0;
+    }
+  }
+}
+
+/*
+ * Forced colours (Windows High Contrast). Images are not recoloured, so the vendor marks (dark
+ * PNGs at 0.78) nearly vanish on a dark Canvas: show them at full strength, and invert them on
+ * dark themes only (light themes already show them well, and inverting there would turn them
+ * white on white). Unlayered so it outranks the opacity utility. Normal rendering is untouched.
+ */
+@media (forced-colors: active) {
+  [data-screen-label="Stack"] img {
+    opacity: 1;
+  }
+}
+@media (forced-colors: active) and (prefers-color-scheme: dark) {
+  [data-screen-label="Stack"] img {
+    filter: invert(1);
+  }
 }
