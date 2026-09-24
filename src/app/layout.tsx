@@ -1,31 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
 import { INTRO_GATE_SCRIPT, INTRO_GATE_STYLE } from "@/components/home/IntroGate";
+import { PC_INTRO_GATE_SCRIPT } from "@/components/private-credit/IntroGate";
 import "./globals.css";
 
-// Upright only. specs/00-foundation.md asks for the italic too, but nothing on the home page
-// sets it and next/font preloads every declared face, so it cost a high-priority 32KB download
-// ahead of the upright file the hero needs. A later page that sets italic should add
-// `style: ["normal", "italic"]` back here.
-const instrumentSans = Instrument_Sans({
-  variable: "--font-instrument",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-});
-
-// The capability panels set their ledgers and counters in IBM Plex Mono. The prototype names
-// it without loading it, so it only rendered where the font happened to be installed.
-// Not preloaded: that text sits screens below the fold and phones never render it. The stage
-// lays it out at mount on desktop, which still fetches the file during load, and the size-
-// adjusted fallback keeps the swap from moving anything.
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-  preload: false,
-});
+// Fonts are self-hosted under their literal family names (see globals.css): the Private
+// Credit motion module names them in inline styles and canvas fonts. The two upright faces
+// every page sets above the fold are preloaded; the rest load on use.
+const PRELOAD_FONTS = [
+  "/fonts/instrument-sans-latin-400-normal.woff2",
+  "/fonts/instrument-sans-latin-500-normal.woff2",
+];
 
 const title = "3264.ai — AI software deployment";
 const description =
@@ -56,17 +40,18 @@ const MOTION_FLAG = `try{if(/[?&]motion=off(&|$)/.test(location.search))document
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${instrumentSans.variable} ${plexMono.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang="en" suppressHydrationWarning>
       <head>
+        {PRELOAD_FONTS.map((href) => (
+          <link key={href} rel="preload" href={href} as="font" type="font/woff2" crossOrigin="anonymous" />
+        ))}
         <script dangerouslySetInnerHTML={{ __html: MOTION_FLAG }} />
         {/* The home intro decides before first paint whether it will play, so the first frame
             is its page-colour cover rather than the page it is about to cover (IntroGate.ts). */}
         <script dangerouslySetInnerHTML={{ __html: INTRO_GATE_SCRIPT }} />
         <style dangerouslySetInnerHTML={{ __html: INTRO_GATE_STYLE }} />
+        {/* Same for the Private Credit intro, on that route only (IntroGate.ts there). */}
+        <script dangerouslySetInnerHTML={{ __html: PC_INTRO_GATE_SCRIPT }} />
       </head>
       <body>{children}</body>
     </html>

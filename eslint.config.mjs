@@ -19,7 +19,7 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     // The design handoff is reference material, not app code.
-    "design_handoff_home/**",
+    "design_handoff_*/**",
     "qa/__screens__/**",
     // One-off QA probes (gitignored); only the reusable harness is linted.
     "qa/review-*",

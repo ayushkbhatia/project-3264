@@ -17,26 +17,35 @@
   --line2: rgba(20, 20, 18, 0.075); /* section dividers, inner rules */
   --tex: 1; /* grid texture on/off multiplier */
   --art: 1; /* hero painting on/off multiplier */
+  --bad: #c4341e; /* breach, #REF!, worsening (Private Credit) */
+  --warn: #8a5a16; /* watch, outstanding, in review (Private Credit) */
+  /* Font stacks, named literally (see the @font-face block above). The home modules and
+     components still read them through these two variables. */
+  --font-instrument: "Instrument Sans";
+  --font-plex-mono: "IBM Plex Mono";
 }
 
 /*
- * Instrument Sans has no arrow glyphs. In the reference the "→" in the industry rows, the
- * case-study figures and "32 → 64" falls through "Helvetica Neue" (which lacks it too) to the
- * system fallback: Lucida Grande on macOS. next/font puts its metric-adjusted Arial face,
- * "Instrument Sans Fallback", straight after the web font, so in the port the same arrows came
- * out as a scaled Arial glyph — a different shape, 0.4px wider per arrow.
- *
- * This adds a second face to that fallback family covering the Arrows block only. Faces of one
- * family with overlapping ranges are tried last-defined first, so arrows draw from Lucida
- * Grande exactly as in the reference while every other character, and the computed
- * font-family, are untouched. Without Lucida Grande (or if next/font renames its fallback) the
- * face simply never applies and arrows come from Arial as before.
+ * Fonts, self-hosted from Fontsource (public/fonts), under their LITERAL family names. The
+ * Private Credit motion module writes `'IBM Plex Mono'` into inline styles and draws canvas
+ * text in `"Instrument Sans"`, and the canvas ring lays itself out from measureText in that
+ * font, so the families cannot be renamed the way next/font does. The files are the Google
+ * Fonts builds the reference prototypes load, copied from the @fontsource/instrument-sans and
+ * @fontsource/ibm-plex-mono devDependencies (5.3.0); re-copy them from there to update. latin + latin-ext, split by unicode-range as
+ * Google serves them; only the subsets a page actually uses are downloaded.
  */
-@font-face {
-  font-family: "Instrument Sans Fallback";
-  src: local("Lucida Grande"), local("LucidaGrande");
-  unicode-range: U+2190-21FF;
-}
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/instrument-sans-latin-ext-400-normal.woff2) format("woff2"); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/instrument-sans-latin-400-normal.woff2) format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/instrument-sans-latin-ext-500-normal.woff2) format("woff2"); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/instrument-sans-latin-500-normal.woff2) format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/instrument-sans-latin-ext-600-normal.woff2) format("woff2"); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/instrument-sans-latin-600-normal.woff2) format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "Instrument Sans"; font-style: italic; font-weight: 400; font-display: swap; src: url(/fonts/instrument-sans-latin-ext-400-italic.woff2) format("woff2"); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "Instrument Sans"; font-style: italic; font-weight: 400; font-display: swap; src: url(/fonts/instrument-sans-latin-400-italic.woff2) format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/ibm-plex-mono-latin-ext-400-normal.woff2) format("woff2"); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/ibm-plex-mono-latin-ext-500-normal.woff2) format("woff2"); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
 
 @theme inline {
   --color-a: var(--a);
@@ -51,6 +60,45 @@
   --color-line2: var(--line2);
   --font-sans: var(--font-instrument), "Helvetica Neue", Helvetica, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+/* The Private Credit sequences' "Continue scrolling" blip. */
+@keyframes pcBlip {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.16;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-blip] {
+    animation: none !important;
+  }
+}
+
+/*
+ * The Private Credit page runs on the prototype's UA defaults: content-box sizing everywhere
+ * (its inline sizes assume it, and so does every element the motion module builds). Tailwind's
+ * preflight makes everything border-box, which would change the size of every bordered window,
+ * tile and card on the page. Unlayered, so it outranks preflight; inline styles that ask for
+ * border-box still win.
+ */
+[data-pc],
+[data-pc] *,
+[data-pc] ::before,
+[data-pc] ::after {
+  box-sizing: content-box;
+}
+/* The Private Credit intro's first-paint cover (components/private-credit/IntroGate.ts).
+   !important: the overlay's server-rendered display:none is inline. */
+html[data-pc-intro="pending"] [data-pc-intro-wrap] {
+  display: flex !important;
+}
+/* Nor does it balance paragraphs globally: only where its inline styles say `pretty`. */
+[data-pc] p {
+  text-wrap: wrap;
 }
 
 /*
