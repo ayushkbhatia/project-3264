@@ -1,0 +1,65 @@
+{
+  "_doc": "Scroll positions for the four pinned sequences. p is track progress 0..1: scrollY = trackTop + p * (track.offsetHeight - pin.offsetHeight). Each point names what must be on screen. Derived from the timing windows in ANIMATIONS.md; if you change a window, change this file. The track is the div whose first child is the sticky pin.",
+  "reality": {
+    "section": "#reality",
+    "points": [
+      { "p": 0.02, "expect": "Empty stage: valley backdrop, menu bar, 'Continue scrolling' blip. No title, no windows." },
+      { "p": 0.09, "expect": "Title A half revealed word by word; 'disconnected' italic, darker." },
+      { "p": 0.20, "expect": "Title A complete. Window 0 (servicing export) in, window 1 (mail) just arriving." },
+      { "p": 0.36, "expect": "All four windows in; Covenants_MASTER_v14.xlsx on top with #REF! in red and the selected 52.1 cell." },
+      { "p": 0.47, "expect": "Title A gone, windows fading, title B starting." },
+      { "p": 0.57, "expect": "Title B complete ('one system of record.' italic). Platform window rising." },
+      { "p": 0.628, "expect": "Platform: Pipeline screen active in the sidebar." },
+      { "p": 0.683, "expect": "Underwriting screen." },
+      { "p": 0.738, "expect": "Documentation screen: 'outstanding' rows in warn colour." },
+      { "p": 0.793, "expect": "Servicing screen." },
+      { "p": 0.848, "expect": "Covenants screen: five 'pass' in accent." },
+      { "p": 0.903, "expect": "Investors screen." },
+      { "p": 0.958, "expect": "Reporting screen: 'in review' in warn colour." }
+    ]
+  },
+  "platform": {
+    "section": "#platform",
+    "_formula": "p = 0.10 + (stage + local) * 0.178",
+    "points": [
+      { "p": 0.02, "expect": "Backdrop only, window not yet in." },
+      { "p": 0.136, "expect": "Pipeline: kanban board, line reveal complete, caption revealing." },
+      { "p": 0.245, "expect": "Pipeline: Northgate deal panel fully open over the board; board columns dimmed to 0.28." },
+      { "p": 0.296, "expect": "Underwriting: base case, stress toast not shown." },
+      { "p": 0.440, "expect": "Underwriting: stress applied. Peak 4.41x, headroom 0.34x, rating B, toast 'Stress scenario applied · done'." },
+      { "p": 0.470, "expect": "Credit memo: summary view (memoS)." },
+      { "p": 0.501, "expect": "Credit memo: section A." },
+      { "p": 0.531, "expect": "Credit memo: section B with the bridge." },
+      { "p": 0.566, "expect": "Credit memo: section C." },
+      { "p": 0.595, "expect": "Credit memo: section D." },
+      { "p": 0.625, "expect": "Credit memo: section E (the ask)." },
+      { "p": 0.741, "expect": "Committee: votes and conditions." },
+      { "p": 0.892, "expect": "Monitoring: certificates arriving, rows re-testing." },
+      { "p": 0.981, "expect": "Monitoring: dossier for the followed deal fully open." }
+    ]
+  },
+  "origination": {
+    "section": "#origination",
+    "_formula": "p = 0.05 + (stage + local) / 6 * 0.92",
+    "points": [
+      { "p": 0.127, "expect": "Sourced · 248 · all tiles in; intake card for Halcyon Dental." },
+      { "p": 0.280, "expect": "Screened: count settling at 96; gates card with gate 03 failed (5.40x)." },
+      { "p": 0.433, "expect": "Underwritten · 61; spreadsheet vignette." },
+      { "p": 0.587, "expect": "To committee · 38; memo card." },
+      { "p": 0.740, "expect": "Approved · 24; conditions card." },
+      { "p": 0.962, "expect": "Funded · 11; the eleven surviving tiles live green with glow." }
+    ]
+  },
+  "delivery": {
+    "section": "#delivery",
+    "_formula": "p = 0.05 + (beat + local) / 5 * 0.92",
+    "points": [
+      { "p": 0.03, "expect": "Headline only; stack at rest, no stage text." },
+      { "p": 0.142, "expect": "Beat 1: plate 1 lifted and lit; 'Company-wide audit' in, stub drawn." },
+      { "p": 0.326, "expect": "Beat 2: plate 2 lit; stage 01 stays at >= 0.62 opacity." },
+      { "p": 0.510, "expect": "Beat 3." },
+      { "p": 0.694, "expect": "Beat 4: all four stages listed." },
+      { "p": 0.950, "expect": "Beat 5: plates closed into one unit, stage text gone, CTA 'One platform, running your book.' in and clickable." }
+    ]
+  }
+}
