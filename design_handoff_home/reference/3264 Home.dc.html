@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>3264.ai — AI software deployment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+html, body { margin:0; padding:0; overflow-x:hidden; }
+body {
+  --a:#157F52; --line:rgba(20,20,18,0.13); --line2:rgba(20,20,18,0.075);
+  --mut:#6E6D67; --sec:#55544E; --tex:1;
+  background:#F6F5F2; color:#1A1917;
+  font-family:"Instrument Sans","Helvetica Neue",Helvetica,sans-serif;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+a { color:inherit; text-decoration:none; }
+a:hover { color:var(--a); }
+::selection { background:var(--a); color:#FFFFFF; }
+@keyframes m3264-mark { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+</style>
+</helmet>
+
+<div ref="{{ iWrap }}" onClick="{{ skipIntro }}" style="position:fixed; inset:0; z-index:300; background:#F6F5F2; display:none; align-items:center; justify-content:center; overflow:hidden; cursor:pointer">
+  <div ref="{{ iGrid }}" style="position:absolute; inset:0; opacity:0"></div>
+  <canvas ref="{{ iCv }}" style="position:absolute; inset:0; width:100%; height:100%; opacity:0"></canvas>
+  <div ref="{{ iMark }}" style="position:relative; opacity:0; text-align:center">
+    <div ref="{{ iLock }}" style="font-size:clamp(48px,8vw,116px); font-weight:400; letter-spacing:-0.05em; line-height:1; white-space:nowrap">3264<span ref="{{ iSfx }}" style="opacity:0">.ai</span></div>
+  </div>
+  <div style="position:absolute; left:0; right:0; bottom:36px; text-align:center; font-size:13px; letter-spacing:-0.005em; color:var(--mut)" ref="{{ iCap }}">1</div>
+</div>
+
+<div>
+
+  <header style="position:sticky; top:0; z-index:100; backdrop-filter:blur(14px); background:rgba(246,245,242,0.78); border-bottom:1px solid var(--line2)">
+    <div style="max-width:1280px; margin:0 auto; padding:0 40px; height:68px; display:flex; align-items:center; gap:48px">
+      <a href="#top" style="font-size:19px; font-weight:500; letter-spacing:-0.03em">3264<span>.ai</span></a>
+      <nav style="display:flex; gap:30px; font-size:14px; color:var(--sec); flex:1">
+        <a href="AI Engineering.dc.html">AI Engineering</a>
+        <a href="AI Transformation.dc.html">AI Transformation</a>
+        <a href="#industries">Industries</a>
+        <a href="#work">Work</a>
+        <a href="#playbooks">Playbooks</a>
+        <a href="Company.dc.html">Company</a>
+      </nav>
+      <a href="#contact" style="display:flex; align-items:center; gap:10px; height:36px; padding:0 16px; border:1px solid var(--line); border-radius:6px; background:#FFFFFF; font-size:13.5px; letter-spacing:-0.01em" style-hover="border-color:var(--a); color:var(--a)">Book a call</a>
+    </div>
+  </header>
+
+  <section id="top" data-screen-label="Hero" style="position:relative; padding:0 40px 118px; border-bottom:1px solid var(--line2); overflow:hidden">
+    <canvas ref="{{ artCv }}" style="position:absolute; left:0; right:0; top:0; width:100%; aspect-ratio:1376 / 768; background-image:url('assets/hero-valley.png'); background-repeat:no-repeat; background-size:cover; background-position:center top; opacity:calc(var(--art) * 0.95); mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.55) 9%, #000 26%, #000 82%, transparent 100%); -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.55) 9%, #000 26%, #000 82%, transparent 100%); pointer-events:none"></canvas>
+    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(246,245,242,0.86) 0%, rgba(246,245,242,0.30) 15%, rgba(246,245,242,0.10) 34%, rgba(246,245,242,0.06) 56%, rgba(246,245,242,0.34) 78%, rgba(246,245,242,0.86) 100%); pointer-events:none"></div>
+    <div ref="{{ heroTex }}" style="position:absolute; inset:0; opacity:calc(var(--tex) * 0.34); background-image:linear-gradient(to right, rgba(20,20,18,0.07) 1px, transparent 1px), linear-gradient(to bottom, rgba(20,20,18,0.05) 1px, transparent 1px); background-size:calc(100% / 32) 68px; mask-image:linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.35) 46%, transparent 88%); -webkit-mask-image:linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.35) 46%, transparent 88%); pointer-events:none"></div>
+    <div style="position:relative; max-width:1280px; margin:0 auto; padding:150px 0 0">
+      <div style="max-width:880px; margin:0 auto; text-align:center">
+        <h1 style="margin:0; font-size:clamp(38px,4.9vw,76px); font-weight:400; letter-spacing:-0.038em; line-height:1.0; text-wrap:balance">Deployment is<br />the deliverable.</h1>
+        <p style="margin:30px auto 0; max-width:620px; font-size:19px; line-height:1.55; color:#2C2B27; text-wrap:pretty">3264 builds and runs AI systems inside banking, fund management and asset management firms. Scope is fixed before we start. You are billed for what reaches production.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin:38px 0 0">
+          <a href="#contact" style="display:flex; align-items:center; height:46px; padding:0 24px; background:#1A1917; color:#FFFFFF; border-radius:6px; font-size:15px; font-weight:500; letter-spacing:-0.01em" style-hover="background:var(--a)">Book a mapping session</a>
+          <a href="#model" style="display:flex; align-items:center; height:46px; padding:0 24px; border:1px solid var(--line); border-radius:6px; background:#FFFFFF; font-size:15px; letter-spacing:-0.01em" style-hover="border-color:var(--a)">How we charge</a>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(272px,1fr)); gap:1px; background:var(--line); margin:112px 0 0; border:1px solid var(--line)">
+        <div style="background:rgba(255,255,255,0.93); backdrop-filter:blur(3px); padding:24px 26px 30px">
+          <div ref="{{ vigA }}" style="height:150px; margin:0 0 26px"></div>
+          <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">Engagement</div>
+          <div style="margin:9px 0 0; font-size:18px; letter-spacing:-0.022em">Fixed scope, fixed price</div>
+          <p style="margin:11px 0 0; font-size:14.5px; line-height:1.5; color:var(--sec); text-wrap:pretty">Each capability is priced and signed off before build begins. Change is quoted, never quietly absorbed.</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.93); backdrop-filter:blur(3px); padding:24px 26px 30px">
+          <div ref="{{ vigB }}" style="height:150px; margin:0 0 26px"></div>
+          <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">First release</div>
+          <div style="margin:9px 0 0; font-size:18px; letter-spacing:-0.022em">Six weeks to production</div>
+          <p style="margin:11px 0 0; font-size:14.5px; line-height:1.5; color:var(--sec); text-wrap:pretty">A working release inside six weeks, then a release every fortnight against the agreed scope.</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.93); backdrop-filter:blur(3px); padding:24px 26px 30px">
+          <div ref="{{ vigC }}" style="height:150px; margin:0 0 26px"></div>
+          <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">After launch</div>
+          <div style="margin:9px 0 0; font-size:18px; letter-spacing:-0.022em">Accuracy held, not assumed</div>
+          <p style="margin:11px 0 0; font-size:14.5px; line-height:1.5; color:var(--sec); text-wrap:pretty">We keep the evaluation suite. Drift is caught and corrected before it reaches anyone downstream.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="model" data-screen-label="Engagement model" style="padding:130px 40px; border-bottom:1px solid var(--line2)">
+    <div style="max-width:1280px; margin:0 auto; display:flex; gap:72px; flex-wrap:wrap">
+      <div style="flex:1 1 280px; min-width:0">
+        <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">01 / The model</div>
+        <h2 style="margin:22px 0 0; font-size:clamp(30px,3.1vw,44px); font-weight:400; letter-spacing:-0.032em; line-height:1.06">You pay for what reaches production.</h2>
+        <p style="margin:20px 0 0; font-size:16.5px; line-height:1.6; color:var(--sec); max-width:400px; text-wrap:pretty">Consulting bills attention. We bill delivery. The commercial terms are written so that a feature nobody uses costs us, not you.</p>
+      </div>
+      <div style="flex:2 1 540px; min-width:0">
+        <div style="border-top:1px solid var(--line); padding:26px 0; display:flex; gap:40px; flex-wrap:wrap">
+          <div style="flex:1 1 180px; font-size:15px; letter-spacing:-0.01em; color:var(--mut)">Scope</div>
+          <div style="flex:3 1 340px; font-size:17px; line-height:1.5; color:#2C2B27">Defined in a two-week diagnostic and frozen. Change requests are priced, never absorbed silently.</div>
+        </div>
+        <div style="border-top:1px solid var(--line); padding:26px 0; display:flex; gap:40px; flex-wrap:wrap">
+          <div style="flex:1 1 180px; font-size:15px; letter-spacing:-0.01em; color:var(--mut)">Price</div>
+          <div style="flex:3 1 340px; font-size:17px; line-height:1.5; color:#2C2B27">Per delivered capability, invoiced on acceptance. No timesheets, no rate cards, no bench.</div>
+        </div>
+        <div style="border-top:1px solid var(--line); padding:26px 0; display:flex; gap:40px; flex-wrap:wrap">
+          <div style="flex:1 1 180px; font-size:15px; letter-spacing:-0.01em; color:var(--mut)">Proof</div>
+          <div style="flex:3 1 340px; font-size:17px; line-height:1.5; color:#2C2B27">Cycle time, error rate and cost per file are measured before build and reported monthly after.</div>
+        </div>
+        <div style="border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:26px 0; display:flex; gap:40px; flex-wrap:wrap">
+          <div style="flex:1 1 180px; font-size:15px; letter-spacing:-0.01em; color:var(--mut)">Exit</div>
+          <div style="flex:3 1 340px; font-size:17px; line-height:1.5; color:#2C2B27">Source, prompts, evaluation sets and runbooks are yours from day one. Nothing is held hostage.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="capabilities" data-screen-label="Capabilities" style="padding:130px 0 0; border-bottom:1px solid var(--line2)">
+    <div style="max-width:1280px; margin:0 auto; padding:0 40px">
+      <div style="display:flex; gap:72px; flex-wrap:wrap; align-items:flex-end">
+        <div style="flex:1 1 280px; min-width:0">
+          <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">02 / Capabilities</div>
+          <h2 style="margin:22px 0 0; font-size:clamp(30px,3.1vw,44px); font-weight:400; letter-spacing:-0.032em; line-height:1.06">Three ways in. One accountable team.</h2>
+        </div>
+        <p style="flex:2 1 480px; min-width:0; margin:0; font-size:16.5px; line-height:1.6; color:var(--sec); max-width:560px; text-wrap:pretty">Most firms arrive with a shortlist of ideas and no way to judge them. We start where the evidence is thinnest and stay until the system is in production and monitored.</p>
+      </div>
+    </div>
+
+    <div ref="{{ phTrack }}" style="position:relative; height:420vh; margin:56px 0 0">
+      <div ref="{{ phPin }}" style="position:sticky; top:0; height:100vh; display:flex; align-items:center; overflow:hidden">
+        <div ref="{{ phGrid }}" style="width:100%; max-width:1280px; margin:0 auto; padding:0 40px; display:grid; grid-template-columns:minmax(0,0.86fr) minmax(0,1.14fr); gap:56px; align-items:center">
+
+          <div style="min-width:0">
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0">
+              <div ref="{{ phR0 }}" onClick="{{ phJump }}" data-act="0" style="border-top:2px solid var(--a); padding:12px 14px 0 0; font-size:12.5px; letter-spacing:0.05em; text-transform:uppercase; color:#1A1917; cursor:pointer">Assess</div>
+              <div ref="{{ phR1 }}" onClick="{{ phJump }}" data-act="1" style="border-top:2px solid var(--line); padding:12px 14px 0 0; font-size:12.5px; letter-spacing:0.05em; text-transform:uppercase; color:var(--mut); cursor:pointer" style-hover="color:#1A1917">Build</div>
+              <div ref="{{ phR2 }}" onClick="{{ phJump }}" data-act="2" style="border-top:2px solid var(--line); padding:12px 14px 0 0; font-size:12.5px; letter-spacing:0.05em; text-transform:uppercase; color:var(--mut); cursor:pointer" style-hover="color:#1A1917">Run</div>
+            </div>
+
+            <div style="position:relative; min-height:390px; margin:40px 0 0">
+              <div ref="{{ phP0 }}" style="position:absolute; inset:0">
+                <div style="display:flex; justify-content:space-between; align-items:baseline; max-width:440px; font-size:13px; letter-spacing:-0.005em; color:var(--mut)"><span style="color:var(--a)">01</span><span>2 weeks</span></div>
+                <h3 style="margin:24px 0 0; font-size:clamp(28px,2.6vw,38px); font-weight:400; letter-spacing:-0.03em; line-height:1.06">Assess</h3>
+                <p style="margin:18px 0 0; max-width:460px; font-size:16.5px; line-height:1.58; color:var(--sec); text-wrap:pretty">A function-by-function audit of where documents, handoffs and exceptions consume time. Ends in a ranked use-case ledger with cost, risk and expected return per item.</p>
+                <ul style="margin:30px 0 0; padding:0; list-style:none; display:grid; gap:10px; max-width:440px; font-size:14.5px; color:#46453F">
+                  <li style="border-top:1px solid var(--line2); padding-top:10px">Workflow and data mapping</li>
+                  <li style="border-top:1px solid var(--line2); padding-top:10px">Baseline instrumentation</li>
+                  <li style="border-top:1px solid var(--line2); padding-top:10px">Build / buy recommendation</li>
+                </ul>
+              </div>
+              <div ref="{{ phP1 }}" style="position:absolute; inset:0; opacity:0">
+                <div style="display:flex; justify-content:space-between; align-items:baseline; max-width:440px; font-size:13px; letter-spacing:-0.005em; color:var(--mut)"><span style="color:var(--a)">02</span><span>6&ndash;12 weeks</span></div>
+                <h3 style="margin:24px 0 0; font-size:clamp(28px,2.6vw,38px); font-weight:400; letter-spacing:-0.03em; line-height:1.06">Build</h3>
+                <p style="margin:18px 0 0; max-width:460px; font-size:16.5px; line-height:1.58; color:var(--sec); text-wrap:pretty">A small senior squad ships the system into your environment: retrieval, extraction, review interface, audit trail. Priced per capability, released fortnightly.</p>
+                <ul style="margin:30px 0 0; padding:0; list-style:none; display:grid; gap:10px; max-width:440px; font-size:14.5px; color:#46453F">
+                  <li style="border-top:1px solid var(--line2); padding-top:10px">Document and decision pipelines</li>
+                  <li style="border-top:1px solid var(--line2); padding-top:10px">Human-in-the-loop interfaces</li>
+                  <li style="border-top:1px solid var(--line2); padding-top:10px">Integration into systems of record</li>
+                </ul>
+              </div>
+              <div ref="{{ phP2 }}" style="position:absolute; inset:0; opacity:0">
+                <div style="display:flex; justify-content:space-between; align-items:baseline; max-width:440px; font-size:13px; letter-spacing:-0.005em; color:var(--mut)"><span style="color:var(--a)">03</span><span>Ongoing</span></div>
+                <h3 style="margin:24px 0 0; font-size:clamp(28px,2.6vw,38px); font-weight:400; letter-spacing:-0.03em; line-height:1.06">Run</h3>
+                <p style="margin:18px 0 0; max-width:460px; font-size:16.5px; line-height:1.58; color:var(--sec); text-wrap:pretty">Deployed systems drift. We hold the evaluation suite, watch accuracy and cost per run, and retrain as models and regulation move underneath them.</p>
+                <ul style="margin:30px 0 0; padding:0; list-style:none; display:grid; gap:10px; max-width:440px; font-size:14.5px; color:#46453F">
+                  <li style="border-top:1px solid var(--line2); padding-top:10px">Evaluation and regression suites</li>
+                  <li style="border-top:1px solid var(--line2); padding-top:10px">Accuracy and spend monitoring</li>
+                  <li style="border-top:1px solid var(--line2); padding-top:10px">Model migration as the frontier moves</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div ref="{{ phStage }}" style="position:relative; width:100%; background:#FFFFFF; border:1px solid var(--line)">
+            <canvas ref="{{ phCv }}" style="position:absolute; inset:0; width:100%; height:100%"></canvas>
+            <div ref="{{ phLabels }}" style="position:absolute; inset:0; pointer-events:none; overflow:hidden"></div>
+            <div ref="{{ phSlot }}" style="display:none; position:absolute; inset:0; flex-direction:column; align-items:center; justify-content:center; gap:14px; pointer-events:none">
+              <div style="font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:var(--mut)">Diagram slot</div>
+              <div style="position:relative; width:180px; height:2px; background:rgba(20,20,18,0.10)">
+                <div ref="{{ phBar }}" style="position:absolute; left:0; top:0; bottom:0; width:0%; background:var(--a)"></div>
+              </div>
+            </div>
+            <div ref="{{ phAssess }}" style="position:absolute; left:0; right:0; top:0; bottom:40px; opacity:0; display:flex; flex-direction:column; overflow:hidden"></div>
+            <div ref="{{ phBuildP }}" style="position:absolute; left:0; right:0; top:0; bottom:40px; opacity:0; display:flex; flex-direction:column; overflow:hidden"></div>
+            <div ref="{{ phRun }}" style="position:absolute; left:0; right:0; top:0; bottom:40px; opacity:0; display:flex; flex-direction:column; overflow:hidden"></div>
+            <div ref="{{ phTip }}" style="position:absolute; left:0; top:0; opacity:0; pointer-events:none; transform:translate(-50%,-124%); background:#1A1917; color:#F6F5F2; padding:9px 12px 10px; border-radius:5px; white-space:nowrap; box-shadow:0 6px 22px rgba(20,20,18,0.18); transition:opacity .16s ease"></div>
+            <div style="position:absolute; left:0; right:0; bottom:0; display:flex; justify-content:space-between; align-items:baseline; padding:0 20px 16px; font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:var(--mut)">
+              <span ref="{{ phCap }}">Workflow and data map</span>
+              <span ref="{{ phMetric }}">01 / 03</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="industries" data-screen-label="Industries" style="padding:130px 40px; border-bottom:1px solid var(--line2)">
+    <div style="max-width:1280px; margin:0 auto">
+      <div style="display:flex; gap:72px; flex-wrap:wrap; align-items:flex-end">
+        <div style="flex:1 1 280px; min-width:0">
+          <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">03 / Industries</div>
+          <h2 style="margin:22px 0 0; font-size:clamp(30px,3.1vw,44px); font-weight:400; letter-spacing:-0.032em; line-height:1.06">Four sectors. The same bottleneck.</h2>
+        </div>
+        <p style="flex:2 1 480px; min-width:0; margin:0; font-size:16.5px; line-height:1.6; color:var(--sec); max-width:560px; text-wrap:pretty">Every mandate we take on runs on documents that people read, summarise and re-key. That is the work we remove first, because it is measurable and it is where the risk sits.</p>
+      </div>
+      <div style="margin:64px 0 0">
+        <a href="Private Credit.dc.html" style="display:flex; gap:48px; flex-wrap:wrap; align-items:baseline; border-top:1px solid var(--line); padding:34px 0" style-hover="border-color:var(--a)">
+          <div style="flex:1 1 260px; min-width:0; display:flex; gap:18px; align-items:baseline">
+            <span style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">R1</span>
+            <h3 style="margin:0; font-size:clamp(24px,2.4vw,34px); font-weight:400; letter-spacing:-0.03em">Private Credit</h3>
+          </div>
+          <div style="flex:2 1 360px; min-width:0; font-size:16px; line-height:1.55; color:var(--sec)">Loan origination and management, covenant testing, borrower monitoring, investor reporting and fund facility compliance.</div>
+          <div style="flex:0 0 auto; margin-left:auto; font-size:14px; color:var(--mut)">&rarr;</div>
+        </a>
+        <a href="#industries" style="display:flex; gap:48px; flex-wrap:wrap; align-items:baseline; border-top:1px solid var(--line); padding:34px 0" style-hover="border-color:var(--a)">
+          <div style="flex:1 1 260px; min-width:0; display:flex; gap:18px; align-items:baseline">
+            <span style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">R2</span>
+            <h3 style="margin:0; font-size:clamp(24px,2.4vw,34px); font-weight:400; letter-spacing:-0.03em">Financial Services</h3>
+          </div>
+          <div style="flex:2 1 360px; min-width:0; font-size:16px; line-height:1.55; color:var(--sec)">Credit memos, KYC and onboarding files, model lifecycle documentation, complaints triage and regulatory response.</div>
+          <div style="flex:0 0 auto; margin-left:auto; font-size:14px; color:var(--mut)">&rarr;</div>
+        </a>
+        <a href="#industries" style="display:flex; gap:48px; flex-wrap:wrap; align-items:baseline; border-top:1px solid var(--line); padding:34px 0" style-hover="border-color:var(--a)">
+          <div style="flex:1 1 260px; min-width:0; display:flex; gap:18px; align-items:baseline">
+            <span style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">R3</span>
+            <h3 style="margin:0; font-size:clamp(24px,2.4vw,34px); font-weight:400; letter-spacing:-0.03em">Fund Management</h3>
+          </div>
+          <div style="flex:2 1 360px; min-width:0; font-size:16px; line-height:1.55; color:var(--sec)">LP reporting cycles, capital calls and distributions, portfolio monitoring, side-letter obligations and data-room diligence.</div>
+          <div style="flex:0 0 auto; margin-left:auto; font-size:14px; color:var(--mut)">&rarr;</div>
+        </a>
+        <a href="#industries" style="display:flex; gap:48px; flex-wrap:wrap; align-items:baseline; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:34px 0" style-hover="border-color:var(--a)">
+          <div style="flex:1 1 260px; min-width:0; display:flex; gap:18px; align-items:baseline">
+            <span style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">R4</span>
+            <h3 style="margin:0; font-size:clamp(24px,2.4vw,34px); font-weight:400; letter-spacing:-0.03em">Asset Management</h3>
+          </div>
+          <div style="flex:2 1 360px; min-width:0; font-size:16px; line-height:1.55; color:var(--sec)">Research synthesis, mandate and guideline compliance, RFP and DDQ response, client reporting and attribution commentary.</div>
+          <div style="flex:0 0 auto; margin-left:auto; font-size:14px; color:var(--mut)">&rarr;</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" data-screen-label="Selected engagements" style="padding:130px 40px; border-bottom:1px solid var(--line2)">
+    <div style="max-width:1280px; margin:0 auto">
+      <div style="display:flex; gap:72px; flex-wrap:wrap; align-items:flex-end">
+        <div style="flex:1 1 280px; min-width:0">
+          <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">04 / Selected engagements</div>
+          <h2 style="margin:22px 0 0; font-size:clamp(30px,3.1vw,44px); font-weight:400; letter-spacing:-0.032em; line-height:1.06">Measured against the week before we arrived.</h2>
+        </div>
+        <p style="flex:2 1 480px; min-width:0; margin:0; font-size:16.5px; line-height:1.6; color:var(--sec); max-width:560px; text-wrap:pretty">Client names are withheld under mandate. Each engagement below reports the baseline we instrumented at the diagnostic stage and the figure at the third monthly review.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:1px; background:var(--line); margin:60px 0 0; border:1px solid var(--line)">
+        <div style="background:#FFFFFF; padding:36px 32px 40px">
+          <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">Fund management &middot; Private markets</div>
+          <h3 style="margin:24px 0 0; font-size:26px; font-weight:400; letter-spacing:-0.028em; line-height:1.2">Quarterly LP reporting for a $500MM growth fund</h3>
+          <p style="margin:16px 0 0; font-size:15.5px; line-height:1.58; color:var(--sec); text-wrap:pretty">Portfolio data arrived as 90-odd spreadsheets and PDF updates. We built extraction into the fund's own warehouse, with analyst review on every figure before it reaches an LP letter.</p>
+          <div style="display:grid; gap:0; margin:30px 0 0">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; gap:20px; border-top:1px solid var(--line2); padding:13px 0"><span style="font-size:14px; color:#46453F">Reporting cycle</span><span style="font-size:14.5px; font-variant-numeric:tabular-nums; color:#1A1917">11 days &rarr; 2 days</span></div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; gap:20px; border-top:1px solid var(--line2); padding:13px 0"><span style="font-size:14px; color:#46453F">Companies monitored</span><span style="font-size:14.5px; font-variant-numeric:tabular-nums; color:#1A1917">94, continuously</span></div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; gap:20px; border-top:1px solid var(--line2); padding:13px 0"><span style="font-size:14px; color:#46453F">Figures re-keyed by hand</span><span style="font-size:14.5px; font-variant-numeric:tabular-nums; color:var(--a)">None</span></div>
+          </div>
+        </div>
+        <div style="background:#FFFFFF; padding:36px 32px 40px">
+          <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">Financial services &middot; Commercial bank</div>
+          <h3 style="margin:24px 0 0; font-size:26px; font-weight:400; letter-spacing:-0.028em; line-height:1.2">Credit memo preparation across a $6.4B book</h3>
+          <p style="margin:16px 0 0; font-size:15.5px; line-height:1.58; color:var(--sec); text-wrap:pretty">Every figure extracted with a citation back to the page it came from. Credit officers review exceptions only; the audit trail satisfied the bank's internal model risk function without amendment.</p>
+          <div style="display:grid; gap:0; margin:30px 0 0">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; gap:20px; border-top:1px solid var(--line2); padding:13px 0"><span style="font-size:14px; color:#46453F">Time per memo</span><span style="font-size:14.5px; font-variant-numeric:tabular-nums; color:#1A1917">6 hrs &rarr; 40 min</span></div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; gap:20px; border-top:1px solid var(--line2); padding:13px 0"><span style="font-size:14px; color:#46453F">Memos prepared</span><span style="font-size:14.5px; font-variant-numeric:tabular-nums; color:#1A1917">1,240</span></div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; gap:20px; border-top:1px solid var(--line2); padding:13px 0"><span style="font-size:14px; color:#46453F">Field-level citations</span><span style="font-size:14.5px; font-variant-numeric:tabular-nums; color:var(--a)">100%</span></div>
+          </div>
+        </div>
+      </div>
+      <p style="margin:22px 0 0; font-size:13.5px; color:var(--mut); line-height:1.6">Placeholder figures &mdash; structure is correct, numbers to be replaced with signed-off engagement data.</p>
+    </div>
+  </section>
+
+  <section data-screen-label="Stack" style="padding:74px 40px; border-bottom:1px solid var(--line2)">
+    <div style="max-width:1280px; margin:0 auto">
+      <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">Built on</div>
+      <div style="margin:30px 0 0; display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:14px 20px; align-items:center">
+        <img src="logos/anthropic.png" alt="Anthropic" style="width:100%; height:50px; object-fit:contain; opacity:0.78" />
+        <img src="logos/openai.png" alt="OpenAI" style="width:100%; height:50px; object-fit:contain; opacity:0.78" />
+        <img src="logos/aws.png" alt="Amazon Web Services" style="width:100%; height:50px; object-fit:contain; opacity:0.78" />
+        <img src="logos/vercel.png" alt="Vercel" style="width:100%; height:50px; object-fit:contain; opacity:0.78" />
+        <img src="logos/supabase.png" alt="Supabase" style="width:100%; height:50px; object-fit:contain; opacity:0.78" />
+        <img src="logos/langchain.png" alt="LangChain" style="width:100%; height:50px; object-fit:contain; opacity:0.78" />
+        <img src="logos/langgraph.png" alt="LangGraph" style="width:100%; height:50px; object-fit:contain; opacity:0.78" />
+        <img src="logos/n8n.png" alt="n8n" style="width:100%; height:50px; object-fit:contain; opacity:0.78" />
+        <img src="logos/brand4.png" alt="Cursor" style="width:100%; height:50px; object-fit:contain; opacity:0.78" />
+        
+        
+        
+        
+        
+        
+      </div>
+    </div>
+  </section>
+
+  <section id="company" data-screen-label="Team" style="padding:130px 40px; border-bottom:1px solid var(--line2)">
+    <div style="max-width:1280px; margin:0 auto">
+      <div style="display:flex; gap:72px; flex-wrap:wrap; align-items:flex-end">
+        <div style="flex:1 1 280px; min-width:0">
+          <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">05 / Who we are</div>
+          <h2 style="margin:22px 0 0; font-size:clamp(30px,3.1vw,44px); font-weight:400; letter-spacing:-0.032em; line-height:1.06">Engineers who have carried a pager.</h2>
+        </div>
+        <p style="flex:2 1 480px; min-width:0; margin:0; font-size:16.5px; line-height:1.6; color:var(--sec); max-width:560px; text-wrap:pretty">The people who scope the work are the people who build it. No account layer, no offshore handoff, no partner you meet once at the pitch.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); gap:28px; margin:60px 0 0">
+        <div>
+          <div style="aspect-ratio:4 / 5; border:1px solid var(--line); background-image:repeating-linear-gradient(45deg, rgba(20,20,18,0.06) 0 1px, transparent 1px 9px); display:flex; align-items:flex-end; padding:16px"><span style="font-size:12.5px; letter-spacing:-0.005em; color:var(--mut)">portrait</span></div>
+          <div style="margin:16px 0 0; font-size:17px; letter-spacing:-0.02em">Managing Partner</div>
+          <div style="margin:5px 0 0; font-size:14px; color:var(--mut)">AI &amp; Engineering</div>
+        </div>
+        <div>
+          <div style="aspect-ratio:4 / 5; border:1px solid var(--line); background-image:repeating-linear-gradient(45deg, rgba(20,20,18,0.06) 0 1px, transparent 1px 9px); display:flex; align-items:flex-end; padding:16px"><span style="font-size:12.5px; letter-spacing:-0.005em; color:var(--mut)">portrait</span></div>
+          <div style="margin:16px 0 0; font-size:17px; letter-spacing:-0.02em">Managing Partner</div>
+          <div style="margin:5px 0 0; font-size:14px; color:var(--mut)">Delivery &amp; Operations</div>
+        </div>
+        <div>
+          <div style="aspect-ratio:4 / 5; border:1px solid var(--line); background-image:repeating-linear-gradient(45deg, rgba(20,20,18,0.06) 0 1px, transparent 1px 9px); display:flex; align-items:flex-end; padding:16px"><span style="font-size:12.5px; letter-spacing:-0.005em; color:var(--mut)">portrait</span></div>
+          <div style="margin:16px 0 0; font-size:17px; letter-spacing:-0.02em">Advisor</div>
+          <div style="margin:5px 0 0; font-size:14px; color:var(--mut)">Product &amp; Applied AI</div>
+        </div>
+        <div>
+          <div style="aspect-ratio:4 / 5; border:1px solid var(--line); background-image:repeating-linear-gradient(45deg, rgba(20,20,18,0.06) 0 1px, transparent 1px 9px); display:flex; align-items:flex-end; padding:16px"><span style="font-size:12.5px; letter-spacing:-0.005em; color:var(--mut)">portrait</span></div>
+          <div style="margin:16px 0 0; font-size:17px; letter-spacing:-0.02em">Advisor</div>
+          <div style="margin:5px 0 0; font-size:14px; color:var(--mut)">Capital Markets</div>
+        </div>
+      </div>
+      <p style="margin:24px 0 0; font-size:13.5px; color:var(--mut)">Names, photographs and biographies to be supplied.</p>
+    </div>
+  </section>
+
+  <section id="playbooks" data-screen-label="Playbooks" style="padding:130px 40px; border-bottom:1px solid var(--line2)">
+    <div style="max-width:1280px; margin:0 auto; display:flex; gap:72px; flex-wrap:wrap">
+      <div style="flex:1 1 280px; min-width:0">
+        <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">06 / Playbooks</div>
+        <h2 style="margin:22px 0 0; font-size:clamp(30px,3.1vw,44px); font-weight:400; letter-spacing:-0.032em; line-height:1.06">What we have learned, written down.</h2>
+      </div>
+      <div style="flex:2 1 540px; min-width:0">
+        <a href="#playbooks" style="display:block; border-top:1px solid var(--line); padding:26px 0" style-hover="border-color:var(--a)">
+          <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">Playbook &middot; 12 pages</div>
+          <div style="margin:12px 0 0; font-size:20px; letter-spacing:-0.024em">Instrumenting a workflow before you automate it</div>
+        </a>
+        <a href="#playbooks" style="display:block; border-top:1px solid var(--line); padding:26px 0" style-hover="border-color:var(--a)">
+          <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">Note</div>
+          <div style="margin:12px 0 0; font-size:20px; letter-spacing:-0.024em">Why document extraction pilots stall at 80% accuracy</div>
+        </a>
+        <a href="#playbooks" style="display:block; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:26px 0" style-hover="border-color:var(--a)">
+          <div style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">Note</div>
+          <div style="margin:12px 0 0; font-size:20px; letter-spacing:-0.024em">A procurement checklist for AI vendors, from the build side</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" data-screen-label="Closing CTA" style="position:relative; padding:150px 40px 160px; overflow:hidden; border-bottom:1px solid var(--line2)">
+    <div style="position:absolute; inset:0; opacity:calc(var(--tex) * 0.4); background-image:linear-gradient(to right, rgba(20,20,18,0.07) 1px, transparent 1px); background-size:calc(100% / 32) 100%; mask-image:linear-gradient(to top, #000 0%, transparent 80%); -webkit-mask-image:linear-gradient(to top, #000 0%, transparent 80%); pointer-events:none"></div>
+    <div style="position:relative; max-width:1280px; margin:0 auto">
+      <h2 style="margin:0; max-width:900px; font-size:clamp(34px,4.6vw,68px); font-weight:400; letter-spacing:-0.038em; line-height:1.02; text-wrap:balance">The advantage compounds from the day it ships.</h2>
+      <div style="display:flex; gap:56px; flex-wrap:wrap; align-items:flex-end; margin:44px 0 0">
+        <p style="flex:1 1 420px; margin:0; max-width:480px; font-size:17px; line-height:1.6; color:var(--sec); text-wrap:pretty">Thirty minutes, one workflow, no deck. We will tell you whether it is worth building and what it would cost before you commit to anything.</p>
+        <a href="#contact" style="display:flex; align-items:center; height:50px; padding:0 28px; background:#1A1917; color:#FFFFFF; border-radius:6px; font-size:15.5px; font-weight:500; letter-spacing:-0.01em" style-hover="background:var(--a)">Book a mapping session</a>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Footer image" style="position:relative; padding:0 40px 0; border-top:1px solid var(--line2)">
+    <div style="max-width:1280px; margin:0 auto; padding:96px 0 0">
+      <div style="position:relative; aspect-ratio:1672 / 941; border:1px solid var(--line2); overflow:hidden">
+        <img src="assets/footer-nocturne.png" alt="" style="display:block; width:100%; height:100%; object-fit:cover; object-position:center center" />
+        <div style="position:absolute; left:0; top:0; bottom:0; width:100%; background:linear-gradient(to right, rgba(10,14,32,0.74) 0%, rgba(10,14,32,0.66) 62%, rgba(10,14,32,0.16) 88%, rgba(10,14,32,0) 100%); pointer-events:none"></div>
+        <div style="position:absolute; left:0; top:0; padding:clamp(22px,3.4%,38px) clamp(28px,5%,80px); font-size:19px; font-weight:500; letter-spacing:-0.03em; color:#FFFFFF">3264<span>.ai</span></div>
+        <div style="position:absolute; left:0; top:50%; transform:translateY(-50%); padding:0 clamp(28px,5%,80px); max-width:min(560px, 62%)">
+          <h2 style="margin:0; font-size:clamp(30px,3.6vw,54px); font-weight:400; letter-spacing:-0.034em; line-height:1.04; color:#FFFFFF; text-wrap:balance">Win the next decade.</h2>
+          <a href="#contact" style="display:inline-flex; align-items:center; height:46px; margin:28px 0 0; padding:0 24px; background:#FFFFFF; color:#1A1917; border-radius:6px; font-size:15px; font-weight:500; letter-spacing:-0.01em" style-hover="background:#D8D6D1; color:#1A1917">Book a call</a>
+        </div>
+      </div>
+      <div style="display:flex; gap:24px; flex-wrap:wrap; justify-content:space-between; align-items:baseline; margin:16px 0 0">
+        <p style="margin:0; max-width:620px; font-size:14.5px; line-height:1.55; color:var(--mut); text-wrap:pretty">AI software deployment for asset-heavy and document-heavy firms.</p>
+        <span style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">32 &rarr; 64</span>
+      </div>
+    </div>
+  </section>
+
+  <footer data-screen-label="Footer" style="padding:70px 40px 40px">
+    <div style="max-width:1280px; margin:0 auto">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr))">
+        <div style="padding:0 28px 0 0; min-width:0">
+          <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Services</div>
+          <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+            <a href="AI Engineering.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">AI Engineering</a>
+            <a href="AI Transformation.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">AI Transformation</a>
+            <a href="#capabilities" style="color:var(--sec)" style-hover="color:var(--a)">Deployment &amp; Run</a>
+            <a href="#capabilities" style="color:var(--sec)" style-hover="color:var(--a)">Evaluation suites</a>
+          </div>
+        </div>
+        <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+          <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Industries</div>
+          <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+            <a href="Private Credit.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Private Credit</a>
+            <a href="#industries" style="color:var(--sec)" style-hover="color:var(--a)">Financial Services</a>
+            <a href="#industries" style="color:var(--sec)" style-hover="color:var(--a)">Fund Management</a>
+            <a href="#industries" style="color:var(--sec)" style-hover="color:var(--a)">Asset Management</a>
+          </div>
+        </div>
+        <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+          <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Company</div>
+          <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+            <a href="Company.dc.html#who" style="color:var(--sec)" style-hover="color:var(--a)">Who we are</a>
+            <a href="Company.dc.html#how" style="color:var(--sec)" style-hover="color:var(--a)">How we work</a>
+            <a href="#work" style="color:var(--sec)" style-hover="color:var(--a)">Case studies</a>
+          </div>
+        </div>
+        <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+          <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Resources</div>
+          <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+            <a href="#playbooks" style="color:var(--sec)" style-hover="color:var(--a)">Playbooks</a>
+            <a href="#playbooks" style="color:var(--sec)" style-hover="color:var(--a)">Field notes</a>
+            <a href="Company.dc.html#how" style="color:var(--sec)" style-hover="color:var(--a)">Security</a>
+          </div>
+        </div>
+        <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+          <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Connect</div>
+          <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+            <a href="#contact" style="color:var(--sec)" style-hover="color:var(--a)">Book a call</a>
+            <a href="mailto:hello@3264.ai" style="color:var(--sec)" style-hover="color:var(--a)">hello@3264.ai</a>
+            <a href="#contact" style="color:var(--sec)" style-hover="color:var(--a)">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin:64px 0 0; padding-top:22px; border-top:1px solid var(--line2); font-size:13px; letter-spacing:-0.005em; color:var(--mut)">
+        <div style="display:flex; align-items:center; gap:11px; min-width:0">
+          <span style="font-size:15px; font-weight:500; letter-spacing:-0.03em; color:#1A1917">3264<span>.ai</span></span>
+          <span>&copy; 2026 Bearing Deployment Company Inc. All rights reserved.</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px">
+          <span style="display:flex; align-items:center; gap:7px"><span style="width:6px; height:6px; border-radius:50%; background:var(--a)"></span>All systems operational</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;accent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#157F52&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme&quot;, &quot;options&quot;: [&quot;#157F52&quot;, &quot;#0E6E7A&quot;, &quot;#2E4EC8&quot;, &quot;#A8501C&quot;] },
+  &quot;playIntro&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Motion&quot; },
+  &quot;introPace&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1, &quot;min&quot;: 0.7, &quot;max&quot;: 1.3, &quot;step&quot;: 0.05, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Motion&quot; },
+  &quot;gridTexture&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Theme&quot; },
+  &quot;heroArt&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Theme&quot; }
+}">
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.iWrap = React.createRef();
+    this.iGrid = React.createRef();
+    this.iMark = React.createRef();
+    this.iCap = React.createRef();
+    this.iCv = React.createRef();
+    this.iLock = React.createRef();
+    this.iSfx = React.createRef();
+    this.heroTex = React.createRef();
+    this.artCv = React.createRef();
+    ["phTrack","phGrid","phPin","phStage","phCv","phLabels","phTip","phSlot","phBar","phAssess","phBuildP","phRun","phCap","phMetric","phP0","phP1","phP2","phR0","phR1","phR2"].forEach((k) => { this[k] = React.createRef(); });
+    this.vigA = React.createRef();
+    this.vigB = React.createRef();
+    this.vigC = React.createRef();
+    this.timers = [];
+    this.done = false;
+  }
+
+  componentDidMount() {
+    this.applyTheme();
+    this.maybeIntro();
+    this.startVignettes();
+    this.initPhases();
+    this.initArt();
+  }
+  componentDidUpdate() { this.applyTheme(); }
+
+  applyTheme() {
+    const s = document.body.style;
+    s.setProperty("--a", this.props.accent ?? "#157F52");
+    s.setProperty("--tex", (this.props.gridTexture ?? true) ? "1" : "0");
+    s.setProperty("--art", (this.props.heroArt ?? true) ? "1" : "0");
+  }
+
+  maybeIntro() {
+    const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if ((this.props.playIntro ?? true) && !reduced) this.runIntro();
+  }
+
+  // Teardown never depends on a single animation callback: the overlay stops swallowing
+  // clicks the moment the intro is logically over, and hiding runs once from whichever
+  // of onfinish / timeout arrives first. A missed onfinish can no longer kill the page.
+  iTeardown(wrap, ms) {
+    if (!wrap) return;
+    wrap.style.pointerEvents = "none";
+    const finish = () => {
+      if (this._iGone) return;
+      this._iGone = true;
+      wrap.style.display = "none";
+      wrap.style.opacity = "0";
+      this.iDispose();
+    };
+    this.timers.push(setTimeout(finish, ms + 120));
+    return finish;
+  }
+
+  skipIntro = () => {
+    const w = this.iWrap.current;
+    if (!w || this.done) return;
+    this.done = true;
+    this.timers.forEach(clearTimeout);
+    this.timers = [];
+    const finish = this.iTeardown(w, 260);
+    w.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, fill: "forwards" }).onfinish = finish;
+  };
+
+  get iPace() { return this.props.introPace ?? 1; }
+  iEase(x) { return 1 - Math.pow(2, -9 * x); }
+  iClamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+  iSeg(s, a, b) { return this.iClamp((s - a) / (b - a)); }
+
+  // the wordmark rasterised once — the source for the relief's cell bitmap
+  iTextCanvas() {
+    const W = 1024, H = 512, c = document.createElement("canvas");
+    c.width = W; c.height = H;
+    const x = c.getContext("2d");
+    x.fillStyle = "#14140F";
+    x.textAlign = "center";
+    x.textBaseline = "middle";
+    const fs = H * 0.62;
+    if ("letterSpacing" in x) x.letterSpacing = (-fs * 0.05).toFixed(2) + "px";
+    x.font = "400 " + fs + "px 'Instrument Sans','Helvetica Neue',Helvetica,sans-serif";
+    x.fillText("3264", W / 2, H * 0.52);
+    return c;
+  }
+
+  iMeasure() {
+    const pw = Math.min(980, window.innerWidth * 0.78);
+    this.iPlaneH = pw / 2;
+    const g = this.iGL;
+    if (g) {
+      const cw = g.cv.clientWidth, ch = g.cv.clientHeight;
+      if (!cw || !ch) { g.w = cw; g.h = ch; return; }
+      g.cam.aspect = cw / ch;
+      g.camZ = (5.8 * ch / this.iPlaneH) / (2 * Math.tan(Math.PI * 15 / 180));
+      g.cam.updateProjectionMatrix();
+      g.r.setSize(cw, ch, false);
+      g.w = cw; g.h = ch;
+    }
+  }
+
+  async iSetupGL() {
+    const cv = this.iCv.current;
+    if (!cv) return false;
+    let T;
+    try {
+      if (document.fonts && document.fonts.ready) await document.fonts.ready;
+      T = await import("https://esm.sh/three@0.161.0");
+    } catch (e) { return false; }
+
+    const scene = new T.Scene();
+    const cam = new T.PerspectiveCamera(30, 1, 0.1, 400);
+    const r = new T.WebGLRenderer({ canvas: cv, alpha: true, antialias: true });
+    r.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    // physical light units: front-face diffuse = albedo x (amb + dir.NdotL)/pi, scaled so white reads white
+    scene.add(new T.AmbientLight(0xffffff, 1.29));
+    const dl = new T.DirectionalLight(0xffffff, 3.11);
+    dl.position.set(-5, 6, 9);
+    scene.add(dl);
+
+    const WD = 11.6, HT = 5.8, COLS = 64, ROWS = 32;
+    const cw = WD / COLS, chh = HT / ROWS;
+    const tc = this.iTextCanvas();
+    const px = tc.getContext("2d").getImageData(0, 0, 1024, 512).data;
+    const alphaAt = (x, y) => px[((y | 0) * 1024 + (x | 0)) * 4 + 3];
+
+    const cells = [];
+    for (let j = 0; j < ROWS; j++) for (let i = 0; i < COLS; i++) {
+      const cx = (i + 0.5) * 16, cy = (j + 0.5) * 16;
+      const mean = (alphaAt(cx - 4, cy - 4) + alphaAt(cx + 4, cy - 4) + alphaAt(cx - 4, cy + 4) + alphaAt(cx + 4, cy + 4)) / 4;
+      cells.push({ x: (i + 0.5) / COLS * WD - WD / 2, y: HT / 2 - (j + 0.5) / ROWS * HT, inside: mean > 100, lag: (i / COLS) * 0.5 });
+    }
+    // only the cells the wordmark actually covers get built — no surrounding tile field
+    const inked = cells.filter((c) => c.inside);
+
+    const mesh = new T.InstancedMesh(
+      new T.BoxGeometry(cw * 0.86, chh * 0.86, 1),
+      new T.MeshStandardMaterial({ color: 0xffffff, roughness: 0.6, metalness: 0.02, transparent: true }),
+      inked.length
+    );
+    mesh.frustumCulled = false;
+    scene.add(mesh);
+
+    const planes = [];
+
+    this.iGL = { T: T, scene: scene, cam: cam, r: r, cv: cv, mesh: mesh, cells: inked, planes: planes,
+      dummy: new T.Object3D(), cIn: new T.Color(0x2c2b27), cOut: new T.Color(0xe4e2dc),
+      tmp: new T.Color(), camZ: 20, w: 0, h: 0 };
+    this.iMeasure();
+    return true;
+  }
+
+  iStep(s) {
+    const g = this.iGL;
+    if (!g) return;
+    if (g.cv.clientWidth !== g.w || g.cv.clientHeight !== g.h) this.iMeasure();
+    g.cv.style.opacity = this.iSeg(s, 1.1, 1.75).toFixed(3);
+
+    // relief holds at full depth and the whole overlay dissolves onto the page
+    const rise = 0.5;
+    for (let k = 0; k < g.cells.length; k++) {
+      const c = g.cells[k];
+      const e = this.iEase(this.iClamp((this.iSeg(s, 1.4, 2.95) - c.lag) / (1 - c.lag * 0.7)));
+      const d = 0.02 + (rise - 0.02) * e;
+      g.dummy.position.set(c.x, c.y, d / 2);
+      g.dummy.scale.set(1, 1, Math.max(0.001, d));
+      g.dummy.updateMatrix();
+      g.mesh.setMatrixAt(k, g.dummy.matrix);
+      g.tmp.copy(g.cOut).lerp(g.cIn, e);
+      g.mesh.setColorAt(k, g.tmp);
+    }
+    g.mesh.instanceMatrix.needsUpdate = true;
+    if (g.mesh.instanceColor) g.mesh.instanceColor.needsUpdate = true;
+
+    g.cam.position.set(0, 0, g.camZ);
+    g.cam.lookAt(0, 0, 0);
+    g.r.render(g.scene, g.cam);
+  }
+
+  iDispose() {
+    if (this.iRaf) { cancelAnimationFrame(this.iRaf); this.iRaf = null; }
+    const g = this.iGL;
+    if (!g) return;
+    g.mesh.geometry.dispose(); g.mesh.material.dispose();
+    g.planes.forEach((p) => { p.geometry.dispose(); p.material.dispose(); });
+    g.r.dispose();
+    this.iGL = null;
+  }
+
+  runIntro() {
+    const wrap = this.iWrap.current, grid = this.iGrid.current, mark = this.iMark.current;
+    if (!wrap || !grid || !mark) return;
+    const accent = this.props.accent ?? "#157F52", P = this.iPace;
+    wrap.style.display = "flex";
+    grid.textContent = "";
+
+    const E = "cubic-bezier(.16,1,.3,1)";
+    const v2 = (n) => { let k = 0; while (n % 2 === 0) { n /= 2; k++; } return k; };
+    const frag = document.createDocumentFragment(), cols = [], rows = [];
+    for (let m = 0; m <= 32; m++) {
+      const gen = (m === 0 || m === 32) ? 0 : 5 - v2(m);
+      const hi = gen <= 1;
+      const d = document.createElement("div");
+      d.style.cssText = "position:absolute;top:0;bottom:0;width:1px;transform:scaleY(0);left:" + (m / 32 * 100) +
+        "%;background:" + (hi ? accent : "#14140F") + ";opacity:" + (hi ? 0.44 : gen <= 3 ? 0.26 : 0.15);
+      frag.appendChild(d); cols.push([d, 90 + gen * 235]);
+    }
+    for (let m = 0; m <= 64; m++) {
+      const gen = (m === 0 || m === 64) ? 0 : 6 - v2(m);
+      const d = document.createElement("div");
+      d.style.cssText = "position:absolute;left:0;right:0;height:1px;transform:scaleX(0);top:" + (m / 64 * 100) +
+        "%;background:#14140F;opacity:" + (gen <= 1 ? 0.34 : gen <= 3 ? 0.2 : 0.12);
+      frag.appendChild(d); rows.push([d, 260 + gen * 200]);
+    }
+    grid.appendChild(frag);
+    grid.style.opacity = "1";
+
+    cols.forEach((r) => r[0].animate([{ transform: "scaleY(0)" }, { transform: "scaleY(1)" }],
+      { duration: 660 * P, delay: r[1] * P, easing: E, fill: "forwards" }));
+    rows.forEach((r) => r[0].animate([{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
+      { duration: 620 * P, delay: r[1] * P, easing: E, fill: "forwards" }));
+    ["2", "4", "8", "16", "32", "32 \u00d7 64"].forEach((t, i) => {
+      this.timers.push(setTimeout(() => { if (this.iCap.current) this.iCap.current.textContent = t; }, (560 + i * 235) * P));
+    });
+    if (this.iCap.current) this.iCap.current.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500 * P, delay: 2400 * P, fill: "forwards" });
+
+    grid.animate([{ opacity: 1 }, { opacity: 0 }],
+      { duration: 700 * P, delay: 2200 * P, easing: "cubic-bezier(.4,0,.7,1)", fill: "forwards" });
+
+    this.timers.push(setTimeout(() => {
+      if (this.done) return;
+      this.done = true;
+      const finish = this.iTeardown(wrap, 820);
+      wrap.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 820, easing: "cubic-bezier(.4,0,.6,1)", fill: "forwards" })
+        .onfinish = finish;
+    }, 3050 * P));
+
+    this.iMeasure();
+    this._iro = () => this.iMeasure();
+    window.addEventListener("resize", this._iro);
+    this.iSetupGL().then((ok) => {
+      if (!ok || this.done) return;
+      const t0 = performance.now();
+      const loop = (ms) => {
+        const s = (ms - t0) / 1000 / this.iPace;
+        this.iStep(Math.min(9, s));
+        if (s > 4.0) { this.iDispose(); return; }
+        this.iRaf = requestAnimationFrame(loop);
+      };
+      this.iRaf = requestAnimationFrame(loop);
+    });
+
+    this._key = () => this.skipIntro();
+    window.addEventListener("keydown", this._key, { once: true });
+  }
+
+  // ================= Assess / Build / Run : scroll engine =================
+  // Infrastructure only \u2014 no diagram content. To plug a diagram in:
+  //   1. build meshes in phBuildScene(g), adding them to g.acts[0..2]
+  //   2. give anything hoverable userData = { kind:"hit", id, t:"Title", m:"detail" }
+  //   3. register overlay type with this.phLabel(act, text, [x,y,z], size)
+  //   4. animate per frame in phScene(g, ctx) \u2014 ctx = { p, w, a, time, hover }
+  // The engine owns scroll mapping, pinning, act cross-fades, the rail, labels,
+  // hover raycasting, the tooltip, and resize. Diagrams own geometry only.
+
+  phSmooth(a, b, x) { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+  phClamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+
+  phLayout() {
+    const grid = this.phGrid.current, track = this.phTrack.current;
+    const pin = this.phPin.current, stage = this.phStage.current;
+    if (!grid || !track || !pin || !stage) return;
+    const vh = window.innerHeight, narrow = window.innerWidth < 940;
+    const hdr = document.querySelector("header");
+    const hh = hdr ? hdr.offsetHeight : 0;
+    const avail = vh - hh;
+
+    // One pinned element on every width, held BELOW the sticky header rather than under it,
+    // with both the canvas and the copy inside it so neither can slide behind the other.
+    pin.style.position = "sticky";
+    pin.style.top = hh + "px";
+    pin.style.height = avail + "px";
+    pin.style.overflow = "hidden";
+    stage.style.aspectRatio = "auto";
+    stage.style.order = narrow ? "-1" : "0";
+    track.style.height = narrow ? "380vh" : "420vh";
+    grid.style.gridTemplateColumns = narrow ? "minmax(0,1fr)" : "minmax(0,0.86fr) minmax(0,1.14fr)";
+    grid.style.gap = narrow ? "26px" : "56px";
+    grid.style.alignItems = narrow ? "start" : "center";
+
+    const panels = [this.phP0.current, this.phP1.current, this.phP2.current].filter(Boolean);
+    const wrap = panels[0] && panels[0].parentElement;
+    panels.forEach((n, i) => {
+      n.style.position = "absolute";
+      n.style.inset = "0";
+      n.style.opacity = i === (this._phActive || 0) ? "1" : "0";
+      const ul = n.querySelector("ul");
+      if (ul) ul.style.display = narrow ? "none" : "grid";
+      const p = n.querySelector("p");
+      if (p) { p.style.fontSize = narrow ? "15.5px" : "16.5px"; p.style.margin = narrow ? "14px 0 0" : "18px 0 0"; }
+    });
+    if (wrap) {
+      wrap.style.margin = narrow ? "20px 0 0" : "40px 0 0";
+      wrap.style.minHeight = "0px";
+      wrap.style.minHeight = Math.ceil(Math.max.apply(null, panels.map((p) => p.scrollHeight))) + "px";
+    }
+
+    const sw = stage.clientWidth || 600;
+    const copyH = grid.firstElementChild ? grid.firstElementChild.offsetHeight : 0;
+    const room = narrow ? avail - copyH - 58 : avail - 56;
+    stage.style.height = Math.max(narrow ? 190 : 260, Math.round(Math.min(sw / (narrow ? 1.15 : 1.3), room))) + "px";
+
+    // the single scroll mapping \u2014 phStep and phJump both read it, so they cannot disagree
+    this._phP = { off: 0, span: Math.max(320, track.offsetHeight - avail) };
+    this.phFitAssess();
+    this.phFitBuild();
+    this.phFitRun();
+  }
+
+  phScroller() {
+    if (this._phSc) return this._phSc;
+    let n = this.phTrack.current && this.phTrack.current.parentElement;
+    while (n && n !== document.body) {
+      const o = getComputedStyle(n).overflowY;
+      if ((o === "auto" || o === "scroll") && n.scrollHeight > n.clientHeight + 8) { this._phSc = n; return n; }
+      n = n.parentElement;
+    }
+    const cands = [document.scrollingElement, document.body, document.documentElement];
+    this._phSc = cands.find((c) => c && c.scrollHeight > c.clientHeight + 8) || document.documentElement;
+    return this._phSc;
+  }
+
+  phJump = (e) => {
+    const track = this.phTrack.current, M = this._phP;
+    if (!track || !M) return;
+    const act = e && e.currentTarget ? +e.currentTarget.getAttribute("data-act") : 0;
+    const sc = this.phScroller();
+    const scRect = sc === document.documentElement || sc === document.body ? { top: 0 } : sc.getBoundingClientRect();
+    const trackTop = track.getBoundingClientRect().top - scRect.top + sc.scrollTop;
+    const to = trackTop + M.off + M.span * [0.06, 0.5, 0.9][act];
+    const from = sc.scrollTop, dist = to - from;
+    if (Math.abs(dist) < 2) return;
+    if (this._phTween) cancelAnimationFrame(this._phTween);
+    if (this.reduced) { sc.scrollTop = to; return; }
+    // smooth scrollTo is unreliable on the resolved scroller, so drive scrollTop directly
+    const dur = Math.min(900, 260 + Math.abs(dist) * 0.42), t0 = performance.now();
+    const tick = (ms) => {
+      const t = Math.min(1, (ms - t0) / dur), k = 1 - Math.pow(1 - t, 3);
+      sc.scrollTop = from + dist * k;
+      if (t < 1) this._phTween = requestAnimationFrame(tick); else this._phTween = null;
+    };
+    this._phTween = requestAnimationFrame(tick);
+  };
+
+  // ---- label overlay: real DOM type riding projected 3D positions ----
+  phLabel(act, text, pos, size, weight, color) {
+    const host = this.phLabels.current, g = this.phGL;
+    if (!host || !g) return null;
+    const d = document.createElement("div");
+    d.style.cssText = "position:absolute; left:0; top:0; opacity:0; white-space:nowrap; transform:translate(-50%,-50%);" +
+      "font-size:" + (size || 12.5) + "px; font-weight:" + (weight || 500) +
+      "; letter-spacing:-0.012em; color:" + (color || "#1A1917") + "; text-shadow:0 1px 0 #FFFFFF";
+    d.textContent = text;
+    host.appendChild(d);
+    const L = { el: d, act: act, pos: pos };
+    g.labels.push(L);
+    return L;
+  }
+
+  async phSetupGL() {
+    const cv = this.phCv.current;
+    if (!cv) return false;
+    let T;
+    try { T = await import("https://esm.sh/three@0.161.0"); } catch (e) { return false; }
+
+    const scene = new T.Scene();
+    const cam = new T.PerspectiveCamera(30, 1, 0.1, 400);
+    const r = new T.WebGLRenderer({ canvas: cv, alpha: true, antialias: true });
+    r.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    // physical light units, scaled so a white material reads white
+    scene.add(new T.AmbientLight(0xffffff, 1.3));
+    const dl = new T.DirectionalLight(0xffffff, 2.75);
+    dl.position.set(-6, 9, 7);
+    scene.add(dl);
+
+    const acts = [new T.Group(), new T.Group(), new T.Group()];
+    acts.forEach((a) => scene.add(a));
+
+    this.phGL = { T: T, scene: scene, cam: cam, r: r, cv: cv, acts: acts, labels: [],
+      dummy: new T.Object3D(), tmp: new T.Color(),
+      ray: new T.Raycaster(), ndc: new T.Vector2(), proj: new T.Vector3(),
+      w: 0, h: 0, hover: null, pointer: false, px: 0, py: 0 };
+
+    if (this.phBuildScene) this.phBuildScene(this.phGL);
+    return true;
+  }
+
+  // ---- diagram hooks. Empty until a diagram is plugged in. ----
+  phBuildScene(g) { /* add meshes to g.acts[0..2]; register labels with this.phLabel(...) */ }
+  phScene(g, ctx) { /* per-frame: ctx = { p, w:[3], a:[3], time, hover } */ }
+
+  phPointer = (e) => {
+    const g = this.phGL, stage = this.phStage.current;
+    if (!g || !stage) return;
+    const r = stage.getBoundingClientRect();
+    g.px = e.clientX - r.left; g.py = e.clientY - r.top;
+    g.ndc.set((g.px / r.width) * 2 - 1, -(g.py / r.height) * 2 + 1);
+    g.pointer = true;
+  };
+  phLeave = () => {
+    const g = this.phGL;
+    if (g) { g.pointer = false; g.hover = null; }
+    if (this.phTip.current) this.phTip.current.style.opacity = "0";
+  };
+
+  phHover() {
+    const g = this.phGL, tip = this.phTip.current;
+    if (!g || !tip) return;
+    if (!g.pointer) { g.hover = null; tip.style.opacity = "0"; return; }
+    const pool = [];
+    g.acts.forEach((grp) => { if (grp.visible) grp.traverse((o) => { if (o.userData && o.userData.kind) pool.push(o); }); });
+    if (!pool.length) { g.hover = null; tip.style.opacity = "0"; return; }
+    g.ray.setFromCamera(g.ndc, g.cam);
+    const hit = g.ray.intersectObjects(pool, false)[0];
+    if (!hit) { g.hover = null; tip.style.opacity = "0"; return; }
+    const u = hit.object.userData;
+    g.hover = u.id;
+    tip.innerHTML = '<div style="font-size:13px; font-weight:500; letter-spacing:-0.015em">' + (u.t || "") +
+      '</div>' + (u.m ? '<div style="margin-top:3px; font-size:12px; color:#B9B7B0">' + u.m + "</div>" : "");
+    tip.style.left = g.px + "px";
+    tip.style.top = g.py + "px";
+    tip.style.opacity = "1";
+  }
+
+  phStep(ms) {
+    const g = this.phGL, track = this.phTrack.current;
+    if (!g || !track) return;
+    const cw = g.cv.clientWidth, ch = g.cv.clientHeight;
+    if (!cw || !ch) return;
+    if (cw !== g.w || ch !== g.h) {
+      g.w = cw; g.h = ch;
+      g.cam.aspect = cw / ch;
+      g.cam.updateProjectionMatrix();
+      g.r.setSize(cw, ch, false);
+    }
+
+    const rect = track.getBoundingClientRect(), vh = window.innerHeight;
+    if (rect.bottom < -200 || rect.top > vh + 200) return;
+    const M = this._phP || { off: 0, span: Math.max(1, rect.height - vh) };
+    const p = this.phClamp((-rect.top - M.off) / M.span);
+    const time = this.reduced ? 6 : ms / 1000;
+
+    // act weights (which diagram is on screen) and build progress (how far into it)
+    const wRun = this.phSmooth(0.62, 0.76, p);
+    const w = [1 - this.phSmooth(0.26, 0.40, p), this.phSmooth(0.28, 0.42, p) * (1 - wRun), wRun];
+    const a = [this.phSmooth(0.0, 0.20, p), this.phSmooth(0.30, 0.52, p), this.phSmooth(0.64, 0.86, p)];
+    g.acts.forEach((grp, i) => { grp.visible = w[i] > 0.012; });
+
+    // Each panel hands off directly to the next: the incoming ramp starts where the
+    // outgoing one has already fallen to ~0.15, so the stage is never blank and two dense
+    // panels are never both legible. Sequenced gaps would leave a hole between acts.
+    const aOp = 1 - this.phSmooth(0.288, 0.334, p);
+    const bOp = this.phSmooth(0.306, 0.371, p) * (1 - this.phSmooth(0.612, 0.658, p));
+    this.phStepAssess(aOp, (p - 0.012) / 0.24);
+    const cOp = this.phSmooth(0.630, 0.690, p);
+    this.phStepBuild(bOp, (p - 0.306) / 0.26);
+    this.phStepRun(cOp, (p - 0.630) / 0.31);
+    this.phScene(g, { p: p, w: w, a: a, time: time, hover: g.hover });
+    this.phHover();
+    g.cam.position.set(0, 6.6, 9.2);
+    g.cam.lookAt(0, 0.2, 0);
+    g.r.render(g.scene, g.cam);
+
+    // labels ride the projected geometry, lit with their own act
+    if (g.labels.length) {
+      const hw = cw / 2, hh2 = ch / 2;
+      g.labels.forEach((L) => {
+        g.proj.set(L.pos[0], L.pos[1], L.pos[2]).project(g.cam);
+        L.el.style.left = ((g.proj.x + 1) * hw).toFixed(1) + "px";
+        L.el.style.top = ((-g.proj.y + 1) * hh2).toFixed(1) + "px";
+        const vis = w[L.act] * this.phClamp((a[L.act] - 0.42) / 0.3);
+        L.el.style.opacity = vis < 0.02 ? "0" : vis.toFixed(2);
+      });
+    }
+
+    if (this.phBar.current) this.phBar.current.style.width = (p * 100).toFixed(1) + "%";
+
+    const active = w[2] > 0.5 ? 2 : w[1] > 0.5 ? 1 : 0;
+    if (active !== this._phActive) {
+      this._phActive = active;
+      [this.phP0, this.phP1, this.phP2].forEach((ref, i) => {
+        const n = ref.current;
+        if (n) { n.style.transition = "opacity .42s cubic-bezier(.16,1,.3,1)"; n.style.opacity = i === active ? "1" : "0"; n.style.pointerEvents = i === active ? "auto" : "none"; }
+      });
+      [this.phR0, this.phR1, this.phR2].forEach((ref, i) => {
+        const n = ref.current;
+        if (!n) return;
+        n.style.borderTopColor = i <= active ? (this.props.accent ?? "#157F52") : "rgba(20,20,18,0.13)";
+        n.style.color = i === active ? "#1A1917" : "#6E6D67";
+      });
+      const caps = ["Workflow and data map", "Document and decision pipelines", "Evaluation in production"];
+      if (this.phCap.current) this.phCap.current.textContent = caps[active];
+      if (this.phMetric.current) this.phMetric.current.textContent = "0" + (active + 1) + " / 03";
+    }
+  }
+
+  // ---------- act 1 \u2014 Assess: the audit log resolving into a ranked ledger ----------
+  // Scroll IS the clock here: the audit narrates and the ledger fills as the reader
+  // moves through the act, so nothing plays off-screen and nothing needs a timer.
+  phAudit() {
+    const C = [
+      { fn: "fund accounting",    seen: "daily \u00b7 4 custodian formats", name: "Custodian file reconciliation", hrs: 52, risk: "High", ret: 640 },
+      { fn: "fund accounting",    seen: "240 notices a quarter",           name: "Capital call notice intake",    hrs: 34, risk: "High", ret: 412 },
+      { fn: "investor relations", seen: "90 packets a quarter",            name: "Subscription document review",  hrs: 26, risk: "Med",  ret: 214 },
+      { fn: "compliance",         seen: "quarterly \u00b7 hard deadline",   name: "Form PF filing preparation",     hrs: 22, risk: "High", ret: 150 }
+    ];
+    const lines = [];
+    C.forEach((c) => {
+      lines.push({ text: "mapping " + c.fn + " \u2014 " + c.seen, tone: "var(--mut)" });
+      lines.push({ text: c.name.toLowerCase() + ": " + c.hrs + " hrs/month, " + c.risk.toLowerCase() + " risk", tone: "#2C2B27", row: c });
+    });
+    return { cases: C, lines: lines.map((l, i) => Object.assign({ t: ((i + 1) * 0.42).toFixed(1) + "s" }, l)) };
+  }
+
+  phBuildAssess() {
+    const host = this.phAssess.current;
+    if (!host) return;
+    host.textContent = "";
+    const A = this.phAudit();
+    const el = (tag, css, txt) => { const n = document.createElement(tag); n.style.cssText = css; if (txt !== undefined) n.textContent = txt; return n; };
+
+    const head = el("div", "flex:none; display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:18px 20px 14px; border-bottom:1px solid var(--line2)");
+    const headL = el("div", "min-width:0");
+    const headLabel = el("div", "font-size:11.5px; letter-spacing:0.05em; text-transform:uppercase; color:var(--mut)", "Function-by-function audit");
+    headL.appendChild(headLabel);
+    const headline = el("div", "margin:6px 0 0; font-size:16.5px; letter-spacing:-0.022em", "Sampling functions\u2026");
+    headL.appendChild(headline);
+    head.appendChild(headL);
+    const counter = el("div", "flex:none; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:11.5px; color:var(--mut); font-variant-numeric:tabular-nums", "0 / 4");
+    head.appendChild(counter);
+    host.appendChild(head);
+
+    // log pane: every line exists, hidden ones are display:none so the stack grows upward
+    const pane = el("div", "flex:none; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden; padding:10px 20px; background:#FBFAF8; border-bottom:1px solid var(--line2)");
+    const lineEls = A.lines.map((l) => {
+      const row = el("div", "display:none; gap:12px; padding:2px 0; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:11px; line-height:1.55");
+      row.appendChild(el("span", "flex:none; color:var(--mut); font-variant-numeric:tabular-nums", l.t));
+      row.appendChild(el("span", "color:" + l.tone + "; overflow:hidden; text-overflow:ellipsis; white-space:nowrap", l.text));
+      pane.appendChild(row);
+      return row;
+    });
+    host.appendChild(pane);
+
+    const led = el("div", "flex:1 1 auto; min-height:0; overflow:hidden; display:flex; flex-direction:column; padding:4px 20px 0");
+    const lhead = el("div", "flex:none; display:flex; padding:9px 0 7px; font-size:10.5px; letter-spacing:0.04em; text-transform:uppercase; color:var(--mut)");
+    [["Ranked use case", "flex:1"], ["Hrs/mo", "width:58px; text-align:right"], ["Risk", "width:46px; text-align:right"], ["Return/yr", "width:80px; text-align:right"]]
+      .forEach((c) => lhead.appendChild(el("span", c[1], c[0])));
+    led.appendChild(lhead);
+
+    const rowEls = A.cases.map((c) => {
+      const row = el("div", "display:none; align-items:baseline; padding:8px 0; border-top:1px solid var(--line2); font-size:13px; transition:background .18s ease");
+      row.appendChild(el("span", "flex:1; letter-spacing:-0.012em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap", c.name));
+      row.appendChild(el("span", "width:58px; text-align:right; font-variant-numeric:tabular-nums; color:var(--sec)", String(c.hrs)));
+      row.appendChild(el("span", "width:46px; text-align:right; font-size:11px; color:var(--sec)", c.risk));
+      row.appendChild(el("span", "width:80px; text-align:right; font-variant-numeric:tabular-nums; color:var(--a)", "$" + c.ret + "k"));
+      row.addEventListener("pointerenter", () => { row.style.background = "rgba(21,127,82,0.06)"; });
+      row.addEventListener("pointerleave", () => { row.style.background = "transparent"; });
+      led.appendChild(row);
+      return row;
+    });
+
+    const foot = el("div", "flex:none; margin-top:auto; display:flex; justify-content:space-between; padding:10px 0 12px; border-top:1px solid var(--line); font-size:11.5px; color:var(--mut)");
+    const footL = el("span", "", "\u2014");
+    const footR = el("span", "font-variant-numeric:tabular-nums", "");
+    foot.appendChild(footL); foot.appendChild(footR);
+    led.appendChild(foot);
+    host.appendChild(led);
+
+    this._as = { A: A, host: host, head: head, headLabel: headLabel, headline: headline, counter: counter,
+      pane: pane, lhead: lhead, led: led, foot: foot, lines: lineEls, rows: rowEls,
+      footL: footL, footR: footR, step: -1, rowLimit: rowEls.length };
+    this.phFitAssess();
+    this.phFitBuild();
+    this.phFitRun();
+  }
+
+  phFitAssess() {
+    const as = this._as, stage = this.phStage.current;
+    if (!as || !stage) return;
+    const h = stage.offsetHeight;
+    // Progressive density: apply the richest tier that fits the stage, measuring rather
+    // than guessing. The log goes before the ledger — the ledger is the deliverable.
+    const tiers = [
+      { log: 1, pad: "8px 0",   fs: "13px",   lbl: 1, foot: 1, rows: 4 },
+      { log: 0, pad: "7px 0",   fs: "12.5px", lbl: 1, foot: 1, rows: 4 },
+      { log: 0, pad: "5px 0",   fs: "12.5px", lbl: 1, foot: 0, rows: 4 },
+      { log: 0, pad: "3.5px 0", fs: "12px",   lbl: 0, foot: 0, rows: 4 },
+      { log: 0, pad: "3.5px 0", fs: "12px",   lbl: 0, foot: 0, rows: 3 }
+    ];
+    for (let i = 0; i < tiers.length; i++) {
+      const t = tiers[i];
+      as.pane.style.display = t.log ? "flex" : "none";
+      as.pane.style.height = t.log ? Math.min(132, Math.round(h * 0.3)) + "px" : "0px";
+      as.headLabel.style.display = t.lbl ? "block" : "none";
+      as.head.style.padding = t.lbl ? "18px 20px 14px" : "14px 20px 11px";
+      as.foot.style.display = t.foot ? "flex" : "none";
+      as.rowLimit = t.rows;
+      // measure the FULL state: every allowed row visible, or the fit test is meaningless
+      as.rows.forEach((n, k) => {
+        n.style.padding = t.pad;
+        n.style.fontSize = t.fs;
+        n.style.display = k < t.rows ? "flex" : "none";
+      });
+      if (!this.phOverflows(as.led) || i === tiers.length - 1) break;
+    }
+    as.step = -1;
+  }
+
+  phStepAssess(w0, prog) {
+    const as = this._as;
+    if (!as) return;
+    as.host.style.opacity = w0 < 0.02 ? "0" : w0.toFixed(2);
+    as.host.style.pointerEvents = w0 > 0.6 ? "auto" : "none";
+    const total = as.lines.length;
+    const step = Math.min(total, Math.round(this.phClamp(prog) * total));
+    if (step === as.step) return;
+    as.step = step;
+    as.lines.forEach((n, i) => { n.style.display = i < step ? "flex" : "none"; });
+    let posted = 0, ret = 0;
+    as.A.lines.forEach((l, i) => {
+      if (!l.row) return;
+      const on = i < step;
+      const ri = as.A.cases.indexOf(l.row);
+      const allowed = ri < (as.rowLimit || as.rows.length);
+      as.rows[ri].style.display = on && allowed ? "flex" : "none";
+      if (on && allowed) { posted++; ret += l.row.ret; }
+    });
+    // One denominator for the whole panel: the ledger's own row limit. Deriving the
+    // headline from the log lines let it claim 4 while three rows were on screen.
+    const limit = as.rowLimit || as.rows.length;
+    as.headline.textContent = posted >= limit && limit > 0
+      ? posted + (posted === 1 ? " candidate ranked" : " candidates ranked")
+      : "Sampling functions\u2026";
+    as.footL.textContent = posted ? "ranked by expected return" : "\u2014";
+    as.counter.textContent = posted + " / " + (as.rowLimit || as.rows.length);
+    as.footR.textContent = posted ? "$" + ret + "k a year" : "";
+  }
+
+  // ---------- act 2 \u2014 Build: scope scoped by scroll, plan and price computed from it ----------
+  // Same contract as Assess: scroll is the clock. Capabilities are taken into scope in
+  // wave order as the reader moves through the act, and the release plan, fortnight count
+  // and total are derived from whatever is scoped at that moment \u2014 never hard-coded.
+  phCaps() {
+    return [
+      { id: "ret", name: "Retrieval over the document store", tag: "3 sources",        price: 48, wave: 1 },
+      { id: "exc", name: "Extraction: capital call notices",  tag: "240 a quarter",    price: 62, wave: 1 },
+      { id: "exf", name: "Extraction: custodian files",       tag: "4 formats",        price: 74, wave: 2 },
+      { id: "val", name: "Validation against trial balance",  tag: "tie-out rules",    price: 56, wave: 2 },
+      { id: "rev", name: "Review interface",                  tag: "exceptions only",  price: 68, wave: 2 },
+      { id: "aud", name: "Audit trail and lineage",           tag: "per field",        price: 42, wave: 3 },
+      { id: "wbk", name: "Write-back to fund accounting",     tag: "journal entries",  price: 58, wave: 3 }
+    ];
+  }
+
+  // The host is a flex column with overflow:hidden, so ITS scrollHeight can never exceed
+  // its clientHeight — flex shrinks the middle child instead. Measure the child that
+  // actually overflows, or a misfit paints straight over the block below it.
+  phOverflows(flexChild) { return !!flexChild && flexChild.scrollHeight > flexChild.clientHeight + 1; }
+
+  phEl(tag, css, txt) { const n = document.createElement(tag); n.style.cssText = css; if (txt !== undefined) n.textContent = txt; return n; }
+
+  phBuildCaps() {
+    const host = this.phBuildP.current;
+    if (!host) return;
+    host.textContent = "";
+    const el = (t, c, x) => this.phEl(t, c, x);
+    const CAPS = this.phCaps();
+
+    const head = el("div", "flex:none; display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:18px 20px 13px; border-bottom:1px solid var(--line2)");
+    const headL = el("div", "min-width:0");
+    const headLabel = el("div", "font-size:11.5px; letter-spacing:0.05em; text-transform:uppercase; color:var(--mut)", "Scope and release plan");
+    headL.appendChild(headLabel);
+    const headline = el("div", "margin:6px 0 0; font-size:16.5px; letter-spacing:-0.022em", "Scoping capabilities\u2026");
+    headL.appendChild(headline);
+    head.appendChild(headL);
+    const counter = el("div", "flex:none; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:11.5px; color:var(--mut); font-variant-numeric:tabular-nums", "0 / 7");
+    head.appendChild(counter);
+    host.appendChild(head);
+
+    const list = el("div", "flex:1 1 auto; min-height:0; overflow:hidden; display:flex; flex-direction:column; padding:2px 20px 0");
+    const capEls = CAPS.map((c) => {
+      const row = el("div", "display:none; align-items:center; gap:11px; padding:7px 0; border-top:1px solid var(--line2); cursor:pointer; transition:opacity .3s ease");
+      const box = el("div", "flex:none; width:14px; height:14px; border:1px solid rgba(20,20,18,0.24); border-radius:3px; display:flex; align-items:center; justify-content:center; font-size:10px; color:#FFFFFF; transition:background .25s ease, border-color .25s ease");
+      const mid = el("div", "flex:1; min-width:0");
+      const nm = el("div", "font-size:12.5px; letter-spacing:-0.012em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap", c.name);
+      const tg = el("div", "margin:2px 0 0; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:10px; color:var(--mut)", "wave " + c.wave + " \u00b7 " + c.tag);
+      mid.appendChild(nm); mid.appendChild(tg);
+      const pr = el("div", "flex:none; font-size:12.5px; font-variant-numeric:tabular-nums", "$" + c.price + "k");
+      row.appendChild(box); row.appendChild(mid); row.appendChild(pr);
+      row.addEventListener("click", () => {
+        if (!this._bd || !this._bd.open) return;
+        const m = this._bd.manual;
+        m[c.id] = m[c.id] === undefined ? 0 : (m[c.id] ? 0 : 1);
+        this._bd.step = -1;
+        this.phStepBuild(this._bd.lastW, this._bd.lastP);
+      });
+      list.appendChild(row);
+      return { row: row, box: box, nm: nm, tg: tg, pr: pr, c: c };
+    });
+    host.appendChild(list);
+
+    const plan = el("div", "flex:none; padding:12px 20px 12px; background:#FBFAF8; border-top:1px solid var(--line2)");
+    const bars = el("div", "display:flex; gap:4px");
+    const waveEls = [1, 2, 3].map((w) => {
+      const col = el("div", "flex:1; min-width:0");
+      const fill = el("div", "height:4px; background:rgba(20,20,18,0.13); transition:background .3s ease");
+      const lab = el("div", "margin:6px 0 0; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:10.5px; color:var(--mut)", "Wave " + w + " \u00b7 wk " + ((w - 1) * 4 + 2));
+      const body = el("div", "margin:2px 0 0; font-size:11px; color:var(--mut)", "nothing scoped");
+      col.appendChild(fill); col.appendChild(lab); col.appendChild(body);
+      bars.appendChild(col);
+      return { fill: fill, body: body, w: w };
+    });
+    plan.appendChild(bars);
+    const foot = el("div", "display:flex; justify-content:space-between; align-items:baseline; margin:12px 0 0; padding:10px 0 0; border-top:1px solid var(--line)");
+    const footL = el("span", "font-size:12px; color:var(--sec)", "Nothing scoped yet");
+    const footR = el("span", "font-size:15px; font-variant-numeric:tabular-nums", "\u2014");
+    foot.appendChild(footL); foot.appendChild(footR);
+    plan.appendChild(foot);
+    host.appendChild(plan);
+
+    this._bd = { host: host, head: head, headLabel: headLabel, headline: headline, counter: counter,
+      list: list, caps: capEls, plan: plan, waves: waveEls, foot: foot, footL: footL, footR: footR,
+      step: -1, capLimit: capEls.length, manual: {}, open: false, lastW: 0, lastP: 0 };
+    this.phFitBuild();
+  }
+
+  phFitBuild() {
+    const bd = this._bd, stage = this.phStage.current;
+    if (!bd || !stage) return;
+    // richest tier that measures as fitting; the capability list sheds rows before the plan does,
+    // because the plan IS the point of the module
+    // Tiers never drop capabilities — a price that changes with window height is not a price.
+    // The whole list goes before any of it is misreported; the plan always covers all seven.
+    const tiers = [
+      { pad: "7px 0",   fs: "12.5px", tag: 1, lbl: 1, list: 1 },
+      { pad: "5px 0",   fs: "12.5px", tag: 1, lbl: 1, list: 1 },
+      { pad: "4px 0",   fs: "12px",   tag: 0, lbl: 1, list: 1 },
+      { pad: "3px 0",   fs: "11.5px", tag: 0, lbl: 0, list: 1 },
+      { pad: "3px 0",   fs: "11.5px", tag: 0, lbl: 0, list: 0 }
+    ];
+    for (let i = 0; i < tiers.length; i++) {
+      const t = tiers[i];
+      bd.headLabel.style.display = t.lbl ? "block" : "none";
+      bd.head.style.padding = t.lbl ? "18px 20px 13px" : "13px 20px 10px";
+      bd.capLimit = bd.caps.length;
+      bd.list.style.display = t.list ? "flex" : "none";
+      bd.caps.forEach((c) => {
+        c.row.style.padding = t.pad;
+        c.nm.style.fontSize = t.fs;
+        c.tg.style.display = t.tag ? "block" : "none";
+        c.row.style.display = "flex";
+      });
+      if (!t.list || !this.phOverflows(bd.list) || i === tiers.length - 1) break;
+    }
+    bd.step = -1;
+  }
+
+  phStepBuild(w1, prog) {
+    const bd = this._bd;
+    if (!bd) return;
+    bd.lastW = w1; bd.lastP = prog;
+    bd.host.style.opacity = w1 < 0.02 ? "0" : w1.toFixed(2);
+    bd.host.style.pointerEvents = w1 > 0.6 ? "auto" : "none";
+    const limit = bd.capLimit;
+    const step = Math.min(limit, Math.round(this.phClamp(prog) * limit));
+    bd.open = step >= limit;
+    if (step === bd.step) return;
+    bd.step = step;
+
+    const scoped = [];
+    bd.caps.forEach((c, i) => {
+      if (i >= limit) return;
+      const auto = i < step;
+      const man = bd.manual[c.c.id];
+      const on = man === undefined ? auto : !!man;
+      c.row.style.opacity = auto || man !== undefined ? "1" : "0.32";
+      c.box.style.background = on ? "var(--a)" : "#FFFFFF";
+      c.box.style.borderColor = on ? "var(--a)" : "rgba(20,20,18,0.24)";
+      c.box.textContent = on ? "\u2713" : "";
+      c.nm.style.color = on ? "#1A1917" : "var(--mut)";
+      c.pr.style.color = on ? "#1A1917" : "var(--mut)";
+      if (on) scoped.push(c.c);
+    });
+
+    const plural = (n, one, many) => n + " " + (n === 1 ? one : many);
+    bd.waves.forEach((wv) => {
+      const items = scoped.filter((c) => c.wave === wv.w);
+      wv.fill.style.background = items.length ? "var(--a)" : "rgba(20,20,18,0.13)";
+      wv.body.style.color = items.length ? "#2C2B27" : "var(--mut)";
+      wv.body.textContent = items.length ? plural(items.length, "capability", "capabilities") : "nothing scoped";
+    });
+
+    const total = scoped.reduce((a, c) => a + c.price, 0);
+    const releases = Math.ceil(scoped.length / 2);
+    bd.counter.textContent = scoped.length + " / " + limit;
+    bd.headline.textContent = bd.open ? "Priced per capability" : "Scoping capabilities\u2026";
+    bd.footL.textContent = scoped.length
+      ? plural(scoped.length, "capability", "capabilities") + " \u00b7 " + plural(releases, "fortnightly release", "fortnightly releases") + " \u00b7 " + plural(releases * 2, "week", "weeks")
+      : "Nothing scoped yet";
+    bd.footR.textContent = scoped.length ? "$" + total + "k" : "\u2014";
+  }
+
+  // ---------- act 3 \u2014 Run: 30 nights of evaluation, drift caught mid-sweep ----------
+  // Scroll walks the cursor across the nights, so the reader arrives at the breach rather
+  // than being shown it. Every figure in the prose is interpolated from the night's own
+  // data \u2014 nothing about this panel is hand-typed.
+  phNights() {
+    if (this._phN) return this._phN;
+    const out = [];
+    for (let i = 0; i < 30; i++) {
+      let v;
+      if (i < 18) v = 0.968 + Math.sin(i * 1.7) * 0.006;
+      else if (i < 22) v = 0.966 - (i - 17) * 0.006;
+      else if (i === 22) v = 0.921;
+      else if (i === 23) v = 0.918;
+      else v = 0.949 + (i - 23) * 0.0045;
+      v = Math.min(0.979, v);
+      out.push({ score: v, cases: 412, failed: Math.round(412 * (1 - v)) });
+    }
+    this._phN = out;
+    return out;
+  }
+
+  phRunNotes() {
+    return {
+      21: { head: "Slide detected across three nights",
+            body: "Accuracy fell 2.4 points without a release. The suite flagged the trend before any breach, and the cause was traced to a provider-side model update." },
+      22: { head: "Threshold breached \u2014 write-back held",
+            body: "The suite's aggregate fell to {score}, with amended custodian files carrying almost all of it. The {failed} failing documents went to the review queue rather than posting." },
+      23: { head: "Second night below threshold",
+            body: "Root cause confirmed: the provider had changed tokenisation on tabular input. Retraining set assembled from the {cum} failures across both nights." },
+      24: { head: "Retrained and released",
+            body: "Recovered to {score} the night after retraining. Not yet at the prior baseline, and the suite keeps it visible until it is." }
+    };
+  }
+
+  phBuildRun() {
+    const host = this.phRun.current;
+    if (!host) return;
+    host.textContent = "";
+    const el = (t, c, x) => this.phEl(t, c, x);
+    const N = this.phNights(), PASS = "#157F52", FAIL = "#C4341E";
+
+    const head = el("div", "flex:none; display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:18px 20px 13px; border-bottom:1px solid var(--line2)");
+    const headL = el("div", "min-width:0");
+    const headLabel = el("div", "font-size:11.5px; letter-spacing:0.05em; text-transform:uppercase; color:var(--mut)", "Evaluation suite \u00b7 412 cases, nightly");
+    headL.appendChild(headLabel);
+    const headline = el("div", "margin:6px 0 0; font-size:16.5px; letter-spacing:-0.022em", "Within tolerance");
+    headL.appendChild(headline);
+    head.appendChild(headL);
+    const state = el("div", "flex:none; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:11.5px; color:" + PASS, "passing");
+    head.appendChild(state);
+    host.appendChild(head);
+
+    const plotWrap = el("div", "flex:1 1 auto; min-height:0; overflow:hidden; display:flex; flex-direction:column; padding:16px 20px 0");
+    const lo = 0.89, hi = 0.985;
+    const plot = el("div", "position:relative; flex:none");
+    const line = el("div", "position:absolute; z-index:1; left:0; right:0; height:1px; background:rgba(196,52,30,0.5)");
+    const chip = el("div", "position:absolute; z-index:2; right:0; padding:1px 4px; background:#FFFFFF; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:10px; color:" + FAIL, "threshold 0.94");
+    const barRow = el("div", "position:absolute; inset:0; display:flex; align-items:flex-end; gap:2px");
+    const bars = N.map((n) => {
+      const cell = el("div", "flex:1; min-width:0; height:100%; position:relative; display:flex; align-items:flex-end");
+      const fillEl = el("div", "width:100%; background:" + (n.score < 0.94 ? FAIL : PASS) + "; transition:opacity .25s ease");
+      const cursor = el("div", "position:absolute; inset:0; border-left:1px solid transparent; transition:border-color .25s ease");
+      cell.appendChild(fillEl); cell.appendChild(cursor);
+      barRow.appendChild(cell);
+      return { fill: fillEl, cursor: cursor, n: n };
+    });
+    plot.appendChild(line); plot.appendChild(chip); plot.appendChild(barRow);
+    plotWrap.appendChild(plot);
+    const axis = el("div", "flex:none; display:flex; justify-content:space-between; margin:7px 0 0; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:10px; color:var(--mut)");
+    const axL = el("span", "", "30 nights ago");
+    const axM = el("span", "", "");
+    const axR = el("span", "", "last night");
+    axis.appendChild(axL); axis.appendChild(axM); axis.appendChild(axR);
+    plotWrap.appendChild(axis);
+
+    const panel = el("div", "flex:none; margin:13px 0 0; padding:11px 13px; background:rgba(21,127,82,0.05); border:1px solid rgba(21,127,82,0.2); transition:background .3s ease, border-color .3s ease");
+    const pTop = el("div", "display:flex; justify-content:space-between; align-items:baseline; gap:12px");
+    const pHead = el("span", "font-size:12.5px; letter-spacing:-0.01em", "No regression");
+    const pScore = el("span", "flex:none; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:11px; color:var(--mut)", "");
+    pTop.appendChild(pHead); pTop.appendChild(pScore);
+    panel.appendChild(pTop);
+    const pBody = el("div", "margin:4px 0 0; font-size:12px; line-height:1.5; color:var(--sec)", "");
+    panel.appendChild(pBody);
+    plotWrap.appendChild(panel);
+
+    const sliceRow = el("div", "flex:none; display:flex; margin:12px 0 14px; padding:11px 0 0; border-top:1px solid var(--line)");
+    const SL = [["Capital calls", 0.981, 0.15], ["Custodian files", 0.972, 0.55], ["Subscriptions", 0.964, 0.12], ["Statements", 0.977, 0.18]];
+    const slices = SL.map((sl) => {
+      const col = el("div", "flex:1; min-width:0");
+      const nm = el("div", "font-size:10.5px; letter-spacing:0.03em; text-transform:uppercase; color:var(--mut)", sl[0]);
+      const val = el("div", "margin:3px 0 0; font-size:14px; font-variant-numeric:tabular-nums", "");
+      const dl = el("div", "margin:2px 0 0; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:10px", "");
+      col.appendChild(nm); col.appendChild(val); col.appendChild(dl);
+      sliceRow.appendChild(col);
+      return { nm: nm, val: val, dl: dl, base: sl[1], w: sl[2] };
+    });
+    plotWrap.appendChild(sliceRow);
+    host.appendChild(plotWrap);
+
+    this._rn = { host: host, head: head, headLabel: headLabel, headline: headline, state: state,
+      plotWrap: plotWrap, plot: plot, line: line, chip: chip, bars: bars, axis: axis, axM: axM,
+      panel: panel, pHead: pHead, pScore: pScore, pBody: pBody, sliceRow: sliceRow, slices: slices,
+      lo: lo, hi: hi, H: 120, night: -1, notes: this.phRunNotes(),
+      cum: N.reduce((a, n) => a + (n.score < 0.94 ? n.failed : 0), 0) };
+    this.phFitRun();
+  }
+
+  phFitRun() {
+    const rn = this._rn, stage = this.phStage.current;
+    if (!rn || !stage) return;
+    const N = this.phNights();
+    let longest = "";
+    Object.keys(rn.notes).forEach((k) => { const b = rn.notes[k].body; if (b.length > longest.length) longest = b; });
+    N.forEach((n) => {
+      const t = n.score < 0.94
+        ? n.failed + " of " + n.cases + " cases failed, below the 0.940 threshold. Write-back is held until the suite clears."
+        : (n.cases - n.failed) + " of " + n.cases + " cases pass. Slice-level scores stay within a point of baseline, so nothing is held.";
+      if (t.length > longest.length) longest = t;
+    });
+    const restore = rn.pBody.textContent;
+    rn.pBody.textContent = longest;
+    // the chart is the argument, so it is the last thing to shrink: slices go, then the
+    // axis, then the label, then the chart compresses
+    const tiers = [
+      { H: 120, slices: 1, axis: 1, lbl: 1, pad: "16px 20px 0", pPad: "11px 13px", pmt: 13, clamp: 0 },
+      { H: 104, slices: 1, axis: 1, lbl: 1, pad: "14px 20px 0", pPad: "11px 13px", pmt: 12, clamp: 0 },
+      { H: 96,  slices: 0, axis: 1, lbl: 1, pad: "14px 20px 0", pPad: "10px 12px", pmt: 11, clamp: 0 },
+      { H: 88,  slices: 0, axis: 1, lbl: 1, pad: "12px 20px 0", pPad: "10px 12px", pmt: 10, clamp: 2 },
+      { H: 76,  slices: 0, axis: 0, lbl: 1, pad: "11px 20px 0", pPad: "9px 11px",  pmt: 9,  clamp: 2 },
+      { H: 62,  slices: 0, axis: 0, lbl: 0, pad: "9px 20px 0",  pPad: "8px 10px",  pmt: 7,  clamp: 2 },
+      { H: 52,  slices: 0, axis: 0, lbl: 0, pad: "7px 20px 0",  pPad: "7px 10px",  pmt: 5,  clamp: 1 },
+      { H: 44,  slices: 0, axis: 0, lbl: 0, pad: "6px 20px 0",  pPad: "6px 9px",   pmt: 4,  clamp: 1 }
+    ];
+    for (let i = 0; i < tiers.length; i++) {
+      const t = tiers[i];
+      rn.H = t.H;
+      rn.plot.style.height = t.H + "px";
+      rn.sliceRow.style.display = t.slices ? "flex" : "none";
+      rn.axis.style.display = t.axis ? "flex" : "none";
+      rn.headLabel.style.display = t.lbl ? "block" : "none";
+      rn.head.style.padding = t.lbl ? "18px 20px 13px" : "13px 20px 10px";
+      rn.plotWrap.style.padding = t.pad;
+      rn.panel.style.padding = t.pPad;
+      rn.panel.style.marginTop = t.pmt + "px";
+      if (t.clamp) {
+        rn.pBody.style.display = "-webkit-box";
+        rn.pBody.style.webkitLineClamp = String(t.clamp);
+        rn.pBody.style.webkitBoxOrient = "vertical";
+        rn.pBody.style.overflow = "hidden";
+      } else {
+        rn.pBody.style.display = "block";
+        rn.pBody.style.overflow = "visible";
+      }
+      const yT = (1 - (0.94 - rn.lo) / (rn.hi - rn.lo)) * t.H;
+      rn.line.style.top = yT + "px";
+      rn.chip.style.top = (yT + 3) + "px";
+      rn.bars.forEach((b) => {
+        b.fill.style.height = Math.max(2, t.H - (1 - (b.n.score - rn.lo) / (rn.hi - rn.lo)) * t.H) + "px";
+      });
+      if (!this.phOverflows(rn.plotWrap) || i === tiers.length - 1) break;
+    }
+    rn.pBody.textContent = restore;
+    rn.night = -1;
+  }
+
+  // The two breach nights are the argument, so they get a third of the act to themselves
+  // instead of the 2/30ths a linear map would give them.
+  phNightAt(u) {
+    if (u < 0.40) return Math.round((u / 0.40) * 21);
+    if (u < 0.56) return 22;
+    if (u < 0.70) return 23;
+    if (u < 0.84) return 24;
+    return 25 + Math.min(4, Math.round(((u - 0.84) / 0.16) * 4));
+  }
+
+  phStepRun(w2, prog) {
+    const rn = this._rn;
+    if (!rn) return;
+    rn.host.style.opacity = w2 < 0.02 ? "0" : w2.toFixed(2);
+    rn.host.style.pointerEvents = "none";
+    const N = this.phNights();
+    const night = this.phNightAt(this.phClamp(prog));
+    if (night === rn.night) return;
+    rn.night = night;
+    const cur = N[night], breach = cur.score < 0.94;
+    const PASS = "#157F52", FAIL = "#C4341E";
+
+    rn.bars.forEach((b, i) => {
+      const bad = b.n.score < 0.94;
+      b.fill.style.opacity = i === night ? "1" : bad ? "0.88" : "0.32";
+      b.cursor.style.borderLeftColor = i === night ? "rgba(20,20,18,0.32)" : "transparent";
+    });
+
+    const raw = rn.notes[night];
+    const fill = (t) => t.split("{failed}").join(cur.failed).split("{cum}").join(rn.cum).split("{score}").join(cur.score.toFixed(3));
+    rn.headline.textContent = raw ? raw.head : breach ? "Below threshold" : "Within tolerance";
+    rn.state.textContent = breach ? "write-back paused" : "passing";
+    rn.state.style.color = breach ? FAIL : PASS;
+    rn.pHead.textContent = raw ? raw.head : breach ? "Below threshold" : "No regression";
+    rn.pScore.textContent = cur.score.toFixed(3);
+    rn.pBody.textContent = raw ? fill(raw.body)
+      : breach
+        ? cur.failed + " of " + cur.cases + " cases failed, below the 0.940 threshold. Write-back is held until the suite clears."
+        : (cur.cases - cur.failed) + " of " + cur.cases + " cases pass. Slice-level scores stay within a point of baseline, so nothing is held.";
+    rn.panel.style.background = breach ? "rgba(196,52,30,0.06)" : "rgba(21,127,82,0.05)";
+    rn.panel.style.borderColor = breach ? "rgba(196,52,30,0.28)" : "rgba(21,127,82,0.2)";
+    rn.axM.textContent = "night " + (N.length - night) + " \u00b7 " + cur.failed + " of " + cur.cases + " failed";
+
+    // slices carry the shortfall in proportion \u2014 weights sum to 1, so they average to the night
+    const D = cur.score - 0.9735;
+    rn.slices.forEach((sl) => {
+      const now = Math.min(sl.base + 0.004, sl.base + D * sl.w * 4);
+      const d = now - sl.base;
+      const off = d < -0.01;
+      sl.val.textContent = (now * 100).toFixed(1) + "%";
+      sl.val.style.color = off ? FAIL : "#1A1917";
+      sl.dl.textContent = (d >= 0 ? "+" : "") + (d * 100).toFixed(1) + " pts";
+      sl.dl.style.color = off ? FAIL : PASS;
+    });
+  }
+
+  async initPhases() {
+    if (!this.phTrack.current) return;
+    this.phLayout();
+    this._phro = () => this.phLayout();
+    window.addEventListener("resize", this._phro);
+    this.phBuildAssess();
+    this.phBuildCaps();
+    this.phBuildRun();
+    const ok = await this.phSetupGL();
+    if (!ok) { this.phLayout(); this.phStepAssess(1, 1); this.phStepBuild(0, 0); this.phStepRun(0, 0); return; }
+    this.phLayout();
+    const stage = this.phStage.current;
+    if (stage) {
+      stage.addEventListener("pointermove", this.phPointer);
+      stage.addEventListener("pointerleave", this.phLeave);
+    }
+    const loop = (ms) => { this.phStep(ms); this.phRaf = requestAnimationFrame(loop); };
+    this.phRaf = requestAnimationFrame(loop);
+  }
+
+  componentWillUnmount() {
+    if (this._key) window.removeEventListener("keydown", this._key);
+    if (this._iro) window.removeEventListener("resize", this._iro);
+    if (this._phro) window.removeEventListener("resize", this._phro);
+    if (this.phRaf) cancelAnimationFrame(this.phRaf);
+    if (this._phTween) cancelAnimationFrame(this._phTween);
+    const _st = this.phStage.current;
+    if (_st) { _st.removeEventListener("pointermove", this.phPointer); _st.removeEventListener("pointerleave", this.phLeave); }
+    if (this.phGL) {
+      this.phGL.scene.traverse((o) => {
+        if (o.geometry) o.geometry.dispose();
+        if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => m.dispose());
+      });
+      this.phGL.r.dispose();
+      this.phGL = null;
+    }
+
+    this.iDispose();
+    this.timers.forEach(clearTimeout);
+    if (this.raf) cancelAnimationFrame(this.raf);
+    if (this.artRaf) cancelAnimationFrame(this.artRaf);
+    if (this._artFit) window.removeEventListener("resize", this._artFit);
+    if (this._artGL) {
+      if (this._artScroll) this._artGL.sc.removeEventListener("scroll", this._artScroll);
+      this._artGL.mesh.geometry.dispose();
+      this._artGL.mesh.material.dispose();
+      this._artGL.tex.dispose();
+      this._artGL.r.dispose();
+      this._artGL = null;
+    }
+    if (this._ro) this._ro.disconnect();
+    if (this._io) this._io.disconnect();
+  }
+
+  // ---------- vignettes ----------
+  get reduced() { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+
+  svgNode(tag, attrs) {
+    const n = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+
+  frame(box, h) {
+    box.textContent = '';
+    const w = Math.max(200, box.clientWidth);
+    const s = this.svgNode('svg', { width: w, height: h });
+    s.style.display = 'block';
+    s.style.overflow = 'visible';
+    box.appendChild(s);
+    return { s: s, w: w, h: h };
+  }
+
+  startVignettes() {
+    const set = [[this.vigA, 'scope', 6200], [this.vigB, 'clock', 6600], [this.vigC, 'evals', 7000]];
+    const build = (kind, box) => { if (kind === 'scope') this.vigScope(box); else if (kind === 'clock') this.vigClock(box); else this.vigEvals(box); };
+    const paintStill = () => { this._still = true; set.forEach(([ref, kind]) => { if (ref.current) build(kind, ref.current); }); this._still = false; };
+    paintStill();
+    if (this.reduced) return;
+    const started = [false, false, false];
+    const start = (i) => {
+      const box = set[i][0].current;
+      if (!box || started[i]) return;
+      started[i] = true;
+      const cycle = () => { build(set[i][1], box); this.timers.push(setTimeout(cycle, set[i][2])); };
+      this.timers.push(setTimeout(cycle, 240));
+    };
+    if ('IntersectionObserver' in window) {
+      this._io = new IntersectionObserver((es) => es.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const i = set.findIndex((row) => row[0].current === e.target);
+        if (i < 0) return;
+        this._io.unobserve(e.target);
+        start(i);
+      }), { rootMargin: '140px' });
+      set.forEach((row) => { if (row[0].current) this._io.observe(row[0].current); });
+    } else set.forEach((row, i) => start(i));
+    if ('ResizeObserver' in window && this.vigA.current) {
+      let t = null;
+      this._ro = new ResizeObserver(() => { clearTimeout(t); t = setTimeout(paintStill, 280); });
+      this._ro.observe(this.vigA.current);
+    }
+  }
+
+  vigScope(box) {
+    if (!box) return;
+    const f = this.frame(box, 150), s = f.s, w = f.w;
+    const N = 5, rowH = 7, gap = 17, top = 24, wid = [0.86, 0.62, 0.95, 0.54, 0.75];
+    const E = 'cubic-bezier(.16,1,.3,1)', still = this.reduced || this._still;
+    for (let i = 0; i < N; i++) {
+      const y = top + i * (rowH + gap), x = 30, len = (w - 46) * wid[i];
+      s.appendChild(this.svgNode('rect', { x: x, y: y, width: len, height: rowH, fill: 'rgba(20,20,18,0.08)' }));
+      const fill = this.svgNode('rect', { x: x, y: y, width: len, height: rowH, fill: '#2C2B27' });
+      fill.style.transformOrigin = x + 'px ' + (y + rowH / 2) + 'px';
+      s.appendChild(fill);
+      const tick = this.svgNode('rect', { x: 8, y: y, width: 7, height: rowH, fill: '#2C2B27' });
+      s.appendChild(tick);
+      if (still) continue;
+      fill.style.transform = 'scaleX(0)';
+      fill.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 620, delay: i * 240, easing: E, fill: 'forwards' });
+      tick.style.opacity = '0';
+      tick.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, delay: i * 240 + 520, fill: 'forwards' });
+    }
+    const bh = N * (rowH + gap) + 10;
+    const fr = this.svgNode('rect', { x: 1, y: top - 12, width: w - 2, height: bh, fill: 'none', stroke: '#2C2B27', 'stroke-width': 1 });
+    s.appendChild(fr);
+    const per = 2 * ((w - 2) + bh);
+    if (!still) {
+      fr.style.strokeDasharray = per;
+      fr.animate([{ strokeDashoffset: per }, { strokeDashoffset: 0 }], { duration: 980, delay: N * 240 + 420, easing: E, fill: 'forwards' });
+      s.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 540, delay: 5300, easing: 'ease', fill: 'forwards' });
+    }
+  }
+
+  vigClock(box) {
+    if (!box) return;
+    const f = this.frame(box, 150), s = f.s, w = f.w;
+    const x0 = 10, x1 = w - 10, span = x1 - x0, y = 104, barY = 62, barH = 9;
+    const E = 'cubic-bezier(.16,1,.3,1)', still = this.reduced || this._still, ship = 5 / 11;
+    s.appendChild(this.svgNode('line', { x1: x0, y1: y, x2: x1, y2: y, stroke: 'rgba(20,20,18,0.14)', 'stroke-width': 1 }));
+    for (let j = 0; j < 12; j++) {
+      const tx = x0 + span * (j / 11);
+      s.appendChild(this.svgNode('line', { x1: tx, y1: y, x2: tx, y2: y + (j === 0 || j === 11 ? 7 : 4), stroke: 'rgba(20,20,18,0.20)', 'stroke-width': 1 }));
+    }
+    const lab = (tx, anchor, t) => { const n = this.svgNode('text', { x: tx, y: y + 24, 'text-anchor': anchor, fill: '#6E6D67', 'font-size': 11, 'font-family': 'inherit' }); n.textContent = t; s.appendChild(n); return n; };
+    lab(x0, 'start', 'week 1'); lab(x1, 'end', 'week 12');
+    const ghost = this.svgNode('rect', { x: x0, y: barY, width: span, height: barH, fill: 'rgba(20,20,18,0.09)' });
+    ghost.style.transformOrigin = x0 + 'px ' + (barY + barH / 2) + 'px';
+    s.appendChild(ghost);
+    const bar = this.svgNode('rect', { x: x0, y: barY, width: span * ship, height: barH, fill: '#2C2B27' });
+    bar.style.transformOrigin = x0 + 'px ' + (barY + barH / 2) + 'px';
+    s.appendChild(bar);
+    const mx = x0 + span * ship;
+    const drop = this.svgNode('line', { x1: mx, y1: 34, x2: mx, y2: y, stroke: '#2C2B27', 'stroke-width': 1 });
+    s.appendChild(drop);
+    const dia = this.svgNode('rect', { x: mx - 5, y: 24, width: 10, height: 10, fill: '#2C2B27', transform: 'rotate(45 ' + mx + ' 29)' });
+    s.appendChild(dia);
+    const cap = this.svgNode('text', { x: mx + 13, y: 33, fill: '#1A1917', 'font-size': 12, 'font-family': 'inherit' });
+    cap.textContent = 'first release'; s.appendChild(cap);
+    const gcap = this.svgNode('text', { x: x1, y: 52, 'text-anchor': 'end', fill: '#8A8983', 'font-size': 11, 'font-family': 'inherit' });
+    gcap.textContent = 'industry norm'; s.appendChild(gcap);
+    if (still) return;
+    ghost.style.transform = 'scaleX(0)';
+    ghost.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 3400, delay: 200, easing: 'linear', fill: 'forwards' });
+    bar.style.transform = 'scaleX(0)';
+    bar.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 1500, delay: 200, easing: 'linear', fill: 'forwards' });
+    [drop, dia, cap].forEach((n, i) => { n.style.opacity = '0'; n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 380, delay: 1760 + i * 90, easing: E, fill: 'forwards' }); });
+    gcap.style.opacity = '0';
+    gcap.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 420, delay: 3400, fill: 'forwards' });
+    s.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 560, delay: 5700, easing: 'ease', fill: 'forwards' });
+  }
+
+  vigEvals(box) {
+    if (!box) return;
+    const f = this.frame(box, 150), s = f.s, w = f.w;
+    const x0 = 10, x1 = w - 10, span = x1 - x0, hi = 26, lo = 116;
+    const still = this.reduced || this._still, N = 64, evs = [22, 44];
+    const thr = hi + (lo - hi) * 0.42;
+    s.appendChild(this.svgNode('line', { x1: x0, y1: thr, x2: x1, y2: thr, stroke: 'rgba(20,20,18,0.22)', 'stroke-width': 1, 'stroke-dasharray': '3 4' }));
+    const tl = this.svgNode('text', { x: x0, y: thr - 8, fill: '#8A8983', 'font-size': 11, 'font-family': 'inherit' });
+    tl.textContent = 'review threshold'; s.appendChild(tl);
+    let seed = 7, v = 0.94, pts = [];
+    const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return (seed / 0x7fffffff) - 0.5; };
+    for (let i = 0; i < N; i++) {
+      if (evs.indexOf(i) > -1) v = 0.955; else v -= 0.0042 + rnd() * 0.004;
+      pts.push([x0 + span * (i / (N - 1)), lo - (lo - hi) * ((v - 0.86) / 0.12)]);
+    }
+    const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+    const path = this.svgNode('path', { d: d, fill: 'none', stroke: '#2C2B27', 'stroke-width': 1.5, 'stroke-linejoin': 'round' });
+    s.appendChild(path);
+    const marks = evs.map((i) => {
+      const mx = x0 + span * (i / (N - 1));
+      const g = this.svgNode('g', {});
+      g.appendChild(this.svgNode('line', { x1: mx, y1: hi - 12, x2: mx, y2: lo + 8, stroke: 'var(--a)', 'stroke-width': 1 }));
+      const t = this.svgNode('text', { x: mx + 6, y: hi - 4, fill: 'var(--a)', 'font-size': 11, 'font-family': 'inherit' });
+      t.textContent = 'eval'; g.appendChild(t);
+      s.appendChild(g); return g;
+    });
+    if (still) return;
+    const len = path.getTotalLength ? path.getTotalLength() : span;
+    path.style.strokeDasharray = len;
+    path.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: 3600, delay: 260, easing: 'linear', fill: 'forwards' });
+    marks.forEach((g, k) => { g.style.opacity = '0'; g.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 260 + 3600 * (evs[k] / N), fill: 'forwards' }); });
+    s.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 560, delay: 6100, easing: 'ease', fill: 'forwards' });
+  }
+
+  // ---------- hero: watercolour ripple driven by scroll ----------
+  // Runs on the image layer only. The scrim, headline, CTAs and cards are DOM siblings
+  // painted above this canvas, so nothing but the painting's own pixels is displaced.
+  async initArt() {
+    const cv = this.artCv.current;
+    if (!cv) return;
+    let T;
+    try { T = await import("https://esm.sh/three@0.161.0"); } catch (e) { return; }
+
+    const tex = await new Promise((res) => {
+      new T.TextureLoader().load("assets/hero-valley.png", (t) => {
+        t.flipY = false;
+        t.wrapS = t.wrapT = T.ClampToEdgeWrapping;
+        t.minFilter = t.magFilter = T.LinearFilter;
+        res(t);
+      }, undefined, () => res(null));
+    });
+    if (!tex) return;
+
+    const iw = tex.image.width, ih = tex.image.height;
+    const scene = new T.Scene();
+    const cam = new T.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0, 1);
+    const r = new T.WebGLRenderer({ canvas: cv, alpha: true, antialias: false });
+    r.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+
+    const uni = {
+      uTex: { value: tex },
+      uScale: { value: new T.Vector2(1, 1) },
+      uOff: { value: new T.Vector2(0, 0) },
+      uTime: { value: 0 },
+      uEnergy: { value: 0 }
+    };
+    const mesh = new T.Mesh(new T.PlaneGeometry(1, 1), new T.ShaderMaterial({
+      uniforms: uni,
+      transparent: true,
+      vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy * 2.0, 0.0, 1.0); }",
+      fragmentShader: [
+        "precision highp float;",
+        "varying vec2 vUv;",
+        "uniform sampler2D uTex;",
+        "uniform vec2 uScale, uOff;",
+        "uniform float uTime, uEnergy;",
+        "float wv(vec2 p, float t){",
+        "  return sin(p.x * 3.1 + t * 0.7) * sin(p.y * 2.3 - t * 0.55)",
+        "       + 0.5 * sin(p.x * 6.7 - t * 1.1) * sin(p.y * 5.3 + t * 0.9);",
+        "}",
+        "void main(){",
+        "  vec2 base = vec2(vUv.x, 1.0 - vUv.y);",
+        "  float e = uEnergy;",
+        // two-octave domain warp, vertically biased so it reads as water settling rather than heat
+        "  vec2 q = base * vec2(1.0, 1.6);",
+        "  vec2 warp = vec2(wv(q * 3.0, uTime), wv(q * 6.3 + 4.7, uTime * 1.3));",
+        "  warp *= (0.0016 + 0.0092 * e);",
+        "  warp.y *= 1.45;",
+        "  vec2 uv = (base + warp) * uScale + uOff;",
+        // watercolour bleed: three taps spread along the warp direction, pigment pulling outward
+        "  vec2 sp = warp * (0.6 + 2.4 * e);",
+        "  vec4 c0 = texture2D(uTex, clamp(uv, 0.0, 1.0));",
+        "  vec3 c = c0.rgb * 0.5",
+        "        + texture2D(uTex, clamp(uv + sp, 0.0, 1.0)).rgb * 0.25",
+        "        + texture2D(uTex, clamp(uv - sp, 0.0, 1.0)).rgb * 0.25;",
+        // faint per-channel separation, the way wet pigment splits on paper
+        "  c.r = mix(c.r, texture2D(uTex, clamp(uv + sp * 1.7, 0.0, 1.0)).r, 0.38 * e);",
+        "  c.b = mix(c.b, texture2D(uTex, clamp(uv - sp * 1.7, 0.0, 1.0)).b, 0.38 * e);",
+        "  gl_FragColor = vec4(c, c0.a);",
+        "}"
+      ].join("\n")
+    }));
+    scene.add(mesh);
+
+    const fit = () => {
+      const cw = cv.clientWidth || 1200, ch = cv.clientHeight || 660;
+      r.setSize(cw, ch, false);
+      // reproduce background-size:cover / background-position:center top exactly
+      const sc = Math.max(cw / iw, ch / ih);
+      const dw = iw * sc, dh = ih * sc;
+      uni.uScale.value.set(cw / dw, ch / dh);
+      uni.uOff.value.set(-((cw - dw) / 2) / dw, 0);
+    };
+    fit();
+    this._artFit = () => { fit(); this._artDirty = true; };
+    this._artDirty = true;
+    window.addEventListener("resize", this._artFit);
+
+    // scroll velocity feeds the ripple; it decays back to a near-still baseline
+    const sc = this.phScroller ? this.phScroller() : document.scrollingElement || document.body;
+    let last = sc.scrollTop, energy = 0;
+    this._artScroll = () => {
+      const now = sc.scrollTop;
+      energy = Math.min(1, energy + Math.min(0.42, Math.abs(now - last) * 0.011));
+      last = now;
+    };
+    sc.addEventListener("scroll", this._artScroll, { passive: true });
+
+    const hero = cv.parentElement;
+    const t0 = performance.now();
+    const loop = (ms) => {
+      const rect = hero.getBoundingClientRect();
+      const onScreen = rect.bottom > -100 && rect.top < window.innerHeight + 100;
+      // at rest the painting is simply still — only a scroll wakes the ripple
+      if (onScreen && (this._artDirty || (!this.reduced && energy > 0.0025))) {
+        if (!this.reduced) {
+          energy *= 0.945;
+          uni.uTime.value = (ms - t0) / 1000;
+        }
+        uni.uEnergy.value = this.reduced ? 0 : energy;
+        r.render(scene, cam);
+        this._artDirty = false;
+      }
+      this.artRaf = requestAnimationFrame(loop);
+    };
+    this.artRaf = requestAnimationFrame(loop);
+    this._artGL = { r: r, mesh: mesh, tex: tex, sc: sc };
+  }
+
+  renderVals() {
+    return { iWrap: this.iWrap, iGrid: this.iGrid, iMark: this.iMark, iCap: this.iCap,
+      iCv: this.iCv, iLock: this.iLock, iSfx: this.iSfx, skipIntro: this.skipIntro,
+      heroTex: this.heroTex, artCv: this.artCv, vigA: this.vigA, vigB: this.vigB, vigC: this.vigC,
+      phTrack: this.phTrack, phGrid: this.phGrid, phPin: this.phPin, phStage: this.phStage, phCv: this.phCv,
+      phLabels: this.phLabels, phTip: this.phTip, phSlot: this.phSlot, phBar: this.phBar,
+      phAssess: this.phAssess, phBuildP: this.phBuildP, phRun: this.phRun, phJump: this.phJump,
+      phCap: this.phCap, phMetric: this.phMetric, phP0: this.phP0, phP1: this.phP1, phP2: this.phP2,
+      phR0: this.phR0, phR1: this.phR1, phR2: this.phR2 };
+  }
+}
+</script>
+</body>
+</html>
