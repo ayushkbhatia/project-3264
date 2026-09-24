@@ -43,3 +43,8 @@ next-env.d.ts
 
 # playwright mcp scratch output
 .playwright-mcp
+# visual QA: screenshots, and the one-off review/fix probes written during QA passes.
+# The reusable harness (compare.mjs and the hero/capabilities/intro/polish suites) is committed.
+/qa/__screens__/
+/qa/review-*
+/qa/fix-*
