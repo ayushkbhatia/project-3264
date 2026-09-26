@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://3264.ai";
   return [
     { url: new URL("/", origin).href, changeFrequency: "monthly", priority: 1 },
+    { url: new URL("/ai-engineering", origin).href, changeFrequency: "monthly", priority: 0.8 },
     { url: new URL("/industries/private-credit", origin).href, changeFrequency: "monthly", priority: 0.8 },
   ];
 }

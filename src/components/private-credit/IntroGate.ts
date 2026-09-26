@@ -46,6 +46,11 @@ function gate(attr: string, graceMs: number, path: string) {
   setTimeout(release, graceMs);
 }
 
+/** The gate as an inline script for one route (the AI Engineering page reuses it). */
+export function introGateScript(attr: string, graceMs: number, path: string) {
+  return `(${gate.toString()})(${JSON.stringify(attr)},${graceMs},${JSON.stringify(path)})`;
+}
+
 // Inlined into <head> by app/layout.tsx (a <script> rendered by a page would run on a hard
 // load but not on a client-side visit, where React refuses to execute it).
-export const PC_INTRO_GATE_SCRIPT = `(${gate.toString()})(${JSON.stringify(PC_INTRO_ATTR)},${PC_INTRO_GRACE_MS},${JSON.stringify(PC_INTRO_PATH)})`;
+export const PC_INTRO_GATE_SCRIPT = introGateScript(PC_INTRO_ATTR, PC_INTRO_GRACE_MS, PC_INTRO_PATH);

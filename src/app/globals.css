@@ -88,17 +88,97 @@
 [data-pc],
 [data-pc] *,
 [data-pc] ::before,
-[data-pc] ::after {
+[data-pc] ::after,
+[data-ai],
+[data-ai] *,
+[data-ai] ::before,
+[data-ai] ::after {
   box-sizing: content-box;
 }
-/* The Private Credit intro's first-paint cover (components/private-credit/IntroGate.ts).
-   !important: the overlay's server-rendered display:none is inline. */
-html[data-pc-intro="pending"] [data-pc-intro-wrap] {
+/* The Private Credit and AI Engineering intros' first-paint covers (IntroGate.ts in each
+   page's components). !important: the overlay's server-rendered display:none is inline. */
+html[data-pc-intro="pending"] [data-pc-intro-wrap],
+html[data-ai-intro="pending"] [data-ai-intro-wrap] {
   display: flex !important;
 }
 /* Nor does it balance paragraphs globally: only where its inline styles say `pretty`. */
-[data-pc] p {
+[data-pc] p,
+[data-ai] p {
   text-wrap: wrap;
+}
+
+/*
+ * AI Engineering below 900px: spec 08's interim rule until mobile is designed. The two pinned
+ * sections are unpinned, their cards stacked in document order at their end states (the page
+ * logic inks every statement, completes the calendar and draws the snippet's final state; see
+ * AIEngineeringPage.tsx); the 03 hold is off (RebuildPlatform.tsx). !important: the layout is
+ * inline, and the logic keeps writing transforms and opacities that these must outrank.
+ * The breakpoint matches NARROW in components/ai-engineering/media.ts.
+ */
+@media (max-width: 899.98px) {
+  [data-ai] [data-track] {
+    min-height: 0 !important;
+  }
+  /* the sticky frame and the stage inside it become ordinary blocks */
+  [data-ai] [data-track] > div {
+    position: static !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+  [data-ai] [data-track] > div > div {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column;
+    gap: 24px;
+  }
+  [data-ai] [data-track] [data-ai-card] {
+    position: relative !important;
+    inset: auto !important;
+    width: auto !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  /* 01 Premise: statement above its window */
+  [data-ai] [data-track="premise"] [data-ai-card] {
+    flex-direction: column !important;
+  }
+  [data-ai] [data-track="premise"] [data-ai-card] > div {
+    flex: none !important;
+  }
+  [data-ai] [data-ai-fit] {
+    width: 100%;
+  }
+  [data-ai] [data-ai-fit="600 / 470"] {
+    aspect-ratio: 600 / 470;
+  }
+  [data-ai] [data-ai-fit="760 / 600"] {
+    aspect-ratio: 760 / 600;
+  }
+  [data-ai] [data-ai-fit="700 / 560"] {
+    aspect-ratio: 700 / 560;
+  }
+  /* 06 Engagement: both cards open, no spines */
+  [data-ai] [data-ai-content] {
+    opacity: 1 !important;
+    height: auto !important;
+  }
+  [data-ai] [data-ai-spine] {
+    display: none !important;
+  }
+  [data-ai] [data-ai-row] {
+    flex-direction: column !important;
+  }
+  [data-ai] [data-ai-col] {
+    flex: none !important;
+  }
+  [data-ai] [data-ai-facts] {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
 }
 
 /*
