@@ -1,0 +1,957 @@
+{
+  "source": "reference/AI Engineering.dc.html (+ Rebuild Platform.dc.html, Rebuild graphic.dc.html)",
+  "props": {
+    "accent": "#157F52 (options #157F52, #1A5FB4, #8A4B2A, #1A1917)",
+    "gridTexture": true,
+    "motion": true,
+    "playIntro": true
+  },
+  "qaFlags": {
+    "?intro=off": "reference copy only; skips the intro overlay"
+  },
+  "assets": [
+    "assets/hero-plane.png",
+    "assets/what-changed-wash.png",
+    "assets/what-produced-wash.webp",
+    "assets/valley-pastel.png",
+    "assets/cta-d.avif",
+    "assets/cta-b.avif",
+    "assets/delivery-bg.webp"
+  ],
+  "sections": [
+    {
+      "file": "reference/sections/00-intro-overlay.html",
+      "refs": [
+        "iWrap",
+        "iStage",
+        "iMark"
+      ],
+      "holes": [
+        "skipIntro"
+      ],
+      "copy": [
+        "3264",
+        ".ai",
+        "Deploy log",
+        "click to skip"
+      ]
+    },
+    {
+      "file": "reference/sections/01-header.html",
+      "refs": [],
+      "holes": [],
+      "copy": [
+        "3264",
+        ".ai",
+        "AI Engineering",
+        "AI Transformation",
+        "Industries",
+        "Work",
+        "Playbooks",
+        "Company",
+        "Book an audit"
+      ]
+    },
+    {
+      "file": "reference/sections/02-hero.html",
+      "refs": [
+        "heroSec",
+        "heroImg",
+        "heroVeil"
+      ],
+      "holes": [],
+      "copy": [
+        "AI Engineering",
+        "The prototype works.",
+        "Now it has to hold.",
+        "Executives and analysts build working software in an afternoon now. We audit what they built, rebuild what has to be rebuilt, and run it in production with the controls a regulated firm is required to hold.",
+        "Book an audit",
+        "See the process"
+      ]
+    },
+    {
+      "file": "reference/sections/03-premise.html",
+      "refs": [
+        "stackTrack",
+        "wcCard",
+        "wcText",
+        "wcFit",
+        "wcStage",
+        "wpCard",
+        "wpText",
+        "wpFit",
+        "wpStage",
+        "wpPortal",
+        "wpInsp",
+        "wnCard",
+        "wnText",
+        "wnFit",
+        "wnStage"
+      ],
+      "holes": [
+        "wcWords",
+        "w",
+        "wpWords",
+        "wnWords"
+      ],
+      "copy": [
+        "01 / Premise",
+        "Two things changed.",
+        "One thing did not.",
+        "We do not tell executives to stop building. The instinct is right and the artefacts are useful. They are drafts, and drafts need an engineer before they hold client money.",
+        "What changed",
+        "AI app builder &mdash; recon-tool",
+        "MO",
+        "M. Oyelaran &middot; COO &middot; 12:41",
+        "Build a tool that reconciles the custodian file against our fund ledger.",
+        "Skip the login for now, it slows me down.",
+        "Here's the database:",
+        "postgres://admin:Nrthg8te!@prod-ledger",
+        "Builder &middot; 12:43",
+        "Done. Your reconciliation tool is live and connected to",
+        "prod-ledger with full admin access",
+        ". I removed authentication as requested.",
+        "recon-tool.app",
+        "Public link",
+        "Matched",
+        "4,812",
+        "Breaks",
+        "37",
+        "Built in",
+        "2 min",
+        "Now share it with the fund admin&hellip;",
+        "Send",
+        "What that produced",
+        "LP Portal &mdash; Northgate Capital",
+        "Northgate",
+        "Overview",
+        "Commitments",
+        "Capital calls",
+        "Distributions",
+        "Documents",
+        "Signed in as",
+        "Ashfield Pension Trust",
+        "Fund III &middot; Q3",
+        "Commitment",
+        "25.0m",
+        "Called",
+        "14.2m",
+        "NAV",
+        "16.9m",
+        "Call 07",
+        "12 Sep",
+        "2,500,000",
+        "Paid",
+        "Call 06",
+        "14 Jun",
+        "1,875,000",
+        "Call 05",
+        "11 Mar",
+        "3,125,000",
+        "Call 04",
+        "06 Dec",
+        "2,250,000",
+        "Network &mdash; LP Portal",
+        "5 issues",
+        "GET",
+        "/rest/v1/investors",
+        "?select=*",
+        "200",
+        "2,418 rows",
+        "Investor",
+        "Fund",
+        "Contact",
+        "III",
+        "25,000,000",
+        "treasury@ashfieldpt.org",
+        "Harrow County Retirement",
+        "40,000,000",
+        "j.okafor@harrowcrs.gov",
+        "Castellano Family Office",
+        "II",
+        "7,500,000",
+        "rc@castellano-fo.com",
+        "Northmere Endowment",
+        "IV",
+        "15,000,000",
+        "invest@northmere.edu",
+        "D. Whitcombe",
+        "2,000,000",
+        "dwhitcombe@gmail.com",
+        "Kestrel Insurance Group",
+        "Cr. I",
+        "30,000,000",
+        "alts@kestrelgroup.com",
+        "L. Adeyemi Trust",
+        "3,250,000",
+        "l.adeyemi@protonmail.com",
+        "Vantor Sovereign Fund",
+        "60,000,000",
+        "pm@vantorsf.com",
+        "Brennan Family Trust",
+        "4,000,000",
+        "k.brennan@icloud.com",
+        "+ 2,409 more rows &middot; 9 funds &middot; no sign-in required",
+        "Issues found",
+        "Network",
+        "Unauthenticated access",
+        "The database answers anyone holding the public key.",
+        "Data leak",
+        "Investor PII exposed",
+        "Names, commitments and contacts for every LP.",
+        "Data",
+        "No fund isolation",
+        "Row-level rules were never switched on.",
+        "Compliance",
+        "No audit trail",
+        "Access cannot be evidenced to an auditor.",
+        "Testing",
+        "Zero tests",
+        "Nothing checks this before release.",
+        "What did not change",
+        "Obligations &mdash; LP Portal",
+        "3 of 3 apply",
+        "System",
+        "LP Portal &middot; built in an afternoon",
+        "0 exemptions",
+        "LP agreement &middot; &sect; 14.2",
+        "Confidentiality",
+        "The General Partner shall hold all information concerning the Limited Partners in confidence",
+        "and disclose it only as this Agreement permits.",
+        "Applies in full",
+        "Regulator &middot; guidance",
+        "Books and records",
+        "Firms must keep records that allow",
+        "each transaction to be reconstructed",
+        ", whatever system produced them.",
+        "Audit scope &middot; FY2026",
+        "IT general controls",
+        "Access, change management and operations for",
+        "every system that feeds the financial statements",
+        ".",
+        "Speed of build: not a factor",
+        "Same standard as every system"
+      ]
+    },
+    {
+      "file": "reference/sections/04-audit.html",
+      "refs": [
+        "auFit",
+        "auStage",
+        "auGrid",
+        "auBars",
+        "auPanel",
+        "auCal",
+        "auCells",
+        "auWin",
+        "auPane"
+      ],
+      "holes": [
+        "auItems",
+        "it.bg",
+        "it.bar",
+        "it.c",
+        "it.dc",
+        "it.d",
+        "auF.dc",
+        "auF.sev",
+        "auF.no",
+        "auF.t",
+        "auF.dt",
+        "auF.d",
+        "auF.where",
+        "auF.exp",
+        "auF.obl",
+        "auF.ev",
+        "l.bg",
+        "l.n",
+        "l.code",
+        "auF.fix"
+      ],
+      "copy": [
+        "3264",
+        "File",
+        "Edit",
+        "View",
+        "Window",
+        "Help",
+        "A",
+        "Tue 9 Jan 9:41 AM",
+        "02 / Audit",
+        "In two weeks, we assess your systems and processes and give you a written foundation for what to rebuild.",
+        "Day 1",
+        "Day 2",
+        "Day 3",
+        "Day 4",
+        "Day 5",
+        "Day 6",
+        "Day 7",
+        "Day 8",
+        "Day 9",
+        "Day 10",
+        "Access",
+        "Read the code",
+        "Code map",
+        "Interview",
+        "Map obligations",
+        "Disposition",
+        "Read-only, nothing changes",
+        "&rarr; Access letter",
+        "Days 2&ndash;4",
+        "Every component, every data path, every secret",
+        "&rarr; Code map",
+        "Days 5&ndash;6",
+        "The people who built it and use it daily",
+        "&rarr; Interview notes",
+        "Days 7&ndash;8",
+        "LPA, regulator and audit scope against each finding",
+        "&rarr; Obligation matrix",
+        "Days 9&ndash;10",
+        "Written, costed and handed over",
+        "&rarr; Disposition report",
+        "OCT",
+        "6",
+        "Audit &mdash; Northgate Capital",
+        "6 Oct &ndash; 17 Oct 2026 &middot; 10 working days &middot; fixed fee",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Kickoff",
+        "9:00",
+        "Read-only access",
+        "11:00",
+        "System inventory",
+        "14:00",
+        "7",
+        "Data paths",
+        "9:30",
+        "Secrets sweep",
+        "13:00",
+        "8",
+        "Fund access rules",
+        "Dependencies",
+        "9",
+        "Fee and NAV logic",
+        "Prompt logs",
+        "13:30",
+        "Browser data path",
+        "15:30",
+        "10",
+        "Builder interview",
+        "10:00",
+        "IR team",
+        "Week 1 readout",
+        "16:00",
+        "13",
+        "Finance ops",
+        "Fund administrator",
+        "14",
+        "Daily users",
+        "LPA clause map",
+        "15",
+        "Regulator guidance",
+        "Audit scope match",
+        "16",
+        "Cost each finding",
+        "Draft disposition",
+        "Review with CFO",
+        "17",
+        "Disposition handed over",
+        "Walkthrough",
+        "Audit &mdash; LP Portal &middot; day 10 of 10",
+        "Components",
+        "11",
+        "+ 6 more",
+        "Where",
+        "Exposure",
+        "Obligation",
+        "Evidence",
+        "1",
+        "keep",
+        "rebuild",
+        "1 retire",
+        "Owned by you",
+        "Illustrative findings from a fund operations tool. Real audits are reported per component, with evidence attached to each line."
+      ]
+    },
+    {
+      "file": "reference/sections/05-rebuild-platform-outcome-host.html",
+      "refs": [],
+      "holes": [],
+      "copy": []
+    },
+    {
+      "file": "reference/sections/06-engagement.html",
+      "refs": [
+        "enTrack",
+        "enStage",
+        "enA",
+        "enAi",
+        "enAx",
+        "enCal",
+        "enAs",
+        "enB",
+        "enBi",
+        "enBx",
+        "enBld",
+        "enBs"
+      ],
+      "holes": [
+        "enAWords",
+        "w",
+        "enJumpA",
+        "enBWords",
+        "enJumpB"
+      ],
+      "copy": [
+        "06 / Engagement",
+        "Two ways in. Neither of them starts with a platform licence.",
+        "Engagement 01",
+        "2 weeks &middot; fixed fee",
+        "The audit",
+        "Book an audit",
+        "OCT",
+        "6",
+        "Audit &mdash; Northgate Capital",
+        "10 working days &middot; fixed fee",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "7",
+        "8",
+        "9",
+        "10",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "Deliverable",
+        "Disposition and plan",
+        "Access needed",
+        "Read-only",
+        "Ends in a build",
+        "Not necessarily",
+        "01",
+        "Engagement 02",
+        "per capability &middot; fortnightly",
+        "The build",
+        "Book a call",
+        "Runs in",
+        "Your environment",
+        "Interface",
+        "Kept where sound",
+        "Handover",
+        "Suite and documentation",
+        "02"
+      ]
+    },
+    {
+      "file": "reference/sections/07-footer.html",
+      "refs": [],
+      "holes": [],
+      "copy": [
+        "Services",
+        "AI Engineering",
+        "AI Transformation",
+        "Deployment &amp; Run",
+        "Evaluation suites",
+        "Industries",
+        "Private Credit",
+        "Financial Services",
+        "Fund Management",
+        "Asset Management",
+        "Company",
+        "Who we are",
+        "How we work",
+        "Case studies",
+        "Resources",
+        "Playbooks",
+        "Field notes",
+        "Security",
+        "Connect",
+        "Book a call",
+        "hello@3264.ai",
+        "LinkedIn",
+        "3264",
+        ".ai",
+        "&copy; 2026 Bearing Deployment Company Inc. All rights reserved.",
+        "All systems operational"
+      ]
+    }
+  ],
+  "logic": {
+    "motion/ai-engineering.logic.js": [
+      {
+        "name": "constructor",
+        "line": 2,
+        "live": true
+      },
+      {
+        "name": "componentDidMount",
+        "line": 12,
+        "live": true
+      },
+      {
+        "name": "componentDidUpdate",
+        "line": 21,
+        "live": true
+      },
+      {
+        "name": "componentWillUnmount",
+        "line": 27,
+        "live": true
+      },
+      {
+        "name": "iClear",
+        "line": 35,
+        "live": true
+      },
+      {
+        "name": "maybeIntro",
+        "line": 40,
+        "live": true
+      },
+      {
+        "name": "iEl",
+        "line": 45,
+        "live": true
+      },
+      {
+        "name": "iFmt",
+        "line": 51,
+        "live": false
+      },
+      {
+        "name": "iTeardown",
+        "line": 56,
+        "live": true
+      },
+      {
+        "name": "skipIntro",
+        "line": 70,
+        "live": true
+      },
+      {
+        "name": "iLift",
+        "line": 79,
+        "live": true
+      },
+      {
+        "name": "iMarkIn",
+        "line": 90,
+        "live": true
+      },
+      {
+        "name": "runIntro",
+        "line": 96,
+        "live": true
+      },
+      {
+        "name": "applyTheme",
+        "line": 139,
+        "live": true
+      },
+      {
+        "name": "cl",
+        "line": 145,
+        "live": true
+      },
+      {
+        "name": "sm",
+        "line": 146,
+        "live": true
+      },
+      {
+        "name": "el",
+        "line": 147,
+        "live": true
+      },
+      {
+        "name": "revealProg",
+        "line": 151,
+        "live": true
+      },
+      {
+        "name": "trackProg",
+        "line": 156,
+        "live": false
+      },
+      {
+        "name": "findings",
+        "line": 164,
+        "live": false
+      },
+      {
+        "name": "buildAudit",
+        "line": 180,
+        "live": false
+      },
+      {
+        "name": "stepAudit",
+        "line": 227,
+        "live": false
+      },
+      {
+        "name": "buildTiers",
+        "line": 250,
+        "live": false
+      },
+      {
+        "name": "stepTiers",
+        "line": 286,
+        "live": false
+      },
+      {
+        "name": "flowRows",
+        "line": 311,
+        "live": false
+      },
+      {
+        "name": "buildFlow",
+        "line": 322,
+        "live": false
+      },
+      {
+        "name": "stepFlow",
+        "line": 366,
+        "live": false
+      },
+      {
+        "name": "three",
+        "line": 403,
+        "live": false
+      },
+      {
+        "name": "hash",
+        "line": 407,
+        "live": false
+      },
+      {
+        "name": "initHero",
+        "line": 409,
+        "live": false
+      },
+      {
+        "name": "drawHero",
+        "line": 437,
+        "live": false
+      },
+      {
+        "name": "initTopo",
+        "line": 464,
+        "live": false
+      },
+      {
+        "name": "drawTopo",
+        "line": 523,
+        "live": false
+      },
+      {
+        "name": "drawWash",
+        "line": 594,
+        "live": false
+      },
+      {
+        "name": "stepWhatChanged",
+        "line": 635,
+        "live": true
+      },
+      {
+        "name": "stepProduced",
+        "line": 660,
+        "live": true
+      },
+      {
+        "name": "stepUnchanged",
+        "line": 694,
+        "live": true
+      },
+      {
+        "name": "stepStack",
+        "line": 715,
+        "live": true
+      },
+      {
+        "name": "stepEngage",
+        "line": 734,
+        "live": true
+      },
+      {
+        "name": "enQ",
+        "line": 763,
+        "live": true
+      },
+      {
+        "name": "enRenderBuild",
+        "line": 769,
+        "live": true
+      },
+      {
+        "name": "enCalendar",
+        "line": 778,
+        "live": true
+      },
+      {
+        "name": "enGear",
+        "line": 797,
+        "live": true
+      },
+      {
+        "name": "enBuildSVG",
+        "line": 808,
+        "live": true
+      },
+      {
+        "name": "enJump",
+        "line": 949,
+        "live": true
+      },
+      {
+        "name": "auData",
+        "line": 956,
+        "live": true
+      },
+      {
+        "name": "auPack",
+        "line": 966,
+        "live": true
+      },
+      {
+        "name": "stepAuditLoop",
+        "line": 980,
+        "live": true
+      },
+      {
+        "name": "rbBuild",
+        "line": 1057,
+        "live": false
+      },
+      {
+        "name": "stepRebuild",
+        "line": 1074,
+        "live": false
+      },
+      {
+        "name": "initVeil",
+        "line": 1156,
+        "live": true
+      },
+      {
+        "name": "buildGrey",
+        "line": 1178,
+        "live": true
+      },
+      {
+        "name": "stepVeil",
+        "line": 1192,
+        "live": true
+      },
+      {
+        "name": "tick",
+        "line": 1230,
+        "live": true
+      },
+      {
+        "name": "renderVals",
+        "line": 1243,
+        "live": true
+      }
+    ],
+    "motion/rebuild-platform.logic.js": [
+      {
+        "name": "componentDidMount",
+        "line": 4
+      },
+      {
+        "name": "componentWillUnmount",
+        "line": 31
+      },
+      {
+        "name": "scroll03",
+        "line": 39
+      },
+      {
+        "name": "cl",
+        "line": 45
+      },
+      {
+        "name": "sm",
+        "line": 46
+      },
+      {
+        "name": "rows",
+        "line": 47
+      },
+      {
+        "name": "scrollP",
+        "line": 57
+      },
+      {
+        "name": "fly",
+        "line": 63
+      },
+      {
+        "name": "tick",
+        "line": 78
+      },
+      {
+        "name": "gear",
+        "line": 136
+      },
+      {
+        "name": "scene",
+        "line": 147
+      },
+      {
+        "name": "scene05",
+        "line": 423
+      },
+      {
+        "name": "renderVals",
+        "line": 732
+      }
+    ],
+    "motion/rebuild-graphic.logic.js": [
+      {
+        "name": "componentDidMount",
+        "line": 3
+      },
+      {
+        "name": "componentWillUnmount",
+        "line": 17
+      },
+      {
+        "name": "cl",
+        "line": 18
+      },
+      {
+        "name": "sm",
+        "line": 19
+      },
+      {
+        "name": "mix",
+        "line": 20
+      },
+      {
+        "name": "tick",
+        "line": 21
+      },
+      {
+        "name": "drawGrid",
+        "line": 38
+      },
+      {
+        "name": "gear",
+        "line": 53
+      },
+      {
+        "name": "scene",
+        "line": 61
+      },
+      {
+        "name": "renderVals",
+        "line": 257
+      }
+    ]
+  },
+  "imperativeCopy": {
+    "intro": [
+      "01",
+      "map the workflow",
+      "02",
+      "build the pipeline",
+      "03",
+      "evaluate accuracy",
+      "04",
+      "deploy to production",
+      "4 capabilities live",
+      "week 06"
+    ],
+    "wordArrays": [
+      {
+        "key": "enAWords",
+        "text": "We read the code, the data path and the access model, then interview the people who use it. You get a written disposition per component and a costed build plan. No obligation to continue."
+      },
+      {
+        "key": "enBWords",
+        "text": "A small senior squad builds onto the four tiers and ships into your environment. Priced per capability, released fortnightly, with the evaluation suite handed over at the end."
+      },
+      {
+        "key": "wnWords",
+        "text": "Your LPs, regulator and auditor expect the same controls as before. We bring software up to that standard."
+      },
+      {
+        "key": "wpWords",
+        "text": "Those tools hold LP data. None of them were secured, tested or handed over."
+      },
+      {
+        "key": "wcWords",
+        "text": "Building software now takes an afternoon. Your analysts already have."
+      }
+    ],
+    "auditFindings": [
+      "Database credentials",
+      "Database password committed to source",
+      "config/db.ts:3",
+      "Full admin on prod-ledger",
+      "Audit scope: access",
+      "Move secrets into a managed vault, rotate the password, and give the app a least-privilege role of its own.",
+      "Fund access rules",
+      "Any signed-in user can read any fund's records",
+      "api/investors.ts:42",
+      "2,418 LP records, 9 funds",
+      "LPA \\u00a7 14.2 confidentiality",
+      "Move reads behind a service that checks the caller's fund on every request, with row-level rules in the database as a second line.",
+      "Model prompt logs",
+      "Investor PII written to model prompt logs",
+      "lib/assistant.ts:88",
+      "Names and commitments in vendor logs",
+      "Data protection",
+      "Redact personal data before a prompt is built, and keep every log inside your own environment.",
+      "Browser data path",
+      "Browser connects directly to the database",
+      "app/portal.tsx:15",
+      "Schema visible to every visitor",
+      "Audit scope: IT controls",
+      "Put a versioned service between the screens and the data. The browser never holds a connection.",
+      "Audit log",
+      "No audit log; actions cannot be attributed",
+      "not present",
+      "Every change since launch",
+      "Books and records",
+      "Record every read and write with the actor, the time and the values before and after, retained for seven years."
+    ],
+    "rebuildGraphicLabels": [
+      "Prototype app",
+      "Fee spreadsheet",
+      "Shadow ledgers",
+      "LPA + side letters",
+      "LP portal · in production"
+    ],
+    "platformStations": [
+      "Emails",
+      "Shared Drives",
+      "Spreadsheets",
+      "Siloed Tools",
+      "Intake",
+      "Capture",
+      "Check",
+      "Approve",
+      "File"
+    ],
+    "engagementSnippetLabels": [
+      "Intake",
+      "Capture",
+      "Check",
+      "Approve",
+      "File",
+      "F1–F5",
+      "live"
+    ]
+  }
+}
