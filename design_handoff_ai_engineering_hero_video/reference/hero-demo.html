@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Engineering hero: video veil (standalone reference)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+html, body { margin:0; padding:0; overflow-x:clip; }
+body {
+  --a:#157F52; --bad:#C4341E; --line:rgba(20,20,18,0.13); --line2:rgba(20,20,18,0.075);
+  --mut:#6E6D67; --sec:#55544E; --tex:1;
+  background:#F6F5F2; color:#1A1917;
+  font-family:"Instrument Sans","Helvetica Neue",Helvetica,sans-serif;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+a { color:inherit; text-decoration:none; }
+a:hover { color:var(--a); }
+::selection { background:var(--a); color:#FFFFFF; }
+</style>
+</head>
+<body>
+<!-- Hero markup verbatim from reference/AI Engineering v2.dc.html; ref="{{ x }}" became data-ref="x". -->
+<section data-ref="heroSec" id="top" data-screen-label="Hero" style="position:relative; padding:0 40px; border-bottom:1px solid var(--line2); overflow:hidden; width:100%; height:clamp(720px, 60vw, calc(100vh + 96px)); box-sizing:border-box">
+    <video data-ref="heroImg" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" muted autoplay loop playsinline preload="auto" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; pointer-events:none; filter:grayscale(1)"></video>
+    <canvas data-ref="heroVeil" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none"></canvas>
+    <div style="position:absolute; inset:0; background:radial-gradient(ellipse 60% 52% at 50% 18%, rgba(250,248,240,0.62) 0%, rgba(250,248,240,0.28) 55%, rgba(250,248,240,0) 100%); pointer-events:none"></div>
+    <div style="position:relative; max-width:1280px; margin:0 auto; padding:clamp(48px,5.2vw,76px) 0 0; display:flex; flex-direction:column; align-items:center; text-align:center">
+      <div style="font-size:13px; letter-spacing:-0.005em; color:#2C2B27">AI Engineering</div>
+      <h1 style="margin:20px 0 0; font-size:clamp(36px,4vw,58px); font-weight:400; letter-spacing:-0.038em; line-height:1.0; text-wrap:balance">The prototype works.<br />Now it has to hold.</h1>
+      <p style="margin:22px 0 0; max-width:640px; font-size:clamp(15.5px,1.2vw,17px); line-height:1.55; color:#2C2B27; text-wrap:pretty">Executives and analysts build working software in an afternoon now. We audit what they built, rebuild what has to be rebuilt, and run it in production with the controls a regulated firm is required to hold.</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin:28px 0 0">
+          <a href="#engagement" style="display:flex; align-items:center; height:46px; padding:0 24px; background:#1A1917; color:#FFFFFF; border-radius:6px; font-size:15px; font-weight:500; letter-spacing:-0.01em">Book an audit</a>
+          <a href="#rebuild" style="display:flex; align-items:center; height:46px; padding:0 24px; border:1px solid var(--line); background:rgba(255,255,255,0.85); border-radius:6px; font-size:15px; letter-spacing:-0.01em">See the process</a>
+        </div>
+    </div>
+  </section>
+<script>
+// initVeil() and stepVeil() verbatim from the page's logic class (see motion/hero-veil.methods.js).
+class HeroVeil {
+  constructor(root, props) {
+    this.props = props || {};
+    const r = (k) => ({ current: root.querySelector('[data-ref="' + k + '"]') });
+    this.heroSec = r("heroSec"); this.heroVeil = r("heroVeil"); this.heroImg = r("heroImg");
+  }
+  // Hero veil: each frame the canvas redraws the current video frame in greyscale over the colour video; the pointer
+  // erases soft watercolour blots that bleed outward and refill over ~2.4s, so colour shows along the trail.
+  initVeil() {
+    const sec = this.heroSec.current, cv = this.heroVeil.current, vid = this.heroImg.current;
+    if (!sec || !cv || !vid) return;
+    this._vPts = [];
+    const still = () => !(this.props.motion ?? true) || !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    vid.muted = true; vid.loop = true; vid.playsInline = true;
+    const go = () => { if (still()) { vid.pause(); return; } const p = vid.play(); if (p && p.catch) p.catch(() => {}); };
+    vid.addEventListener("canplay", go);
+    if (vid.readyState >= 3) go();
+    const onMove = (e) => {
+      if (!this._vReady || still()) return;
+      const r = sec.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      const last = this._vPts[this._vPts.length - 1];
+      if (last && Math.hypot(x - last.x, y - last.y) < 14) return;
+      this._vPts.push({ x: x, y: y, t: performance.now(), s: Math.random() * 6.28, r: 53 + Math.random() * 31 });
+      if (this._vPts.length > 90) this._vPts.shift();
+    };
+    sec.addEventListener("pointermove", onMove);
+    this._veilOff = () => { sec.removeEventListener("pointermove", onMove); vid.removeEventListener("canplay", go); };
+  }
+
+  stepVeil(ms) {
+    const sec = this.heroSec.current, cv = this.heroVeil.current, vid = this.heroImg.current;
+    if (!sec || !cv || !vid || !this._vPts || vid.readyState < 2 || !vid.videoWidth) return;
+    const box = sec.getBoundingClientRect();
+    if (box.bottom < 0 || box.top > window.innerHeight) return;
+    const cw = Math.max(1, sec.clientWidth), ch = Math.max(1, sec.clientHeight);
+    let fresh = false;
+    if (cv.width !== cw || cv.height !== ch) { cv.width = cw; cv.height = ch; fresh = true; }
+    if (!this._vReady) { this._vReady = true; fresh = true; vid.style.filter = "none"; }
+    const LIFE = 2400;
+    this._vPts = this._vPts.filter((p) => ms - p.t < LIFE);
+    const vt = vid.currentTime;
+    if (!fresh && !this._vPts.length && !this._vDirty && vt === this._vT) return;
+    this._vT = vt;
+    this._vDirty = this._vPts.length > 0;
+    const x = cv.getContext("2d");
+    const k = Math.max(cw / vid.videoWidth, ch / vid.videoHeight), dw = vid.videoWidth * k, dh = vid.videoHeight * k;
+    x.globalCompositeOperation = "source-over";
+    x.clearRect(0, 0, cw, ch);
+    x.drawImage(vid, (cw - dw) / 2, ch - dh, dw, dh);
+    // desaturate in place: a zero-saturation fill in "saturation" mode keeps each pixel's luminosity (0.3R + 0.59G + 0.11B)
+    x.globalCompositeOperation = "saturation";
+    x.fillStyle = "#000";
+    x.fillRect(0, 0, cw, ch);
+    if (!this._vPts.length) return;
+    x.globalCompositeOperation = "destination-out";
+    for (const p of this._vPts) {
+      const age = (ms - p.t) / LIFE, fin = Math.min(1, (ms - p.t) / 140);
+      const a = 0.95 * fin * Math.pow(1 - age, 1.6);
+      const R = p.r * (1 + 0.55 * age);
+      for (let k = 0; k < 3; k++) {
+        const ang = p.s + k * 2.1, cx = p.x + Math.cos(ang) * R * 0.34, cy = p.y + Math.sin(ang * 1.3) * R * 0.28;
+        const rr = R * (0.72 + 0.14 * k);
+        const rg = x.createRadialGradient(cx, cy, 0, cx, cy, rr);
+        rg.addColorStop(0, "rgba(0,0,0," + (a * 0.7).toFixed(3) + ")");
+        rg.addColorStop(0.55, "rgba(0,0,0," + (a * 0.5).toFixed(3) + ")");
+        rg.addColorStop(1, "rgba(0,0,0,0)");
+        x.fillStyle = rg;
+        x.beginPath(); x.arc(cx, cy, rr, 0, 6.2832); x.fill();
+      }
+    }
+  }
+}
+const veil = new HeroVeil(document, { motion: true });
+veil.initVeil();
+(function loop(ms) { veil.stepVeil(ms); requestAnimationFrame(loop); })(performance.now());
+</script>
+</body>
+</html>
