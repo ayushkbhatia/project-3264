@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
 
 // public/ files keep fixed, unhashed URLs, which Next serves with `max-age=0`: every visit
-// paid a revalidation round trip for the hero painting and the logos. Not content-hashed, so
-// not immutable either: fresh for a week, then served from cache for up to a day more while
-// it revalidates. A file replaced under the same name can take that long to reach a returning
-// visitor; give it a new name to ship it at once.
+// paid a revalidation round trip for the hero painting, the logos and (on AI Engineering) the
+// hero video. Not content-hashed, so not immutable either: fresh for a week, then served from
+// cache for up to a day more while it revalidates. A file replaced under the same name can take
+// that long to reach a returning visitor; give it a new name to ship it at once.
 const ASSET_CACHE = [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }];
 
 const nextConfig: NextConfig = {
@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
-      { source: "/:dir(img|logos|fonts)/:file*", headers: ASSET_CACHE },
+      { source: "/:dir(img|logos|fonts|video)/:file*", headers: ASSET_CACHE },
       // The metadata files in src/app. Their <link> and og:image URLs carry a content hash,
       // but crawlers and touch-icon lookups also fetch the bare paths.
       { source: "/:file(icon\\.svg|apple-icon\\.png|opengraph-image\\.png)", headers: ASSET_CACHE },

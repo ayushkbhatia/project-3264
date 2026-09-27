@@ -14,8 +14,8 @@ the header height.
 ## 0 · PORT SHIMS (the only permitted changes to method bodies)
 
 1. `extends DCLogic` → `extends React.Component` in all three files.
-2. Asset paths: `"assets/hero-plane.png"` in `initVeil` → `"/img/hero-plane.png"`; every `url('assets/…')`
-   and `src="assets/…"` in markup → `/img/…`.
+2. Asset paths: every `url('assets/…')` and `src="assets/…"` in markup → `/img/…`. (The hero video's path
+   lives in the markup only.)
 3. Delete the dead code listed at the top of `ai-engineering.logic.js` (including the `three()` import of
    `https://esm.sh/three`).
 4. QA flag: in `maybeIntro`, also skip when `location.search` contains `intro=off` (the reference copy does).
@@ -46,13 +46,16 @@ Refs `iWrap` (fixed overlay, `display:none` until it runs), `iStage` (empty), `i
 * Click or any key: 280ms fade. Teardown sets `pointer-events:none` at once and always hides on a timer, so
   the page can never stay sealed.
 
-## 3 · Hero veil (`initVeil`, `buildGrey`, `stepVeil`)
+## 3 · Hero veil (`initVeil`, `stepVeil`)
 
-Refs `heroSec`, `heroImg`, `heroVeil` (canvas). The img starts `filter: grayscale(1)`; once the canvas holds a
-greyscale copy (cover-fit, bottom-anchored, luminance 0.3R + 0.59G + 0.11B) the filter is removed so colour
-sits under the grey canvas. `pointermove` adds a point every ≥14px (max 90; radius 53–84px; random phase).
-Each frame the grey copy is redrawn and soft watercolour blots are erased at the points (`destination-out`),
-bleeding outward and refilling over 2400ms. Off under `motion=false` or reduced motion.
+Refs `heroSec`, `heroImg` (the video), `heroVeil` (canvas). The video plays muted and looped; under reduced
+motion or `motion=false` it holds on its first frame. Each frame, while the hero is on screen and a frame is
+available, the canvas (CSS-pixel size) draws the video cover-fit and bottom-anchored, then fills with `#000` in
+`"saturation"` mode to make it greyscale (luminance 0.3R + 0.59G + 0.11B). It redraws only when resized, when
+blots are live, or when `currentTime` changes. The first drawn frame removes the video's CSS filter.
+`pointermove` adds a point every ≥14px (max 90; radius 53–84px; random phase). Blots are erased at the points
+(`destination-out`), bleeding outward and refilling over 2400ms. No pixel reads, so a tainted canvas is fine.
+(From `/design_handoff_ai_engineering_hero_video`, which replaced the illustration and `buildGrey`.)
 
 ## 4 · 01 Premise (`stepStack` + step functions)
 

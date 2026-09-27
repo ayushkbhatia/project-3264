@@ -63,8 +63,9 @@ child. Keep `auPack(i)` as the data source.
   `shown` never reaches 1; or a Strict Mode double mount left a wheel listener attached.
 * **Links turn green.** A child component declared its own global `a` colour. There must be one link rule.
 * **SVG text in Helvetica.** Fonts loaded through `next/font` only. Use Fontsource family names.
-* **Hero stays grey.** The veil loads the image by path; after the path shim it must be `/img/hero-plane.png`,
-  same origin (`getImageData`).
+* **Hero stays grey or blank.** The video never reached `readyState ≥ 2`: check the path, that `muted` is set
+  as a property before `play()`, and that `playsInline` is present for iOS. Don't add `crossOrigin` unless the
+  host sends CORS headers.
 * **Word fills don't move.** Spans must be direct children of the ref'd `<p>`.
 * **06 card jumps on resize.** The spine width is read from the build card's `offsetLeft`; keep
   `left: clamp(56px, 7.2vw, 104px)` on it and the same clamp on both spines.

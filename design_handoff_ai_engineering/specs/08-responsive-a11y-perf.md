@@ -31,6 +31,6 @@ end states with no scroll hold, and ask design for mobile layouts.
 
 * Three rAF loops. Keep their off-screen guards: 04/05 regenerate SVG only within 50px of the viewport; the 06
   snippet only while the build card shows and the section is on screen; the audit loop only once in view.
-* `hero-plane.png` is the LCP: preload, AVIF/WebP at 1x/2x.
-* The veil calls `getImageData` once per size change; the image must be same-origin.
+* The hero poster is the LCP: preload it. The video is H.264, faststart, about 4 MB or less, self-hosted.
+* The veil redraws once per video frame while the hero is on screen; it never calls `getImageData`.
 * No page re-render on scroll. The only React state is the audit finding index.

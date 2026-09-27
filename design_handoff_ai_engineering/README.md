@@ -167,7 +167,7 @@ In `assets/` (also `reference/assets/`, so the reference runs offline):
 
 | File | Use |
 | --- | --- |
-| `hero-plane.png` | hero image, and the source of the greyscale veil |
+| `ai-engineering-hero.mp4` + its first frame as poster | hero video under the greyscale veil (in the app: `public/video/`, `public/img/ai-engineering/hero-poster.jpg`; `reference/assets/` has the mp4). Superseded `hero-plane.png`, kept here for the record |
 | `what-changed-wash.png` | 01 card 1 |
 | `what-produced-wash.webp` | 01 card 2 |
 | `valley-pastel.png` | 01 card 3 and the 02 Audit tile |
@@ -175,7 +175,7 @@ In `assets/` (also `reference/assets/`, so the reference runs offline):
 | `cta-d.avif` | 06 audit card |
 | `cta-b.avif` | 06 build card |
 
-Optimise them (AVIF/WebP, responsive sizes) but keep crops and positions. `hero-plane.png` is the LCP.
+Optimise them (AVIF/WebP, responsive sizes) but keep crops and positions. The hero poster is the LCP.
 
 ## Files
 

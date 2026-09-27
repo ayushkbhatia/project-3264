@@ -74,6 +74,11 @@ reference prototype (`reference/AI Engineering.dc.html`) wins over the specs.
 - Behaviour the handoff asks the port to add, wrapped around the logic rather than written into
   it: the intro's first-paint gate, reduced motion for the 03 hold, the under-900px interim
   layout (spec 08), keyboard-reachable spine buttons, and a footer "Pause animations" control.
+- The hero is a looping video under the greyscale colour-reveal veil
+  ([`design_handoff_ai_engineering_hero_video/`](design_handoff_ai_engineering_hero_video/README.md)):
+  self-hosted at `public/video/ai-engineering-hero.mp4` (H.264, faststart, ~3MB, re-encoded from
+  the design's source clip) with its first frame as the preloaded poster. The video pauses while
+  the hero is off screen, under the pause control and under reduced motion.
 - The reference's embedded canvas prototypes leak their preview background
   (`body { background:#E9E7E2 }`) onto the whole page; the port keeps the page's specified
   `#F6F5F2`, and the QA scripts neutralise the leak on the reference side.
@@ -81,7 +86,8 @@ reference prototype (`reference/AI Engineering.dc.html`) wins over the specs.
   `node qa/ai-scrub.mjs` (every scroll point, three viewports; `--reduced` for the static
   states), `node qa/ai-motion.mjs` (audit loop, 03 hold, flight into 04),
   `node qa/ai-intro.mjs`, `node qa/ai-interact.mjs`, `node qa/ai-lifecycle.mjs`,
-  `node qa/ai-responsive.mjs` and `node qa/ai-a11y.mjs`.
+  `node qa/ai-responsive.mjs`, `node qa/ai-a11y.mjs` and `node qa/ai-hero-video.mjs` (the hero
+  video: playback, veil, trail, reduced motion, pause, reference vs port on the same frame).
 
 ## Environment
 

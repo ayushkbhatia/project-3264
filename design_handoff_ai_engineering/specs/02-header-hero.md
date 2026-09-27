@@ -16,8 +16,11 @@ Markup `reference/sections/01-header.html`, `02-hero.html`. Motion `ANIMATIONS.m
 
 * Section (`heroSec`): `position:relative; padding:0 40px; overflow:hidden; height:clamp(720px, 60vw,
   calc(100vh + 96px)); border-bottom:1px solid var(--line2)`.
-* `heroImg`: `hero-plane.png`, `absolute; inset:0; 100%×100%; object-fit:cover; object-position:center bottom;
-  filter:grayscale(1)` (the veil removes the filter once ready).
+* `heroImg`: a `<video>` of `/video/ai-engineering-hero.mp4` (poster: its first frame,
+  `/img/ai-engineering/hero-poster.jpg` in the app), `muted autoPlay loop playsInline preload="auto" aria-hidden="true"`,
+  `absolute; inset:0; 100%×100%; object-fit:cover; object-position:center bottom; pointer-events:none;
+  filter:grayscale(1)` (the veil removes the filter once the first frame is drawn). Changed by
+  `/design_handoff_ai_engineering_hero_video`.
 * `heroVeil`: canvas, `absolute; inset:0; 100%×100%; pointer-events:none`.
 * Glow: `radial-gradient(ellipse 60% 52% at 50% 18%, rgba(250,248,240,0.62) 0%, rgba(250,248,240,0.28) 55%,
   rgba(250,248,240,0) 100%)`.

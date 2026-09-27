@@ -1,19 +1,28 @@
 /* eslint-disable react-hooks/refs -- `v` carries the page logic's createRef() objects, which
    these components only hand to ref={…}; nothing reads .current during render. */
-import Image from "next/image";
 import type { AIEngineeringVals } from "@/motion/ai-engineering/ai-engineering.logic";
 import { css } from "@/components/private-credit/css";
-import heroPlane from "../../../../public/img/ai-engineering/hero-plane.png";
+import { HERO_POSTER, HERO_VIDEO } from "../hero-media";
 
-// Hero (#top). The plane is drawn in colour under a greyscale canvas copy (the veil); the
-// pointer erases soft blots from the grey copy, which refill over ~2.4s (initVeil / stepVeil).
-// Until the veil is ready the image itself is greyscale.
+// Hero (#top). A looping video plays in colour under a greyscale canvas (the veil), which
+// redraws the current frame in grey every video frame; the pointer erases soft blots from the
+// grey layer, which refill over ~2.4s, so the trail reveals the moving footage in colour
+// (initVeil / stepVeil, design_handoff_ai_engineering_hero_video). Until the veil has drawn
+// its first frame the video itself is greyscale (its inline filter), so colour only ever
+// appears inside the trail.
+//
+// The video is self-hosted (hero-media.ts). Its poster is the first frame, preloaded by the page:
+// it is the LCP, and it keeps the hero from standing empty before the first frame decodes.
+//
+// No `autoPlay`, unlike the handoff's element: React renders `muted` into the server HTML, so
+// the browser would start the video before hydration, including for a reduced-motion visitor,
+// until the logic paused it. initVeil starts playback itself on `canplay` when motion is
+// allowed, so under reduced motion the video never leaves its first frame.
 
 export function Hero({ v }: { v: AIEngineeringVals }) {
   return (
     <section ref={v.heroSec} id="top" data-screen-label="Hero" style={css("position:relative; padding:0 40px; border-bottom:1px solid var(--line2); overflow:hidden; width:100%; height:clamp(720px, 60vw, calc(100vh + 96px)); box-sizing:border-box")}>
-      {/* The LCP. `sizes` 100vw: the section is full-bleed. */}
-      <Image ref={v.heroImg} quality={90} src={heroPlane} alt="" fill preload sizes="100vw" style={css("position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; pointer-events:none; filter:grayscale(1)")} />
+      <video ref={v.heroImg} src={HERO_VIDEO} poster={HERO_POSTER} muted loop playsInline preload="auto" aria-hidden="true" style={css("position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; pointer-events:none; filter:grayscale(1)")} />
       <canvas ref={v.heroVeil} aria-hidden="true" style={css("position:absolute; inset:0; width:100%; height:100%; pointer-events:none")} />
       <div style={css("position:absolute; inset:0; background:radial-gradient(ellipse 60% 52% at 50% 18%, rgba(250,248,240,0.62) 0%, rgba(250,248,240,0.28) 55%, rgba(250,248,240,0) 100%); pointer-events:none")} />
       <div style={css("position:relative; max-width:1280px; margin:0 auto; padding:clamp(48px,5.2vw,76px) 0 0; display:flex; flex-direction:column; align-items:center; text-align:center")}>

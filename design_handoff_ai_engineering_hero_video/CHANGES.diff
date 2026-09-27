@@ -1,0 +1,101 @@
+--- a/AI Engineering.dc.html
++++ b/AI Engineering v2.dc.html
+@@ -53,7 +53,7 @@
+   </header>
+ 
+   <section ref="{{ heroSec }}" id="top" data-screen-label="Hero" style="position:relative; padding:0 40px; border-bottom:1px solid var(--line2); overflow:hidden; width:100%; height:clamp(720px, 60vw, calc(100vh + 96px)); box-sizing:border-box">
++    <video ref="{{ heroImg }}" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" muted="{{ true }}" autoPlay="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="auto" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; pointer-events:none; filter:grayscale(1)"></video>
+-    <img ref="{{ heroImg }}" src="assets/hero-plane.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; pointer-events:none; filter:grayscale(1)" />
+     <canvas ref="{{ heroVeil }}" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none"></canvas>
+     <div style="position:absolute; inset:0; background:radial-gradient(ellipse 60% 52% at 50% 18%, rgba(250,248,240,0.62) 0%, rgba(250,248,240,0.28) 55%, rgba(250,248,240,0) 100%); pointer-events:none"></div>
+     <div style="position:relative; max-width:1280px; margin:0 auto; padding:clamp(48px,5.2vw,76px) 0 0; display:flex; flex-direction:column; align-items:center; text-align:center">
+@@ -1848,19 +1848,19 @@
+     if (ne && ne.textContent !== cnt) ne.textContent = cnt;
+   }
+ 
++  // Hero veil: each frame the canvas redraws the current video frame in greyscale over the colour video; the pointer
+-  // Hero veil: a canvas holds a greyscale copy of the illustration over the colour image; the pointer
+   // erases soft watercolour blots that bleed outward and refill over ~2.4s, so colour shows along the trail.
+   initVeil() {
++    const sec = this.heroSec.current, cv = this.heroVeil.current, vid = this.heroImg.current;
++    if (!sec || !cv || !vid) return;
+-    const sec = this.heroSec.current, cv = this.heroVeil.current;
+-    if (!sec || !cv) return;
+     this._vPts = [];
++    const still = () => !(this.props.motion ?? true) || !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
++    vid.muted = true; vid.loop = true; vid.playsInline = true;
++    const go = () => { if (still()) { vid.pause(); return; } const p = vid.play(); if (p && p.catch) p.catch(() => {}); };
++    vid.addEventListener("canplay", go);
++    if (vid.readyState >= 3) go();
+-    const src = new Image();
+-    src.onload = () => { this._vImg = src; this._vGrey = null; this._vDirty = true; };
+-    src.src = "assets/hero-plane.png";
+     const onMove = (e) => {
++      if (!this._vReady || still()) return;
+-      if (!this._vGrey) return;
+-      if (!(this.props.motion ?? true)) return;
+-      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+       const r = sec.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+       const last = this._vPts[this._vPts.length - 1];
+       if (last && Math.hypot(x - last.x, y - last.y) < 14) return;
+@@ -1868,43 +1868,33 @@
+       if (this._vPts.length > 90) this._vPts.shift();
+     };
+     sec.addEventListener("pointermove", onMove);
++    this._veilOff = () => { sec.removeEventListener("pointermove", onMove); vid.removeEventListener("canplay", go); };
+-    this._veilOff = () => sec.removeEventListener("pointermove", onMove);
+   }
+ 
+-  // greyscale copy, cover-fit and bottom-anchored to match the img beneath
+-  buildGrey(cw, ch) {
+-    const im = this._vImg;
+-    const s = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+-    const dw = im.naturalWidth * s, dh = im.naturalHeight * s;
+-    const c = document.createElement("canvas");
+-    c.width = cw; c.height = ch;
+-    const x = c.getContext("2d");
+-    x.drawImage(im, (cw - dw) / 2, ch - dh, dw, dh);
+-    const d = x.getImageData(0, 0, cw, ch), p = d.data;
+-    for (let i = 0; i < p.length; i += 4) { const l = 0.3 * p[i] + 0.59 * p[i + 1] + 0.11 * p[i + 2]; p[i] = p[i + 1] = p[i + 2] = l; }
+-    x.putImageData(d, 0, 0);
+-    return c;
+-  }
+-
+   stepVeil(ms) {
++    const sec = this.heroSec.current, cv = this.heroVeil.current, vid = this.heroImg.current;
++    if (!sec || !cv || !vid || !this._vPts || vid.readyState < 2 || !vid.videoWidth) return;
++    const box = sec.getBoundingClientRect();
++    if (box.bottom < 0 || box.top > window.innerHeight) return;
+-    const sec = this.heroSec.current, cv = this.heroVeil.current;
+-    if (!sec || !cv || !this._vPts || !this._vImg) return;
+     const cw = Math.max(1, sec.clientWidth), ch = Math.max(1, sec.clientHeight);
++    let fresh = false;
++    if (cv.width !== cw || cv.height !== ch) { cv.width = cw; cv.height = ch; fresh = true; }
++    if (!this._vReady) { this._vReady = true; fresh = true; vid.style.filter = "none"; }
+-    if (cv.width !== cw || cv.height !== ch || !this._vGrey) {
+-      cv.width = cw; cv.height = ch;
+-      this._vGrey = this.buildGrey(cw, ch);
+-      this._vDirty = true;
+-      const img = this.heroImg.current;
+-      if (img) img.style.filter = "none";
+-    }
+     const LIFE = 2400;
+     this._vPts = this._vPts.filter((p) => ms - p.t < LIFE);
++    const vt = vid.currentTime;
++    if (!fresh && !this._vPts.length && !this._vDirty && vt === this._vT) return;
++    this._vT = vt;
+-    if (!this._vPts.length && !this._vDirty) return;
+     this._vDirty = this._vPts.length > 0;
+     const x = cv.getContext("2d");
++    const k = Math.max(cw / vid.videoWidth, ch / vid.videoHeight), dw = vid.videoWidth * k, dh = vid.videoHeight * k;
+     x.globalCompositeOperation = "source-over";
+     x.clearRect(0, 0, cw, ch);
++    x.drawImage(vid, (cw - dw) / 2, ch - dh, dw, dh);
++    // desaturate in place: a zero-saturation fill in "saturation" mode keeps each pixel's luminosity (0.3R + 0.59G + 0.11B)
++    x.globalCompositeOperation = "saturation";
++    x.fillStyle = "#000";
++    x.fillRect(0, 0, cw, ch);
+-    x.drawImage(this._vGrey, 0, 0);
+     if (!this._vPts.length) return;
+     x.globalCompositeOperation = "destination-out";
+     for (const p of this._vPts) {
