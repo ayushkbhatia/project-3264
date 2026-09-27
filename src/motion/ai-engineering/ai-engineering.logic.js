@@ -5,7 +5,9 @@
  *   * `extends DCLogic` -> `extends React.Component`, exported.
  *   * The dead code listed in the handoff copy is deleted (the legacy audit list, tier list, flow table, hero wash,
  *     three.js hero/topology and the old 03 Rebuild), with its refs, renderVals keys and calls.
- *   * initVeil loads the hero image the page already fetched (same origin, for getImageData) instead of "assets/…".
+ *   * initVeil and stepVeil are the hero-video versions from design_handoff_ai_engineering_hero_video
+ *     (motion/hero-veil.methods.js, verbatim), and buildGrey is gone: the veil redraws the playing video in
+ *     greyscale each frame instead of a still copy of an illustration.
  *   * maybeIntro also skips on ?intro=off (the QA flag the reference copy carries).
  *   * stepAuditLoop hands the finding index to <AuditFindings> through a ref instead of setState on the page, so
  *     the 1.3s finding step re-renders the findings pane only; its fade moved there from componentDidUpdate.
@@ -583,19 +585,19 @@ export class AIEngineeringLogic extends React.Component {
     if (this.auFindings.current) this.auFindings.current.show(j);
   }
 
-  // Hero veil: a canvas holds a greyscale copy of the illustration over the colour image; the pointer
+  // Hero veil: each frame the canvas redraws the current video frame in greyscale over the colour video; the pointer
   // erases soft watercolour blots that bleed outward and refill over ~2.4s, so colour shows along the trail.
   initVeil() {
-    const sec = this.heroSec.current, cv = this.heroVeil.current;
-    if (!sec || !cv) return;
+    const sec = this.heroSec.current, cv = this.heroVeil.current, vid = this.heroImg.current;
+    if (!sec || !cv || !vid) return;
     this._vPts = [];
-    const src = new Image();
-    src.onload = () => { this._vImg = src; this._vGrey = null; this._vDirty = true; };
-    src.src = (this.heroImg.current && this.heroImg.current.currentSrc) || this.props.veilSrc || "/img/ai-engineering/hero-plane.png";
+    const still = () => !(this.props.motion ?? true) || !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    vid.muted = true; vid.loop = true; vid.playsInline = true;
+    const go = () => { if (still()) { vid.pause(); return; } const p = vid.play(); if (p && p.catch) p.catch(() => {}); };
+    vid.addEventListener("canplay", go);
+    if (vid.readyState >= 3) go();
     const onMove = (e) => {
-      if (!this._vGrey) return;
-      if (!(this.props.motion ?? true)) return;
-      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (!this._vReady || still()) return;
       const r = sec.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
       const last = this._vPts[this._vPts.length - 1];
       if (last && Math.hypot(x - last.x, y - last.y) < 14) return;
@@ -603,43 +605,33 @@ export class AIEngineeringLogic extends React.Component {
       if (this._vPts.length > 90) this._vPts.shift();
     };
     sec.addEventListener("pointermove", onMove);
-    this._veilOff = () => sec.removeEventListener("pointermove", onMove);
-  }
-
-  // greyscale copy, cover-fit and bottom-anchored to match the img beneath
-  buildGrey(cw, ch) {
-    const im = this._vImg;
-    const s = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
-    const dw = im.naturalWidth * s, dh = im.naturalHeight * s;
-    const c = document.createElement("canvas");
-    c.width = cw; c.height = ch;
-    const x = c.getContext("2d");
-    x.drawImage(im, (cw - dw) / 2, ch - dh, dw, dh);
-    const d = x.getImageData(0, 0, cw, ch), p = d.data;
-    for (let i = 0; i < p.length; i += 4) { const l = 0.3 * p[i] + 0.59 * p[i + 1] + 0.11 * p[i + 2]; p[i] = p[i + 1] = p[i + 2] = l; }
-    x.putImageData(d, 0, 0);
-    return c;
+    this._veilOff = () => { sec.removeEventListener("pointermove", onMove); vid.removeEventListener("canplay", go); };
   }
 
   stepVeil(ms) {
-    const sec = this.heroSec.current, cv = this.heroVeil.current;
-    if (!sec || !cv || !this._vPts || !this._vImg) return;
+    const sec = this.heroSec.current, cv = this.heroVeil.current, vid = this.heroImg.current;
+    if (!sec || !cv || !vid || !this._vPts || vid.readyState < 2 || !vid.videoWidth) return;
+    const box = sec.getBoundingClientRect();
+    if (box.bottom < 0 || box.top > window.innerHeight) return;
     const cw = Math.max(1, sec.clientWidth), ch = Math.max(1, sec.clientHeight);
-    if (cv.width !== cw || cv.height !== ch || !this._vGrey) {
-      cv.width = cw; cv.height = ch;
-      this._vGrey = this.buildGrey(cw, ch);
-      this._vDirty = true;
-      const img = this.heroImg.current;
-      if (img) img.style.filter = "none";
-    }
+    let fresh = false;
+    if (cv.width !== cw || cv.height !== ch) { cv.width = cw; cv.height = ch; fresh = true; }
+    if (!this._vReady) { this._vReady = true; fresh = true; vid.style.filter = "none"; }
     const LIFE = 2400;
     this._vPts = this._vPts.filter((p) => ms - p.t < LIFE);
-    if (!this._vPts.length && !this._vDirty) return;
+    const vt = vid.currentTime;
+    if (!fresh && !this._vPts.length && !this._vDirty && vt === this._vT) return;
+    this._vT = vt;
     this._vDirty = this._vPts.length > 0;
     const x = cv.getContext("2d");
+    const k = Math.max(cw / vid.videoWidth, ch / vid.videoHeight), dw = vid.videoWidth * k, dh = vid.videoHeight * k;
     x.globalCompositeOperation = "source-over";
     x.clearRect(0, 0, cw, ch);
-    x.drawImage(this._vGrey, 0, 0);
+    x.drawImage(vid, (cw - dw) / 2, ch - dh, dw, dh);
+    // desaturate in place: a zero-saturation fill in "saturation" mode keeps each pixel's luminosity (0.3R + 0.59G + 0.11B)
+    x.globalCompositeOperation = "saturation";
+    x.fillStyle = "#000";
+    x.fillRect(0, 0, cw, ch);
     if (!this._vPts.length) return;
     x.globalCompositeOperation = "destination-out";
     for (const p of this._vPts) {

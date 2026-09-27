@@ -15,8 +15,6 @@ export interface AIEngineeringProps {
   motion?: boolean;
   /** false: the intro never shows. Default true. */
   playIntro?: boolean;
-  /** PORT: the optimised hero image URL, for the veil's greyscale copy (see initVeil). */
-  veilSrc?: string;
 }
 
 export interface AuditItem {
@@ -104,6 +102,7 @@ export interface AIEngineeringVals {
 
 export declare class AIEngineeringLogic<P extends AIEngineeringProps = AIEngineeringProps> extends Component<P> {
   heroImg: Ref;
+  heroSec: Ref;
   iWrap: Ref;
   enAs: Ref;
   enBs: Ref;
@@ -114,7 +113,7 @@ export declare class AIEngineeringLogic<P extends AIEngineeringProps = AIEnginee
   _enP2: number | undefined;
   _enVB: number | undefined;
   componentDidMount(): void;
-  componentDidUpdate(): void;
+  componentDidUpdate(prevProps: Readonly<P>): void;
   componentWillUnmount(): void;
   maybeIntro(): void;
   stepStack(): void;

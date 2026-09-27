@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { getImageProps } from "next/image";
+import { preload } from "react-dom";
+import { HERO_POSTER } from "@/components/ai-engineering/hero-media";
 import { AIEngineering, PauseControl } from "@/components/ai-engineering/Motion";
 import { Footer } from "@/components/home/Footer";
 import { Header } from "@/components/home/Header";
 import { footerColumns, headerCta, meta, nav } from "@/content/ai-engineering";
-import heroPlane from "../../../public/img/ai-engineering/hero-plane.png";
 
 // AI Engineering — the service page, ported from design_handoff_ai_engineering (its reference
 // prototype is the source of truth). The page itself is one client component that extends the
@@ -19,13 +19,11 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  // The hero veil paints a greyscale copy of the hero image from pixels, so it loads the image
-  // itself (same origin): the optimised URL, not the 1.8MB source (see initVeil). The <img>
-  // normally hands it its own current source first, which is then a cache hit.
-  const veilSrc = getImageProps({ src: heroPlane, alt: "", fill: true, sizes: "100vw", quality: 90 }).props.src;
+  // The hero video's poster is the LCP. Preloaded from here: a preload() inside the client
+  // tree does not reach the server HTML's <head>.
+  preload(HERO_POSTER, { as: "image", fetchPriority: "high" });
   return (
     <AIEngineering
-      veilSrc={veilSrc}
       header={<Header nav={nav} cta={headerCta} homeHref="/" collapseBelow="1024" />}
       footer={<Footer columns={footerColumns} extra={<PauseControl />} />}
     />
