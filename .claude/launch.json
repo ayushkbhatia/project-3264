@@ -39,6 +39,20 @@
       "port": 4101
     },
     {
+      "name": "design reference: ai engineering",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4102",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_ai_engineering/reference"
+      ],
+      "port": 4102
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { INTRO_GATE_SCRIPT, INTRO_GATE_STYLE } from "@/components/home/IntroGate";
+import { AI_INTRO_GATE_SCRIPT } from "@/components/ai-engineering/IntroGate";
 import { PC_INTRO_GATE_SCRIPT } from "@/components/private-credit/IntroGate";
 import "./globals.css";
 
@@ -50,8 +51,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             is its page-colour cover rather than the page it is about to cover (IntroGate.ts). */}
         <script dangerouslySetInnerHTML={{ __html: INTRO_GATE_SCRIPT }} />
         <style dangerouslySetInnerHTML={{ __html: INTRO_GATE_STYLE }} />
-        {/* Same for the Private Credit intro, on that route only (IntroGate.ts there). */}
+        {/* Same for the Private Credit and AI Engineering intros, each on its own route only
+            (IntroGate.ts in each page's components). */}
         <script dangerouslySetInnerHTML={{ __html: PC_INTRO_GATE_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: AI_INTRO_GATE_SCRIPT }} />
       </head>
       <body>{children}</body>
     </html>

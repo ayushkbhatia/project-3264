@@ -57,6 +57,32 @@ way: the reference prototype (`reference/Private Credit.dc.html`) wins over the 
   `node qa/pc-a11y.mjs`, and `qa/compare.mjs` with `REF_URL` / `PORT_URL` set for static
   sections (`?t=16&intro=off` on both sides freezes the time loops and skips the intro).
 
+## AI Engineering page
+
+`/ai-engineering` is a port of
+[`design_handoff_ai_engineering/`](design_handoff_ai_engineering/README.md); again the
+reference prototype (`reference/AI Engineering.dc.html`) wins over the specs.
+
+- As that handoff prescribes, the motion is the prototype's own logic classes, ported as React
+  class components: `src/motion/ai-engineering/*.logic.js` (method bodies verbatim apart from
+  the handoff's port shims, listed at the top of each file). The page component
+  (`src/components/ai-engineering/AIEngineeringPage.tsx`) extends the page logic and adds
+  `render()`; `RebuildPlatform` and `RebuildGraphic` do the same for the 03–05 dark canvas.
+- Section markup in `src/components/ai-engineering/sections/` was converted from the reference
+  with every inline style kept verbatim through `css()`. The page root (`[data-ai]`) runs on
+  content-box sizing.
+- Behaviour the handoff asks the port to add, wrapped around the logic rather than written into
+  it: the intro's first-paint gate, reduced motion for the 03 hold, the under-900px interim
+  layout (spec 08), keyboard-reachable spine buttons, and a footer "Pause animations" control.
+- The reference's embedded canvas prototypes leak their preview background
+  (`body { background:#E9E7E2 }`) onto the whole page; the port keeps the page's specified
+  `#F6F5F2`, and the QA scripts neutralise the leak on the reference side.
+- QA: serve the reference on :4102 (`.claude/launch.json`), then
+  `node qa/ai-scrub.mjs` (every scroll point, three viewports; `--reduced` for the static
+  states), `node qa/ai-motion.mjs` (audit loop, 03 hold, flight into 04),
+  `node qa/ai-intro.mjs`, `node qa/ai-interact.mjs`, `node qa/ai-lifecycle.mjs`,
+  `node qa/ai-responsive.mjs` and `node qa/ai-a11y.mjs`.
+
 ## Environment
 
 Copy `.env.example` to `.env.local` and fill in the values. `.env.local` is

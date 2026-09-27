@@ -1,0 +1,27 @@
+{
+  "viewports": [[1280, 800], [1440, 900], [1920, 1080]],
+  "points": [
+    { "id": "hero", "kind": "anchor", "selector": "#top", "offset": 0, "expect": "headline, greyscale plane, two CTAs" },
+    { "id": "premise-head", "kind": "anchor", "selector": "section[data-screen-label='Premise']", "offset": 68, "expect": "01 / Premise header, card 1 below" },
+    { "id": "premise-010", "kind": "track", "track": "premise", "m": 0.10, "expect": "card 1, statement about a third inked" },
+    { "id": "premise-033", "kind": "track", "track": "premise", "m": 0.33, "expect": "card 2 halfway over card 1" },
+    { "id": "premise-050", "kind": "track", "track": "premise", "m": 0.50, "expect": "card 2, LP portal window" },
+    { "id": "premise-060", "kind": "track", "track": "premise", "m": 0.60, "expect": "card 2, network inspector (5 issues)" },
+    { "id": "premise-069", "kind": "track", "track": "premise", "m": 0.69, "expect": "card 3 halfway over card 2" },
+    { "id": "premise-090", "kind": "track", "track": "premise", "m": 0.90, "expect": "card 3, obligations, statement inked" },
+    { "id": "audit-2400", "kind": "time", "selector": "#audit", "offset": 68, "waitMs": 2400, "expect": "Gantt bars and description panel" },
+    { "id": "audit-7500", "kind": "time", "selector": "#audit", "offset": 68, "waitMs": 7500, "expect": "calendar filling, day 4–5 lit" },
+    { "id": "audit-11800", "kind": "time", "selector": "#audit", "offset": 68, "waitMs": 11800, "expect": "day 10 chips green" },
+    { "id": "audit-14000", "kind": "time", "selector": "#audit", "offset": 68, "waitMs": 14000, "expect": "audit window, Database credentials" },
+    { "id": "audit-18000", "kind": "time", "selector": "#audit", "offset": 68, "waitMs": 18000, "expect": "finding 4, Browser data path" },
+    { "id": "rebuild-hold", "kind": "hold", "selector": "#rebuild", "expect": "page stopped at 03, tiers assembling" },
+    { "id": "rebuild-built", "kind": "hold-complete", "selector": "#rebuild", "expect": "03 assembled, 'LP portal · in production'" },
+    { "id": "platform-land", "kind": "time", "selector": "#platform", "offset": -200, "waitMs": 4500, "expect": "04 wired, stations active, both captions" },
+    { "id": "engagement-012", "kind": "track", "track": "engagement", "m": 0.12, "expect": "audit card, mini calendar about half filled" },
+    { "id": "engagement-030", "kind": "track", "track": "engagement", "m": 0.30, "expect": "calendar complete, day 10 green; build spine at right" },
+    { "id": "engagement-052", "kind": "track", "track": "engagement", "m": 0.52, "expect": "build card mid-roll, both contents faded" },
+    { "id": "engagement-075", "kind": "track", "track": "engagement", "m": 0.75, "expect": "build card open, two or three stations live" },
+    { "id": "engagement-095", "kind": "track", "track": "engagement", "m": 0.95, "expect": "all five stations live, paragraph inked, audit spine at left" },
+    { "id": "footer", "kind": "anchor", "selector": "footer", "offset": 200, "expect": "five columns and bottom bar" }
+  ]
+}
