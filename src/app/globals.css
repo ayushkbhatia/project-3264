@@ -17,8 +17,23 @@
   --line2: rgba(20, 20, 18, 0.075); /* section dividers, inner rules */
   --tex: 1; /* grid texture on/off multiplier */
   --art: 1; /* hero painting on/off multiplier */
-  --bad: #c4341e; /* breach, #REF!, worsening (Private Credit) */
+  --bad: #c4341e; /* breach, #REF!, worsening (Private Credit); fail (playbook pages) */
   --warn: #8a5a16; /* watch, outstanding, in review (Private Credit) */
+  /* The playbook pages (design_handoff_covenant_watch/README.md, "Design tokens"). */
+  --faint: #8a887f; /* empty cells, carve-outs */
+  --rule: #d9d6cf; /* borders */
+  --rule-2: #e8e5df; /* hairlines */
+  --tile: #fbfaf8; /* cards, callouts */
+  --wash: #eeebe4; /* active contents entry, sidebar card */
+  --hl: #f1e6cf; /* evidence-line hover */
+  --ok: #157f52; /* status green: the accent's value, but not themed with it */
+  --ok-bg: #e4f0ea;
+  --bad-bg: #f6e3df; /* the one "moment" row */
+  /* Status text set ON those tints. The design's #157F52 and #C4341E read 4.28:1 and 4.40:1
+     there, under WCAG AA's 4.5:1 for text this small; these are the nearest shades that pass
+     (4.69:1 and 4.63:1). Dots and borders keep the design's colours. */
+  --ok-ink: #13784e;
+  --bad-ink: #be321c;
   /* Font stacks, named literally (see the @font-face block above). The home modules and
      components still read them through these two variables. */
   --font-instrument: "Instrument Sans";
@@ -58,6 +73,18 @@
   --color-card: var(--card);
   --color-line: var(--line);
   --color-line2: var(--line2);
+  --color-bad: var(--bad);
+  --color-faint: var(--faint);
+  --color-rule: var(--rule);
+  --color-rule-2: var(--rule-2);
+  --color-tile: var(--tile);
+  --color-wash: var(--wash);
+  --color-hl: var(--hl);
+  --color-ok: var(--ok);
+  --color-ok-bg: var(--ok-bg);
+  --color-bad-bg: var(--bad-bg);
+  --color-ok-ink: var(--ok-ink);
+  --color-bad-ink: var(--bad-ink);
   --font-sans: var(--font-instrument), "Helvetica Neue", Helvetica, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
@@ -178,6 +205,31 @@ html[data-ai-intro="pending"] [data-ai-intro-wrap] {
   [data-ai] [data-ai-facts] {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
+  }
+}
+
+/*
+ * Playbook pages (components/playbooks/article). Anchor targets (the hero, each section, 05's
+ * subsections) land 120px below the viewport top, as in the reference: the 69px scroll-padding
+ * below plus 51px here. Under 1048px the "On this page" bar is sticky under the header, so
+ * focus scrolling stops below both (114px) and the targets' margin shrinks to keep the 120.
+ * Anchor jumps glide, except under reduced motion; Next still jumps on route changes
+ * (data-scroll-behavior on <html>).
+ */
+[data-pb-anchor] {
+  scroll-margin-top: 51px;
+}
+@media (max-width: 1047.98px) {
+  html:has([data-pb-tocbar]) {
+    scroll-padding-top: 114px;
+  }
+  [data-pb-anchor] {
+    scroll-margin-top: 6px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html:has([data-pb-tocbar]) {
+    scroll-behavior: smooth;
   }
 }
 

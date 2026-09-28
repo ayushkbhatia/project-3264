@@ -23,63 +23,77 @@ export const meta = {
 // cards, where the audit is described and booked.
 const audit = `${routes.aiEngineering}#engagement`;
 
-export const nav: HeaderNavItem[] = [
-  { label: "AI Engineering", href: routes.aiEngineering },
-  { label: "AI Transformation", href: routes.aiTransformation },
-  { label: "Industries", href: "/#industries" },
-  { label: "Work", href: "/#work" },
-  { label: "Playbooks", href: "#top", current: true },
-  { label: "Company", href: routes.company },
-];
+function siteNav(playbooks: HeaderNavItem): HeaderNavItem[] {
+  return [
+    { label: "AI Engineering", href: routes.aiEngineering },
+    { label: "AI Transformation", href: routes.aiTransformation },
+    { label: "Industries", href: "/#industries" },
+    { label: "Work", href: "/#work" },
+    playbooks,
+    { label: "Company", href: routes.company },
+  ];
+}
+
+export const nav = siteNav({ label: "Playbooks", href: "#top", current: true });
+
+/** The playbook pages (/playbooks/<slug>): "Playbooks" in ink, linking back to the library. */
+export const articleNav = siteNav({ label: "Playbooks", href: routes.playbooks, current: "section" });
 
 export const headerCta: Link = { label: "Book an audit", href: audit };
 
 // "Deployment & Run", "Evaluation suites" and LinkedIn are placeholders in the handoff too.
-export const footerColumns: FooterColumn[] = [
-  {
-    head: "Services",
-    links: [
-      { label: "AI Engineering", href: routes.aiEngineering },
-      { label: "AI Transformation", href: routes.aiTransformation },
-      { label: "Deployment & Run", href: "/#capabilities" },
-      { label: "Evaluation suites", href: "/#capabilities" },
-    ],
-  },
-  {
-    head: "Industries",
-    links: [
-      { label: "Private Credit", href: routes.privateCredit },
-      { label: "Private Equity", href: routes.privateEquity },
-      { label: "Fund Management", href: "/#industries" },
-      { label: "Asset Management", href: "/#industries" },
-    ],
-  },
-  {
-    head: "Company",
-    links: [
-      { label: "Who we are", href: routes.companyWho },
-      { label: "How we work", href: routes.companyHow },
-      { label: "Case studies", href: "/#work" },
-    ],
-  },
-  {
-    head: "Resources",
-    links: [
-      // the reference sets it in the ordinary link colour, not as the current page
-      { label: "Playbooks", href: "#top" },
-      { label: "Field notes", href: "/#playbooks" },
-      { label: "Security", href: routes.companyHow },
-    ],
-  },
-  {
-    head: "Connect",
-    links: [
-      { label: "Book a call", href: audit },
-      { label: "hello@3264.ai", href: "mailto:hello@3264.ai" },
-      { label: "LinkedIn", href: audit },
-    ],
-  },
-];
+function siteFooter(playbooksHref: string): FooterColumn[] {
+  return [
+    {
+      head: "Services",
+      links: [
+        { label: "AI Engineering", href: routes.aiEngineering },
+        { label: "AI Transformation", href: routes.aiTransformation },
+        { label: "Deployment & Run", href: "/#capabilities" },
+        { label: "Evaluation suites", href: "/#capabilities" },
+      ],
+    },
+    {
+      head: "Industries",
+      links: [
+        { label: "Private Credit", href: routes.privateCredit },
+        { label: "Private Equity", href: routes.privateEquity },
+        { label: "Fund Management", href: "/#industries" },
+        { label: "Asset Management", href: "/#industries" },
+      ],
+    },
+    {
+      head: "Company",
+      links: [
+        { label: "Who we are", href: routes.companyWho },
+        { label: "How we work", href: routes.companyHow },
+        { label: "Case studies", href: "/#work" },
+      ],
+    },
+    {
+      head: "Resources",
+      links: [
+        // the reference sets it in the ordinary link colour, not as the current page
+        { label: "Playbooks", href: playbooksHref },
+        { label: "Field notes", href: "/#playbooks" },
+        { label: "Security", href: routes.companyHow },
+      ],
+    },
+    {
+      head: "Connect",
+      links: [
+        { label: "Book a call", href: audit },
+        { label: "hello@3264.ai", href: "mailto:hello@3264.ai" },
+        { label: "LinkedIn", href: audit },
+      ],
+    },
+  ];
+}
+
+export const footerColumns = siteFooter("#top");
+
+/** The playbook pages' footer: the same columns, with Playbooks linking to the library. */
+export const articleFooterColumns = siteFooter(routes.playbooks);
 
 /* ------------------------------------------------------------------ data */
 
@@ -125,8 +139,9 @@ export const categories: Category[] = [
 //
 // Loan Ops Ledger is `live` in the handoff (its detail page was built from a separate handoff),
 // but that page is not in this codebase yet, so it redirects like the others until it lands.
+// Covenant Watch is live: src/app/playbooks/covenant-watch.
 export const playbooks: Playbook[] = [
-  { slug: "covenant-watch", name: "Covenant Watch", category: "private-credit", blurb: "Borrower reporting packages read and tested against the credit agreement, with breaches flagged before quarter close.", live: false },
+  { slug: "covenant-watch", name: "Covenant Watch", category: "private-credit", blurb: "Borrower reporting packages read and tested against the credit agreement, with breaches flagged before quarter close.", live: true },
   { slug: "capital-call-flow", name: "Capital Call Flow", category: "private-credit", blurb: "Notices computed from the LPA, sent per investor and reconciled to the cash that actually arrives.", live: false },
   { slug: "loan-ops-ledger", name: "Loan Ops Ledger", category: "private-credit", blurb: "Agent notices matched to the loan system every day, with each break explained before month end.", live: false },
   { slug: "nav-pack-review", name: "NAV Pack Review", category: "fund-management", blurb: "Administrator NAV packs tied out line by line to your own records before the CFO signs.", live: false },

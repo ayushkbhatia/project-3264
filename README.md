@@ -122,6 +122,42 @@ reference prototype (`reference/Playbooks.dc.html`) wins over the specs.
   `node qa/pb-a11y.mjs` (axe, focus rings, hit areas, menu, overflow) and
   `node qa/pb-contrast.mjs` (text set over imagery).
 
+## Playbook pages (Covenant Watch)
+
+`/playbooks/covenant-watch` is a port of
+[`design_handoff_covenant_watch/`](design_handoff_covenant_watch/README.md); its prototype
+(`Covenant Watch.dc.html`) wins over its README and copy deck. It is the first page built on the
+template the nine playbook pages share.
+
+- The template is `src/components/playbooks/article/`: `PlaybookPage` (header with a reading
+  progress bar, the phone "On this page" bar, the sticky sidebar with its coverage rail, the
+  article, More playbooks, the closing panel, the footer, breadcrumb and Article JSON-LD) fed by
+  a content module typed in `types.ts`. A page is its content (`src/content/<slug>.ts`: hero,
+  sections as typed blocks, terms, FAQ, related playbooks) plus its figures
+  (`src/components/playbooks/<slug>/`), named by slot in the content. The harness anatomy,
+  pass^k and engagement figures are house figures in `article/figures/`.
+- A new playbook page: a content module, its figures, and `src/app/playbooks/<slug>/page.tsx`
+  (`articleMetadata` + `PlaybookPage`); then mark the playbook `live` in `content/playbooks.ts`
+  so `[slug]` stops redirecting it, and add it to the sitemap.
+- Figures respond to the main column's width, not the viewport's: `<main>` is a size container
+  and the figures switch layout with container queries at the prototype's thresholds.
+- Client islands only: the scroll-spy shell, the copy link, the FAQ (closed answers are
+  `hidden="until-found"`, so find-in-page reaches them), the hero reveal and the evidence-line
+  hover. The read time is computed on the server. The hero reveal has a first-paint gate in
+  `<head>` (`article/reveal.ts`), so a figure already in view is held at its start state rather
+  than shown, hidden, then replayed.
+- Deliberate departures, all for accessibility: status text on the green and red tints uses
+  `--ok-ink` / `--bad-ink` (4.69:1 and 4.63:1; the design's colours read 4.28:1 and 4.40:1), and
+  the small back links carry 24px hit areas. The header gets the Playbooks page's menu below
+  1000px, and the footer is the site's.
+- QA: serve the reference on :4104 (`.claude/launch.json`), then with `PORT_URL` pointing at the
+  page: `node qa/cw-sections.mjs --w 1440,1280,1024,768,390` (every section, pixel diff),
+  `node qa/cw-text.mjs` (the copy, verbatim against the reference), `node qa/cw-behaviour.mjs`
+  (scroll-spy, rail and progress parity, anchors, FAQ, copy link, phone bar, evidence hover,
+  hero reveal) and `node qa/cw-a11y.mjs` (axe, landmarks, Tab sweep, hit areas, overflow). Run
+  them against `next start`: under `next dev` the first request for each new image size is
+  optimised on demand and can stall a run at a new width.
+
 ## Environment
 
 Copy `.env.example` to `.env.local` and fill in the values. `.env.local` is

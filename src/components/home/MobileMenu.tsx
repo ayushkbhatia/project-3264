@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import type { HeaderNavItem } from "./Header";
+import { navCurrent, type HeaderNavItem } from "./nav";
 import { SmartLink } from "./primitives";
 
 // Static class names for Tailwind, keyed like Header's COLLAPSE.
@@ -87,7 +87,7 @@ export function MobileMenu({ nav, breakpoint }: { nav: HeaderNavItem[]; breakpoi
               <li key={item.label} className="border-b border-line2 last:border-b-0">
                 <SmartLink
                   href={item.href}
-                  aria-current={item.current ? "page" : undefined}
+                  aria-current={navCurrent(item)}
                   onClick={() => setOpen(false)}
                   className={`flex h-12 items-center text-[16px] tracking-[-0.01em] ${item.current ? "text-ink" : "text-sec"}`}
                 >

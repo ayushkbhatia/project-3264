@@ -1,8 +1,9 @@
 import { headerCta, nav as homeNav, type Link as NavLink } from "@/content/home";
 import { MobileMenu } from "./MobileMenu";
+import { navCurrent, type HeaderNavItem } from "./nav";
 import { Button, SmartLink, Wordmark } from "./primitives";
 
-export type HeaderNavItem = NavLink & { current?: boolean };
+export type { HeaderNavItem };
 
 // The nav is hidden (not removed: the invisible nav is the spacer that keeps the button
 // right-aligned) once it no longer fits on one line. With `menu`, a menu button beside the CTA
@@ -30,6 +31,7 @@ export function Header({
   homeHref = "#top",
   collapseBelow = "940",
   menu = false,
+  progress = false,
 }: {
   nav?: HeaderNavItem[];
   cta?: NavLink;
@@ -38,6 +40,9 @@ export function Header({
   collapseBelow?: keyof typeof COLLAPSE;
   /** Show a menu button (and its sheet of the same links) where the nav is collapsed. */
   menu?: boolean;
+  /** A 2px reading-progress bar on the header's bottom edge, driven by the page (it sets
+      `transform: scaleX(p)` on [data-reading-progress]; the playbook pages' ArticleShell). */
+  progress?: boolean;
 }) {
   // On phones this is the only header action, so it gets a 40px tap target there (38 + the
   // border); from 768px up it is the reference's 38px.
@@ -60,7 +65,7 @@ export function Header({
             <SmartLink
               key={item.label}
               href={item.href}
-              aria-current={item.current ? "page" : undefined}
+              aria-current={navCurrent(item)}
               className={item.current ? "text-ink" : undefined}
             >
               {item.label}
@@ -76,6 +81,14 @@ export function Header({
           cta
         )}
       </div>
+      {progress ? (
+        <div
+          data-reading-progress=""
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 -bottom-px h-0.5 origin-left bg-[#157F52]"
+          style={{ transform: "scaleX(0)" }}
+        />
+      ) : null}
     </header>
   );
 }
