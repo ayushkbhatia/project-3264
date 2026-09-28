@@ -34,7 +34,7 @@ export function readMinutes(article: PlaybookArticle, cta: Link, showBuilt: bool
         return add(b.title, b.text, b.link.label, "→");
       case "stepTable":
         add(...b.head);
-        return b.rows.forEach((r) => add(r.step, ...r.cells.map((c) => c ?? "—")));
+        return b.rows.forEach((r) => add(r.step, ...r.cells.map((c) => c ?? b.empty ?? "—")));
       case "callout":
         return add(b.label, b.text);
       case "figure":

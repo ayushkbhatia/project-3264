@@ -36,6 +36,7 @@ export function Figure({
   evidence,
   moment,
   caption,
+  footer,
   children,
   ref,
   ...rest
@@ -67,6 +68,9 @@ export function Figure({
   evidence?: ReactNode;
   moment?: ReactNode;
   caption: ReactNode;
+  /** Set as given under the caption, inside the figure (Capital Call Flow's hero carries a
+      terminology note there). */
+  footer?: ReactNode;
   /** The sheets. */
   children: ReactNode;
   ref?: Ref<HTMLElement>;
@@ -112,6 +116,7 @@ export function Figure({
       ) : null}
       {moment ? <p className="mt-2 mb-0 text-[15px] leading-[1.5] text-sec">{moment}</p> : null}
       <figcaption className={cx("text-[12px] leading-[1.5] text-mut", captionGap === 6 ? "mt-1.5" : "mt-2")}>{caption}</figcaption>
+      {footer}
     </figure>
   );
 }
@@ -137,9 +142,13 @@ export function Sheet({
   );
 }
 
-/** A sheet's title: 16.5px / 500. */
-export function SheetTitle({ children }: { children: ReactNode }) {
-  return <div className="text-[16.5px] leading-[1.3] font-medium tracking-[-0.016em]">{children}</div>;
+/** A sheet's title: 16.5px / 500. `id`: for the table it names. */
+export function SheetTitle({ id, children }: { id?: string; children: ReactNode }) {
+  return (
+    <div id={id} className="text-[16.5px] leading-[1.3] font-medium tracking-[-0.016em]">
+      {children}
+    </div>
+  );
 }
 
 /** 7px status dot, green or red. Decorative: the text beside it carries the status. */

@@ -122,13 +122,14 @@ reference prototype (`reference/Playbooks.dc.html`) wins over the specs.
   `node qa/pb-a11y.mjs` (axe, focus rings, hit areas, menu, overflow) and
   `node qa/pb-contrast.mjs` (text set over imagery).
 
-## Playbook pages (Covenant Watch, Loan Ops Ledger)
+## Playbook pages (Covenant Watch, Loan Ops Ledger, Capital Call Flow)
 
-`/playbooks/covenant-watch` and `/playbooks/loan-ops-ledger` are ports of
-[`design_handoff_covenant_watch/`](design_handoff_covenant_watch/README.md) and
-[`design_handoff_loan_ops_ledger/`](design_handoff_loan_ops_ledger/README.md); each prototype
-(`<Name>.dc.html`) wins over its README and copy deck. Both are built on the template the nine
-playbook pages share.
+`/playbooks/covenant-watch`, `/playbooks/loan-ops-ledger` and `/playbooks/capital-call-flow` are
+ports of [`design_handoff_covenant_watch/`](design_handoff_covenant_watch/README.md),
+[`design_handoff_loan_ops_ledger/`](design_handoff_loan_ops_ledger/README.md) and
+[`design_handoff_capital_call_flow/`](design_handoff_capital_call_flow/README.md); each prototype
+(`<Name>.dc.html`) wins over its README and copy deck. All three are built on the template the
+nine playbook pages share.
 
 - The template is `src/components/playbooks/article/`: `PlaybookPage` (header with a reading
   progress bar, the phone "On this page" bar, the sticky sidebar with its coverage rail, the
@@ -140,13 +141,16 @@ playbook pages share.
   injection containment and engagement timeline.
 - The handoffs differ in small ways the template takes as options rather than forks: block-level
   or inline mono labels (`blockLabels`), a figure inside a break, a note under the roles or the
-  rules, the rules' "Status as of" line, the figure frame's radius, padding and caption gap, and
-  the hero reveal's trigger (`RevealTrigger`: Covenant Watch plays once 30% of the figure is in
-  view; Loan Ops Ledger once its top is in the upper 65% of the viewport, or settles on the final
-  state if the reader has not got there within 4s).
+  rules (greedy-wrapped on Capital Call Flow: `greedyNote`), the rules' "Status as of" line, a
+  step table's empty cell in words (`empty: "Nothing"`), the figure frame's radius, padding,
+  caption gap, head alignment and a note under the caption (`footer`), and the hero reveal's
+  trigger (`RevealTrigger`: Covenant Watch plays once 30% of the figure is in view; Loan Ops
+  Ledger and Capital Call Flow once its top is in the upper 65% of the viewport, or settle on the
+  final state if the reader has not got there within 4s, `ON_TOP_IN_UPPER_65`).
 - A new playbook page: a content module, its figures, and `src/app/playbooks/<slug>/page.tsx`
   (`articleMetadata` + `PlaybookPage`); then mark the playbook `live` in `content/playbooks.ts`
-  so `[slug]` stops redirecting it, and add it to the sitemap and to `qa/playbook-lib.mjs`.
+  so `[slug]` stops redirecting it, and add it to the sitemap, to `.claude/launch.json` (its
+  reference) and to `qa/playbook-lib.mjs` (with its hero reveal's parts).
 - Figures respond to the main column's width, not the viewport's: `<main>` is a size container
   and the figures switch layout with container queries at the prototypes' thresholds.
 - Client islands only: the scroll-spy shell, the copy link, the FAQ (closed answers are
@@ -154,16 +158,20 @@ playbook pages share.
   states and toggles. The read time is computed on the server. The hero reveal has a first-paint
   gate in `<head>` (`article/reveal.ts`), so a figure already in view is held at its start state
   rather than shown, hidden, then replayed.
-- Deliberate departures, all for accessibility: status text on the green and red tints uses
-  `--ok-ink` / `--bad-ink` (4.69:1 and 4.63:1; the design's colours read 4.28:1 and 4.40:1), and
-  the small back links and toggles carry 24px hit areas. The header gets the Playbooks page's
-  menu below 1000px, and the footer is the site's.
+- Deliberate departures, all for legibility and accessibility: status text on the green and red
+  tints uses `--ok-ink` / `--bad-ink` (4.69:1 and 4.63:1; the design's colours read 4.28:1 and
+  4.40:1), muted text on Capital Call Flow's #F1EEE8 row tint uses `--mut-ink` (4.55:1, against
+  4.48:1) and its step table's "Nothing" `--faint-ink` (4.55:1, against 3.26:1); the small back
+  links and toggles carry 24px hit areas. Capital Call Flow's hero table stacks each investor's
+  line under a 448px main column (phones), where the reference's four columns overprint their
+  amounts; from 448px up it is the reference's table. The header gets the Playbooks page's menu
+  below 1000px, and the footer is the site's.
 - QA: serve the page's reference (`.claude/launch.json`: :4104 Covenant Watch, :4105 Loan Ops
-  Ledger), then with `BASE_URL` pointing at the site and `--page <slug>`:
+  Ledger, :4106 Capital Call Flow), then with `BASE_URL` pointing at the site and `--page <slug>`:
   `node qa/playbook-sections.mjs --w 1440,1280,1024,768,390` (every section, pixel diff),
   `node qa/playbook-text.mjs` (the copy, verbatim against the reference),
   `node qa/playbook-behaviour.mjs` (scroll-spy, rail and progress parity, anchors, FAQ, copy
-  link, phone bar, evidence hover, hero reveal, and each page's own toggles and hovers) and
+  link, phone bar, evidence hover, hero reveal, and each page's own toggles, hovers and fits) and
   `node qa/playbook-a11y.mjs` (axe, landmarks, Tab sweep, hit areas, overflow). Run them against
   `next start`: under `next dev` the first request for each new image size is optimised on
   demand and can stall a run at a new width.

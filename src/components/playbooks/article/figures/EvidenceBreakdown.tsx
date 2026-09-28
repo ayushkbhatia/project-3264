@@ -25,6 +25,7 @@ export function EvidenceBreakdown({
   veil,
   className,
   meta,
+  metaRight,
   parts,
   caption,
 }: {
@@ -32,12 +33,22 @@ export function EvidenceBreakdown({
   veil: number;
   className?: string;
   meta: string;
+  /** See Figure: Covenant Watch right-aligns the head's meta, Capital Call Flow does not. */
+  metaRight?: boolean;
   parts: readonly EvidencePart[];
   caption: string;
 }) {
   const [hot, setHot] = useState(-1);
   return (
-    <Figure image={image} veil={veil} className={className} label="Example evidence line" meta={meta} caption={caption}>
+    <Figure
+      image={image}
+      veil={veil}
+      className={className}
+      label="Example evidence line"
+      meta={meta}
+      metaRight={metaRight}
+      caption={caption}
+    >
       <Sheet>
         <div className="font-mono text-[11.5px] leading-[1.9] text-ink [overflow-wrap:anywhere]">
           {parts.map((part, i) => (

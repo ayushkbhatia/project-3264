@@ -34,6 +34,12 @@
      (4.69:1 and 4.63:1). Dots and borders keep the design's colours. */
   --ok-ink: #13784e;
   --bad-ink: #be321c;
+  /* The same for grey text (Capital Call Flow). Muted labels on the #F1EEE8 row tint read 4.48:1
+     in the design's #6E6D67, so they take the nearest shade that passes (4.55:1). A step table's
+     empty cell said in words ("Nothing") reads 3.26:1 in the design's faint #8A887F on the page;
+     it takes the nearest passing shade (4.55:1). Empty cells drawn as "—" keep --faint. */
+  --mut-ink: #6d6c66;
+  --faint-ink: #727069;
   /* Font stacks, named literally (see the @font-face block above). The home modules and
      components still read them through these two variables. */
   --font-instrument: "Instrument Sans";
@@ -85,6 +91,8 @@
   --color-bad-bg: var(--bad-bg);
   --color-ok-ink: var(--ok-ink);
   --color-bad-ink: var(--bad-ink);
+  --color-mut-ink: var(--mut-ink);
+  --color-faint-ink: var(--faint-ink);
   --font-sans: var(--font-instrument), "Helvetica Neue", Helvetica, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }

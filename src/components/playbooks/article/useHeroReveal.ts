@@ -16,6 +16,11 @@ export type RevealTrigger = {
 /** Covenant Watch: once 30% of the figure is on screen. */
 export const ON_THIRD_VISIBLE: RevealTrigger = { threshold: 0.3 };
 
+/** Loan Ops Ledger and Capital Call Flow: once the figure's top is in the upper 65% of the
+    viewport (which works for figures taller than the screen), or the final state if that has
+    not happened within 4s of mount. */
+export const ON_TOP_IN_UPPER_65: RevealTrigger = { threshold: 0, rootMargin: "0px 0px -35% 0px", startWithin: 4000 };
+
 /**
  * The hero figure's reveal (README, F1): once the trigger fires, step 1 at 400ms, 2 at 1050,
  * 3 at 1700 and 4 (done) at 2350, each part easing in over its own transition; the final state
