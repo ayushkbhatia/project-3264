@@ -138,6 +138,20 @@
       "port": 4108
     },
     {
+      "name": "design reference: side-letter register",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4109",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_side_letter_register"
+      ],
+      "port": 4109
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [
