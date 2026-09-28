@@ -122,16 +122,18 @@ reference prototype (`reference/Playbooks.dc.html`) wins over the specs.
   `node qa/pb-a11y.mjs` (axe, focus rings, hit areas, menu, overflow) and
   `node qa/pb-contrast.mjs` (text set over imagery).
 
-## Playbook pages (Covenant Watch, Loan Ops Ledger, Capital Call Flow, NAV Pack Review, Investor Reporting)
+## Playbook pages (Covenant Watch, Loan Ops Ledger, Capital Call Flow, NAV Pack Review, Investor Reporting, Side-Letter Register)
 
 `/playbooks/covenant-watch`, `/playbooks/loan-ops-ledger`, `/playbooks/capital-call-flow`,
-`/playbooks/nav-pack-review` and `/playbooks/investor-reporting` are ports of
+`/playbooks/nav-pack-review`, `/playbooks/investor-reporting` and
+`/playbooks/side-letter-register` are ports of
 [`design_handoff_covenant_watch/`](design_handoff_covenant_watch/README.md),
 [`design_handoff_loan_ops_ledger/`](design_handoff_loan_ops_ledger/README.md),
 [`design_handoff_capital_call_flow/`](design_handoff_capital_call_flow/README.md),
-[`design_handoff_nav_pack_review/`](design_handoff_nav_pack_review/README.md) and
-[`design_handoff_investor_reporting/`](design_handoff_investor_reporting/README.md); each
-prototype (`<Name>.dc.html`) wins over its README and copy deck. All five are built on the
+[`design_handoff_nav_pack_review/`](design_handoff_nav_pack_review/README.md),
+[`design_handoff_investor_reporting/`](design_handoff_investor_reporting/README.md) and
+[`design_handoff_side_letter_register/`](design_handoff_side_letter_register/README.md); each
+prototype (`<Name>.dc.html`) wins over its README and copy deck. All six are built on the
 template the nine playbook pages share.
 
 - The template is `src/components/playbooks/article/`: `PlaybookPage` (header with a reading
@@ -149,14 +151,17 @@ template the nine playbook pages share.
   (`plain`), the Inputs / Outputs gap (`roomy`), the callout's border (`quiet`), the figure
   frame's radius, padding, caption gap, head alignment and a note under the caption (`footer`),
   and the hero reveal's trigger (`RevealTrigger`: Covenant Watch plays once 30% of the figure is
-  in view; Loan Ops Ledger, Capital Call Flow and NAV Pack Review once its top is in the upper 65%
-  of the viewport, or settle on the final state if the reader has not got there within 4s,
-  `ON_TOP_IN_UPPER_65`). A related playbook gets its own card (`related`: the playbook's tile,
-  badge and link). Investor Reporting adds a step-table lane said in its own words
-  (`{ faint }`), dated "Recently updated" rows, a figure head with its own right-hand content
-  (`aside`), and a reveal on its own schedule (`useHeroReveal`'s `schedule`: six steps 150ms
-  apart, each a dot turning from grey to green and, under the sentence's figures, an underline
-  drawing: the `wait` and `draw` parts).
+  in view; Loan Ops Ledger, Capital Call Flow, NAV Pack Review and Side-Letter Register once its
+  top is in the upper 65% of the viewport, or settle on the final state if the reader has not got
+  there within 4s, `ON_TOP_IN_UPPER_65`). A related playbook gets its own card (`related`: the
+  playbook's tile, badge and link). Investor Reporting adds a step-table lane said in its own
+  words (`{ faint }`), dated "Recently updated" rows, a figure head with its own right-hand
+  content (`aside`), and a reveal on its own schedule (`useHeroReveal`'s `schedule`: six steps
+  150ms apart, each a dot turning from grey to green and, under the sentence's figures, an
+  underline drawing: the `wait` and `draw` parts). Side-Letter Register's reveal is on a schedule
+  too (its five rows 150ms apart, then the overdue row turns red), and it adds a note between the
+  evidence line and the caption (Figure's `note`), several bold lead-ins in one list item (`Rich`
+  as an array) and a link inside a FAQ answer (`Inline`).
 - A new playbook page: a content module, its figures, and `src/app/playbooks/<slug>/page.tsx`
   (`articleMetadata` + `PlaybookPage`); then mark the playbook `live` in `content/playbooks.ts`
   so `[slug]` stops redirecting it, and add it to the sitemap, to `.claude/launch.json` (its
@@ -177,14 +182,17 @@ template the nine playbook pages share.
   Review's small muted text on the red wash and on the wash uses `--mut-ink-2` (4.52:1 and
   4.70:1, against 4.19:1 and 4.36:1), as do Investor Reporting's on the wash and the hover
   highlight (4.51:1 there), whose faint words ("No model step", a struck-out edit) take
-  `--faint-ink`; the small back links and toggles carry 24px hit areas, and
+  `--faint-ink`, and the muted text in Side-Letter Register's overdue row. Text Side-Letter
+  Register sets in its faint grey #8A887F (the MFN grid's "own provision" and "carve-out", the
+  internal register ids, F4's "none") also takes `--faint-ink` (about 4.9:1 on the sheet, against
+  3.5:1). The small back links and toggles carry 24px hit areas, and
   "Copy link" falls back to a hidden textarea where the async clipboard is missing or refused.
   Capital Call Flow's hero table stacks each investor's line under a 448px main column (phones),
   where the reference's four columns overprint their amounts; from 448px up it is the reference's
   table. The header gets the Playbooks page's menu below 1000px, and the footer is the site's.
 - QA: serve the page's reference (`.claude/launch.json`: :4104 Covenant Watch, :4105 Loan Ops
-  Ledger, :4106 Capital Call Flow, :4107 NAV Pack Review, :4108 Investor Reporting), then with
-  `BASE_URL` pointing at the site and `--page <slug>`:
+  Ledger, :4106 Capital Call Flow, :4107 NAV Pack Review, :4108 Investor Reporting, :4109
+  Side-Letter Register), then with `BASE_URL` pointing at the site and `--page <slug>`:
   `node qa/playbook-sections.mjs --w 1440,1280,1024,768,390` (every section, pixel diff),
   `node qa/playbook-text.mjs` (the copy, verbatim against the reference),
   `node qa/playbook-behaviour.mjs` (scroll-spy, rail and progress parity, anchors, FAQ, copy

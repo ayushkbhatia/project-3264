@@ -39,8 +39,13 @@ function RichText({ item }: { item: Rich }) {
   if (typeof item === "string") return <>{item}</>;
   return (
     <>
-      <strong className="font-medium text-ink">{item.lead}</strong>
-      {item.text ? ` ${item.text}` : null}
+      {(Array.isArray(item) ? item : [item]).map((part, i) => (
+        <Fragment key={i}>
+          {i ? " " : null}
+          <strong className="font-medium text-ink">{part.lead}</strong>
+          {part.text ? ` ${part.text}` : null}
+        </Fragment>
+      ))}
     </>
   );
 }

@@ -8,8 +8,16 @@ import type { Link } from "@/content/home";
 // order with the reference's exact styles (blocks.tsx); a figure block names a slot in the
 // page's figure map, so the illustrations stay per-page components.
 
-/** A list item or paragraph with an optional bold lead-in (weight 500, ink). */
-export type Rich = string | { lead: string; text?: string };
+/** A bold lead-in (weight 500, ink) and the text after it. */
+export type RichPart = { lead: string; text?: string };
+
+/** A list item or paragraph with an optional bold lead-in, or several lead-ins run together in
+    one item (Side-Letter Register: "Field accuracy: … Span fidelity: …"). */
+export type Rich = string | RichPart | RichPart[];
+
+/** Text with inline links where it names another page, run together as given (a FAQ answer on
+    Side-Letter Register: "… See Capital Call Flow."). */
+export type Inline = string | Array<string | Link>;
 
 /** A lane in the step table: what happens there, `null` for an empty lane (the table's `empty`),
     or `faint` words for one lane left empty on purpose and said differently (Investor
@@ -77,7 +85,7 @@ export type Block =
     }
   | { type: "terms"; items: Array<{ term: string; def: string }> }
   | { type: "updates"; items: Update[] }
-  | { type: "faq"; items: Array<{ q: string; a: string }> };
+  | { type: "faq"; items: Array<{ q: string; a: Inline }> };
 
 export type ArticleSection = {
   id: string;

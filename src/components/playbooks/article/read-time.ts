@@ -1,4 +1,4 @@
-import type { Block, PlaybookArticle } from "./types";
+import type { Block, Inline, PlaybookArticle, Rich } from "./types";
 
 type Link = { label: string; href: string };
 
@@ -13,7 +13,8 @@ export function readMinutes(article: PlaybookArticle, cta: Link, showBuilt: bool
   const add = (...s: Array<string | null | undefined>) => {
     for (const x of s) if (x) parts.push(x);
   };
-  const rich = (r: string | { lead: string; text?: string }) => (typeof r === "string" ? add(r) : add(r.lead, r.text));
+  const rich = (r: Rich) => (typeof r === "string" ? add(r) : (Array.isArray(r) ? r : [r]).forEach((p) => add(p.lead, p.text)));
+  const inline = (a: Inline) => (typeof a === "string" ? a : a.map((p) => (typeof p === "string" ? p : p.label)).join(""));
 
   const { hero } = article;
   add("Playbook ·", hero.category.label, hero.title, hero.oneLiner, article.reviewed.label, "Copy link");
@@ -62,7 +63,7 @@ export function readMinutes(article: PlaybookArticle, cta: Link, showBuilt: bool
       case "updates":
         return b.items.forEach((it) => (typeof it === "object" && "date" in it ? add(it.date, it.text) : rich(it)));
       case "faq":
-        return b.items.forEach((it, i) => add(it.q, i === 0 ? "−" : "+", i === 0 ? it.a : null));
+        return b.items.forEach((it, i) => add(it.q, i === 0 ? "−" : "+", i === 0 ? inline(it.a) : null));
     }
   };
 

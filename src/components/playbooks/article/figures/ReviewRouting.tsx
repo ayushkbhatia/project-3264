@@ -2,9 +2,10 @@ import type { ReactNode } from "react";
 import type { StaticImageData } from "next/image";
 import { Figure, Sheet } from "../figure";
 
-// Review routing (Covenant Watch F7, NAV Pack Review F7), a house figure for "How we know it
-// works": where 1,000 extracted fields go. Filled bars for the fields that pass through,
-// outlined bars for the ones a person reads. Illustrative counts.
+// Review routing (Covenant Watch F7, NAV Pack Review F7, Side-Letter Register F6), a house figure
+// for "How we know it works": where 1,000 extracted fields go. Filled bars for the fields that
+// pass through, outlined bars for the ones a person reads. Illustrative counts. Side-Letter
+// Register's caption adds what the funnel covers on that page.
 
 function Row({ label, sub, children }: { label: string; sub?: string; children: ReactNode }) {
   return (
@@ -42,15 +43,19 @@ function Outline({ pct, min, className }: { pct: string; min: number; className?
   );
 }
 
-export function ReviewRouting({ image, veil, className }: { image: StaticImageData; veil: number; className?: string }) {
+export function ReviewRouting({
+  image,
+  veil,
+  className,
+  caption = "Fields that fail a validator or fall below the confidence threshold go to a person; a sample of the rest is checked by field class. Illustrative counts.",
+}: {
+  image: StaticImageData;
+  veil: number;
+  className?: string;
+  caption?: string;
+}) {
   return (
-    <Figure
-      image={image}
-      veil={veil}
-      className={className}
-      label="Review routing · 1,000 extracted fields"
-      caption="Fields that fail a validator or fall below the confidence threshold go to a person; a sample of the rest is checked by field class. Illustrative counts."
-    >
+    <Figure image={image} veil={veil} className={className} label="Review routing · 1,000 extracted fields" caption={caption}>
       <Sheet>
         <Row label="Fields extracted">
           <Bar pct="100%" value="1,000" />
