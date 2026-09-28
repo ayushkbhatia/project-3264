@@ -7,14 +7,17 @@ export type FooterColumn = { head: string; links: Array<Link & { current?: boole
 export function Footer({
   columns = homeFooter.columns,
   extra,
+  className,
 }: {
   columns?: FooterColumn[];
   /** Rendered in the bottom bar, before the status line (e.g. a pause control). */
   extra?: ReactNode;
+  /** Appended to the footer's own classes (e.g. a page's narrower phone gutter). */
+  className?: string;
 }) {
   const footer = homeFooter;
   return (
-    <footer data-screen-label="Footer" className="px-6 pt-[70px] pb-10 md:px-10">
+    <footer data-screen-label="Footer" className={`px-6 pt-[70px] pb-10 md:px-10 ${className ?? ""}`}>
       <div className="mx-auto max-w-[1280px]">
         {/* Five columns divided by left hairlines; see .footer-cols in globals.css for how
             the rules follow the columns as they reflow to three, two and then one. */}

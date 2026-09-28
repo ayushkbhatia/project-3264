@@ -11,6 +11,8 @@ export const routes = {
   aiEngineering: "/ai-engineering",
   aiTransformation: "/ai-transformation",
   privateCredit: "/industries/private-credit",
+  privateEquity: "/industries/private-equity",
+  playbooks: "/playbooks",
   company: "/company",
   companyWho: "/company#who",
   companyHow: "/company#how",
