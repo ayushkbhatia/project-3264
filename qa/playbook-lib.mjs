@@ -38,6 +38,10 @@ const PAGES = {
     reveal: { rise: { sel: '[data-reveal="fade"]', text: "Fee basis should step down" } },
     settles: true,
   },
+  // F1: six status dots grey to green 150ms apart and, under the sentence's four figures, an
+  // underline drawing. No ring or fades: its own check in playbook-behaviour.mjs, which also
+  // covers the final state for a reader who has not reached the figure within 4s.
+  "investor-reporting": { file: "Investor%20Reporting.dc.html", refPort: 4108, reveal: {} },
 };
 
 export const PAGE = arg("page", "covenant-watch");
