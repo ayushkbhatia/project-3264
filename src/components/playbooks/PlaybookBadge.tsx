@@ -77,6 +77,24 @@ const ICONS: Record<string, ReactNode> = {
   ),
 };
 
+/** One playbook's icon, drawn in ink. Decorative: size it with `className`. */
+export function PlaybookIcon({ slug, className, strokeWidth = 2 }: { slug: string; className?: string; strokeWidth?: number }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke="#1A1917"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      {ICONS[slug]}
+    </svg>
+  );
+}
+
 /**
  * The glass icon badge centred on every playbook image (specs/00): a frosted rounded square,
  * `size` of the image box's height (34% on tiles, 30% in the carousel), the icon at 48% of the
@@ -89,17 +107,7 @@ export function PlaybookBadge({ slug, size }: { slug: string; size: "34%" | "30%
       className="pointer-events-none absolute top-1/2 left-1/2 box-border flex aspect-square -translate-1/2 items-center justify-center rounded-[28%] border border-[rgba(255,255,255,0.72)] bg-[rgba(250,249,246,0.62)] shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_18px_40px_-16px_rgba(20,20,18,0.38)] backdrop-blur-[18px] backdrop-saturate-[1.3]"
       style={{ height: size }}
     >
-      <svg
-        viewBox="0 0 48 48"
-        fill="none"
-        stroke="#1A1917"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="block h-[48%] w-[48%]"
-      >
-        {ICONS[slug]}
-      </svg>
+      <PlaybookIcon slug={slug} className="block h-[48%] w-[48%]" />
     </div>
   );
 }

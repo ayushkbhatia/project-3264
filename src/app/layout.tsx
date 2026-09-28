@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { INTRO_GATE_SCRIPT, INTRO_GATE_STYLE } from "@/components/home/IntroGate";
 import { AI_INTRO_GATE_SCRIPT } from "@/components/ai-engineering/IntroGate";
 import { PC_INTRO_GATE_SCRIPT } from "@/components/private-credit/IntroGate";
+import { PB_REVEAL_GATE_SCRIPT, PB_REVEAL_GATE_STYLE } from "@/components/playbooks/article/reveal";
 import "./globals.css";
 
 // Fonts are self-hosted under their literal family names (see globals.css): the Private
@@ -41,7 +42,9 @@ const MOTION_FLAG = `try{if(/[?&]motion=off(&|$)/.test(location.search))document
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    // data-scroll-behavior: the playbook pages scroll smoothly to their anchors (globals.css);
+    // this has Next jump, not glide, to the top of the next page on a route change.
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
         {PRELOAD_FONTS.map((href) => (
           <link key={href} rel="preload" href={href} as="font" type="font/woff2" crossOrigin="anonymous" />
@@ -55,6 +58,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             (IntroGate.ts in each page's components). */}
         <script dangerouslySetInnerHTML={{ __html: PC_INTRO_GATE_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: AI_INTRO_GATE_SCRIPT }} />
+        {/* The playbook pages' hero reveal holds its parts from the first frame when it will
+            play, rather than showing them and then hiding them to play (reveal.ts). */}
+        <script dangerouslySetInnerHTML={{ __html: PB_REVEAL_GATE_SCRIPT }} />
+        <style dangerouslySetInnerHTML={{ __html: PB_REVEAL_GATE_STYLE }} />
       </head>
       <body>{children}</body>
     </html>
