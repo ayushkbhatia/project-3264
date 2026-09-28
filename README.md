@@ -122,16 +122,17 @@ reference prototype (`reference/Playbooks.dc.html`) wins over the specs.
   `node qa/pb-a11y.mjs` (axe, focus rings, hit areas, menu, overflow) and
   `node qa/pb-contrast.mjs` (text set over imagery).
 
-## Playbook pages (Covenant Watch, Loan Ops Ledger, Capital Call Flow, NAV Pack Review)
+## Playbook pages (Covenant Watch, Loan Ops Ledger, Capital Call Flow, NAV Pack Review, Investor Reporting)
 
-`/playbooks/covenant-watch`, `/playbooks/loan-ops-ledger`, `/playbooks/capital-call-flow` and
-`/playbooks/nav-pack-review` are ports of
+`/playbooks/covenant-watch`, `/playbooks/loan-ops-ledger`, `/playbooks/capital-call-flow`,
+`/playbooks/nav-pack-review` and `/playbooks/investor-reporting` are ports of
 [`design_handoff_covenant_watch/`](design_handoff_covenant_watch/README.md),
 [`design_handoff_loan_ops_ledger/`](design_handoff_loan_ops_ledger/README.md),
-[`design_handoff_capital_call_flow/`](design_handoff_capital_call_flow/README.md) and
-[`design_handoff_nav_pack_review/`](design_handoff_nav_pack_review/README.md); each prototype
-(`<Name>.dc.html`) wins over its README and copy deck. All four are built on the template the
-nine playbook pages share.
+[`design_handoff_capital_call_flow/`](design_handoff_capital_call_flow/README.md),
+[`design_handoff_nav_pack_review/`](design_handoff_nav_pack_review/README.md) and
+[`design_handoff_investor_reporting/`](design_handoff_investor_reporting/README.md); each
+prototype (`<Name>.dc.html`) wins over its README and copy deck. All five are built on the
+template the nine playbook pages share.
 
 - The template is `src/components/playbooks/article/`: `PlaybookPage` (header with a reading
   progress bar, the phone "On this page" bar, the sticky sidebar with its coverage rail, the
@@ -151,7 +152,11 @@ nine playbook pages share.
   in view; Loan Ops Ledger, Capital Call Flow and NAV Pack Review once its top is in the upper 65%
   of the viewport, or settle on the final state if the reader has not got there within 4s,
   `ON_TOP_IN_UPPER_65`). A related playbook gets its own card (`related`: the playbook's tile,
-  badge and link).
+  badge and link). Investor Reporting adds a step-table lane said in its own words
+  (`{ faint }`), dated "Recently updated" rows, a figure head with its own right-hand content
+  (`aside`), and a reveal on its own schedule (`useHeroReveal`'s `schedule`: six steps 150ms
+  apart, each a dot turning from grey to green and, under the sentence's figures, an underline
+  drawing: the `wait` and `draw` parts).
 - A new playbook page: a content module, its figures, and `src/app/playbooks/<slug>/page.tsx`
   (`articleMetadata` + `PlaybookPage`); then mark the playbook `live` in `content/playbooks.ts`
   so `[slug]` stops redirecting it, and add it to the sitemap, to `.claude/launch.json` (its
@@ -168,14 +173,16 @@ nine playbook pages share.
   4.40:1), muted text on Capital Call Flow's #F1EEE8 row tint uses `--mut-ink` (4.55:1, against
   4.48:1) and its step table's "Nothing" `--faint-ink` (4.55:1, against 3.26:1), and NAV Pack
   Review's small muted text on the red wash and on the wash uses `--mut-ink-2` (4.52:1 and
-  4.70:1, against 4.19:1 and 4.36:1); the small back links and toggles carry 24px hit areas, and
+  4.70:1, against 4.19:1 and 4.36:1), as do Investor Reporting's on the wash and the hover
+  highlight (4.51:1 there), whose faint words ("No model step", a struck-out edit) take
+  `--faint-ink`; the small back links and toggles carry 24px hit areas, and
   "Copy link" falls back to a hidden textarea where the async clipboard is missing or refused.
   Capital Call Flow's hero table stacks each investor's line under a 448px main column (phones),
   where the reference's four columns overprint their amounts; from 448px up it is the reference's
   table. The header gets the Playbooks page's menu below 1000px, and the footer is the site's.
 - QA: serve the page's reference (`.claude/launch.json`: :4104 Covenant Watch, :4105 Loan Ops
-  Ledger, :4106 Capital Call Flow, :4107 NAV Pack Review), then with `BASE_URL` pointing at the
-  site and `--page <slug>`:
+  Ledger, :4106 Capital Call Flow, :4107 NAV Pack Review, :4108 Investor Reporting), then with
+  `BASE_URL` pointing at the site and `--page <slug>`:
   `node qa/playbook-sections.mjs --w 1440,1280,1024,768,390` (every section, pixel diff),
   `node qa/playbook-text.mjs` (the copy, verbatim against the reference),
   `node qa/playbook-behaviour.mjs` (scroll-spy, rail and progress parity, anchors, FAQ, copy

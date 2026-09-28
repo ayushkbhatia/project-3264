@@ -196,7 +196,13 @@ function StepTable({ head, rows, empty = "—", plain }: Extract<Block, { type: 
             <div key={head[i + 1]} role="cell" className="text-[13.5px] leading-[1.55] text-ink-2">
               <span className="mb-0.5 block text-[11.5px] font-medium text-mut @min-[599.5px]:hidden">{head[i + 1]}</span>
               {/* an empty cell said in words is text, and must pass AA (see --faint-ink) */}
-              {cell ?? <span className={empty === "—" ? "text-faint" : "text-faint-ink"}>{empty}</span>}
+              {typeof cell === "string" ? (
+                cell
+              ) : cell ? (
+                <span className="text-faint-ink">{cell.faint}</span>
+              ) : (
+                <span className={empty === "—" ? "text-faint" : "text-faint-ink"}>{empty}</span>
+              )}
             </div>
           ))}
         </div>
@@ -414,13 +420,22 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
     case "updates":
       return (
         <ul className="mt-[22px] mb-0 list-none border-t border-ink p-0">
-          {block.items.map((item, i) => (
-            <li key={i} className="flex flex-wrap items-baseline gap-x-3.5 gap-y-1.5 border-b border-rule-2 py-[13px] text-[14.5px] leading-[1.55]">
-              <span className="min-w-0 flex-[1_1_320px]">
-                <RichText item={item} />
-              </span>
-            </li>
-          ))}
+          {block.items.map((item, i) =>
+            typeof item === "object" && "date" in item ? (
+              <li key={i} className="flex flex-wrap items-baseline gap-x-6 gap-y-1 border-b border-rule-2 py-[13px]">
+                <time dateTime={item.date} className="flex-[0_0_96px] font-mono text-[11.5px]">
+                  {item.date}
+                </time>
+                <span className="min-w-0 flex-[1_1_320px] text-[14.5px] leading-[1.55]">{item.text}</span>
+              </li>
+            ) : (
+              <li key={i} className="flex flex-wrap items-baseline gap-x-3.5 gap-y-1.5 border-b border-rule-2 py-[13px] text-[14.5px] leading-[1.55]">
+                <span className="min-w-0 flex-[1_1_320px]">
+                  <RichText item={item} />
+                </span>
+              </li>
+            ),
+          )}
         </ul>
       );
 
