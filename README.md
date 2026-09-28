@@ -167,7 +167,9 @@ template the nine playbook pages share.
   `hidden="until-found"`, so find-in-page reaches them), the hero reveals and the figures' hover
   states and toggles. The read time is computed on the server. The hero reveal has a first-paint
   gate in `<head>` (`article/reveal.ts`), so a figure already in view is held at its start state
-  rather than shown, hidden, then replayed.
+  rather than shown, hidden, then replayed; after a client-side navigation (a card on
+  /playbooks, More playbooks, a related card) the hook sets the same gate itself, since Next
+  measures the new page before the start state lands and the parts would otherwise fade out.
 - Deliberate departures, all for legibility and accessibility: status text on the green and red
   tints uses `--ok-ink` / `--bad-ink` (4.69:1 and 4.63:1; the design's colours read 4.28:1 and
   4.40:1), muted text on Capital Call Flow's #F1EEE8 row tint uses `--mut-ink` (4.55:1, against

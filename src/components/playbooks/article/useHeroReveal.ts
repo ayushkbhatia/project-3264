@@ -69,6 +69,12 @@ export function useHeroReveal(
     // committed before paint: hence state set in a layout effect.
     const times = at.split(",").map(Number);
     const done = times.length;
+    // A client-side navigation arrives without the head gate (or with the last page's), and the
+    // new page's style can be read before step 0 lands: Next's scroll handler measures the page
+    // later in this same commit. Parts resolved at their final state would then transition out
+    // to their start state, a visible flash. Holding them through the gate's style from here
+    // means their first style is already the start state; the effect below lets go as usual.
+    if (gate !== "pending") html.setAttribute(REVEAL_ATTR, "pending");
     setStep(0);
     const timers: number[] = [];
     let started = false;
