@@ -17,6 +17,9 @@
 //      and F5's row hover
 //   9. Capital Call Flow only: F1's amounts stay inside their cells at every main width (under
 //      448px its lines stack), and F2 and F6 fold their columns at 600px as the reference does
+//  10. Investor Reporting only: the hero reveal (six dots grey to green and four underlines
+//      drawn, in the reference's order and 150ms rhythm), its final state for a reader who has
+//      not reached it within 4s, and the two-way hover between the sentence and the table
 //
 //   BASE_URL=… node qa/playbook-behaviour.mjs --page loan-ops-ledger [--only spy,reveal]
 
@@ -340,6 +343,131 @@ try {
     const after = await read();
     check(before.rise === 0 && after.rise === 1 && (after.dot === null || after.dot === "rgb(21, 127, 82)"), `reveal (not reached): held at 2.5s, final state after 4s (${JSON.stringify(after)})`);
     await ctx.close();
+  }
+
+  // Investor Reporting: the hero reveal, port against reference. Each side samples its six
+  // status dots (grey #D9D6CF, then green) and four underlines (0%, then 100% wide) on every
+  // frame from the first; the order and the gaps between the parts must match.
+  if (want("reveal") && PAGE === "investor-reporting") {
+    const sampler = () => {
+      window.__samples = [];
+      const t0 = performance.now();
+      const tick = () => {
+        const fig = document.querySelector("figure");
+        const isRef = !document.querySelector("[data-reveal]");
+        const dots = fig ? (isRef ? [...fig.querySelectorAll("div[data-f] > span:nth-last-child(2) > span[aria-hidden]")] : [...fig.querySelectorAll('[data-reveal="wait"]')]) : [];
+        const unders = fig ? (isRef ? [...fig.querySelectorAll("p span[data-f]")] : [...fig.querySelectorAll('[data-reveal="draw"]')]) : [];
+        if (dots.length === 6 && unders.length === 4)
+          window.__samples.push({
+            t: Math.round(performance.now() - t0),
+            gate: document.documentElement.getAttribute("data-pb-reveal"),
+            dots: dots.map((d) => getComputedStyle(d).backgroundColor),
+            unders: unders.map((u) => parseFloat(getComputedStyle(u).backgroundSize) || 0),
+          });
+        if (performance.now() - t0 < 9000) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const GREEN = "rgb(21, 127, 82)", GREY = "rgb(217, 214, 207)";
+    /** When each part reached its final state, relative to the first part's. */
+    const landings = (s) => {
+      const at = (f) => s.find(f)?.t ?? null;
+      const d = [0, 1, 2, 3, 4, 5].map((i) => at((x) => x.dots[i] === GREEN));
+      const u = [0, 1, 2, 3].map((i) => at((x) => x.unders[i] >= 100));
+      const t0 = Math.min(...d.filter((x) => x !== null));
+      return { d: d.map((x) => (x === null ? null : x - t0)), u: u.map((x) => (x === null ? null : x - t0)) };
+    };
+    for (const [w, h, label] of [[1440, 1300, "in view at load"], [1440, 800, "below the fold"], [390, 844, "phone, below the fold"]]) {
+      const runs = [];
+      for (const url of [REF, PORT]) {
+        const ctx = await browser.newContext({ viewport: { width: w, height: h }, reducedMotion: "no-preference" });
+        const p = await ctx.newPage();
+        await p.addInitScript(sampler);
+        await p.goto(url, { waitUntil: "domcontentloaded" });
+        if (h < 1000) {
+          await p.waitForTimeout(1500);
+          await p.evaluate(() => window.scrollTo(0, document.querySelector("figure").getBoundingClientRect().top + scrollY - 200));
+        }
+        await p.waitForTimeout(h < 1000 ? 4500 : 6000);
+        runs.push(await p.evaluate(() => window.__samples));
+        await ctx.close();
+      }
+      const [r, s] = runs;
+      const first = s[0];
+      check(!!first && first.dots.every((c) => c === GREY) && first.unders.every((u) => u === 0), `IR reveal (${label}): first frame held at the start state (gate ${first?.gate})`);
+      // before the port's reveal owns the parts, nothing may show its final state
+      const early = s.filter((x) => x.gate !== "run" && (x.dots.some((c) => c === GREEN) || x.unders.some((u) => u > 0)));
+      check(early.length === 0, `IR reveal (${label}): nothing shows, then hides, before the reveal`);
+      const a = landings(r), b = landings(s);
+      const order = (l) => [...l.d.map((t, i) => ["d" + i, t]), ...l.u.map((t, i) => ["u" + i, t])].sort((x, y) => x[1] - y[1]).map((x) => x[0]).join(" ");
+      const gap = Math.max(...[...a.d.map((t, i) => Math.abs(t - b.d[i])), ...a.u.map((t, i) => Math.abs(t - b.u[i]))]);
+      check(
+        [...b.d, ...b.u].every((t) => t !== null) && order(a) === order(b) && gap <= 60,
+        `IR reveal (${label}): dots at ${b.d.join(", ")}ms, underlines at ${b.u.join(", ")}ms (reference ${a.d.join(", ")} / ${a.u.join(", ")}; max gap ${gap}ms)`,
+      );
+      const last = s[s.length - 1];
+      check(last.dots.every((c) => c === GREEN) && last.unders.every((u) => u >= 100), `IR reveal (${label}): ends in the final state`);
+    }
+
+    // a reader who has not reached the figure within 4s gets its final state, held till then
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 800 }, reducedMotion: "no-preference" });
+    const p = await ctx.newPage();
+    await p.goto(PORT, { waitUntil: "domcontentloaded" });
+    const read = () =>
+      p.evaluate(() => ({
+        green: [...document.querySelectorAll('[data-reveal="wait"]')].filter((d) => getComputedStyle(d).backgroundColor === "rgb(21, 127, 82)").length,
+        drawn: [...document.querySelectorAll('[data-reveal="draw"]')].filter((u) => parseFloat(getComputedStyle(u).backgroundSize) >= 100).length,
+      }));
+    await p.waitForTimeout(2500);
+    const before = await read();
+    await p.waitForTimeout(3000);
+    const after = await read();
+    check(before.green === 0 && before.drawn === 0 && after.green === 6 && after.drawn === 4, `IR reveal (not reached): held at 2.5s, final state after 4s (${JSON.stringify(after)})`);
+    await ctx.close();
+  }
+
+  // Investor Reporting: hovering a figure in the sentence or its row tints both #F1E6CF; the
+  // gross pair's check and the NAV (no figure in the sentence) tint their row alone, over the
+  // wash they rest on.
+  if (want("hover") && PAGE === "investor-reporting") {
+    for (const [w, h] of [[1440, 900], [390, 844]]) {
+      const ref = await open(browser, REF, w, h);
+      const port = await open(browser, PORT, w, h);
+      await settle(ref.page);
+      const state = (p) =>
+        p.evaluate(() => {
+          const fig = document.querySelector("figure");
+          const rows = [...fig.querySelectorAll('[role="row"], div[data-f]')].filter((r) => r.querySelector("span") && !/Calculation/.test(r.textContent));
+          const unders = [...fig.querySelectorAll("p > span")].filter((u) => /^[\d.]+[%x]$/.test(u.textContent));
+          return {
+            rows: rows.map((r) => getComputedStyle(r).backgroundColor).join(" "),
+            figs: unders.map((u) => getComputedStyle(u).backgroundColor).join(" "),
+          };
+        });
+      const targets = [
+        ["the sentence's 1.21x", (p) => p.locator("figure").first().locator("p > span", { hasText: /^1\.21x$/ })],
+        ["row 2", (p) => p.locator("figure").first().getByText("Net · without facility · same period and method")],
+        ["the gross pair's row", (p) => p.locator("figure").first().getByText("pair check: gross and net share basis")],
+        ["the NAV row", (p) => p.locator("figure").first().getByText("Northbay pack v3 (fictional) · fee-basis break rebooked")],
+      ];
+      const [a0, b0] = await Promise.all([state(ref.page), state(port.page)]);
+      check(a0.rows === b0.rows && a0.figs === b0.figs, `IR hover @${w} at rest: rows ${b0.rows.split(" rgb").length} alike, the wash on the pair and the NAV`);
+      for (const [name, loc] of targets) {
+        await loc(ref.page).hover();
+        await loc(port.page).hover();
+        await Promise.all([ref.page.waitForTimeout(260), port.page.waitForTimeout(260)]);
+        const [a, b] = await Promise.all([state(ref.page), state(port.page)]);
+        const lit = (x) => (x.rows.match(/rgb\(241, 230, 207\)/g) || []).length + (x.figs.match(/rgb\(241, 230, 207\)/g) || []).length;
+        check(a.rows === b.rows && a.figs === b.figs && lit(b) >= 1, `IR hover @${w} on ${name}: ${lit(b)} part(s) tinted, as in the reference`);
+      }
+      await ref.page.mouse.move(5, 5);
+      await port.page.mouse.move(5, 5);
+      await Promise.all([ref.page.waitForTimeout(260), port.page.waitForTimeout(260)]);
+      const [a1, b1] = await Promise.all([state(ref.page), state(port.page)]);
+      check(a1.rows === b1.rows && a1.figs === b1.figs && b1.rows === b0.rows, `IR hover @${w}: leaving resets both`);
+      await ref.ctx.close();
+      await port.ctx.close();
+    }
   }
 
   // Loan Ops Ledger: the notice toggle below a 500px column, and F5's row hover.

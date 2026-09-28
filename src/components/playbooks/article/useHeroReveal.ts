@@ -1,8 +1,13 @@
 import { useEffect, useLayoutEffect, useState, type RefObject } from "react";
 import { REVEAL_ATTR } from "./reveal";
 
-/** The reveal's last step: its final state, which is also what the server renders. */
+/** The four-step reveal's last step: its final state, which is also what the server renders. */
 export const REVEAL_DONE = 4;
+
+/** When each step lands, in ms after the reveal starts: the four of Covenant Watch, Loan Ops
+    Ledger, Capital Call Flow and NAV Pack Review. A page may pass its own (Investor Reporting:
+    six, 150ms apart). */
+export const FOUR_STEPS: readonly number[] = [400, 1050, 1700, 2350];
 
 export type RevealTrigger = {
   /** IntersectionObserver options for the moment the reveal starts. */
@@ -22,22 +27,26 @@ export const ON_THIRD_VISIBLE: RevealTrigger = { threshold: 0.3 };
 export const ON_TOP_IN_UPPER_65: RevealTrigger = { threshold: 0, rootMargin: "0px 0px -35% 0px", startWithin: 4000 };
 
 /**
- * The hero figure's reveal (README, F1): once the trigger fires, step 1 at 400ms, 2 at 1050,
- * 3 at 1700 and 4 (done) at 2350, each part easing in over its own transition; the final state
- * is forced 4s after the start whatever happens. It runs once. Reduced motion, ?motion=off,
- * `animate = false` or a missing IntersectionObserver keep the final state throughout.
+ * The hero figure's reveal (README, F1): once the trigger fires, the steps land on `schedule`
+ * (by default step 1 at 400ms, 2 at 1050, 3 at 1700 and 4, the last, at 2350), each part
+ * easing in over its own transition; the final state is forced 4s after the start whatever
+ * happens. It runs once. Reduced motion, ?motion=off, `animate = false` or a missing
+ * IntersectionObserver keep the final state throughout.
  *
- * Returns the step, 0–4. Before hydration the figure is in its final state (the server
- * render) or, on a first load where the reveal will play, held at step 0 by the head gate
- * (reveal.ts), which this takes over.
+ * Returns the step, from 0 to the schedule's length (the final state). Before hydration the
+ * figure is in its final state (the server render) or, on a first load where the reveal will
+ * play, held at step 0 by the head gate (reveal.ts), which this takes over.
  */
 export function useHeroReveal(
   ref: RefObject<HTMLElement | null>,
   animate: boolean,
   trigger: RevealTrigger = ON_THIRD_VISIBLE,
+  schedule: readonly number[] = FOUR_STEPS,
 ): number {
   const { threshold, rootMargin, startWithin } = trigger;
-  const [step, setStep] = useState(REVEAL_DONE);
+  // as a string, so a schedule written inline does not restart the reveal on every render
+  const at = schedule.join(",");
+  const [step, setStep] = useState(schedule.length);
 
   // Layout effect: on a client-side navigation there is no gate, and step 0 must be committed
   // before the new page's first paint.
@@ -58,6 +67,8 @@ export function useHeroReveal(
     }
     // Only the browser can say whether the reveal may play, and its start state has to be
     // committed before paint: hence state set in a layout effect.
+    const times = at.split(",").map(Number);
+    const done = times.length;
     setStep(0);
     const timers: number[] = [];
     let started = false;
@@ -66,8 +77,8 @@ export function useHeroReveal(
         if (!entries.some((e) => e.isIntersecting)) return;
         io.disconnect();
         started = true;
-        [1, 2, 3, 4].forEach((s, i) => timers.push(window.setTimeout(() => setStep(s), 400 + i * 650)));
-        timers.push(window.setTimeout(() => setStep(REVEAL_DONE), 4000));
+        times.forEach((ms, i) => timers.push(window.setTimeout(() => setStep(i + 1), ms)));
+        timers.push(window.setTimeout(() => setStep(done), 4000));
       },
       { threshold, rootMargin },
     );
@@ -77,14 +88,14 @@ export function useHeroReveal(
         window.setTimeout(() => {
           if (started) return;
           io.disconnect();
-          setStep(REVEAL_DONE);
+          setStep(done);
         }, startWithin),
       );
     return () => {
       io.disconnect();
       timers.forEach(clearTimeout);
     };
-  }, [animate, ref, threshold, rootMargin, startWithin]);
+  }, [animate, ref, threshold, rootMargin, startWithin, at]);
 
   // The figure now holds its own start state, so the gate's style can let go.
   useEffect(() => {

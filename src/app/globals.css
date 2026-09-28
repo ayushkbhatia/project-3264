@@ -41,7 +41,9 @@
   --mut-ink: #6d6c66;
   --faint-ink: #727069;
   /* NAV Pack Review sets small muted text on the red wash (#F6E3DF, 4.19:1 in #6E6D67) and on
-     the wash (#EEEBE4, 4.36:1): one step darker passes both (4.52:1 and 4.70:1). */
+     the wash (#EEEBE4, 4.36:1): one step darker passes both (4.52:1 and 4.70:1). Investor
+     Reporting's hero table sets it on the wash and, under the pointer, on the highlight
+     (#F1E6CF, 4.19:1 in #6E6D67; 4.51:1 in this). */
   --mut-ink-2: #696862;
   /* Font stacks, named literally (see the @font-face block above). The home modules and
      components still read them through these two variables. */

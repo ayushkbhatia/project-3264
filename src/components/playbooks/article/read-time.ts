@@ -36,7 +36,7 @@ export function readMinutes(article: PlaybookArticle, cta: Link, showBuilt: bool
         return add(b.label, b.title, b.text, b.cta, "→");
       case "stepTable":
         add(...b.head);
-        return b.rows.forEach((r) => add(r.step, ...r.cells.map((c) => c ?? b.empty ?? "—")));
+        return b.rows.forEach((r) => add(r.step, ...r.cells.map((c) => (typeof c === "string" ? c : (c?.faint ?? b.empty ?? "—")))));
       case "callout":
         return add(b.label, b.text);
       case "figure":
@@ -60,7 +60,7 @@ export function readMinutes(article: PlaybookArticle, cta: Link, showBuilt: bool
       case "terms":
         return b.items.forEach((it) => add(it.term, it.def));
       case "updates":
-        return b.items.forEach(rich);
+        return b.items.forEach((it) => (typeof it === "object" && "date" in it ? add(it.date, it.text) : rich(it)));
       case "faq":
         return b.items.forEach((it, i) => add(it.q, i === 0 ? "−" : "+", i === 0 ? it.a : null));
     }

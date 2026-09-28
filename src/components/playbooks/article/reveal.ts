@@ -56,14 +56,17 @@ function gate(attr: string, graceMs: number) {
 
 export const PB_REVEAL_GATE_SCRIPT = `(${gate.toString()})(${JSON.stringify(REVEAL_ATTR)},${REVEAL_GRACE_MS})`;
 
-// Parts are marked in the figure's markup: [data-reveal="ring" | "fade" | "rise" | "dot"] inside a
-// [data-reveal-root="on"] (the figure; "off" when its page turns the animation off, so nothing
-// is held). !important: the parts' final state is an inline style. Printing shows the final
-// state whatever the reveal is doing.
+// Parts are marked in the figure's markup: [data-reveal="ring" | "fade" | "rise" | "dot" | "draw" |
+// "wait"] inside a [data-reveal-root="on"] (the figure; "off" when its page turns the animation
+// off, so nothing is held). !important: the parts' final state is an inline style. Printing
+// shows the final state whatever the reveal is doing.
 export const PB_REVEAL_GATE_STYLE =
   `html[${REVEAL_ATTR}=pending] [data-reveal-root=on] [data-reveal=ring]{box-shadow:0 0 0 1.5px rgba(26,25,23,0)!important}` +
   `html[${REVEAL_ATTR}=pending] [data-reveal-root=on] [data-reveal=fade]{opacity:0!important}` +
   `html[${REVEAL_ATTR}=pending] [data-reveal-root=on] [data-reveal=rise]{opacity:0!important;transform:translateY(6px)!important}` +
   // a status dot that turns from red to green as the reveal ends
   `html[${REVEAL_ATTR}=pending] [data-reveal-root=on] [data-reveal=dot]{background:#C4341E!important}` +
-  `@media print{[data-reveal-root] [data-reveal]{opacity:1!important;transform:none!important}[data-reveal-root] [data-reveal=ring]{box-shadow:0 0 0 1.5px #1A1917!important}[data-reveal-root] [data-reveal=dot]{background:#157F52!important}}`;
+  // Investor Reporting: an underline drawn under a figure, and a status dot waiting in grey
+  `html[${REVEAL_ATTR}=pending] [data-reveal-root=on] [data-reveal=draw]{background-size:0% 1.5px!important}` +
+  `html[${REVEAL_ATTR}=pending] [data-reveal-root=on] [data-reveal=wait]{background:#D9D6CF!important}` +
+  `@media print{[data-reveal-root] [data-reveal]{opacity:1!important;transform:none!important}[data-reveal-root] [data-reveal=ring]{box-shadow:0 0 0 1.5px #1A1917!important}[data-reveal-root] [data-reveal=dot],[data-reveal-root] [data-reveal=wait]{background:#157F52!important}[data-reveal-root] [data-reveal=draw]{background-size:100% 1.5px!important}}`;

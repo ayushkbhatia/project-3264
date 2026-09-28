@@ -124,6 +124,20 @@
       "port": 4107
     },
     {
+      "name": "design reference: investor reporting",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4108",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_investor_reporting"
+      ],
+      "port": 4108
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [

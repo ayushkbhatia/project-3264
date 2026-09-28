@@ -11,6 +11,14 @@ import type { Link } from "@/content/home";
 /** A list item or paragraph with an optional bold lead-in (weight 500, ink). */
 export type Rich = string | { lead: string; text?: string };
 
+/** A lane in the step table: what happens there, `null` for an empty lane (the table's `empty`),
+    or `faint` words for one lane left empty on purpose and said differently (Investor
+    Reporting: "The send tool is not exposed to the model"). */
+export type StepCell = string | null | { faint: string };
+
+/** A "Recently updated" row: the note alone, or (Investor Reporting) after its date. */
+export type Update = Rich | { date: string; text: string };
+
 export type Block =
   /** Body paragraph: 15.5px / 1.7, 16px under what precedes it. */
   | { type: "p"; text: string }
@@ -34,7 +42,7 @@ export type Block =
   | {
       type: "stepTable";
       head: [string, string, string, string];
-      rows: Array<{ step: string; cells: [string | null, string | null, string | null] }>;
+      rows: Array<{ step: string; cells: [StepCell, StepCell, StepCell] }>;
       empty?: string;
       plain?: boolean;
     }
@@ -68,7 +76,7 @@ export type Block =
       tight?: boolean;
     }
   | { type: "terms"; items: Array<{ term: string; def: string }> }
-  | { type: "updates"; items: Rich[] }
+  | { type: "updates"; items: Update[] }
   | { type: "faq"; items: Array<{ q: string; a: string }> };
 
 export type ArticleSection = {

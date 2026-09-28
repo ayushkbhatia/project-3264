@@ -25,6 +25,7 @@ export function Figure({
   veil,
   label,
   meta,
+  aside,
   eager = false,
   className,
   band,
@@ -49,6 +50,9 @@ export function Figure({
   label: string;
   /** Mono head, top right: entity, document, version. */
   meta?: ReactNode;
+  /** Set as given at the head's right, in place of `meta`'s mono line (Investor Reporting's
+      hero: a status dot and its line, on their own font's line height). */
+  aside?: ReactNode;
   /** The hero figure: its wash loads at once, at high priority. */
   eager?: boolean;
   /** Margin above (28–44px per figure). */
@@ -102,9 +106,10 @@ export function Figure({
         <div className="relative">
           <div className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1 px-1.5 pt-1" style={{ paddingBottom: headGap }}>
             <span className={cx(monoLabel, "text-ink")}>{label}</span>
-            {meta ? (
-              <span className={cx("font-mono text-[11px] leading-[1.6] text-ink-2", metaRight && "text-right")}>{meta}</span>
-            ) : null}
+            {aside ??
+              (meta ? (
+                <span className={cx("font-mono text-[11px] leading-[1.6] text-ink-2", metaRight && "text-right")}>{meta}</span>
+              ) : null)}
           </div>
           {children}
         </div>
