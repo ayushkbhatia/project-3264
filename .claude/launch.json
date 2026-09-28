@@ -152,6 +152,20 @@
       "port": 4109
     },
     {
+      "name": "design reference: mandate guardrails",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4110",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_mandate_guardrails"
+      ],
+      "port": 4110
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [
