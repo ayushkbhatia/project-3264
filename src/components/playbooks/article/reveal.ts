@@ -13,9 +13,10 @@
 //
 // States of <html data-pb-reveal>:
 //   (absent)  not playing: another route, ?motion=off, reduced motion, no IntersectionObserver.
-//             Client-side navigations land here too; the hook then starts the reveal itself,
-//             in a layout effect, before the new page paints.
-//   pending   decided in <head>; the parts marked [data-reveal] are held at their start state
+//             Client-side navigations land here too (or on the last page's state); the hook
+//             then sets "pending" itself, in a layout effect, before the new page paints.
+//   pending   decided in <head> (or by the hook, on a client-side navigation); the parts marked
+//             [data-reveal] are held at their start state
 //   run       the figure owns them (its start state is committed; the style lets go)
 //   off       the figure declined at start (its animate flag is off)
 //   released  hydration did not come within REVEAL_GRACE_MS, or an app script failed to load:

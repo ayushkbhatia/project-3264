@@ -139,15 +139,16 @@ export const categories: Category[] = [
 //
 // Live pages: Covenant Watch (src/app/playbooks/covenant-watch), Loan Ops Ledger
 // (src/app/playbooks/loan-ops-ledger), Capital Call Flow (src/app/playbooks/capital-call-flow),
-// NAV Pack Review (src/app/playbooks/nav-pack-review) and Investor Reporting
-// (src/app/playbooks/investor-reporting).
+// NAV Pack Review (src/app/playbooks/nav-pack-review), Investor Reporting
+// (src/app/playbooks/investor-reporting) and Side-Letter Register
+// (src/app/playbooks/side-letter-register).
 export const playbooks: Playbook[] = [
   { slug: "covenant-watch", name: "Covenant Watch", category: "private-credit", blurb: "Borrower reporting packages read and tested against the credit agreement, with breaches flagged before quarter close.", live: true },
   { slug: "capital-call-flow", name: "Capital Call Flow", category: "private-credit", blurb: "Notices computed from the LPA, sent per investor and reconciled to the cash that actually arrives.", live: true },
   { slug: "loan-ops-ledger", name: "Loan Ops Ledger", category: "private-credit", blurb: "Agent notices matched to the loan system every day, with each break explained before month end.", live: true },
   { slug: "nav-pack-review", name: "NAV Pack Review", category: "fund-management", blurb: "Administrator NAV packs tied out line by line to your own records before the CFO signs.", live: true },
   { slug: "investor-reporting", name: "Investor Reporting", category: "fund-management", blurb: "Letters, statements and DDQ answers drafted from the systems of record and checked before they go out.", live: true },
-  { slug: "side-letter-register", name: "Side-Letter Register", category: "fund-management", blurb: "Obligations read out of LPAs and side letters into a live register, with proof of delivery attached.", live: false },
+  { slug: "side-letter-register", name: "Side-Letter Register", category: "fund-management", blurb: "Obligations read out of LPAs and side letters into a live register, with proof of delivery attached.", live: true },
   { slug: "mandate-guardrails", name: "Mandate Guardrails", category: "asset-management", blurb: "IMA restrictions encoded once, screened before and after every trade, and attested with evidence.", live: false },
   { slug: "client-reporting-flow", name: "Client Reporting Flow", category: "asset-management", blurb: "Performance and holdings reports composed per client and reconciled to the books before release.", live: false },
   { slug: "research-intake", name: "Research Intake", category: "asset-management", blurb: "Research, filings and transcripts summarised overnight in the house format, every claim cited.", live: false },

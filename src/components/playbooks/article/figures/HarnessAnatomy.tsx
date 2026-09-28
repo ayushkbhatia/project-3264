@@ -2,10 +2,10 @@ import type { StaticImageData } from "next/image";
 import { Figure, Sheet } from "../figure";
 
 // The harness anatomy (Covenant Watch F6, Loan Ops Ledger F6, Capital Call Flow F4, NAV Pack
-// Review F4), a house figure for every playbook's "How it is built": the pinned model in the
-// middle of the eight parts that instruct, constrain and check it, framed by the four that watch
-// every run. From a 600px main column it is the framed 3×3 grid with the four edge labels; below
-// that, a stacked list.
+// Review F4, Side-Letter Register F5), a house figure for every playbook's "How it is built": the
+// pinned model in the middle of the eight parts that instruct, constrain and check it, framed by
+// the four that watch every run. From a 600px main column it is the framed 3×3 grid with the four
+// edge labels; below that, a stacked list. Side-Letter Register captions it in its own words.
 
 const PARTS = [
   { n: "02", name: "Instructions", text: "versioned prompts and rubrics, one per release" },
@@ -58,15 +58,19 @@ function Card({ part }: { part: (typeof PARTS)[number] }) {
   );
 }
 
-export function HarnessAnatomy({ image, veil, className }: { image: StaticImageData; veil: number; className?: string }) {
+export function HarnessAnatomy({
+  image,
+  veil,
+  className,
+  caption = "The pinned model sits inside twelve layers that instruct, constrain, check and record it.",
+}: {
+  image: StaticImageData;
+  veil: number;
+  className?: string;
+  caption?: string;
+}) {
   return (
-    <Figure
-      image={image}
-      veil={veil}
-      className={className}
-      label="Harness anatomy"
-      caption="The pinned model sits inside twelve layers that instruct, constrain, check and record it."
-    >
+    <Figure image={image} veil={veil} className={className} label="Harness anatomy" caption={caption}>
       <Sheet pad="p-3.5">
         {/* wide: the framed grid */}
         <div className="relative hidden rounded-[18px] border-[1.5px] border-ink px-11 py-[46px] @min-[599.5px]:block">

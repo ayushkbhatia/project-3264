@@ -36,6 +36,7 @@ export function Figure({
   captionGap = 8,
   evidence,
   moment,
+  note,
   caption,
   footer,
   children,
@@ -71,6 +72,9 @@ export function Figure({
   captionGap?: 6 | 8;
   evidence?: ReactNode;
   moment?: ReactNode;
+  /** A small secondary note between the evidence line and the caption, set as the prototype
+      does, without text-wrap: pretty (Side-Letter Register's F2 states its sample assumption). */
+  note?: ReactNode;
   caption: ReactNode;
   /** Set as given under the caption, inside the figure (Capital Call Flow's hero carries a
       terminology note there). */
@@ -120,6 +124,7 @@ export function Figure({
         </div>
       ) : null}
       {moment ? <p className="mt-2 mb-0 text-[15px] leading-[1.5] text-sec">{moment}</p> : null}
+      {note ? <p className="mt-2 mb-0 text-[12px] leading-[1.5] text-sec [text-wrap:wrap]">{note}</p> : null}
       <figcaption className={cx("text-[12px] leading-[1.5] text-mut", captionGap === 6 ? "mt-1.5" : "mt-2")}>{caption}</figcaption>
       {footer}
     </figure>

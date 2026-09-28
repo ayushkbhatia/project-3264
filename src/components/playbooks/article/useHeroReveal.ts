@@ -5,8 +5,8 @@ import { REVEAL_ATTR } from "./reveal";
 export const REVEAL_DONE = 4;
 
 /** When each step lands, in ms after the reveal starts: the four of Covenant Watch, Loan Ops
-    Ledger, Capital Call Flow and NAV Pack Review. A page may pass its own (Investor Reporting:
-    six, 150ms apart). */
+    Ledger, Capital Call Flow and NAV Pack Review. A page may pass its own (Investor Reporting and
+    Side-Letter Register: six, 150ms apart). */
 export const FOUR_STEPS: readonly number[] = [400, 1050, 1700, 2350];
 
 export type RevealTrigger = {
@@ -21,9 +21,9 @@ export type RevealTrigger = {
 /** Covenant Watch: once 30% of the figure is on screen. */
 export const ON_THIRD_VISIBLE: RevealTrigger = { threshold: 0.3 };
 
-/** Loan Ops Ledger, Capital Call Flow and NAV Pack Review: once the figure's top is in the upper 65% of the
-    viewport (which works for figures taller than the screen), or the final state if that has
-    not happened within 4s of mount. */
+/** Loan Ops Ledger, Capital Call Flow, NAV Pack Review and Side-Letter Register: once the
+    figure's top is in the upper 65% of the viewport (which works for figures taller than the
+    screen), or the final state if that has not happened within 4s of mount. */
 export const ON_TOP_IN_UPPER_65: RevealTrigger = { threshold: 0, rootMargin: "0px 0px -35% 0px", startWithin: 4000 };
 
 /**
@@ -69,6 +69,12 @@ export function useHeroReveal(
     // committed before paint: hence state set in a layout effect.
     const times = at.split(",").map(Number);
     const done = times.length;
+    // A client-side navigation arrives without the head gate (or with the last page's), and the
+    // new page's style can be read before step 0 lands: Next's scroll handler measures the page
+    // later in this same commit. Parts resolved at their final state would then transition out
+    // to their start state, a visible flash. Holding them through the gate's style from here
+    // means their first style is already the start state; the effect below lets go as usual.
+    if (gate !== "pending") html.setAttribute(REVEAL_ATTR, "pending");
     setStep(0);
     const timers: number[] = [];
     let started = false;

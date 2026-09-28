@@ -10,9 +10,11 @@
 //   6. evidence line: hovering a row highlights its segment and inks its label
 //   7. hero reveal (motion on): held from the first frame, then its parts in turn; on Loan Ops
 //      Ledger also the status dot's red-to-green; on NAV Pack Review the rows 40ms apart, then
-//      the explanation and the break's "Break · explained"; on Loan Ops Ledger, Capital Call
-//      Flow and NAV Pack Review the final state when the reader has not reached the figure
-//      within 4s
+//      the explanation and the break's "Break · explained"; on Side-Letter Register the rows
+//      150ms apart, then the overdue row's red; on Loan Ops Ledger, Capital Call Flow, NAV Pack
+//      Review and Side-Letter Register the final state when the reader has not reached the
+//      figure within 4s; and, arriving by a client-side navigation from /playbooks, the parts
+//      start hidden and never fade out (no flash of the final state)
 //   8. Loan Ops Ledger only: the hero notice's "Show full notice" toggle below a 500px column,
 //      and F5's row hover
 //   9. Capital Call Flow only: F1's amounts stay inside their cells at every main width (under
@@ -20,6 +22,9 @@
 //  10. Investor Reporting only: the hero reveal (six dots grey to green and four underlines
 //      drawn, in the reference's order and 150ms rhythm), its final state for a reader who has
 //      not reached it within 4s, and the two-way hover between the sentence and the table
+//  11. Side-Letter Register only: every figure's height equals the reference's either side of
+//      each fold (F2's election grid at a 520px column, F1 and F2's compendium at 560, F4, F5
+//      and F8 at 600), and nothing runs past its cell at any width from 320 to 1440
 //
 //   BASE_URL=… node qa/playbook-behaviour.mjs --page loan-ops-ledger [--only spy,reveal]
 
@@ -325,8 +330,103 @@ try {
     await ctx.close();
   }
 
-  // Loan Ops Ledger, Capital Call Flow and NAV Pack Review: a reader who has not reached the hero
-  // within 4s gets its final state.
+  // Side-Letter Register's reveal: its five register rows fade in 150ms apart, then the overdue
+  // row (Tamsin's, the third) turns red: wash, edge, words and dot. The row fades in neutral and
+  // turns red only after the last row has started. Sampled every frame from the first.
+  if (want("reveal") && PAGE === "side-letter-register") for (const [w, h, label] of [[1440, 1300, "in view at load"], [1440, 800, "below the fold"]]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, reducedMotion: "no-preference" });
+    const p = await ctx.newPage();
+    await p.addInitScript(() => {
+      window.__samples = [];
+      const t0 = performance.now();
+      const tick = () => {
+        const rows = document.querySelectorAll('[data-reveal-root] [data-reveal="fade"]');
+        if (rows.length === 5) {
+          window.__samples.push({
+            t: Math.round(performance.now() - t0),
+            r0: +getComputedStyle(rows[0]).opacity,
+            r2: +getComputedStyle(rows[2]).opacity,
+            r4: +getComputedStyle(rows[4]).opacity,
+            bg: getComputedStyle(rows[2]).backgroundColor,
+            gate: document.documentElement.getAttribute("data-pb-reveal"),
+          });
+        }
+        if (performance.now() - t0 < 9000) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    await p.goto(PORT, { waitUntil: "domcontentloaded" });
+    if (h < 1000) {
+      await p.waitForTimeout(1500);
+      await p.evaluate(() => window.scrollTo(0, 500));
+    }
+    await p.waitForTimeout(h < 1000 ? 4500 : 6000);
+    const s = await p.evaluate(() => window.__samples);
+    const RED = "rgb(246, 227, 223)";
+    const clear = (bg) => bg === "rgba(0, 0, 0, 0)";
+    const first = s[0], last = s[s.length - 1];
+    const shownEarly = s.filter((x) => x.gate !== "run" && (x.r0 > 0 || x.r2 > 0 || x.r4 > 0));
+    const row0 = s.find((x) => x.r0 > 0.99), row4start = s.find((x) => x.r4 > 0), row4 = s.find((x) => x.r4 > 0.99);
+    const tamsin = s.find((x) => x.r2 > 0);
+    const redStart = s.find((x) => x.gate === "run" && x.r2 > 0 && !clear(x.bg));
+    check(!!first && first.r0 === 0 && first.r4 === 0, `reveal (${label}): first frame held at the start state (gate ${first?.gate})`);
+    check(shownEarly.length === 0, `reveal (${label}): nothing shows, then hides, before the reveal`);
+    check(!!(row0 && row4) && row0.t < row4.t, `reveal (${label}): first row in at ${row0?.t}ms, last row at ${row4?.t}ms`);
+    check(!!tamsin && clear(tamsin.bg) && !!redStart && !!row4start && redStart.t > row4start.t, `reveal (${label}): the overdue row fades in neutral, turns red at ${redStart?.t}ms (after the last row starts, ${row4start?.t}ms)`);
+    check(last.r0 === 1 && last.r4 === 1 && last.bg === RED, `reveal (${label}): ends in the final state`);
+    await ctx.close();
+  }
+
+  // Every page, arriving by a client-side navigation (a card on /playbooks): there is no head
+  // gate then, so the hook holds the parts itself. The first frame shows them at their start
+  // state, and no part ever goes backwards: that would be the final state flashing. Each part's
+  // progress is read from what it animates: opacity (fade, rise), the ring's alpha, a dot's
+  // green (dot, wait), an underline's width (draw).
+  if (want("reveal")) {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 1300 }, reducedMotion: "no-preference" });
+    const p = await ctx.newPage();
+    // the library's hero video keeps the network busy: wait for load, not network idle
+    await p.goto(new URL("/playbooks", PORT).href, { waitUntil: "load" });
+    await p.waitForTimeout(1000);
+    await p.evaluate(() => {
+      window.__nav = [];
+      const t0 = performance.now();
+      const alpha = (c) => {
+        const m = /rgba?\((\d+), (\d+), (\d+)(?:, ([\d.]+))?\)/.exec(c);
+        return m && m[1] === "26" && m[2] === "25" && m[3] === "23" ? (m[4] === undefined ? 1 : +m[4]) : 0;
+      };
+      const progress = (e) => {
+        const cs = getComputedStyle(e);
+        switch (e.getAttribute("data-reveal")) {
+          case "ring":
+            return alpha(cs.boxShadow);
+          case "dot":
+          case "wait":
+            return cs.backgroundColor === "rgb(21, 127, 82)" ? 1 : 0;
+          case "draw":
+            return (parseFloat(cs.backgroundSize) || 0) / 100;
+          default:
+            return +cs.opacity;
+        }
+      };
+      const tick = () => {
+        const parts = [...document.querySelectorAll("[data-reveal-root] [data-reveal]")];
+        if (parts.length) window.__nav.push({ t: Math.round(performance.now() - t0), ops: parts.map(progress) });
+        if (performance.now() - t0 < 6000) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    await p.locator(`section[id] a[href="/playbooks/${PAGE}"]`).first().click();
+    await p.waitForTimeout(5500);
+    const s = await p.evaluate(() => window.__nav);
+    const drops = s.slice(1).filter((x, i) => x.ops.some((o, j) => o < s[i].ops[j] - 0.001));
+    const last = s[s.length - 1];
+    check(!!s.length && s[0].ops.every((o) => o === 0) && !drops.length && last.ops.every((o) => o === 1), `reveal (client-side navigation): first frame at the start state, ${drops.length} frames with a part going backwards, ends in the final state`);
+    await ctx.close();
+  }
+
+  // Loan Ops Ledger, Capital Call Flow, NAV Pack Review and Side-Letter Register: a reader who has
+  // not reached the hero within 4s gets its final state.
   if (want("reveal") && REVEAL_SETTLES) {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 800 }, reducedMotion: "no-preference" });
     const p = await ctx.newPage();
@@ -574,6 +674,69 @@ try {
     check(same, "F2 and F6 fold their columns at a 600px column, figure heights equal to the reference's");
     await ref.ctx.close();
     await port.ctx.close();
+  }
+
+  // Side-Letter Register: the figures fold where the reference's do. Main widths either side of
+  // 520 (F2's election grid), 560 (F1, F2's compendium) and 600 (F4, F5, F8): viewports 566/565,
+  // 609/608 and 653/652 put the column at 520.3/519.4, 560.3/559.4 and 600.8/599.8.
+  if (want("slr") && PAGE === "side-letter-register") {
+    const ref = await open(browser, REF, 1440, 900);
+    const port = await open(browser, PORT, 1440, 900);
+    const heights = (pg) =>
+      pg.evaluate(() => [...document.querySelectorAll("main figure")].map((f) => f.offsetHeight).join(" "));
+    let same = true;
+    for (const w of [1440, 1047, 700, 653, 652, 609, 608, 566, 565, 480, 390, 320]) {
+      await Promise.all([ref.page, port.page].map((pg) => pg.setViewportSize({ width: w, height: 900 })));
+      await Promise.all([ref.page, port.page].map((pg) => pg.waitForTimeout(300)));
+      const [a, b] = await Promise.all([heights(ref.page), heights(port.page)]);
+      if (a !== b) {
+        same = false;
+        console.log(`     @${w}: ref ${a}\n            port ${b}`);
+      }
+    }
+    check(same, "every figure's height equals the reference's either side of each fold (520, 560 and 600px columns), 1440 to 320");
+    await ref.ctx.close();
+    await port.ctx.close();
+
+    // Nothing in a figure runs past the box it sits in (long ids and mono lines wrap anywhere).
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+    const p = await ctx.newPage();
+    await p.goto(PORT, { waitUntil: "networkidle" });
+    const worst = [];
+    for (let w = 1440; w >= 320; w -= w > 720 ? 120 : 10) {
+      await p.setViewportSize({ width: w, height: 900 });
+      await p.waitForTimeout(60);
+      const r = await p.evaluate(() => {
+        let over = 0, where = "";
+        for (const fig of document.querySelectorAll("main figure")) {
+          for (const box of fig.querySelectorAll("[role=cell], [role=rowheader], [role=columnheader], dd, dt, div, span, p")) {
+            if (!box.getClientRects().length || box.closest(".sr-only") || getComputedStyle(box).display === "inline") continue;
+            const cr = box.getBoundingClientRect();
+            const walk = document.createTreeWalker(box, NodeFilter.SHOW_TEXT);
+            for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+              if (n.parentElement.closest(".sr-only")) continue;
+              // only text laid out in this box, not in a block descendant (checked on its own)
+              let el = n.parentElement;
+              while (el !== box && getComputedStyle(el).display === "inline") el = el.parentElement;
+              if (el !== box) continue;
+              const range = document.createRange();
+              range.selectNodeContents(n);
+              for (const rr of range.getClientRects()) {
+                const o = Math.max(rr.right - cr.right, cr.left - rr.left);
+                if (rr.width && o > over) {
+                  over = o;
+                  where = n.textContent.trim().slice(0, 30);
+                }
+              }
+            }
+          }
+        }
+        return { over: +over.toFixed(1), where };
+      });
+      if (r.over > 0.5) worst.push(`${w}px: ${r.over}px ("${r.where}")`);
+    }
+    check(!worst.length, `no figure text runs past its box from 1440 to 320px${worst.length ? ": " + worst.slice(0, 6).join("; ") : ""}`);
+    await ctx.close();
   }
 } finally {
   await browser.close();

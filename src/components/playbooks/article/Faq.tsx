@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { SmartLink } from "@/components/home/primitives";
+import type { Inline } from "./types";
 
 /**
  * Questions: an accordion whose items open and close independently, the first one open
@@ -10,8 +12,10 @@ import { useEffect, useId, useRef, useState } from "react";
  * and opens the item it lands in (beforematch). React renders `hidden` as a plain boolean, so
  * the attribute's value is written after each render; browsers without until-found treat it as
  * ordinary `hidden`.
+ *
+ * An answer may link to another page inline (underlined in ink, accent on hover).
  */
-export function Faq({ items }: { items: Array<{ q: string; a: string }> }) {
+export function Faq({ items }: { items: Array<{ q: string; a: Inline }> }) {
   const [open, setOpen] = useState(() => items.map((_, i) => i === 0));
   const id = useId();
   const answers = useRef<Array<HTMLDivElement | null>>([]);
@@ -62,7 +66,23 @@ export function Faq({ items }: { items: Array<{ q: string; a: string }> }) {
             }}
             hidden={!open[i]}
           >
-            <p className="m-0 pb-[18px] text-[14.5px] leading-[1.7] text-ink-2">{item.a}</p>
+            <p className="m-0 pb-[18px] text-[14.5px] leading-[1.7] text-ink-2">
+              {typeof item.a === "string"
+                ? item.a
+                : item.a.map((part, j) =>
+                    typeof part === "string" ? (
+                      part
+                    ) : (
+                      <SmartLink
+                        key={j}
+                        href={part.href}
+                        className="border-b border-[rgba(20,20,18,0.3)] text-ink hover:border-a hover:text-a"
+                      >
+                        {part.label}
+                      </SmartLink>
+                    ),
+                  )}
+            </p>
           </div>
         </div>
       ))}
