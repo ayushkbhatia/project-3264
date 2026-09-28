@@ -97,10 +97,11 @@ export function PlaybookIcon({ slug, className, strokeWidth = 2 }: { slug: strin
 
 /**
  * The glass icon badge centred on every playbook image (specs/00): a frosted rounded square,
- * `size` of the image box's height (34% on tiles, 30% in the carousel), the icon at 48% of the
- * badge. Decorative. The image box must be position:relative.
+ * `size` of the image box's height (34% on tiles, 30% in the carousel, 52% on a playbook
+ * page's related-playbook card), the icon at 48% of the badge. Decorative. The image box must
+ * be position:relative.
  */
-export function PlaybookBadge({ slug, size }: { slug: string; size: "34%" | "30%" }) {
+export function PlaybookBadge({ slug, size }: { slug: string; size: "34%" | "30%" | "52%" }) {
   return (
     <div
       aria-hidden="true"

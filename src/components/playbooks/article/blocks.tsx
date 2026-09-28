@@ -1,17 +1,20 @@
 import Image from "next/image";
 import { Fragment, type ReactNode } from "react";
 import { SmartLink } from "@/components/home/primitives";
-import { closingWash } from "@/components/playbooks/media";
-import { PlaybookIcon } from "@/components/playbooks/PlaybookBadge";
+import { closingWash, tileImages } from "@/components/playbooks/media";
+import { PlaybookBadge, PlaybookIcon } from "@/components/playbooks/PlaybookBadge";
+import { playbookHref } from "@/content/playbooks";
 import { Faq } from "./Faq";
 import { cx, monoLabel } from "./figure";
 import type { Block, Rich } from "./types";
 
 // The article's building blocks, set with the reference's exact values
 // (design_handoff_covenant_watch/Covenant Watch.dc.html; its README lists most of them under
-// "Shared components", but where the two differ the prototype's markup is followed). The
-// element structure mirrors the prototype's too, inline spans included: several blocks get
-// their line heights from a span sitting in a 16px line box, as in the reference.
+// "Shared components", but where the two differ the prototype's markup is followed). Later
+// pages' handoffs move a few margins and borders; the blocks take those as options (see
+// types.ts), so each page stays on its own reference. The element structure mirrors the
+// prototype's too, inline spans included: several blocks get their line heights from a span
+// sitting in a 16px line box, as in the reference.
 
 /** Section eyebrow: "01 / The work today". */
 export function Eyebrow({ children }: { children: ReactNode }) {
@@ -133,12 +136,37 @@ function PlatformCard({ icons, title, text, link }: Extract<Block, { type: "plat
   );
 }
 
+/** A related playbook: its painted tile under the glass badge, then a label, its name and how
+    the two connect, and the link on the right (under the text once the row wraps). */
+function RelatedCard({ slug, label, title, text, cta }: Extract<Block, { type: "related" }>) {
+  return (
+    <SmartLink
+      href={playbookHref(slug)}
+      className="mt-10 box-border flex flex-wrap items-center gap-x-[22px] gap-y-4 rounded-[16px] border border-rule-2 bg-tile p-3.5 text-ink hover:border-[rgba(20,20,18,0.3)] hover:text-ink"
+    >
+      <div className="relative h-[88px] flex-[0_0_164px] overflow-hidden rounded-[11px] bg-[#E2DFD8]">
+        <Image src={tileImages[slug]} alt="" fill sizes="164px" className="object-cover" />
+        <PlaybookBadge slug={slug} size="52%" />
+      </div>
+      <span className="min-w-0 flex-[1_1_300px]">
+        <span className="block text-[12px] text-mut">{label}</span>
+        <span className="mt-1 block text-[16px] leading-[1.3] tracking-[-0.015em]">{title}</span>
+        <span className="mt-1 block text-[13.5px] leading-[1.5] text-pretty text-sec">{text}</span>
+      </span>
+      <span className="flex-none border-b border-[rgba(20,20,18,0.3)] pb-px text-[13px]">
+        {cta}
+        <Arrow />
+      </span>
+    </SmartLink>
+  );
+}
+
 /** §03's step table: four columns from a 600px column, one stacked column (with lane labels
     on every cell) below it. Exposed as a table, its step names as row headers. */
-function StepTable({ head, rows, empty = "—" }: Extract<Block, { type: "stepTable" }>) {
+function StepTable({ head, rows, empty = "—", plain }: Extract<Block, { type: "stepTable" }>) {
   const cols = "@min-[599.5px]:grid-cols-[minmax(0,0.62fr)_repeat(3,minmax(0,1fr))]";
   return (
-    <div role="table" className="mt-7 border-t border-rule-2">
+    <div role="table" className={plain ? "mt-6" : "mt-7 border-t border-rule-2"}>
       <div
         role="row"
         className={cx(
@@ -220,7 +248,7 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
 
     case "io":
       return (
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className={cx("flex flex-wrap", block.roomy ? "mt-7 gap-4" : "mt-8 gap-3")}>
           {block.cards.map((card) => (
             <div key={card.label} className="box-border min-w-0 flex-[1_1_280px] rounded-[14px] border border-rule-2 bg-tile px-[22px] py-5">
               <Label block={ctx.blockLabels} className={cx(monoLabel, "text-sec")}>
@@ -255,12 +283,20 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
     case "platformCard":
       return <PlatformCard {...block} />;
 
+    case "related":
+      return <RelatedCard {...block} />;
+
     case "stepTable":
       return <StepTable {...block} />;
 
     case "callout":
       return (
-        <div className="mt-7 box-border rounded-[14px] border-[1.5px] border-ink bg-tile px-[22px] py-5">
+        <div
+          className={cx(
+            "box-border rounded-[14px] bg-tile",
+            block.quiet ? "mt-8 border border-rule-2 px-5 py-[18px]" : "mt-7 border-[1.5px] border-ink px-[22px] py-5",
+          )}
+        >
           <Label block={ctx.blockLabels} className={cx(monoLabel, "text-ink")}>
             {block.label}
           </Label>
@@ -348,7 +384,9 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
       return (
         <>
           {block.status ? (
-            <div className="mt-[22px] flex items-center gap-[9px] font-mono text-[11px] text-sec">
+            <div
+              className={cx("flex items-center font-mono text-[11px] text-sec", block.tight ? "mt-[18px] gap-2" : "mt-[22px] gap-[9px]")}
+            >
               <span aria-hidden="true" className="size-1.5 rounded-full bg-ink" />
               {block.status}
             </div>

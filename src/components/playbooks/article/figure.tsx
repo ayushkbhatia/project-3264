@@ -151,12 +151,13 @@ export function SheetTitle({ id, children }: { id?: string; children: ReactNode 
   );
 }
 
-/** 7px status dot, green or red. Decorative: the text beside it carries the status. */
-export function Dot({ tone, className }: { tone: "ok" | "bad"; className?: string }) {
+/** 7px status dot, green or red. Decorative: the text beside it carries the status. Raised
+    1px off the baseline it sits on, unless `level` (NAV Pack Review's tables). */
+export function Dot({ tone, level, className }: { tone: "ok" | "bad"; level?: boolean; className?: string }) {
   return (
     <span
       aria-hidden="true"
-      className={cx("size-[7px] flex-none -translate-y-px rounded-full", tone === "ok" ? "bg-ok" : "bg-bad", className)}
+      className={cx("size-[7px] flex-none rounded-full", !level && "-translate-y-px", tone === "ok" ? "bg-ok" : "bg-bad", className)}
     />
   );
 }

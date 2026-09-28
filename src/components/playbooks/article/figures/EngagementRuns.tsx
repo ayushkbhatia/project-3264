@@ -1,9 +1,10 @@
 import type { StaticImageData } from "next/image";
 import { Figure, Sheet } from "../figure";
 
-// How an engagement runs (Covenant Watch F9), a house figure: a two-week assessment, a build
-// released every fortnight with a shadow run at its end, acceptance, then production. From a
-// 600px main column it is a timeline in four columns; below that, the phases stack.
+// How an engagement runs (Covenant Watch F9, Loan Ops Ledger F9, Capital Call Flow F5, NAV Pack
+// Review F6), a house figure: a two-week assessment, a build released every fortnight with a
+// shadow run at its end, acceptance, then production. From a 600px main column it is a timeline
+// in four columns; below that, the phases stack.
 
 type Step = { n: string; name: string; text: string };
 

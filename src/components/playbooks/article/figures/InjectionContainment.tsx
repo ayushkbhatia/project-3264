@@ -2,9 +2,10 @@ import { Fragment, type ReactNode } from "react";
 import type { StaticImageData } from "next/image";
 import { Dot, Figure, Sheet } from "../figure";
 
-// Injection containment (Covenant Watch F10, Loan Ops Ledger F8), a house figure: the
-// untrusted document passes through a quarantined reader (no tools, no egress) and leaves only
-// as a typed record; beside it, a seeded red-team case. Each page names its document and case.
+// Injection containment (Covenant Watch F10, Loan Ops Ledger F8, NAV Pack Review F8), a house
+// figure: the untrusted document passes through a quarantined reader (no tools, no egress) and
+// leaves only as a typed record; beside it, a seeded red-team case. Each page names its document
+// and case.
 
 /** A pipeline box: name left, note right. */
 function Stage({ name, note, strong, right }: { name: string; note?: string; strong?: boolean; right?: boolean }) {

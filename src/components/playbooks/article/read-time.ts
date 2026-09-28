@@ -32,6 +32,8 @@ export function readMinutes(article: PlaybookArticle, cta: Link, showBuilt: bool
         return b.items.forEach((it, i) => add(String(i + 1), it.title, it.text));
       case "platformCard":
         return add(b.title, b.text, b.link.label, "→");
+      case "related":
+        return add(b.label, b.title, b.text, b.cta, "→");
       case "stepTable":
         add(...b.head);
         return b.rows.forEach((r) => add(r.step, ...r.cells.map((c) => c ?? b.empty ?? "—")));

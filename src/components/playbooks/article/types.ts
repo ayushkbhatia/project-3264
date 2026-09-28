@@ -17,23 +17,30 @@ export type Block =
   /** §01: who does each step today. Numbered rows, role left (210px), what they do right,
       and an optional small note under the list. */
   | { type: "roles"; items: Array<{ role: string; text: string }>; note?: string }
-  /** §01: the Inputs and Outputs cards. */
-  | { type: "io"; cards: Array<{ label: string; items: string[] }> }
+  /** §01: the Inputs and Outputs cards, 12px apart and 32px under the list; `roomy`: 16px
+      apart and 28px under it (NAV Pack Review). */
+  | { type: "io"; cards: Array<{ label: string; items: string[] }>; roomy?: boolean }
   /** §02: numbered failure modes, each an h3 and a paragraph, optionally followed by a
       figure (a slot in the figure map) inside the same row. */
   | { type: "breaks"; items: Array<{ title: string; text: string; figure?: string }> }
   /** A card linking to a related page, with a painted thumbnail and playbook badges on it. */
   | { type: "platformCard"; icons: string[]; title: string; text: string; link: Link }
+  /** A card for one related playbook: its painted tile and glass badge, a label, its name, a
+      line on how the two connect, and `cta` as the link (to the playbook's page). */
+  | { type: "related"; slug: string; label: string; title: string; text: string; cta: string }
   /** §03: who does what at each step, in three lanes. `null` is an empty cell, set faint:
-      "—", or `empty` where the page says so in words (Capital Call Flow: "Nothing"). */
+      "—", or `empty` where the page says so in words (Capital Call Flow: "Nothing"). `plain`:
+      no hairline above the table and 24px above it, not 28 (NAV Pack Review). */
   | {
       type: "stepTable";
       head: [string, string, string, string];
       rows: Array<{ step: string; cells: [string | null, string | null, string | null] }>;
       empty?: string;
+      plain?: boolean;
     }
-  /** A boxed note under an ink rule, e.g. "Never automated". */
-  | { type: "callout"; label: string; text: string }
+  /** A boxed note, e.g. "Never automated": a 1.5px ink border 28px under what precedes it, or
+      with `quiet` a hairline one 32px under it, with slightly tighter padding (NAV Pack Review). */
+  | { type: "callout"; label: string; text: string; quiet?: boolean }
   /** A slot in the page's figure map. */
   | { type: "figure"; id: string }
   /** Subsection heading. With an id it is an anchor, listed under its section in the contents. */
@@ -50,13 +57,15 @@ export type Block =
   | { type: "linkCard"; label: string; title: string; link: Link }
   /** Dated rules rows, optionally under a "Status as of …" line and over a closing note.
       `greedyNote`: the note wraps greedily, without the site's text-wrap: pretty (as Capital Call
-      Flow's prototype sets it; the others' notes are pretty). */
+      Flow's prototype sets it; the others' notes are pretty). `tight`: the status line sits 18px
+      under the h2, its dot 8px from the text (NAV Pack Review); otherwise 22px and 9px. */
   | {
       type: "rules";
       items: Array<{ date: string; title: string; text: string }>;
       status?: string;
       note?: string;
       greedyNote?: boolean;
+      tight?: boolean;
     }
   | { type: "terms"; items: Array<{ term: string; def: string }> }
   | { type: "updates"; items: Rich[] }
