@@ -29,6 +29,15 @@ const PAGES = {
     },
     settles: true,
   },
+  // F1: the six rows 40ms apart, then the explanation as the break turns "Break · explained". No
+  // ring, so its own check in playbook-behaviour.mjs; `rise` (the explanation) is what the
+  // settle check reads.
+  "nav-pack-review": {
+    file: "NAV%20Pack%20Review.dc.html",
+    refPort: 4107,
+    reveal: { rise: { sel: '[data-reveal="fade"]', text: "Fee basis should step down" } },
+    settles: true,
+  },
 };
 
 export const PAGE = arg("page", "covenant-watch");

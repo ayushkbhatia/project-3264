@@ -16,7 +16,7 @@ export type RevealTrigger = {
 /** Covenant Watch: once 30% of the figure is on screen. */
 export const ON_THIRD_VISIBLE: RevealTrigger = { threshold: 0.3 };
 
-/** Loan Ops Ledger and Capital Call Flow: once the figure's top is in the upper 65% of the
+/** Loan Ops Ledger, Capital Call Flow and NAV Pack Review: once the figure's top is in the upper 65% of the
     viewport (which works for figures taller than the screen), or the final state if that has
     not happened within 4s of mount. */
 export const ON_TOP_IN_UPPER_65: RevealTrigger = { threshold: 0, rootMargin: "0px 0px -35% 0px", startWithin: 4000 };

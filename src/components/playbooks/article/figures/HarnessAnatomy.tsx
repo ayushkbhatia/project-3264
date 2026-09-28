@@ -1,10 +1,11 @@
 import type { StaticImageData } from "next/image";
 import { Figure, Sheet } from "../figure";
 
-// The harness anatomy (Covenant Watch F6), a house figure for every playbook's "How it is
-// built": the pinned model in the middle of the eight parts that instruct, constrain and check
-// it, framed by the four that watch every run. From a 600px main column it is the framed 3×3
-// grid with the four edge labels; below that, a stacked list.
+// The harness anatomy (Covenant Watch F6, Loan Ops Ledger F6, Capital Call Flow F4, NAV Pack
+// Review F4), a house figure for every playbook's "How it is built": the pinned model in the
+// middle of the eight parts that instruct, constrain and check it, framed by the four that watch
+// every run. From a 600px main column it is the framed 3×3 grid with the four edge labels; below
+// that, a stacked list.
 
 const PARTS = [
   { n: "02", name: "Instructions", text: "versioned prompts and rubrics, one per release" },

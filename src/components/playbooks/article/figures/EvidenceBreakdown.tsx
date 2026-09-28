@@ -4,9 +4,9 @@ import { useState } from "react";
 import type { StaticImageData } from "next/image";
 import { Figure, Sheet, cx, monoLabel } from "../figure";
 
-// The evidence line, broken down (Covenant Watch F3, Loan Ops Ledger F4), a house figure: one
-// test's evidence line, then its eight parts one per row. Hovering a row highlights its segment
-// in the line and inks the row's label.
+// The evidence line, broken down (Covenant Watch F3, Loan Ops Ledger F4, Capital Call Flow F3,
+// NAV Pack Review F3), a house figure: one test's evidence line, then its eight parts one per
+// row. Hovering a row highlights its segment in the line and inks the row's label.
 
 export type EvidencePart = {
   label: string;
@@ -33,7 +33,8 @@ export function EvidenceBreakdown({
   veil: number;
   className?: string;
   meta: string;
-  /** See Figure: Covenant Watch right-aligns the head's meta, Capital Call Flow does not. */
+  /** See Figure: Covenant Watch right-aligns the head's meta; Capital Call Flow and NAV Pack
+      Review do not. */
   metaRight?: boolean;
   parts: readonly EvidencePart[];
   caption: string;

@@ -40,6 +40,9 @@
      it takes the nearest passing shade (4.55:1). Empty cells drawn as "—" keep --faint. */
   --mut-ink: #6d6c66;
   --faint-ink: #727069;
+  /* NAV Pack Review sets small muted text on the red wash (#F6E3DF, 4.19:1 in #6E6D67) and on
+     the wash (#EEEBE4, 4.36:1): one step darker passes both (4.52:1 and 4.70:1). */
+  --mut-ink-2: #696862;
   /* Font stacks, named literally (see the @font-face block above). The home modules and
      components still read them through these two variables. */
   --font-instrument: "Instrument Sans";
@@ -93,6 +96,7 @@
   --color-bad-ink: var(--bad-ink);
   --color-mut-ink: var(--mut-ink);
   --color-faint-ink: var(--faint-ink);
+  --color-mut-ink-2: var(--mut-ink-2);
   --font-sans: var(--font-instrument), "Helvetica Neue", Helvetica, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }

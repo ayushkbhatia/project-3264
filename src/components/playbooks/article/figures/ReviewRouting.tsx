@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
-import { featureImages } from "@/components/playbooks/media";
-import { Figure, Sheet } from "@/components/playbooks/article/figure";
+import type { StaticImageData } from "next/image";
+import { Figure, Sheet } from "../figure";
 
-// F7 (§05, "How we know it works"): where 1,000 extracted fields go. Filled bars for the fields
-// that pass through, outlined bars for the ones a person reads. Illustrative counts.
+// Review routing (Covenant Watch F7, NAV Pack Review F7), a house figure for "How we know it
+// works": where 1,000 extracted fields go. Filled bars for the fields that pass through,
+// outlined bars for the ones a person reads. Illustrative counts.
 
 function Row({ label, sub, children }: { label: string; sub?: string; children: ReactNode }) {
   return (
@@ -41,12 +42,12 @@ function Outline({ pct, min, className }: { pct: string; min: number; className?
   );
 }
 
-export function ReviewRouting() {
+export function ReviewRouting({ image, veil, className }: { image: StaticImageData; veil: number; className?: string }) {
   return (
     <Figure
-      image={featureImages["mandate-guardrails"]}
-      veil={0.7}
-      className="mt-8"
+      image={image}
+      veil={veil}
+      className={className}
       label="Review routing · 1,000 extracted fields"
       caption="Fields that fail a validator or fall below the confidence threshold go to a person; a sample of the rest is checked by field class. Illustrative counts."
     >

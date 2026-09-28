@@ -9,8 +9,10 @@
 //   5. phone bar: opens, closes on an entry, on Escape (focus returns) and on an outside click
 //   6. evidence line: hovering a row highlights its segment and inks its label
 //   7. hero reveal (motion on): held from the first frame, then its parts in turn; on Loan Ops
-//      Ledger also the status dot's red-to-green; on Loan Ops Ledger and Capital Call Flow the
-//      final state when the reader has not reached the figure within 4s
+//      Ledger also the status dot's red-to-green; on NAV Pack Review the rows 40ms apart, then
+//      the explanation and the break's "Break · explained"; on Loan Ops Ledger, Capital Call
+//      Flow and NAV Pack Review the final state when the reader has not reached the figure
+//      within 4s
 //   8. Loan Ops Ledger only: the hero notice's "Show full notice" toggle below a 500px column,
 //      and F5's row hover
 //   9. Capital Call Flow only: F1's amounts stay inside their cells at every main width (under
@@ -226,7 +228,8 @@ try {
   }
 
   // 7. hero reveal, motion on
-  if (want("reveal")) for (const [w, h, label] of [[1440, 1300, "in view at load"], [1440, 800, "below the fold"]]) {
+  // (NAV Pack Review's figure has no ring: its reveal has a check of its own, below.)
+  if (want("reveal") && REVEAL.ring) for (const [w, h, label] of [[1440, 1300, "in view at load"], [1440, 800, "below the fold"]]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, reducedMotion: "no-preference" });
     const p = await ctx.newPage();
     // sample the parts from the first frame on
@@ -275,8 +278,52 @@ try {
     await ctx.close();
   }
 
-  // Loan Ops Ledger and Capital Call Flow: a reader who has not reached the hero within 4s gets
-  // its final state.
+  // NAV Pack Review's reveal: its six rows fade in 40ms apart, then the explanation, as the break
+  // turns from "Break" to "Break · explained". Sampled every frame from the first.
+  if (want("reveal") && PAGE === "nav-pack-review") for (const [w, h, label] of [[1440, 1300, "in view at load"], [1440, 800, "below the fold"]]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, reducedMotion: "no-preference" });
+    const p = await ctx.newPage();
+    await p.addInitScript(() => {
+      window.__samples = [];
+      const t0 = performance.now();
+      const tick = () => {
+        const fades = document.querySelectorAll('[data-reveal-root] [data-reveal="fade"]');
+        if (fades.length === 7) {
+          const brk = [...fades[3].querySelectorAll("span")].find((s) => /^Break/.test(s.textContent));
+          window.__samples.push({
+            t: Math.round(performance.now() - t0),
+            r0: +getComputedStyle(fades[0]).opacity,
+            r5: +getComputedStyle(fades[5]).opacity,
+            exp: +getComputedStyle(fades[6]).opacity,
+            status: brk?.textContent ?? null,
+            gate: document.documentElement.getAttribute("data-pb-reveal"),
+          });
+        }
+        if (performance.now() - t0 < 9000) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    await p.goto(PORT, { waitUntil: "domcontentloaded" });
+    if (h < 1000) {
+      await p.waitForTimeout(1500);
+      await p.evaluate(() => window.scrollTo(0, 500));
+    }
+    await p.waitForTimeout(h < 1000 ? 4500 : 6000);
+    const s = await p.evaluate(() => window.__samples);
+    const first = s[0], last = s[s.length - 1];
+    const shownEarly = s.filter((x) => x.gate !== "run" && (x.r0 > 0 || x.exp > 0));
+    const row0 = s.find((x) => x.r0 > 0.99), row5 = s.find((x) => x.r5 > 0.99), exp = s.find((x) => x.exp > 0.99);
+    const flip = s.find((x) => x.status === "Break · explained" && x.t > (row0?.t ?? Infinity));
+    check(!!first && first.r0 === 0 && first.exp === 0, `reveal (${label}): first frame held at the start state (gate ${first?.gate})`);
+    check(shownEarly.length === 0, `reveal (${label}): nothing shows, then hides, before the reveal`);
+    check(!!(row0 && row5 && exp) && row0.t < row5.t && row5.t < exp.t, `reveal (${label}): first row ${row0?.t}ms, last row ${row5?.t}ms, explanation ${exp?.t}ms`);
+    check(row0?.status === "Break" && !!flip && flip.t <= exp.t, `reveal (${label}): "Break" with the rows, "Break · explained" at ${flip?.t}ms`);
+    check(last.r0 === 1 && last.r5 === 1 && last.exp === 1 && last.status === "Break · explained", `reveal (${label}): ends in the final state`);
+    await ctx.close();
+  }
+
+  // Loan Ops Ledger, Capital Call Flow and NAV Pack Review: a reader who has not reached the hero
+  // within 4s gets its final state.
   if (want("reveal") && REVEAL_SETTLES) {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 800 }, reducedMotion: "no-preference" });
     const p = await ctx.newPage();

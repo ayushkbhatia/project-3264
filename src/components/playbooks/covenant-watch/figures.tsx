@@ -4,17 +4,17 @@ import { EvidenceBreakdown } from "@/components/playbooks/article/figures/Eviden
 import { HarnessAnatomy } from "@/components/playbooks/article/figures/HarnessAnatomy";
 import { InjectionContainment } from "@/components/playbooks/article/figures/InjectionContainment";
 import { PassK } from "@/components/playbooks/article/figures/PassK";
+import { ReviewRouting } from "@/components/playbooks/article/figures/ReviewRouting";
 import { featureImages, tileImages } from "@/components/playbooks/media";
 import { CureEligibility } from "./CureEligibility";
 import { DefinitionTrace } from "./DefinitionTrace";
 import { evidenceLine } from "./case";
 import { EvidenceBundle } from "./EvidenceBundle";
 import { Recompute } from "./Recompute";
-import { ReviewRouting } from "./ReviewRouting";
 
 /**
  * Covenant Watch's ten figures, by the slot names its content uses (content/covenant-watch.ts).
- * F3, F6, F8, F9 and F10 are house figures the playbook pages share; this page sets their
+ * F3 and F6–F10 are house figures the playbook pages share; this page sets their
  * text, washes, veils and spacing. `animateHero` false shows F1 in its final state.
  */
 export function covenantWatchFigures({ animateHero = true }: { animateHero?: boolean } = {}): Record<string, ReactNode> {
@@ -34,7 +34,7 @@ export function covenantWatchFigures({ animateHero = true }: { animateHero?: boo
     bundle: <EvidenceBundle />, // F4
     trace: <DefinitionTrace />, // F5
     anatomy: <HarnessAnatomy image={featureImages["side-letter-register"]} veil={0.64} className="mt-8" />, // F6
-    routing: <ReviewRouting />, // F7
+    routing: <ReviewRouting image={featureImages["mandate-guardrails"]} veil={0.7} className="mt-8" />, // F7
     passk: <PassK image={featureImages["nav-pack-review"]} veil={0.66} className="mt-8" />, // F8
     engagement: <EngagementRuns image={tileImages["capital-call-flow"]} veil={0.62} className="mt-10" />, // F9
     injection: (
