@@ -28,6 +28,11 @@ export function Figure({
   eager = false,
   className,
   band,
+  radius = 16,
+  padding = 12,
+  headGap = 10,
+  metaRight = true,
+  captionGap = 8,
   evidence,
   moment,
   caption,
@@ -49,6 +54,16 @@ export function Figure({
   className?: string;
   /** Extra classes for the band (none in the reference). */
   band?: string;
+  /** Band corner radius and padding, and the space under its head: 16 / 12 / 10 on every
+      figure except Loan Ops Ledger's hero, which is 18 / 14 / 12. */
+  radius?: number;
+  padding?: number;
+  headGap?: number;
+  /** Covenant Watch right-aligns the head's meta text; Loan Ops Ledger does not. It only
+      shows when the meta wraps. */
+  metaRight?: boolean;
+  /** Space above the caption: 8px, or 6px under a moment sentence on Loan Ops Ledger. */
+  captionGap?: 6 | 8;
   evidence?: ReactNode;
   moment?: ReactNode;
   caption: ReactNode;
@@ -62,8 +77,8 @@ export function Figure({
           under its 1px border too. Here they fill the border box from a layer of their own,
           and the border is drawn over them; the band itself keeps a transparent border for
           its geometry. */}
-      <div className={cx("relative rounded-[16px] border border-transparent p-3", band)}>
-        <div aria-hidden="true" className="absolute -inset-px overflow-hidden rounded-[16px] bg-wash">
+      <div className={cx("relative border border-transparent", band)} style={{ borderRadius: radius, padding }}>
+        <div aria-hidden="true" className="absolute -inset-px overflow-hidden bg-wash" style={{ borderRadius: radius }}>
           <Image
             src={image}
             alt=""
@@ -75,11 +90,17 @@ export function Figure({
           />
           <div className="absolute inset-0" style={{ background: `rgba(251,250,248,${veil})` }} />
         </div>
-        <div aria-hidden="true" className="pointer-events-none absolute -inset-px rounded-[16px] border border-[rgba(20,20,18,0.06)]" />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -inset-px border border-[rgba(20,20,18,0.06)]"
+          style={{ borderRadius: radius }}
+        />
         <div className="relative">
-          <div className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1 px-1.5 pt-1 pb-2.5">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1 px-1.5 pt-1" style={{ paddingBottom: headGap }}>
             <span className={cx(monoLabel, "text-ink")}>{label}</span>
-            {meta ? <span className="text-right font-mono text-[11px] leading-[1.6] text-ink-2">{meta}</span> : null}
+            {meta ? (
+              <span className={cx("font-mono text-[11px] leading-[1.6] text-ink-2", metaRight && "text-right")}>{meta}</span>
+            ) : null}
           </div>
           {children}
         </div>
@@ -90,16 +111,25 @@ export function Figure({
         </div>
       ) : null}
       {moment ? <p className="mt-2 mb-0 text-[15px] leading-[1.5] text-sec">{moment}</p> : null}
-      <figcaption className="mt-2 text-[12px] leading-[1.5] text-mut">{caption}</figcaption>
+      <figcaption className={cx("text-[12px] leading-[1.5] text-mut", captionGap === 6 ? "mt-1.5" : "mt-2")}>{caption}</figcaption>
     </figure>
   );
 }
 
-/** A white sheet on the band: 11px radius, the sheet shadow, 16px padding unless `pad` says. */
-export function Sheet({ pad = "p-4", className, children, ...rest }: ComponentPropsWithoutRef<"div"> & { pad?: string }) {
+/** A white sheet on the band: the sheet shadow, 11px radius and 16px padding unless `radius`
+    and `pad` say otherwise (Loan Ops Ledger's hero sheets are 12px and 18px). */
+export function Sheet({
+  pad = "p-4",
+  radius = 11,
+  className,
+  style,
+  children,
+  ...rest
+}: ComponentPropsWithoutRef<"div"> & { pad?: string; radius?: number }) {
   return (
     <div
-      className={cx("rounded-[11px] bg-[rgba(255,255,255,0.93)] shadow-[0_12px_32px_-20px_rgba(20,20,18,0.3)]", pad, className)}
+      className={cx("bg-[rgba(255,255,255,0.93)] shadow-[0_12px_32px_-20px_rgba(20,20,18,0.3)]", pad, className)}
+      style={{ borderRadius: radius, ...style }}
       {...rest}
     >
       {children}

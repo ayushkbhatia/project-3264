@@ -137,13 +137,12 @@ export const categories: Category[] = [
 
 // Order matters: the rows show them in this order, three per category.
 //
-// Loan Ops Ledger is `live` in the handoff (its detail page was built from a separate handoff),
-// but that page is not in this codebase yet, so it redirects like the others until it lands.
-// Covenant Watch is live: src/app/playbooks/covenant-watch.
+// Live pages: Covenant Watch (src/app/playbooks/covenant-watch) and Loan Ops Ledger
+// (src/app/playbooks/loan-ops-ledger).
 export const playbooks: Playbook[] = [
   { slug: "covenant-watch", name: "Covenant Watch", category: "private-credit", blurb: "Borrower reporting packages read and tested against the credit agreement, with breaches flagged before quarter close.", live: true },
   { slug: "capital-call-flow", name: "Capital Call Flow", category: "private-credit", blurb: "Notices computed from the LPA, sent per investor and reconciled to the cash that actually arrives.", live: false },
-  { slug: "loan-ops-ledger", name: "Loan Ops Ledger", category: "private-credit", blurb: "Agent notices matched to the loan system every day, with each break explained before month end.", live: false },
+  { slug: "loan-ops-ledger", name: "Loan Ops Ledger", category: "private-credit", blurb: "Agent notices matched to the loan system every day, with each break explained before month end.", live: true },
   { slug: "nav-pack-review", name: "NAV Pack Review", category: "fund-management", blurb: "Administrator NAV packs tied out line by line to your own records before the CFO signs.", live: false },
   { slug: "investor-reporting", name: "Investor Reporting", category: "fund-management", blurb: "Letters, statements and DDQ answers drafted from the systems of record and checked before they go out.", live: false },
   { slug: "side-letter-register", name: "Side-Letter Register", category: "fund-management", blurb: "Obligations read out of LPAs and side letters into a live register, with proof of delivery attached.", live: false },

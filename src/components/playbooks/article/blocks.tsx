@@ -48,7 +48,7 @@ function Arrow() {
 }
 
 /** The page CTA as the dark band's light button. */
-function MidCta({ title, text, cta }: { title: string; text: string; cta: { label: string; href: string } }) {
+function MidCta({ title, text, cta, tracked }: { title: string; text: string; cta: { label: string; href: string }; tracked?: boolean }) {
   return (
     <div className="mt-11 box-border flex flex-wrap items-center justify-between gap-x-7 gap-y-4 rounded-[16px] bg-ink px-6 py-[22px] text-[#F4F3F0]">
       <div className="min-w-0 flex-[1_1_340px]">
@@ -57,7 +57,10 @@ function MidCta({ title, text, cta }: { title: string; text: string; cta: { labe
       </div>
       <SmartLink
         href={cta.href}
-        className="box-border inline-flex h-10 flex-none items-center rounded-[6px] bg-[#F4F3F0] px-[18px] text-[13.5px] font-medium text-ink hover:bg-white hover:text-ink focus-visible:outline-[#F4F3F0] forced-colors:border"
+        className={cx(
+          "box-border inline-flex h-10 flex-none items-center rounded-[6px] bg-[#F4F3F0] px-[18px] text-[13.5px] font-medium text-ink hover:bg-white hover:text-ink focus-visible:outline-[#F4F3F0] forced-colors:border",
+          tracked && "tracking-[-0.005em]",
+        )}
       >
         {cta.label}
       </SmartLink>
@@ -176,18 +179,25 @@ function StepTable({ head, rows }: Extract<Block, { type: "stepTable" }>) {
 export type BlockContext = {
   figures: Record<string, ReactNode>;
   cta: { label: string; href: string };
+  /** See PlaybookArticle.blockLabels. */
+  blockLabels?: boolean;
 };
+
+/** A mono label: inline (in the line box of its 16px parent) or a block of its own. */
+function Label({ block, className, children }: { block?: boolean; className: string; children: ReactNode }) {
+  return block ? <div className={className}>{children}</div> : <span className={className}>{children}</span>;
+}
 
 export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext }) {
   switch (block.type) {
     case "p":
       return <p className="mt-4 mb-0 text-[15.5px] leading-[1.7] text-ink-2">{block.text}</p>;
 
-    case "roles":
-      return (
+    case "roles": {
+      const list = (
         <ol className="mt-7 mb-0 list-none border-t border-ink p-0">
           {block.items.map((item, i) => (
-            <li key={item.role} className="flex flex-wrap gap-x-5 gap-y-1 border-b border-rule-2 py-3.5">
+            <li key={i} className="flex flex-wrap gap-x-5 gap-y-1 border-b border-rule-2 py-3.5">
               <span className="flex flex-[0_0_210px] items-baseline gap-3">
                 <span className="font-mono text-[11px] text-mut">{i + 1}</span>
                 <span className="text-[14.5px] leading-[1.45] font-medium tracking-[-0.01em]">{item.role}</span>
@@ -197,13 +207,24 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
           ))}
         </ol>
       );
+      return block.note ? (
+        <>
+          {list}
+          <p className="mt-2.5 mb-0 text-[12px] text-mut">{block.note}</p>
+        </>
+      ) : (
+        list
+      );
+    }
 
     case "io":
       return (
         <div className="mt-8 flex flex-wrap gap-3">
           {block.cards.map((card) => (
             <div key={card.label} className="box-border min-w-0 flex-[1_1_280px] rounded-[14px] border border-rule-2 bg-tile px-[22px] py-5">
-              <span className={cx(monoLabel, "text-sec")}>{card.label}</span>
+              <Label block={ctx.blockLabels} className={cx(monoLabel, "text-sec")}>
+                {card.label}
+              </Label>
               <ul className="mt-3 mb-0 grid list-disc gap-1.5 pl-4 text-[13.5px] leading-[1.5] text-ink-2">
                 {card.items.map((item) => (
                   <li key={item}>{item}</li>
@@ -223,6 +244,7 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
               <div className="min-w-0 flex-auto">
                 <h3 className="m-0 text-[17px] leading-[1.35] font-medium tracking-[-0.015em]">{item.title}</h3>
                 <p className="mt-2 mb-0 text-[15px] leading-[1.7] text-ink-2">{item.text}</p>
+                {item.figure ? ctx.figures[item.figure] : null}
               </div>
             </li>
           ))}
@@ -238,7 +260,9 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
     case "callout":
       return (
         <div className="mt-7 box-border rounded-[14px] border-[1.5px] border-ink bg-tile px-[22px] py-5">
-          <span className={cx(monoLabel, "text-ink")}>{block.label}</span>
+          <Label block={ctx.blockLabels} className={cx(monoLabel, "text-ink")}>
+            {block.label}
+          </Label>
           <p className="mt-2 mb-0 text-[14.5px] leading-[1.65] text-ink-2">{block.text}</p>
         </div>
       );
@@ -287,7 +311,9 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
             <div key={item.hard} className="flex flex-wrap gap-x-7 gap-y-2 border-b border-rule-2 py-4">
               {[item.hard, item.we].map((text, i) => (
                 <div key={i} className="min-w-0 flex-[1_1_260px]">
-                  <span className={cx(monoLabel, i === 0 ? "text-mut" : "text-ink")}>{block.labels[i]}</span>
+                  <Label block={ctx.blockLabels} className={cx(monoLabel, i === 0 ? "text-mut" : "text-ink")}>
+                    {block.labels[i]}
+                  </Label>
                   <p className="mt-[5px] mb-0 text-[14px] leading-[1.6] text-ink-2">{text}</p>
                 </div>
               ))}
@@ -297,14 +323,14 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
       );
 
     case "midCta":
-      return <MidCta title={block.title} text={block.text} cta={ctx.cta} />;
+      return <MidCta title={block.title} text={block.text} cta={ctx.cta} tracked={block.tracked} />;
 
     case "linkCard":
       return <LinkCard label={block.label} title={block.title} link={block.link} className="mt-11" />;
 
-    case "rules":
-      return (
-        <ol className="mt-[22px] mb-0 list-none border-t border-ink p-0">
+    case "rules": {
+      const rows = (
+        <ol className={cx("mb-0 list-none border-t border-ink p-0", block.status ? "mt-3" : "mt-[22px]")}>
           {block.items.map((item) => (
             <li key={item.date + item.title} className="flex flex-wrap gap-x-6 gap-y-1 border-b border-rule-2 py-3.5">
               <time dateTime={item.date} className="flex-[0_0_96px] pt-0.5 font-mono text-[11.5px]">
@@ -318,6 +344,19 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
           ))}
         </ol>
       );
+      return (
+        <>
+          {block.status ? (
+            <div className="mt-[22px] flex items-center gap-[9px] font-mono text-[11px] text-sec">
+              <span aria-hidden="true" className="size-1.5 rounded-full bg-ink" />
+              {block.status}
+            </div>
+          ) : null}
+          {rows}
+          {block.note ? <p className="mt-3.5 mb-0 text-[13px] leading-[1.6] text-sec">{block.note}</p> : null}
+        </>
+      );
+    }
 
     case "terms":
       return (
