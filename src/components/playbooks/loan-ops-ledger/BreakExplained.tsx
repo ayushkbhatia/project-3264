@@ -3,17 +3,13 @@
 import { useId, useRef, useState, type ReactNode } from "react";
 import { tileImages } from "@/components/playbooks/media";
 import { Figure, Sheet, cx, monoLabel } from "@/components/playbooks/article/figure";
-import { useHeroReveal, type RevealTrigger } from "@/components/playbooks/article/useHeroReveal";
+import { ON_TOP_IN_UPPER_65, useHeroReveal } from "@/components/playbooks/article/useHeroReveal";
 
 // F1, the hero figure: a break explained, a partial PIK toggle. The agent's interest notice,
 // the two ledger lines it breaks, and the explanation. The notice's Interest Amount is ringed
 // (step 1), the two differences fade in (step 2), the break class, calculation and status rise
 // in (step 3), and the status dot turns from red to green (step 4). All data fictional; the
 // rate is illustrative.
-
-/** The handoff's trigger: the figure's top in the upper 65% of the viewport, and the reveal
-    abandoned for the final state if that has not happened within 4s of mount. */
-const TRIGGER: RevealTrigger = { threshold: 0, rootMargin: "0px 0px -35% 0px", startWithin: 4000 };
 
 const NOTICE: Array<[string, string]> = [
   ["Borrower", "Penrose Vale Software"],
@@ -57,7 +53,9 @@ function Field({ label, children, strong, plain }: { label: string; children: Re
 
 export function BreakExplained({ animate = true }: { animate?: boolean }) {
   const ref = useRef<HTMLElement>(null);
-  const step = useHeroReveal(ref, animate, TRIGGER);
+  // the handoff's trigger: the figure's top in the upper 65% of the viewport, or the final state
+  // if that has not happened within 4s of mount
+  const step = useHeroReveal(ref, animate, ON_TOP_IN_UPPER_65);
   const [notice, setNotice] = useState(false);
   const noticeId = useId();
   const diff = { opacity: step >= 2 ? 1 : 0 };

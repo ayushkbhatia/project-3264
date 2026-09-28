@@ -96,6 +96,20 @@
       "port": 4105
     },
     {
+      "name": "design reference: capital call flow",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4106",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_capital_call_flow"
+      ],
+      "port": 4106
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [

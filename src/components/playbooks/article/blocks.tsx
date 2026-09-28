@@ -135,7 +135,7 @@ function PlatformCard({ icons, title, text, link }: Extract<Block, { type: "plat
 
 /** §03's step table: four columns from a 600px column, one stacked column (with lane labels
     on every cell) below it. Exposed as a table, its step names as row headers. */
-function StepTable({ head, rows }: Extract<Block, { type: "stepTable" }>) {
+function StepTable({ head, rows, empty = "—" }: Extract<Block, { type: "stepTable" }>) {
   const cols = "@min-[599.5px]:grid-cols-[minmax(0,0.62fr)_repeat(3,minmax(0,1fr))]";
   return (
     <div role="table" className="mt-7 border-t border-rule-2">
@@ -167,7 +167,8 @@ function StepTable({ head, rows }: Extract<Block, { type: "stepTable" }>) {
           {row.cells.map((cell, i) => (
             <div key={head[i + 1]} role="cell" className="text-[13.5px] leading-[1.55] text-ink-2">
               <span className="mb-0.5 block text-[11.5px] font-medium text-mut @min-[599.5px]:hidden">{head[i + 1]}</span>
-              {cell ?? <span className="text-faint">—</span>}
+              {/* an empty cell said in words is text, and must pass AA (see --faint-ink) */}
+              {cell ?? <span className={empty === "—" ? "text-faint" : "text-faint-ink"}>{empty}</span>}
             </div>
           ))}
         </div>
@@ -353,7 +354,9 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
             </div>
           ) : null}
           {rows}
-          {block.note ? <p className="mt-3.5 mb-0 text-[13px] leading-[1.6] text-sec">{block.note}</p> : null}
+          {block.note ? (
+            <p className={cx("mt-3.5 mb-0 text-[13px] leading-[1.6] text-sec", block.greedyNote && "[text-wrap:wrap]")}>{block.note}</p>
+          ) : null}
         </>
       );
     }

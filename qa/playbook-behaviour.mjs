@@ -9,14 +9,16 @@
 //   5. phone bar: opens, closes on an entry, on Escape (focus returns) and on an outside click
 //   6. evidence line: hovering a row highlights its segment and inks its label
 //   7. hero reveal (motion on): held from the first frame, then its parts in turn; on Loan Ops
-//      Ledger also the status dot's red-to-green, and the final state when the reader has not
-//      reached the figure within 4s
+//      Ledger also the status dot's red-to-green; on Loan Ops Ledger and Capital Call Flow the
+//      final state when the reader has not reached the figure within 4s
 //   8. Loan Ops Ledger only: the hero notice's "Show full notice" toggle below a 500px column,
 //      and F5's row hover
+//   9. Capital Call Flow only: F1's amounts stay inside their cells at every main width (under
+//      448px its lines stack), and F2 and F6 fold their columns at 600px as the reference does
 //
 //   BASE_URL=… node qa/playbook-behaviour.mjs --page loan-ops-ledger [--only spy,reveal]
 
-import { PAGE, REF, PORT, launch, open, settle } from "./playbook-lib.mjs";
+import { PAGE, REF, PORT, REVEAL, REVEAL_SETTLES, launch, open, settle } from "./playbook-lib.mjs";
 
 const ok = (b) => (b ? "ok  " : "FAIL");
 let fails = 0;
@@ -52,6 +54,14 @@ async function spyState(p, isRef) {
       rail: rail ? parseFloat(rail.style.height) || 0 : null,
       progress: m ? +m[1] : null,
       phone: phone && getComputedStyle(phone).display !== "none" && phone.offsetParent ? phone.children[1].textContent.trim() : null,
+      // the port's own rule, for where its layout differs from the reference's on purpose: the
+      // last entry whose target's top is at or above min(170px, 30% of the viewport)
+      rule: isRef
+        ? null
+        : [...document.querySelectorAll("[data-pb-tocbar] a")]
+            .filter((a) => document.getElementById(a.hash.slice(1))?.getBoundingClientRect().top <= Math.min(170, innerHeight * 0.3))
+            .map((a) => [...a.children].map((c) => c.textContent).join(" ").trim())
+            .pop() ?? "Overview",
       // the page's own measure, for when the two documents differ in height (the site footer)
       expected: +(Math.min(1, Math.max(0, scrollY / (document.documentElement.scrollHeight - innerHeight)))).toFixed(4),
     };
@@ -72,13 +82,17 @@ try {
     const H = await port.page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
     const [hr, hp] = await Promise.all([ref.page, port.page].map((p) => p.evaluate(() => document.documentElement.scrollHeight)));
     const sameHeight = hr === hp;
+    // Capital Call Flow under a 488px viewport: F1 stacks its lines where the reference's
+    // columns overprint (a departure), so the hero is taller and the same scroll position lands
+    // elsewhere; there the phone bar is checked against the spy's rule on the port's own layout.
+    const own = PAGE === "capital-call-flow" && w < 488;
     let mism = 0, n = 0, railMax = 0, progMax = 0;
     for (let y = 0; y <= H + 400; y += 400) {
       const yy = Math.min(y, H);
       await Promise.all([scrollAndWait(ref.page, yy), scrollAndWait(port.page, yy)]);
       const [a, b] = await Promise.all([spyState(ref.page, true), spyState(port.page, false)]);
       n++;
-      const same = a.active === b.active && a.sub === b.sub && a.phone === b.phone;
+      const same = own ? b.phone === b.rule : a.active === b.active && a.sub === b.sub && a.phone === b.phone;
       if (!same) {
         mism++;
         if (mism <= 5) console.log(`     @${w} y=${yy}: ref ${JSON.stringify(a)} port ${JSON.stringify(b)}`);
@@ -88,7 +102,7 @@ try {
       // shorter than the reference's), each bar must match its own page's scroll share.
       progMax = Math.max(progMax, sameHeight ? Math.abs((a.progress ?? 0) - (b.progress ?? 0)) : Math.abs((b.progress ?? 0) - b.expected));
     }
-    check(mism === 0, `@${w} scroll-spy: ${n} positions, ${mism} mismatches (active entry, 05 subsection${w < 1048 ? ", phone bar label" : ""})`);
+    check(mism === 0, `@${w} scroll-spy: ${n} positions, ${mism} mismatches (${own ? "phone bar label against the spy's rule on the port" : "active entry, 05 subsection" + (w < 1048 ? ", phone bar label" : "")})`);
     if (w >= 1048) check(railMax < 1.5, `@${w} coverage rail: max difference ${railMax.toFixed(2)}px`);
     check(progMax < 0.002, `@${w} progress bar: max difference ${progMax.toFixed(4)}`);
     const end = await spyState(port.page, false);
@@ -216,13 +230,14 @@ try {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, reducedMotion: "no-preference" });
     const p = await ctx.newPage();
     // sample the parts from the first frame on
-    await p.addInitScript(() => {
+    await p.addInitScript((parts) => {
       window.__samples = [];
       const t0 = performance.now();
+      const pick = ({ sel, text }) => [...document.querySelectorAll(sel)].find((e) => !text || e.textContent.includes(text));
       const tick = () => {
-        const ring = document.querySelector('[data-reveal="ring"]');
-        const fade = document.querySelector('[data-reveal="fade"]');
-        const rise = document.querySelector('[data-reveal="rise"]');
+        const ring = pick(parts.ring);
+        const fade = pick(parts.fade);
+        const rise = pick(parts.rise);
         const dot = document.querySelector('[data-reveal="dot"]');
         if (ring) {
           window.__samples.push({
@@ -237,7 +252,7 @@ try {
         if (performance.now() - t0 < 9000) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
-    });
+    }, REVEAL);
     await p.goto(PORT, { waitUntil: "domcontentloaded" });
     if (h < 1000) {
       await p.waitForTimeout(1500);
@@ -260,21 +275,23 @@ try {
     await ctx.close();
   }
 
-  // Loan Ops Ledger: a reader who has not reached the hero within 4s gets its final state.
-  if (want("reveal") && PAGE === "loan-ops-ledger") {
+  // Loan Ops Ledger and Capital Call Flow: a reader who has not reached the hero within 4s gets
+  // its final state.
+  if (want("reveal") && REVEAL_SETTLES) {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 800 }, reducedMotion: "no-preference" });
     const p = await ctx.newPage();
     await p.goto(PORT, { waitUntil: "domcontentloaded" });
     const read = () =>
-      p.evaluate(() => ({
-        rise: +getComputedStyle(document.querySelector('[data-reveal="rise"]')).opacity,
-        dot: getComputedStyle(document.querySelector('[data-reveal="dot"]')).backgroundColor,
-      }));
+      p.evaluate((parts) => {
+        const pick = ({ sel, text }) => [...document.querySelectorAll(sel)].find((e) => !text || e.textContent.includes(text));
+        const dot = document.querySelector('[data-reveal="dot"]');
+        return { rise: +getComputedStyle(pick(parts.rise)).opacity, dot: dot ? getComputedStyle(dot).backgroundColor : null };
+      }, REVEAL);
     await p.waitForTimeout(2500);
     const before = await read();
     await p.waitForTimeout(3000);
     const after = await read();
-    check(before.rise === 0 && after.rise === 1 && after.dot === "rgb(21, 127, 82)", `reveal (not reached): held at 2.5s, final state after 4s (${JSON.stringify(after)})`);
+    check(before.rise === 0 && after.rise === 1 && (after.dot === null || after.dot === "rgb(21, 127, 82)"), `reveal (not reached): held at 2.5s, final state after 4s (${JSON.stringify(after)})`);
     await ctx.close();
   }
 
@@ -323,6 +340,65 @@ try {
     check(ok, "F5: hovering a step tints its row #F1EEE8, as in the reference");
     await r2.ctx.close();
     await p2.ctx.close();
+  }
+  // Capital Call Flow: F1's amounts never run past their cells (the reference's four columns
+  // overprint under a 448px main column, where the port stacks each line instead), and the
+  // tables fold at the reference's thresholds.
+  if (want("ccf") && PAGE === "capital-call-flow") {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+    const p = await ctx.newPage();
+    await p.goto(PORT, { waitUntil: "networkidle" });
+    const worst = [];
+    for (let w = 1440; w >= 320; w -= w > 720 ? 120 : 8) {
+      await p.setViewportSize({ width: w, height: 900 });
+      await p.waitForTimeout(60);
+      const r = await p.evaluate(() => {
+        const fig = document.querySelector("main figure");
+        const mw = Math.round(document.querySelector("main").getBoundingClientRect().width);
+        let over = 0;
+        for (const cell of fig.querySelectorAll("[role=cell], [role=rowheader], [role=columnheader]")) {
+          if (!cell.getClientRects().length) continue;
+          const cr = cell.getBoundingClientRect();
+          const walk = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT);
+          for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+            if (n.parentElement.closest(".sr-only")) continue;
+            const range = document.createRange();
+            range.selectNodeContents(n);
+            for (const rr of range.getClientRects()) if (rr.width) over = Math.max(over, rr.right - cr.right, cr.left - rr.left);
+          }
+        }
+        return { mw, over: +over.toFixed(1), stacked: getComputedStyle(fig.querySelector("[role=row]")).display === "none" };
+      });
+      // from 640px the reference's six columns spill ~6px into their 8px gaps; the port keeps that
+      if (r.over > (r.mw >= 640 && r.mw < 700 ? 6.5 : 0.5)) worst.push(`${w}px (main ${r.mw}): ${r.over}px`);
+      if ((r.mw < 448) !== r.stacked) worst.push(`${w}px (main ${r.mw}): stacked ${r.stacked}`);
+    }
+    check(!worst.length, `F1 amounts stay inside their cells from 1440 to 320px, stacked under a 448px column${worst.length ? ": " + worst.slice(0, 6).join("; ") : ""}`);
+    await ctx.close();
+
+    const ref = await open(browser, REF, 1440, 900);
+    const port = await open(browser, PORT, 1440, 900);
+    const fold = (pg) =>
+      pg.evaluate(() => {
+        const figs = [...document.querySelectorAll("main figure")];
+        const f2 = figs.find((f) => f.textContent.includes("Wires matched to investors"));
+        const f6 = figs.find((f) => f.textContent.includes("What the model may touch"));
+        const visible = (f, t) => [...f.querySelectorAll("span")].some((s) => s.textContent === t && s.getClientRects().length > 0);
+        return [f2.offsetHeight, f6.offsetHeight, visible(f2, "Received"), visible(f6, "Approval before effect")].join(" ");
+      });
+    let same = true;
+    for (const w of [652, 651, 600, 390]) {
+      await Promise.all([ref.page, port.page].map((pg) => pg.setViewportSize({ width: w, height: 900 })));
+      await Promise.all([ref.page, port.page].map((pg) => pg.waitForTimeout(250)));
+      const [a, b] = await Promise.all([fold(ref.page), fold(port.page)]);
+      if (a !== b) {
+        same = false;
+        console.log(`     @${w}: ref ${a} port ${b}`);
+      }
+    }
+    check(same, "F2 and F6 fold their columns at a 600px column, figure heights equal to the reference's");
+    await ref.ctx.close();
+    await port.ctx.close();
   }
 } finally {
   await browser.close();

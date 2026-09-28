@@ -24,11 +24,13 @@ export type Block =
   | { type: "breaks"; items: Array<{ title: string; text: string; figure?: string }> }
   /** A card linking to a related page, with a painted thumbnail and playbook badges on it. */
   | { type: "platformCard"; icons: string[]; title: string; text: string; link: Link }
-  /** §03: who does what at each step, in three lanes. `null` is an empty cell ("—"). */
+  /** §03: who does what at each step, in three lanes. `null` is an empty cell, set faint:
+      "—", or `empty` where the page says so in words (Capital Call Flow: "Nothing"). */
   | {
       type: "stepTable";
       head: [string, string, string, string];
       rows: Array<{ step: string; cells: [string | null, string | null, string | null] }>;
+      empty?: string;
     }
   /** A boxed note under an ink rule, e.g. "Never automated". */
   | { type: "callout"; label: string; text: string }
@@ -46,8 +48,16 @@ export type Block =
   | { type: "midCta"; title: string; text: string; tracked?: boolean }
   /** A plain related-page card: small label, title, and an underlined link on the right. */
   | { type: "linkCard"; label: string; title: string; link: Link }
-  /** Dated rules rows, optionally under a "Status as of …" line and over a closing note. */
-  | { type: "rules"; items: Array<{ date: string; title: string; text: string }>; status?: string; note?: string }
+  /** Dated rules rows, optionally under a "Status as of …" line and over a closing note.
+      `greedyNote`: the note wraps greedily, without the site's text-wrap: pretty (as Capital Call
+      Flow's prototype sets it; the others' notes are pretty). */
+  | {
+      type: "rules";
+      items: Array<{ date: string; title: string; text: string }>;
+      status?: string;
+      note?: string;
+      greedyNote?: boolean;
+    }
   | { type: "terms"; items: Array<{ term: string; def: string }> }
   | { type: "updates"; items: Rich[] }
   | { type: "faq"; items: Array<{ q: string; a: string }> };
