@@ -11,10 +11,11 @@
 //   7. hero reveal (motion on): held from the first frame, then its parts in turn; on Loan Ops
 //      Ledger also the status dot's red-to-green; on NAV Pack Review the rows 40ms apart, then
 //      the explanation and the break's "Break · explained"; on Side-Letter Register the rows
-//      150ms apart, then the overdue row's red; on Loan Ops Ledger, Capital Call Flow, NAV Pack
-//      Review and Side-Letter Register the final state when the reader has not reached the
-//      figure within 4s; and, arriving by a client-side navigation from /playbooks, the parts
-//      start hidden and never fade out (no flash of the final state)
+//      150ms apart, then the overdue row's red; on Mandate Guardrails the underline, the
+//      interpretation note, then PASS; on Loan Ops Ledger, Capital Call Flow, NAV Pack Review,
+//      Side-Letter Register and Mandate Guardrails the final state when the reader has not
+//      reached the figure within 4s; and, arriving by a client-side navigation from /playbooks,
+//      the parts start hidden and never fade out (no flash of the final state)
 //   8. Loan Ops Ledger only: the hero notice's "Show full notice" toggle below a 500px column,
 //      and F5's row hover
 //   9. Capital Call Flow only: F1's amounts stay inside their cells at every main width (under
@@ -25,6 +26,8 @@
 //  11. Side-Letter Register only: every figure's height equals the reference's either side of
 //      each fold (F2's election grid at a 520px column, F1 and F2's compendium at 560, F4, F5
 //      and F8 at 600), and nothing runs past its cell at any width from 320 to 1440
+//  12. Mandate Guardrails only: F2, F4 and F7 fold at the reference's thresholds, F4's rule spec
+//      scrolls inside its own box, and on phones no figure text runs past its card
 //
 //   BASE_URL=… node qa/playbook-behaviour.mjs --page loan-ops-ledger [--only spy,reveal]
 
@@ -381,7 +384,8 @@ try {
   // gate then, so the hook holds the parts itself. The first frame shows them at their start
   // state, and no part ever goes backwards: that would be the final state flashing. Each part's
   // progress is read from what it animates: opacity (fade, rise), the ring's alpha, a dot's
-  // green (dot, wait), an underline's width (draw).
+  // green (dot, wait), an underline's width (draw), a bar's green tint (tint), a word's green
+  // (word).
   if (want("reveal")) {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 1300 }, reducedMotion: "no-preference" });
     const p = await ctx.newPage();
@@ -405,6 +409,10 @@ try {
             return cs.backgroundColor === "rgb(21, 127, 82)" ? 1 : 0;
           case "draw":
             return (parseFloat(cs.backgroundSize) || 0) / 100;
+          case "tint":
+            return cs.backgroundColor === "rgb(228, 240, 234)" ? 1 : 0;
+          case "word":
+            return cs.color === "rgb(19, 120, 78)" ? 1 : 0;
           default:
             return +cs.opacity;
         }
@@ -425,8 +433,58 @@ try {
     await ctx.close();
   }
 
-  // Loan Ops Ledger, Capital Call Flow, NAV Pack Review and Side-Letter Register: a reader who has
-  // not reached the hero within 4s gets its final state.
+  // Mandate Guardrails' reveal: "investment grade" underlined, then the interpretation note, then
+  // the result turning PASS (its bar tinted green, its dot and word green). Sampled every frame
+  // from the first.
+  if (want("reveal") && PAGE === "mandate-guardrails") for (const [w, h, label] of [[1440, 1300, "in view at load"], [1440, 800, "below the fold"]]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, reducedMotion: "no-preference" });
+    const p = await ctx.newPage();
+    await p.addInitScript(() => {
+      window.__samples = [];
+      const t0 = performance.now();
+      const tick = () => {
+        const q = (part) => document.querySelector(`[data-reveal-root] [data-reveal="${part}"]`);
+        const [draw, note, tint, wait, word] = ["draw", "fade", "tint", "wait", "word"].map(q);
+        if (draw && note && tint && wait && word) {
+          window.__samples.push({
+            t: Math.round(performance.now() - t0),
+            drawn: getComputedStyle(draw).backgroundSize,
+            note: +getComputedStyle(note).opacity,
+            tint: getComputedStyle(tint).backgroundColor,
+            dot: getComputedStyle(wait).backgroundColor,
+            word: getComputedStyle(word).color,
+            gate: document.documentElement.getAttribute("data-pb-reveal"),
+          });
+        }
+        if (performance.now() - t0 < 9000) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    await p.goto(PORT, { waitUntil: "domcontentloaded" });
+    if (h < 1000) {
+      await p.waitForTimeout(1500);
+      await p.evaluate(() => window.scrollTo(0, 500));
+    }
+    await p.waitForTimeout(h < 1000 ? 4500 : 6000);
+    const s = await p.evaluate(() => window.__samples);
+    const GREEN_BAR = "rgb(228, 240, 234)", HELD_BAR = "rgb(241, 238, 232)", GREEN = "rgb(21, 127, 82)", GREY = "rgb(217, 214, 207)";
+    const OK_INK = "rgb(19, 120, 78)", FAINT = "rgb(138, 136, 127)";
+    const passed = (x) => x.tint === GREEN_BAR && x.dot === GREEN && x.word === OK_INK;
+    const first = s[0], last = s[s.length - 1];
+    const shownEarly = s.filter((x) => x.gate !== "run" && (x.drawn !== "0% 1.5px" || x.note > 0 || x.tint !== HELD_BAR));
+    const drawn = s.find((x) => x.drawn.startsWith("100%")), note = s.find((x) => x.note > 0.99), pass = s.find(passed);
+    check(
+      !!first && first.drawn === "0% 1.5px" && first.note === 0 && first.tint === HELD_BAR && first.dot === GREY && first.word === FAINT,
+      `reveal (${label}): first frame held at the start state (gate ${first?.gate})`,
+    );
+    check(shownEarly.length === 0, `reveal (${label}): nothing shows, then hides, before the reveal`);
+    check(!!(drawn && note && pass) && drawn.t < note.t && note.t < pass.t, `reveal (${label}): underline ${drawn?.t}ms, note ${note?.t}ms, PASS ${pass?.t}ms`);
+    check(!!last && last.drawn === "100% 1.5px" && last.note === 1 && passed(last), `reveal (${label}): ends in the final state`);
+    await ctx.close();
+  }
+
+  // Loan Ops Ledger, Capital Call Flow, NAV Pack Review, Side-Letter Register and Mandate
+  // Guardrails: a reader who has not reached the hero within 4s gets its final state.
   if (want("reveal") && REVEAL_SETTLES) {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 800 }, reducedMotion: "no-preference" });
     const p = await ctx.newPage();
@@ -737,6 +795,96 @@ try {
     }
     check(!worst.length, `no figure text runs past its box from 1440 to 320px${worst.length ? ": " + worst.slice(0, 6).join("; ") : ""}`);
     await ctx.close();
+  }
+
+  // Mandate Guardrails: the figures fold at the reference's thresholds (F2's check table at a
+  // 560px column, F4's lanes at 600 and its Expected column at 540, F7's table at 540), with
+  // figure heights equal to the reference's. Between 540 and 560 the reference switches F2's
+  // cells but not its columns (a broken two-column grid); the port folds both at 560, so F2 is
+  // compared outside that band and checked on its own inside it (and not under a 334px column,
+  // where the port wraps its order line). And F4's rule spec scrolls sideways inside its own
+  // box, from the keyboard too, while the page never does.
+  if (want("mg") && PAGE === "mandate-guardrails") {
+    const ref = await open(browser, REF, 1440, 900);
+    const port = await open(browser, PORT, 1440, 900);
+    const fold = (pg) =>
+      pg.evaluate(() => {
+        const figs = [...document.querySelectorAll("main figure")];
+        const find = (t) => figs.find((f) => f.textContent.includes(t));
+        const f2 = find("Pre-trade compliance"), f4 = find("clause → rule → test"), f7 = find("which denominator?");
+        const visible = (f, t) => [...f.querySelectorAll("span")].some((s) => s.textContent.trim() === t && s.getClientRects().length > 0);
+        const mw = Math.round(document.querySelector("main").getBoundingClientRect().width);
+        return {
+          mw,
+          f2: `${f2.offsetHeight} ${visible(f2, "Projected")}`,
+          f4: `${f4.offsetHeight} ${visible(f4, "Expected")}`,
+          f7: `${f7.offsetHeight} ${visible(f7, "Denominator £m")}`,
+        };
+      });
+    const bad = [];
+    for (const w of [652, 651, 609, 608, 587, 586, 430, 390, 320]) {
+      await Promise.all([ref.page, port.page].map((pg) => pg.setViewportSize({ width: w, height: 900 })));
+      await Promise.all([ref.page, port.page].map((pg) => pg.waitForTimeout(250)));
+      const [a, b] = await Promise.all([fold(ref.page), fold(port.page)]);
+      const band = a.mw >= 540 && a.mw < 560;
+      // under a 334px column the port wraps F2's order line where the reference overflows its card
+      const own = a.mw < 334;
+      for (const k of ["f4", "f7", ...(band || own ? [] : ["f2"])]) if (a[k] !== b[k]) bad.push(`@${w} (main ${a.mw}) ${k}: ref ${a[k]} port ${b[k]}`);
+      if (band && !b.f2.endsWith("false")) bad.push(`@${w} (main ${b.mw}) f2: the port's columns show under 560 (${b.f2})`);
+    }
+    check(!bad.length, `F2, F4 and F7 fold at the reference's thresholds, heights equal to its${bad.length ? ":\n      " + bad.join("\n      ") : ""}`);
+    await ref.ctx.close();
+    await port.ctx.close();
+
+    const spec = [];
+    for (const w of [320, 390, 1440]) {
+      const pg = await open(browser, PORT, w, 900);
+      const r = await pg.page.evaluate(() => {
+        const pre = [...document.querySelectorAll("main pre")].find((e) => e.textContent.includes("rule_draft@v5"));
+        const page = document.documentElement.scrollWidth - document.documentElement.clientWidth;
+        return { overflow: pre.scrollWidth - pre.clientWidth, tab: pre.tabIndex, page };
+      });
+      if (r.tab !== 0 || r.page > 0 || (w < 400 && r.overflow <= 0)) spec.push(`@${w}: ${JSON.stringify(r)}`);
+      if (w === 390) {
+        await pg.page.locator("main pre").focus();
+        await pg.page.keyboard.press("ArrowRight");
+        await pg.page.keyboard.press("ArrowRight");
+        await pg.page.waitForTimeout(400); // Chrome animates keyboard scrolling
+        const x = await pg.page.evaluate(() => document.querySelector("main pre").scrollLeft);
+        if (!(x > 0)) spec.push(`@390: arrow keys did not scroll the spec (${x})`);
+      }
+      await pg.ctx.close();
+    }
+    check(!spec.length, `F4's rule spec scrolls inside its box (keyboard too), the page does not${spec.length ? ": " + spec.join("; ") : ""}`);
+
+    // On phones no figure text runs past its white card (or, outside one, its band). The
+    // reference's F2 order line does under a 334px column; the port lets that value wrap.
+    const spill = [];
+    for (const w of [430, 390, 375, 360, 320]) {
+      const pg = await open(browser, PORT, w, 900);
+      const r = await pg.page.evaluate(() => {
+        const out = [];
+        for (const fig of document.querySelectorAll("main figure")) {
+          const band = fig.firstElementChild.getBoundingClientRect();
+          const walk = document.createTreeWalker(fig, NodeFilter.SHOW_TEXT);
+          for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+            const el = n.parentElement;
+            if (!n.textContent.trim() || !el.getClientRects().length || el.closest("pre")) continue;
+            let card = el;
+            while (card !== fig && getComputedStyle(card).backgroundColor !== "rgba(255, 255, 255, 0.93)") card = card.parentElement;
+            const box = card === fig ? band : card.getBoundingClientRect();
+            const range = document.createRange();
+            range.selectNodeContents(n);
+            for (const rr of range.getClientRects())
+              if (rr.right - box.right > 0.5 || box.left - rr.left > 0.5) out.push(n.textContent.trim().slice(0, 32));
+          }
+        }
+        return [...new Set(out)];
+      });
+      if (r.length) spill.push(`@${w}: ${r.join(" | ")}`);
+      await pg.ctx.close();
+    }
+    check(!spill.length, `no figure text runs past its card from 320 to 430px${spill.length ? ": " + spill.join("; ") : ""}`);
   }
 } finally {
   await browser.close();

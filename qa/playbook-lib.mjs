@@ -50,6 +50,15 @@ const PAGES = {
     reveal: { rise: { sel: '[data-reveal="fade"]', text: "SL-LSH-9.0" } },
     settles: true,
   },
+  // F1: "investment grade" underlined, then the interpretation note, then the result turning PASS
+  // (its bar, dot and word). No ring, so its own check in playbook-behaviour.mjs; `rise` (the
+  // note) is what the settle check reads.
+  "mandate-guardrails": {
+    file: "Mandate%20Guardrails.dc.html",
+    refPort: 4110,
+    reveal: { rise: { sel: '[data-reveal="fade"]', text: "Interpretation note" } },
+    settles: true,
+  },
 };
 
 export const PAGE = arg("page", "covenant-watch");

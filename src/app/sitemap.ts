@@ -15,5 +15,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: new URL("/playbooks/nav-pack-review", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },
     { url: new URL("/playbooks/investor-reporting", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },
     { url: new URL("/playbooks/side-letter-register", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },
+    { url: new URL("/playbooks/mandate-guardrails", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },
   ];
 }

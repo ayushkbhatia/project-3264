@@ -1,10 +1,11 @@
 import type { StaticImageData } from "next/image";
 import { Figure, Sheet } from "../figure";
 
-// Consistency across repeated runs (Covenant Watch F8), a house figure: at a 95% per-run
-// success rate, pass^k (every one of k runs right) falls to 0.60 by ten runs while pass@k (at
-// least one right) reaches ~1.00. Illustrative maths. The plot is an SVG stretched to its box
-// (non-scaling strokes); the axes and labels are HTML around it, as in the reference.
+// Consistency across repeated runs (Covenant Watch F8, Mandate Guardrails F6), a house figure: at
+// a 95% per-run success rate, pass^k (every one of k runs right) falls to 0.60 by ten runs while
+// pass@k (at least one right) reaches ~1.00. Illustrative maths. The plot is an SVG stretched to
+// its box (non-scaling strokes); the axes and labels are HTML around it, as in the reference.
+// Mandate Guardrails captions it in its own words (why no model sits at run time).
 
 const P = 0.95;
 const K = 10;
@@ -18,15 +19,19 @@ const PASS_AT = points((k) => 1 - (1 - P) ** k); // 0,50 100,2.5 200,0.1 300,0 â
 
 const TICK = "absolute font-mono text-[10.5px] text-mut";
 
-export function PassK({ image, veil, className }: { image: StaticImageData; veil: number; className?: string }) {
+export function PassK({
+  image,
+  veil,
+  className,
+  caption = "Illustrative maths, not measured performance. At a 95% per-run success rate, all ten runs are correct about 60% of the time.",
+}: {
+  image: StaticImageData;
+  veil: number;
+  className?: string;
+  caption?: string;
+}) {
   return (
-    <Figure
-      image={image}
-      veil={veil}
-      className={className}
-      label="Consistency across repeated runs"
-      caption="Illustrative maths, not measured performance. At a 95% per-run success rate, all ten runs are correct about 60% of the time."
-    >
+    <Figure image={image} veil={veil} className={className} label="Consistency across repeated runs" caption={caption}>
       <Sheet>
         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
           <span className="text-[12.5px] text-sec">Per-run success rate 0.95, runs independent</span>
