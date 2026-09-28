@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>3264.ai — Playbooks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+html, body { margin:0; padding:0; overflow-x:clip; }
+body { --a:#157F52; --bad:#C4341E; --line:rgba(20,20,18,0.13); --line2:rgba(20,20,18,0.075); --mut:#6E6D67; --sec:#55544E; background:#F6F5F2; color:#1A1917; font-family:"Instrument Sans","Helvetica Neue",Helvetica,sans-serif; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { color:inherit; text-decoration:none; }
+a:hover { color:var(--a); }
+::selection { background:var(--a); color:#FFFFFF; }
+</style>
+</helmet>
+
+<header style="position:sticky; top:0; z-index:100; backdrop-filter:blur(14px); background:rgba(246,245,242,0.78); border-bottom:1px solid var(--line2)">
+  <div style="max-width:1280px; margin:0 auto; padding:0 40px; height:68px; display:flex; align-items:center; gap:48px">
+    <a href="3264 Home.dc.html" style="font-size:19px; font-weight:500; letter-spacing:-0.03em">3264<span>.ai</span></a>
+    <nav style="display:flex; gap:30px; font-size:14px; color:var(--sec); flex:1">
+      <a href="AI Engineering.dc.html">AI Engineering</a>
+      <a href="AI Transformation.dc.html">AI Transformation</a>
+      <a href="3264 Home.dc.html#industries">Industries</a>
+      <a href="3264 Home.dc.html#work">Work</a>
+      <a href="#top" style="color:#1A1917">Playbooks</a>
+      <a href="Company.dc.html">Company</a>
+    </nav>
+    <a href="AI Engineering.dc.html#engagement" style="display:flex; align-items:center; gap:10px; height:36px; padding:0 16px; border:1px solid var(--line); border-radius:6px; background:#FFFFFF; font-size:13.5px; letter-spacing:-0.01em" style-hover="border-color:var(--a); color:var(--a)">Book an audit</a>
+  </div>
+</header>
+
+<section id="top" data-screen-label="Hero" style="position:relative; overflow:hidden; background:#0A0A0A; color:#F4F3F0; min-height:calc(100vh - 68px); display:flex; flex-direction:column">
+  <div aria-hidden="true" style="position:absolute; inset:0; z-index:0; overflow:hidden">
+    <video ref="{{ heroVid }}" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_074625_a81f018a-956b-43fb-9aee-4d1508e30e6a.mp4" muted="{{ true }}" autoPlay="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:bottom; opacity:0"></video>
+    <canvas ref="{{ heroCv }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:bottom; opacity:0"></canvas>
+  </div>
+  <div style="position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.15) 40%, rgba(10,10,10,0.35) 75%, rgba(10,10,10,0.92) 100%)"></div>
+  <div style="position:relative; flex:1; max-width:1280px; width:100%; box-sizing:border-box; margin:0 auto; padding:clamp(56px,9vh,112px) 40px 56px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; text-align:center">
+    <h1 style="margin:0; max-width:1000px; font-size:clamp(34px, 4.2vw, 60px); font-weight:400; letter-spacing:-0.04em; line-height:0.98; text-wrap:balance">Every workflow we have shipped,<br />drawn so you can start from it.</h1>
+    <div style="display:flex; gap:12px; margin:34px 0 0; flex-wrap:wrap; justify-content:center">
+      <a href="#library" style="display:inline-flex; align-items:center; height:46px; padding:0 24px; background:#F4F3F0; color:#1A1917; border-radius:6px; font-size:15px; font-weight:500; letter-spacing:-0.01em" style-hover="background:#FFFFFF; color:#1A1917">Browse the library</a>
+      <a href="AI Engineering.dc.html#engagement" style="display:inline-flex; align-items:center; height:46px; padding:0 24px; box-sizing:border-box; border:1px solid rgba(255,255,255,0.28); background:rgba(255,255,255,0.06); backdrop-filter:blur(6px); color:#F4F3F0; border-radius:6px; font-size:15px; font-weight:500; letter-spacing:-0.01em" style-hover="border-color:#F4F3F0; color:#F4F3F0">Book a two-week audit</a>
+    </div>
+  </div>
+</section>
+
+<section id="library" data-screen-label="Library" style="padding:64px 40px 0; scroll-margin-top:68px">
+  <div style="max-width:1280px; margin:0 auto; display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:space-between; padding-bottom:20px; border-bottom:1px solid var(--line)">
+    <div style="display:flex; gap:6px; flex-wrap:wrap">
+      <sc-for list="{{ cats }}" as="c" hint-placeholder-count="4">
+      <button type="button" onClick="{{ pickCat }}" data-cat="{{ c.name }}" aria-pressed="{{ c.on }}" style="height:34px; padding:0 15px; border-radius:999px; border:1px solid {{ c.bd }}; background:{{ c.bg }}; color:{{ c.fg }}; font:inherit; font-size:13.5px; letter-spacing:-0.01em; cursor:pointer; transition:background 160ms ease, color 160ms ease">{{ c.name }}</button>
+      </sc-for>
+    </div>
+    <label style="position:relative; display:flex; align-items:center; width:min(100%, 320px)">
+      <span aria-hidden="true" style="position:absolute; left:14px; top:50%; width:11px; height:11px; margin-top:-7px; box-sizing:border-box; border:1.5px solid var(--mut); border-radius:50%"></span>
+      <span aria-hidden="true" style="position:absolute; left:23px; top:50%; width:5px; height:1.5px; margin-top:3px; background:var(--mut); transform:rotate(45deg); transform-origin:left center"></span>
+      <input type="search" value="{{ q }}" onChange="{{ setQ }}" placeholder="Search playbooks" aria-label="Search playbooks" style="width:100%; height:40px; box-sizing:border-box; padding:0 14px 0 36px; border:1px solid var(--line); border-radius:8px; background:#FFFFFF; font:inherit; font-size:14px; color:#1A1917; outline:none" style-focus="border-color:var(--a)" />
+    </label>
+  </div>
+</section>
+
+<sc-if value="{{ browsing }}" hint-placeholder-val="{{ true }}">
+<section data-screen-label="Featured" style="padding:40px 0 0">
+  <div ref="{{ carWrap }}" onMouseEnter="{{ carHold }}" onMouseLeave="{{ carFree }}" style="position:relative; overflow:hidden">
+    <div ref="{{ carTrack }}" style="display:flex; gap:24px; padding-left:40px; transition:transform 700ms cubic-bezier(0.2,0.7,0.2,1); will-change:transform">
+      <sc-for list="{{ slides }}" as="sl" hint-placeholder-count="3">
+      <div data-slide="{{ $index }}" onClick="{{ carPick }}" style="flex:0 0 auto; width:min(1200px, calc(100vw - 80px)); box-sizing:border-box; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap:14px; padding:14px; border-radius:22px; background:#EEECE7; transition:opacity 500ms ease">
+        <div style="display:flex; flex-direction:column; justify-content:center; padding:clamp(20px,3.4vw,44px)">
+          <span style="font-size:13px; letter-spacing:-0.005em; color:var(--mut)">{{ sl.cat }}</span>
+          <span style="margin:16px 0 0; font-size:clamp(28px, 2.8vw, 40px); letter-spacing:-0.034em; line-height:1.06; color:#1A1917; text-wrap:balance">{{ sl.name }}</span>
+          <span style="margin:16px 0 0; max-width:440px; font-size:16px; line-height:1.55; color:var(--sec); text-wrap:pretty">{{ sl.blurb }}</span>
+          <a href="{{ sl.href }}" style="align-self:flex-start; margin:28px 0 0; display:inline-flex; align-items:center; height:42px; padding:0 18px; background:#1A1917; color:#FFFFFF; border-radius:8px; font-size:14px; font-weight:500; letter-spacing:-0.01em" style-hover="background:var(--a); color:#FFFFFF">Read the playbook</a>
+        </div>
+        <div style="position:relative; min-height:clamp(240px, 30vw, 400px); border-radius:14px; overflow:hidden; background:#E2DFD8">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ sl.slotF }}" src="{{ sl.srcF }}" shape="rounded" radius="14" placeholder="{{ sl.phF }}" hint-size="100%,100%" style="position:absolute; inset:0; width:100%; height:100%"></x-import>
+          {{ sl.mark }}
+        </div>
+      </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="max-width:1280px; margin:0 auto; padding:24px 40px 0; box-sizing:border-box; display:flex; align-items:center; gap:24px">
+    <div style="flex:1 1 auto; min-width:0; display:flex; gap:12px">
+      <sc-for list="{{ slides }}" as="sl" hint-placeholder-count="6">
+      <button type="button" onClick="{{ carSeg }}" data-i="{{ $index }}" aria-label="{{ sl.aria }}" style="flex:1 1 0; min-width:0; height:20px; padding:0; background:none; border:0; cursor:pointer; display:flex; align-items:center">
+        <span style="position:relative; display:block; width:100%; height:2px; background:rgba(20,20,18,0.14); overflow:hidden"><span data-seg-fill="" style="position:absolute; left:0; top:0; bottom:0; width:0; background:#1A1917"></span></span>
+      </button>
+      </sc-for>
+    </div>
+    <div style="display:flex; gap:10px">
+      <button type="button" onClick="{{ carPrev }}" aria-label="Previous playbook" style="width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:#FFFFFF; color:#1A1917; font:inherit; font-size:17px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center" style-hover="border-color:#1A1917">←</button>
+      <button type="button" onClick="{{ carNext }}" aria-label="Next playbook" style="width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:#FFFFFF; color:#1A1917; font:inherit; font-size:17px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center" style-hover="border-color:#1A1917">→</button>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Library CTAs" style="padding:56px 40px 0">
+  <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap; gap:20px">
+    <div style="position:relative; flex:1 1 480px; min-width:0; overflow:hidden; border-radius:20px; background:#B8321F; color:#FFFFFF; padding:clamp(28px,3vw,40px)">
+      <img src="assets/subscribe-wash.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%" />
+      <div style="position:absolute; inset:0; background:linear-gradient(100deg, rgba(74,16,10,0.62) 0%, rgba(74,16,10,0.34) 55%, rgba(74,16,10,0.06) 100%)"></div>
+      <div style="position:relative">
+        <div style="font-size:24px; letter-spacing:-0.025em; line-height:1.2; color:#FFFFFF; text-shadow:0 1px 14px rgba(74,16,10,0.35)">Get new playbooks as they ship</div>
+        <div style="margin:8px 0 0; font-size:15px; line-height:1.5; color:rgba(255,255,255,0.92); text-shadow:0 1px 12px rgba(74,16,10,0.35)">One email when a playbook is published or revised. Nothing else.</div>
+        <sc-if value="{{ notSub }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ subscribe }}" style="display:flex; gap:6px; margin:24px 0 0; max-width:480px; padding:5px; border-radius:10px; background:#FFFFFF">
+          <input type="email" required="{{ true }}" placeholder="Work email" aria-label="Work email" style="flex:1 1 auto; min-width:0; height:42px; padding:0 12px; border:0; background:transparent; font:inherit; font-size:15px; color:#1A1917; outline:none" />
+          <button type="submit" style="flex:none; height:42px; padding:0 20px; border:0; border-radius:7px; background:#157F52; color:#FFFFFF; font:inherit; font-size:14.5px; font-weight:500; cursor:pointer" style-hover="background:#0F6A43">Subscribe</button>
+        </form>
+        </sc-if>
+        <sc-if value="{{ sub }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; align-items:center; gap:10px; height:52px; margin:24px 0 0; font-size:15px"><span style="width:8px; height:8px; border-radius:50%; background:#6FCF97"></span>You are on the list.</div>
+        </sc-if>
+      </div>
+    </div>
+    <div style="position:relative; flex:1 1 480px; min-width:0; box-sizing:border-box; display:flex; overflow:hidden; border-radius:20px; background:#E9C9B8; padding:clamp(28px,3vw,40px)">
+      <img src="assets/platform-wash.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 40%" />
+      <div style="position:absolute; inset:0; background:linear-gradient(100deg, rgba(248,246,240,0.74) 0%, rgba(248,246,240,0.46) 55%, rgba(248,246,240,0.08) 100%)"></div>
+      <div style="position:relative; flex:1 1 auto; min-width:0">
+        <div style="font-size:24px; letter-spacing:-0.025em; line-height:1.2">See three playbooks on one platform</div>
+        <p style="margin:10px 0 0; max-width:440px; font-size:15px; line-height:1.55; color:#2C2B27; text-wrap:pretty">Covenant Watch, Capital Call Flow and Loan Ops Ledger, running on the same record for a private credit fund.</p>
+        <a href="Private Credit.dc.html" style="display:inline-flex; align-items:center; gap:8px; margin:20px 0 0; font-size:14.5px; letter-spacing:-0.01em; color:#1A1917; border-bottom:1px solid rgba(20,20,18,0.3); padding-bottom:2px" style-hover="color:var(--a); border-color:var(--a)">See the Private Credit platform →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+<section id="{{ g.id }}" data-screen-label="{{ g.label }}" style="padding:96px 40px 0">
+  <div style="max-width:1280px; margin:0 auto">
+    <div style="display:flex; gap:12px 24px; flex-wrap:wrap; align-items:baseline; justify-content:space-between">
+      <h2 style="margin:0; font-size:clamp(32px, 3.2vw, 46px); font-weight:400; letter-spacing:-0.035em; line-height:1.05">{{ g.label }}</h2>
+      <a href="{{ g.href }}" style="font-size:14px; letter-spacing:-0.01em; color:var(--sec)" style-hover="color:var(--a)">{{ g.linkLabel }} →</a>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:44px 28px; margin:36px 0 0">
+      <sc-for list="{{ g.items }}" as="pb" hint-placeholder-count="3">
+      <div style="display:flex; flex-direction:column; min-width:0">
+        <div style="position:relative; aspect-ratio:2 / 1; border-radius:14px; overflow:hidden; background:#ECEAE5">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ pb.slot }}" src="{{ pb.src }}" shape="rounded" radius="14" placeholder="{{ pb.ph }}" hint-size="100%,100%" style="position:absolute; inset:0; width:100%; height:100%"></x-import>
+          {{ pb.mark }}
+        </div>
+        <a href="{{ pb.href }}" style="display:flex; flex-direction:column; gap:10px; padding:20px 0 0; color:#1A1917" style-hover="color:var(--a)">
+          <span style="font-size:20px; letter-spacing:-0.022em; line-height:1.2">{{ pb.name }}</span>
+          <span style="font-size:15px; line-height:1.55; color:var(--sec); text-wrap:pretty">{{ pb.blurb }}</span>
+        </a>
+      </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+</sc-for>
+
+<section data-screen-label="Recently updated" style="padding:96px 40px 0">
+  <div style="max-width:1280px; margin:0 auto">
+    <h2 style="margin:0; font-size:clamp(32px, 3.2vw, 46px); font-weight:400; letter-spacing:-0.035em; line-height:1.05">Recently updated</h2>
+    <div style="margin:28px 0 0; border-top:1px solid #1A1917">
+      <sc-for list="{{ recent }}" as="r" hint-placeholder-count="6">
+      <a href="{{ r.href }}" style="display:grid; grid-template-columns:80px minmax(0,1fr) auto; gap:8px 24px; align-items:baseline; padding:20px 0; border-bottom:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+        <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:var(--mut)">{{ r.date }}</span>
+        <span style="min-width:0"><span style="display:block; font-size:18px; letter-spacing:-0.02em; line-height:1.25">{{ r.name }}</span><span style="display:block; margin:4px 0 0; font-size:14.5px; line-height:1.5; color:var(--sec)">{{ r.note }}</span></span>
+        <span style="font-size:13px; color:var(--mut); white-space:nowrap">{{ r.cat }}</span>
+      </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ filtering }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Results" style="padding:32px 40px 0; min-height:44vh">
+  <div style="max-width:1280px; margin:0 auto">
+    <div style="display:flex; gap:16px; align-items:baseline; justify-content:space-between">
+      <span style="font-size:14px; color:var(--sec)">{{ resultLabel }}</span>
+      <button type="button" onClick="{{ clear }}" style="padding:0; background:none; border:0; border-bottom:1px solid var(--line); font:inherit; font-size:14px; color:#1A1917; cursor:pointer" style-hover="color:var(--a); border-color:var(--a)">Clear</button>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap:44px 28px; margin:24px 0 0">
+      <sc-for list="{{ results }}" as="rs" hint-placeholder-count="3">
+      <div style="display:flex; flex-direction:column; min-width:0">
+        <div style="position:relative; aspect-ratio:2 / 1; border-radius:14px; overflow:hidden; background:#ECEAE5">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ rs.slot }}" src="{{ rs.src }}" shape="rounded" radius="14" placeholder="{{ rs.ph }}" hint-size="100%,100%" style="position:absolute; inset:0; width:100%; height:100%"></x-import>
+          {{ rs.mark }}
+        </div>
+        <a href="{{ rs.href }}" style="display:flex; flex-direction:column; gap:10px; padding:20px 0 0; color:#1A1917" style-hover="color:var(--a)">
+          <span style="font-size:20px; letter-spacing:-0.022em; line-height:1.2">{{ rs.name }}</span>
+          <span style="font-size:15px; line-height:1.55; color:var(--sec); text-wrap:pretty">{{ rs.blurb }}</span>
+        </a>
+      </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+    <p style="margin:0; padding:24px 0; border-top:1px solid #1A1917; font-size:16px; line-height:1.55; color:var(--sec)">No playbook matches that search. Try a process name, such as covenant, capital call or NAV.</p>
+    </sc-if>
+  </div>
+</section>
+</sc-if>
+
+<section data-screen-label="Closing" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+  <div style="position:relative; overflow:hidden; max-width:1280px; margin:0 auto; border:1px solid var(--line); border-radius:20px; background:#E8E2D2 url('assets/valley-pastel.png') center 60% / cover; padding:clamp(48px,6vw,88px) clamp(32px,5vw,72px); display:flex; gap:48px; flex-wrap:wrap; align-items:flex-end; justify-content:space-between">
+    <div style="position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(248,246,240,0.7) 0%, rgba(248,246,240,0.5) 60%, rgba(248,246,240,0.35) 100%)"></div>
+    <div style="position:relative; flex:3 1 480px; min-width:0">
+      <div style="font-size:13px; letter-spacing:-0.005em; color:#2C2B27">Start</div>
+      <h2 style="margin:22px 0 0; max-width:760px; font-size:clamp(32px, 3.6vw, 52px); font-weight:400; letter-spacing:-0.035em; line-height:1.04; text-wrap:balance">Pick the nearest playbook.<br />A two-week audit matches your process to one of the nine.</h2>
+      <p style="margin:20px 0 0; max-width:560px; font-size:16.5px; line-height:1.6; color:#2C2B27; text-wrap:pretty">We price the build against the baseline the audit measures. If none of the nine fits, you leave with a ranked use-case ledger and no obligation to continue.</p>
+    </div>
+    <div style="position:relative; display:flex; flex-direction:column; gap:12px; align-items:flex-start">
+      <a href="AI Engineering.dc.html#engagement" style="display:inline-flex; align-items:center; height:46px; padding:0 24px; background:#1A1917; color:#FFFFFF; border-radius:6px; font-size:15px; font-weight:500; letter-spacing:-0.01em" style-hover="background:var(--a); color:#FFFFFF">Book a two-week audit</a>
+    </div>
+  </div>
+</section>
+
+<footer data-screen-label="Footer" style="padding:70px 40px 40px">
+  <div style="max-width:1280px; margin:0 auto">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr))">
+      <div style="padding:0 28px 0 0; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Services</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="AI Engineering.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">AI Engineering</a>
+          <a href="AI Transformation.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">AI Transformation</a>
+          <a href="3264 Home.dc.html#capabilities" style="color:var(--sec)" style-hover="color:var(--a)">Deployment &amp; Run</a>
+          <a href="3264 Home.dc.html#capabilities" style="color:var(--sec)" style-hover="color:var(--a)">Evaluation suites</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Industries</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Private Credit.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Private Credit</a>
+          <a href="Private Equity.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Private Equity</a>
+          <a href="3264 Home.dc.html#industries" style="color:var(--sec)" style-hover="color:var(--a)">Fund Management</a>
+          <a href="3264 Home.dc.html#industries" style="color:var(--sec)" style-hover="color:var(--a)">Asset Management</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Company</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Company.dc.html#who" style="color:var(--sec)" style-hover="color:var(--a)">Who we are</a>
+          <a href="Company.dc.html#how" style="color:var(--sec)" style-hover="color:var(--a)">How we work</a>
+          <a href="3264 Home.dc.html#work" style="color:var(--sec)" style-hover="color:var(--a)">Case studies</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Resources</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="#top" style="color:var(--sec)" style-hover="color:var(--a)">Playbooks</a>
+          <a href="3264 Home.dc.html#playbooks" style="color:var(--sec)" style-hover="color:var(--a)">Field notes</a>
+          <a href="Company.dc.html#how" style="color:var(--sec)" style-hover="color:var(--a)">Security</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Connect</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="AI Engineering.dc.html#engagement" style="color:var(--sec)" style-hover="color:var(--a)">Book a call</a>
+          <a href="mailto:hello@3264.ai" style="color:var(--sec)" style-hover="color:var(--a)">hello@3264.ai</a>
+          <a href="AI Engineering.dc.html#engagement" style="color:var(--sec)" style-hover="color:var(--a)">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin:64px 0 0; padding-top:22px; border-top:1px solid var(--line2); font-size:13px; letter-spacing:-0.005em; color:var(--mut)">
+      <div style="display:flex; align-items:center; gap:11px; min-width:0">
+        <span style="font-size:15px; font-weight:500; letter-spacing:-0.03em; color:#1A1917">3264<span>.ai</span></span>
+        <span>&copy; 2026 Bearing Deployment Company Inc. All rights reserved.</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px">
+        <span style="display:flex; align-items:center; gap:7px"><span style="width:6px; height:6px; border-radius:50%; background:var(--a)"></span>All systems operational</span>
+      </div>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+class Component extends DCLogic {
+  state = { cat: "All", q: "", sub: false };
+  heroVid = React.createRef(); heroCv = React.createRef(); carWrap = React.createRef(); carTrack = React.createRef();
+
+  still() { return !(this.props.motion ?? true) || !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches); }
+  play(v) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+
+  fadeVid(v, to, ms) {
+    if (!v) return;
+    cancelAnimationFrame(this._fr);
+    const from = parseFloat(v.style.opacity) || 0, t0 = performance.now();
+    const step = (now) => { const p = Math.min(1, (now - t0) / ms); v.style.opacity = String(from + (to - from) * p); if (p < 1) this._fr = requestAnimationFrame(step); };
+    this._fr = requestAnimationFrame(step);
+  }
+  initHero() {
+    const A = this.heroVid.current;
+    if (!A) return;
+    A.muted = true; A.playsInline = true; A.loop = false;
+    this._hv = () => {
+      if (this.still()) { A.pause(); A.style.opacity = "1"; return; }
+      if (this._started) return;
+      this._started = true;
+      this.play(A);
+      this.fadeVid(A, 1, 500);
+    };
+    A.addEventListener("canplay", this._hv);
+    if (A.readyState >= 3) this._hv();
+  }
+
+  // Ping-pong loop. The first forward pass plays natively. Meanwhile a worker fetches the same file,
+  // decodes every frame with WebCodecs (the file has a single keyframe, so seeking backward is not
+  // viable) and stores it as a JPEG. Once all frames are in, the sequence plays backward and forward
+  // from memory, easing into each turn. Without WebCodecs the video rests on its last frame.
+  rate(edge) { const E = 0.7, k = Math.max(0, Math.min(1, edge / E)); return 0.3 + 0.7 * k * k * (3 - 2 * k); }
+  capFail() {
+    this._capFailed = true; this._seq = null;
+    if (this._wk) { this._wk.terminate(); this._wk = null; }
+  }
+  startDecode(A) {
+    this._wkOn = true;
+    const lowMem = navigator.deviceMemory && navigator.deviceMemory < 2;
+    if (lowMem || typeof Worker === "undefined" || typeof OffscreenCanvas === "undefined") { this._capFailed = true; return; }
+    try { this._wkUrl = URL.createObjectURL(new Blob(["\nfunction demux(buf) {\n  const dv = new DataView(buf), u8 = new Uint8Array(buf);\n  const typ = (o) => String.fromCharCode(u8[o], u8[o + 1], u8[o + 2], u8[o + 3]);\n  const kids = (s, e) => { const r = []; let o = s; while (o + 8 <= e) { let z = dv.getUint32(o), h = 8; if (z === 1) { z = Number(dv.getBigUint64(o + 8)); h = 16; } else if (z === 0) z = e - o; if (z < 8) break; r.push({ t: typ(o + 4), d: o + h, e: o + z }); o += z; } return r; };\n  const find = (l, t) => l.find((b) => b.t === t);\n  const moov = find(kids(0, buf.byteLength), \"moov\");\n  for (const trak of kids(moov.d, moov.e).filter((b) => b.t === \"trak\")) {\n    const mdia = find(kids(trak.d, trak.e), \"mdia\"); if (!mdia) continue;\n    const mk = kids(mdia.d, mdia.e), hdlr = find(mk, \"hdlr\");\n    if (!hdlr || typ(hdlr.d + 8) !== \"vide\") continue;\n    const mdhd = find(mk, \"mdhd\"), ts = u8[mdhd.d] ? dv.getUint32(mdhd.d + 20) : dv.getUint32(mdhd.d + 12);\n    const minf = find(mk, \"minf\"), stbl = find(kids(minf.d, minf.e), \"stbl\"), sk = kids(stbl.d, stbl.e);\n    const stsd = find(sk, \"stsd\"), en = kids(stsd.d + 8, stsd.e)[0];\n    const w = dv.getUint16(en.d + 24), h = dv.getUint16(en.d + 26);\n    const avcC = find(kids(en.d + 78, en.e), \"avcC\"); if (!avcC) throw new Error(\"no avcC\");\n    const desc = u8.slice(avcC.d, avcC.e), hx = (n) => n.toString(16).padStart(2, \"0\");\n    const codec = en.t + \".\" + hx(desc[1]) + hx(desc[2]) + hx(desc[3]);\n    const tb = (t) => { const b = find(sk, t); return b && { v: u8[b.d], n: dv.getUint32(b.d + 4), o: b.d + 8 }; };\n    const stts = tb(\"stts\"), ctts = tb(\"ctts\"), stsc = tb(\"stsc\"), stss = tb(\"stss\"), stsz = find(sk, \"stsz\"), stco = find(sk, \"stco\"), co64 = find(sk, \"co64\");\n    const fixed = dv.getUint32(stsz.d + 4), count = dv.getUint32(stsz.d + 8), size = (i) => fixed || dv.getUint32(stsz.d + 12 + i * 4);\n    const nCh = dv.getUint32((stco || co64).d + 4), chOff = (c) => stco ? dv.getUint32(stco.d + 8 + c * 4) : Number(dv.getBigUint64(co64.d + 8 + c * 8));\n    const S = []; let si = 0;\n    for (let e = 0; e < stsc.n; e++) {\n      const first = dv.getUint32(stsc.o + e * 12) - 1, per = dv.getUint32(stsc.o + e * 12 + 4);\n      const last = e + 1 < stsc.n ? dv.getUint32(stsc.o + (e + 1) * 12) - 1 : nCh;\n      for (let c = first; c < last && si < count; c++) { let off = chOff(c); for (let k = 0; k < per && si < count; k++, si++) { const z = size(si); S.push({ off, z, dts: 0, dur: 0, cto: 0 }); off += z; } }\n    }\n    let t = 0, i = 0;\n    for (let e = 0; e < stts.n; e++) { const c = dv.getUint32(stts.o + e * 8), d = dv.getUint32(stts.o + e * 8 + 4); for (let k = 0; k < c && i < S.length; k++, i++) { S[i].dts = t; S[i].dur = d; t += d; } }\n    i = 0;\n    if (ctts) for (let e = 0; e < ctts.n; e++) { const c = dv.getUint32(ctts.o + e * 8), o = ctts.v ? dv.getInt32(ctts.o + e * 8 + 4) : dv.getUint32(ctts.o + e * 8 + 4); for (let k = 0; k < c && i < S.length; k++, i++) S[i].cto = o; }\n    const keys = new Set(); if (stss) for (let e = 0; e < stss.n; e++) keys.add(dv.getUint32(stss.o + e * 4) - 1);\n    S.forEach((x, j) => { x.pts = x.dts + x.cto; x.key = stss ? keys.has(j) : true; });\n    return { codec, desc, w, h, ts, S, u8 };\n  }\n  throw new Error(\"no video track\");\n}\nonmessage = async (e) => {\n  try {\n    if (typeof VideoDecoder === \"undefined\" || typeof OffscreenCanvas === \"undefined\") throw new Error(\"no webcodecs\");\n    const res = await fetch(e.data.url); if (!res.ok) throw new Error(\"fetch \" + res.status);\n    const m = demux(await res.arrayBuffer());\n    const cfg = { codec: m.codec, description: m.desc, codedWidth: m.w, codedHeight: m.h };\n    if (!(await VideoDecoder.isConfigSupported(cfg)).supported) throw new Error(\"unsupported \" + m.codec);\n    const W = Math.min(m.w, e.data.maxW), H = Math.round(m.h * W / m.w), cv = new OffscreenCanvas(W, H), x = cv.getContext(\"2d\");\n    const q = []; let fail = null, fed = 0, flushing = false, flushed = false;\n    const dec = new VideoDecoder({ output: (f) => q.push(f), error: (err) => { fail = err; } });\n    dec.configure(cfg);\n    const us = (v) => Math.round(v * 1e6 / m.ts);\n    for (;;) {\n      if (fail) throw fail;\n      while (fed < m.S.length && q.length + dec.decodeQueueSize < 4) { const s = m.S[fed++]; dec.decode(new EncodedVideoChunk({ type: s.key ? \"key\" : \"delta\", timestamp: us(s.pts), duration: us(s.dur), data: m.u8.subarray(s.off, s.off + s.z) })); }\n      if (fed === m.S.length && !flushing) { flushing = true; dec.flush().then(() => { flushed = true; }, (err) => { fail = err; }); }\n      if (!q.length) { if (flushed) break; await new Promise((r) => setTimeout(r, 2)); continue; }\n      const f = q.shift(), t = f.timestamp / 1e6;\n      x.drawImage(f, 0, 0, W, H); f.close();\n      postMessage({ t, blob: await cv.convertToBlob({ type: \"image/jpeg\", quality: 0.88 }) });\n    }\n    dec.close();\n    postMessage({ done: true, n: m.S.length });\n  } catch (err) { postMessage({ err: String((err && err.message) || err) }); }\n};"], { type: "text/javascript" })); this._wk = new Worker(this._wkUrl); } catch (e) { this._capFailed = true; return; }
+    this._seq = []; this._seqReady = false;
+    this._wk.onmessage = (e) => {
+      const d = e.data;
+      if (d.err) { this.capFail(); return; }
+      if (!this._seq) return;
+      if (d.blob) this._seq.push({ t: d.t, blob: d.blob });
+      if (d.done) { this._seqReady = true; this._wk.terminate(); this._wk = null; }
+    };
+    this._wk.postMessage({ url: A.currentSrc || A.src, maxW: window.innerWidth < 900 ? 960 : 1440 });
+  }
+  beginPP(ms) {
+    if (!this._seqReady) return;
+    const S = this._seq.slice().sort((a, b) => a.t - b.t);
+    if (S.length < 24) { this.capFail(); return; }
+    this._seq = S; this._bm = new Map(); this._bmp = new Set();
+    this._pp = { p: S[S.length - 1].t, d: -1, shown: false, drawn: -1 };
+    this._pl = ms;
+  }
+  frameAt(p) {
+    const S = this._seq; let lo = 0, hi = S.length - 1;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (S[m].t < p) lo = m + 1; else hi = m; }
+    return lo > 0 && p - S[lo - 1].t < S[lo].t - p ? lo - 1 : lo;
+  }
+  stepPP(ms) {
+    const P = this._pp, S = this._seq, cv = this.heroCv.current, A = this.heroVid.current;
+    if (!cv) return;
+    const t0 = S[0].t, T = S[S.length - 1].t, dt = Math.min(0.05, Math.max(0, (ms - this._pl) / 1000));
+    this._pl = ms;
+    if (P.shown) {
+      P.p += P.d * this.rate(Math.min(P.p - t0, T - P.p)) * dt;
+      if (P.p >= T) { P.p = T; P.d = -1; } else if (P.p <= t0) { P.p = t0; P.d = 1; }
+    }
+    const i = this.frameAt(P.p), K = 4;
+    for (let j = Math.max(0, i - K); j <= Math.min(S.length - 1, i + K); j++) {
+      if (this._bm.has(j) || this._bmp.has(j)) continue;
+      this._bmp.add(j);
+      createImageBitmap(S[j].blob).then((b) => { this._bmp.delete(j); if (this._dead) b.close(); else this._bm.set(j, b); }, () => this._bmp.delete(j));
+    }
+    this._bm.forEach((b, j) => { if (Math.abs(j - i) > K + 2) { b.close(); this._bm.delete(j); } });
+    const b = this._bm.get(i);
+    if (b && P.drawn !== i) {
+      if (cv.width !== b.width || cv.height !== b.height) { cv.width = b.width; cv.height = b.height; this._cx = null; }
+      const cx = this._cx || (this._cx = cv.getContext("2d", { alpha: false }));
+      cx.drawImage(b, 0, 0); P.drawn = i;
+      if (!P.shown) { P.shown = true; cv.style.opacity = "1"; if (A) { A.style.opacity = "0"; A.pause(); } }
+    }
+  }
+  stepHero(ms) {
+    const A = this.heroVid.current;
+    if (!A || !this._hv) return;
+    const still = this.still();
+    if (!this._started) { if (!still && A.readyState >= 3) this._hv(); return; }
+    if (this._pp) { if (still) this._pl = ms; else this.stepPP(ms); return; }
+    if (still) { if (!A.paused) { A.pause(); this._held = true; } return; }
+    if (this._held) { this._held = false; if (!A.ended) this.play(A); }
+    const D = A.duration;
+    if (!this._capFailed && D && isFinite(D)) {
+      const r = Math.round(this.rate(Math.min(A.currentTime, D - A.currentTime)) * 20) / 20;
+      if (A.playbackRate !== r) A.playbackRate = r;
+    }
+    // Start the decode once the file has fully buffered, so the worker's fetch can come from cache.
+    if (!this._wkOn && !this._capFailed) {
+      const b = A.buffered, full = D && b.length && b.end(b.length - 1) >= D - 0.25;
+      this._t0 = this._t0 || ms;
+      if (full || ms - this._t0 > 8000) this.startDecode(A);
+    }
+    if (A.ended && !this._capFailed) this.beginPP(ms);
+  }
+
+  ICONS = {
+    "Covenant Watch": '<path d="M19 41H11a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h13l7 7v10"/><path d="M24 5v7h7"/><path d="M14 18h10M14 24h6"/><path d="M22 33c2.8-4.4 6.7-6.5 11-6.5s8.2 2.1 11 6.5c-2.8 4.4-6.7 6.5-11 6.5s-8.2-2.1-11-6.5Z"/><circle cx="33" cy="33" r="3"/>',
+    "Capital Call Flow": '<circle cx="7" cy="12" r="2.5"/><circle cx="7" cy="24" r="2.5"/><circle cx="7" cy="36" r="2.5"/><path d="M9.5 12c5 0 5 12 10 12M9.5 36c5 0 5-12 10-12M9.5 24H25"/><path d="m21.5 20.5 3.5 3.5-3.5 3.5"/><ellipse cx="37" cy="14" rx="7" ry="3"/><path d="M30 14v20c0 1.66 3.13 3 7 3s7-1.34 7-3V14"/><path d="M30 20.7c0 1.66 3.13 3 7 3s7-1.34 7-3M30 27.3c0 1.66 3.13 3 7 3s7-1.34 7-3"/>',
+    "Loan Ops Ledger": '<rect x="10" y="5" width="28" height="38" rx="2"/><path d="M16 5v38"/><path d="M29 5v9l2.5-2 2.5 2V5"/><path d="M21 22h5M29.5 22H33M21 28h5M29.5 28H33M21 34h5M29.5 34H33"/>',
+    "NAV Pack Review": '<path d="M15 9.5V8a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v26a2 2 0 0 1-2 2h-1.5"/><rect x="9" y="12" width="24" height="30" rx="2"/><path d="m15 27.5 4.5 4.5 8-9"/>',
+    "Investor Reporting": '<path d="M13 22V9a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2v13"/><path d="M19 13h10M19 18h6"/><path d="M6 20.5V39a2 2 0 0 0 2 2h32a2 2 0 0 0 2-2V20.5"/><path d="m6 20.5 18 11.5 18-11.5M6 20.5l7-4.5M42 20.5l-7-4.5"/>',
+    "Side-Letter Register": '<path d="M17 8h-4a3 3 0 0 0-3 3v29a3 3 0 0 0 3 3h22a3 3 0 0 0 3-3V11a3 3 0 0 0-3-3h-4"/><rect x="17" y="5" width="14" height="6" rx="2"/><path d="M16.5 21h.01M16.5 28h.01M16.5 35h.01"/><path d="M21 21h11M21 28h11M21 35h7"/>',
+    "Mandate Guardrails": '<path d="M24 5 39 10.5V22c0 9.5-6.4 16.8-15 21-8.6-4.2-15-11.5-15-21V10.5Z"/><path d="m17.5 23.5 4.5 4.5 8.5-8.5"/>',
+    "Client Reporting Flow": '<path d="M22 10.5A15.5 15.5 0 1 0 37.5 26H22Z"/><path d="M26 6.5A15.5 15.5 0 0 1 41.5 22H26Z"/>',
+    "Research Intake": '<path d="M24 6v19"/><path d="m17.5 18.5 6.5 6.5 6.5-6.5"/><path d="M16 15h-3.2a2 2 0 0 0-1.86 1.26L6 28M32 15h3.2a2 2 0 0 1 1.86 1.26L42 28"/><path d="M6 28h10l3 4h10l3-4h10v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2Z"/>'
+  };
+
+  // Centred playbook icon on a glass badge; h is the badge height as a share of the tile.
+  mark(n, h) {
+    return React.createElement("div", { "aria-hidden": "true", style: { position: "absolute", left: "50%", top: "50%", height: h, aspectRatio: "1 / 1", transform: "translate(-50%, -50%)", boxSizing: "border-box", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "28%", background: "rgba(250,249,246,0.62)", backdropFilter: "blur(18px) saturate(1.3)", WebkitBackdropFilter: "blur(18px) saturate(1.3)", border: "1px solid rgba(255,255,255,0.72)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), 0 18px 40px -16px rgba(20,20,18,0.38)", pointerEvents: "none" } },
+      React.createElement("svg", { viewBox: "0 0 48 48", fill: "none", stroke: "#1A1917", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", style: { display: "block", width: "48%", height: "48%" }, dangerouslySetInnerHTML: { __html: this.ICONS[n] } }));
+  }
+
+  data() {
+    const G = [
+      { id: "private-credit", label: "Private Credit", href: "Private Credit.dc.html", linkLabel: "How we work in Private Credit" },
+      { id: "fund-management", label: "Fund Management", href: "3264 Home.dc.html#industries", linkLabel: "How we work in Fund Management" },
+      { id: "asset-management", label: "Asset Management", href: "3264 Home.dc.html#industries", linkLabel: "How we work in Asset Management" }
+    ];
+    const P = [
+      ["Covenant Watch", 0, "Borrower reporting packages read and tested against the credit agreement, with breaches flagged before quarter close."],
+      ["Capital Call Flow", 0, "Notices computed from the LPA, sent per investor and reconciled to the cash that actually arrives."],
+      ["Loan Ops Ledger", 0, "Agent notices matched to the loan system every day, with each break explained before month end."],
+      ["NAV Pack Review", 1, "Administrator NAV packs tied out line by line to your own records before the CFO signs."],
+      ["Investor Reporting", 1, "Letters, statements and DDQ answers drafted from the systems of record and checked before they go out."],
+      ["Side-Letter Register", 1, "Obligations read out of LPAs and side letters into a live register, with proof of delivery attached."],
+      ["Mandate Guardrails", 2, "IMA restrictions encoded once, screened before and after every trade, and attested with evidence."],
+      ["Client Reporting Flow", 2, "Performance and holdings reports composed per client and reconciled to the books before release."],
+      ["Research Intake", 2, "Research, filings and transcripts summarised overnight in the house format, every claim cited."]
+    ].map(([name, g, blurb]) => ({ name, blurb, mark: this.mark(name, "34%"), cat: G[g].label, href: name === "Loan Ops Ledger" ? "Loan Ops Ledger.dc.html" : G[g].href, slot: "pb-" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-"), src: "assets/playbooks/" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-") + ".png", ph: name + " image" }));
+    G.forEach((g) => { g.items = P.filter((p) => p.cat === g.label); });
+    const by = (n) => P.find((p) => p.name === n);
+    const recent = [
+      ["Sep 22", "NAV Pack Review", "Tolerance bands now set per asset class"],
+      ["Sep 18", "Covenant Watch", "Equity-cure testing and cure-cap tracking"],
+      ["Sep 12", "Research Intake", "Earnings-call transcripts added as a source"],
+      ["Sep 9", "Loan Ops Ledger", "New break class for PIK toggles"],
+      ["Sep 2", "Side-Letter Register", "MFN elections tracked per investor"],
+      ["Aug 29", "Capital Call Flow", "Side-letter excuse rights applied when each call is computed"]
+    ].map(([date, n, note]) => Object.assign({}, by(n), { date, note }));
+    const slides = ["Covenant Watch", "NAV Pack Review", "Mandate Guardrails", "Capital Call Flow", "Side-Letter Register", "Research Intake"].map((n) => { const p = by(n); const f = "feat-" + p.slot.slice(3); return Object.assign({}, p, { mark: this.mark(n, "30%"), slotF: f, srcF: "assets/playbooks/" + f + ".png", phF: n + " feature image", aria: "Show " + n }); });
+    return { G, P, recent, slides };
+  }
+  pickCat = (e) => { this.setState({ cat: e.currentTarget.getAttribute("data-cat") }); };
+  setQ = (e) => { this.setState({ q: e.target.value }); };
+  clear = () => { this.setState({ cat: "All", q: "" }); };
+  subscribe = (e) => { e.preventDefault(); this.setState({ sub: true }); };
+
+  // Featured carousel: one slide centred, neighbours peeking; advances every 7s, holds on hover.
+  go(i) { const n = (this.D && this.D.slides.length) || 1; this._ci = ((i % n) + n) % n; this._cp = 0; }
+  carHold = () => { this._chold = true; };
+  carFree = () => { this._chold = false; };
+  carPrev = () => { this.go((this._ci || 0) - 1); };
+  carNext = () => { this.go((this._ci || 0) + 1); };
+  carSeg = (e) => { this.go(+e.currentTarget.getAttribute("data-i")); };
+  carPick = (e) => { const i = +e.currentTarget.getAttribute("data-slide"); if (i !== (this._ci || 0)) { e.preventDefault(); this.go(i); } };
+  stepCarousel(ms) {
+    const wrap = this.carWrap.current, track = this.carTrack.current, dt = this._cl == null ? 0 : ms - this._cl;
+    this._cl = ms;
+    if (!wrap || !track) return;
+    if (this._ctrack !== track) { this._ctrack = track; this._cw = null; this._slides = null; }
+    const slides = this._slides || (this._slides = Array.from(track.querySelectorAll("[data-slide]"))), n = slides.length;
+    if (!n) return;
+    if (this._ci == null) this._ci = 0;
+    const W = wrap.clientWidth, sw = Math.min(1200, W - 80);
+    if (this._cw !== W) { this._cw = W; track.style.paddingLeft = ((W - sw) / 2).toFixed(1) + "px"; slides.forEach((el) => { el.style.width = sw + "px"; }); this._cshown = null; }
+    if (!this.still() && !this._chold && document.visibilityState !== "hidden") { this._cp = (this._cp || 0) + dt / 7000; if (this._cp >= 1) this.go(this._ci + 1); }
+    if (this._cshown !== this._ci) {
+      this._cshown = this._ci;
+      track.style.transform = "translateX(" + (-this._ci * (sw + 24)).toFixed(1) + "px)";
+      slides.forEach((el, k) => { el.style.opacity = k === this._ci ? "1" : "0.4"; el.style.cursor = k === this._ci ? "auto" : "pointer"; });
+    }
+    const fills = wrap.parentNode.querySelectorAll("[data-seg-fill]"), p = this.still() ? 1 : (this._cp || 0);
+    fills.forEach((f, k) => { f.style.width = (k < this._ci ? 100 : k === this._ci ? p * 100 : 0).toFixed(2) + "%"; });
+  }
+
+  componentDidMount() {
+    this.initHero();
+    const loop = (ms) => {
+      this.raf = requestAnimationFrame(loop);
+      try { this.stepHero(ms); this.stepCarousel(ms); } catch (e) { if (!this._err) { this._err = 1; console.error(e); } }
+    };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() {
+    this._dead = true;
+    cancelAnimationFrame(this.raf); cancelAnimationFrame(this._fr); clearTimeout(this._rt);
+    const v = this.heroVid.current;
+    if (v && this._hv) v.removeEventListener("canplay", this._hv);
+    if (this._wk) this._wk.terminate();
+    if (this._wkUrl) URL.revokeObjectURL(this._wkUrl);
+    if (this._bm) this._bm.forEach((b) => b.close());
+    this._seq = null;
+  }
+
+  renderVals() {
+    const D = this.D || (this.D = this.data()), cat = this.state.cat, q = this.state.q, qq = q.trim().toLowerCase();
+    const filtering = cat !== "All" || !!qq;
+    const results = D.P.filter((p) => (cat === "All" || p.cat === cat) && (!qq || (p.name + " " + p.blurb + " " + p.cat).toLowerCase().includes(qq)));
+    const cats = ["All"].concat(D.G.map((g) => g.label)).map((name) => { const on = name === cat; return { name, on: String(on), bg: on ? "#1A1917" : "#FFFFFF", fg: on ? "#FFFFFF" : "#1A1917", bd: on ? "#1A1917" : "rgba(20,20,18,0.13)" }; });
+    const n = results.length;
+    return {
+      heroVid: this.heroVid, heroCv: this.heroCv,
+      cats, q, pickCat: this.pickCat, setQ: this.setQ, clear: this.clear,
+      browsing: !filtering, filtering, results, noResults: filtering && n === 0,
+      resultLabel: n + (n === 1 ? " playbook" : " playbooks") + (cat !== "All" ? " in " + cat : "") + (qq ? " matching “" + q.trim() + "”" : ""),
+      groups: D.G, recent: D.recent, slides: D.slides,
+      carWrap: this.carWrap, carTrack: this.carTrack, carHold: this.carHold, carFree: this.carFree, carPrev: this.carPrev, carNext: this.carNext, carSeg: this.carSeg, carPick: this.carPick,
+      sub: this.state.sub, notSub: !this.state.sub, subscribe: this.subscribe
+    };
+  }
+}
+</script>
+</body>
+</html>

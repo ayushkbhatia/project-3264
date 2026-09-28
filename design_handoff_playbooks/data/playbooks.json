@@ -1,0 +1,34 @@
+{
+  "categories": [
+    { "id": "private-credit", "label": "Private Credit", "linkLabel": "How we work in Private Credit", "href": "/industries/private-credit" },
+    { "id": "fund-management", "label": "Fund Management", "linkLabel": "How we work in Fund Management", "href": "/#industries" },
+    { "id": "asset-management", "label": "Asset Management", "linkLabel": "How we work in Asset Management", "href": "/#industries" }
+  ],
+  "playbooks": [
+    { "slug": "covenant-watch", "name": "Covenant Watch", "category": "private-credit", "blurb": "Borrower reporting packages read and tested against the credit agreement, with breaches flagged before quarter close.", "tile": "playbooks/covenant-watch.png", "feature": "playbooks/feat-covenant-watch.png", "icon": "icons/covenant-watch.svg", "live": false },
+    { "slug": "capital-call-flow", "name": "Capital Call Flow", "category": "private-credit", "blurb": "Notices computed from the LPA, sent per investor and reconciled to the cash that actually arrives.", "tile": "playbooks/capital-call-flow.png", "feature": "playbooks/feat-capital-call-flow.png", "icon": "icons/capital-call-flow.svg", "live": false },
+    { "slug": "loan-ops-ledger", "name": "Loan Ops Ledger", "category": "private-credit", "blurb": "Agent notices matched to the loan system every day, with each break explained before month end.", "tile": "playbooks/loan-ops-ledger.png", "feature": null, "icon": "icons/loan-ops-ledger.svg", "live": true },
+    { "slug": "nav-pack-review", "name": "NAV Pack Review", "category": "fund-management", "blurb": "Administrator NAV packs tied out line by line to your own records before the CFO signs.", "tile": "playbooks/nav-pack-review.png", "feature": "playbooks/feat-nav-pack-review.png", "icon": "icons/nav-pack-review.svg", "live": false },
+    { "slug": "investor-reporting", "name": "Investor Reporting", "category": "fund-management", "blurb": "Letters, statements and DDQ answers drafted from the systems of record and checked before they go out.", "tile": "playbooks/investor-reporting.png", "feature": null, "icon": "icons/investor-reporting.svg", "live": false },
+    { "slug": "side-letter-register", "name": "Side-Letter Register", "category": "fund-management", "blurb": "Obligations read out of LPAs and side letters into a live register, with proof of delivery attached.", "tile": "playbooks/side-letter-register.png", "feature": "playbooks/feat-side-letter-register.png", "icon": "icons/side-letter-register.svg", "live": false },
+    { "slug": "mandate-guardrails", "name": "Mandate Guardrails", "category": "asset-management", "blurb": "IMA restrictions encoded once, screened before and after every trade, and attested with evidence.", "tile": "playbooks/mandate-guardrails.png", "feature": "playbooks/feat-mandate-guardrails.png", "icon": "icons/mandate-guardrails.svg", "live": false },
+    { "slug": "client-reporting-flow", "name": "Client Reporting Flow", "category": "asset-management", "blurb": "Performance and holdings reports composed per client and reconciled to the books before release.", "tile": "playbooks/client-reporting-flow.png", "feature": null, "icon": "icons/client-reporting-flow.svg", "live": false },
+    { "slug": "research-intake", "name": "Research Intake", "category": "asset-management", "blurb": "Research, filings and transcripts summarised overnight in the house format, every claim cited.", "tile": "playbooks/research-intake.png", "feature": "playbooks/feat-research-intake.png", "icon": "icons/research-intake.svg", "live": false }
+  ],
+  "featured": ["covenant-watch", "nav-pack-review", "mandate-guardrails", "capital-call-flow", "side-letter-register", "research-intake"],
+  "recentlyUpdated": {
+    "_note": "Placeholder entries. Replace with the real changelog before launch.",
+    "items": [
+      { "date": "2026-09-22", "label": "Sep 22", "slug": "nav-pack-review", "note": "Tolerance bands now set per asset class" },
+      { "date": "2026-09-18", "label": "Sep 18", "slug": "covenant-watch", "note": "Equity-cure testing and cure-cap tracking" },
+      { "date": "2026-09-12", "label": "Sep 12", "slug": "research-intake", "note": "Earnings-call transcripts added as a source" },
+      { "date": "2026-09-09", "label": "Sep 9", "slug": "loan-ops-ledger", "note": "New break class for PIK toggles" },
+      { "date": "2026-09-02", "label": "Sep 2", "slug": "side-letter-register", "note": "MFN elections tracked per investor" },
+      { "date": "2026-08-29", "label": "Aug 29", "slug": "capital-call-flow", "note": "Side-letter excuse rights applied when each call is computed" }
+    ]
+  },
+  "routes": {
+    "_note": "Every card links to /playbooks/<slug>. Until a detail page is live, redirect it to the category href.",
+    "pattern": "/playbooks/<slug>"
+  }
+}

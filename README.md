@@ -89,6 +89,39 @@ reference prototype (`reference/AI Engineering.dc.html`) wins over the specs.
   `node qa/ai-responsive.mjs`, `node qa/ai-a11y.mjs` and `node qa/ai-hero-video.mjs` (the hero
   video: playback, veil, trail, reduced motion, pause, reference vs port on the same frame).
 
+## Playbooks page
+
+`/playbooks` is a port of [`design_handoff_playbooks/`](design_handoff_playbooks/README.md); the
+reference prototype (`reference/Playbooks.dc.html`) wins over the specs.
+
+- Copy and data (the nine playbooks, the featured order, the placeholder "Recently updated"
+  entries) live in `src/content/playbooks.ts`; sections in `src/components/playbooks/`, written in
+  Tailwind with the reference's exact values. Where the reference relies on content-box sizing
+  (the subscribe card's flex basis, the closing tile's max-width, the results' min-height) the
+  element carries `box-content`, so the geometry matches it.
+- The page is static apart from four client islands: the hero video, the library's filter state
+  (`Library.tsx`, which swaps the server-rendered browsing sections for results and mirrors the
+  filter in `?category=&q=`), the carousel and the subscribe form.
+- Motion is the handoff's two modules in `src/motion/playbooks/`: `hero-video.ts` (verbatim) and
+  `carousel.ts` (changes marked `PORT FIX`, among them `inert` moved off the slides so a click on
+  a peeking slide activates it). Neither re-renders React per frame.
+- The hero video is a pre-rendered boomerang, self-hosted: `scripts/playbooks-video.sh` builds
+  it (1756 wide for tablets up, 960 for phones, H.264) and the poster. The page images are the
+  handoff PNGs re-encoded to WebP by `scripts/playbooks-assets.mjs`.
+- Every card links to `/playbooks/<slug>`; until a detail page ships, `app/playbooks/[slug]`
+  redirects (307) to the playbook's category page. A detail page added as its own folder takes
+  precedence; then mark the playbook `live`.
+- The subscribe form posts through one seam, `components/playbooks/subscribe.ts`, which is a mock
+  until an email provider is chosen (an address at `.invalid` exercises the error state).
+- Additions the handoff asks for: a header menu below 1000px (the Header's `menu` prop,
+  `components/home/MobileMenu.tsx`), a carousel pause control, keyboard and swipe, 20px gutters
+  below 480px, and the two-column "Recently updated" rows below 520px.
+- QA: serve the reference on :4103 (`.claude/launch.json`), then `node qa/pb-sections.mjs --w
+  1440,1280,1024` (every section, pixel diff), `node qa/pb-states.mjs` (filter, search, empty,
+  subscribe states), `node qa/pb-motion.mjs` (carousel, hero video, reduced motion),
+  `node qa/pb-a11y.mjs` (axe, focus rings, hit areas, menu, overflow) and
+  `node qa/pb-contrast.mjs` (text set over imagery).
+
 ## Environment
 
 Copy `.env.example` to `.env.local` and fill in the values. `.env.local` is

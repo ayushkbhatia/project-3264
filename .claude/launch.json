@@ -53,6 +53,20 @@
       "port": 4102
     },
     {
+      "name": "design reference: playbooks",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4103",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_playbooks/reference"
+      ],
+      "port": 4103
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [

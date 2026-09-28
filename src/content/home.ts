@@ -11,6 +11,8 @@ export const routes = {
   aiEngineering: "/ai-engineering",
   aiTransformation: "/ai-transformation",
   privateCredit: "/industries/private-credit",
+  privateEquity: "/industries/private-equity",
+  playbooks: "/playbooks",
   company: "/company",
   companyWho: "/company#who",
   companyHow: "/company#how",
@@ -27,7 +29,7 @@ export const nav: Link[] = [
   { label: "AI Transformation", href: routes.aiTransformation },
   { label: "Industries", href: "#industries" },
   { label: "Work", href: "#work" },
-  { label: "Playbooks", href: "#playbooks" },
+  { label: "Playbooks", href: routes.playbooks },
   { label: "Company", href: routes.company },
 ];
 
@@ -283,7 +285,7 @@ export const footer = {
     {
       head: "Resources",
       links: [
-        { label: "Playbooks", href: "#playbooks" },
+        { label: "Playbooks", href: routes.playbooks },
         { label: "Field notes", href: "#playbooks" },
         { label: "Security", href: routes.companyHow },
       ],
