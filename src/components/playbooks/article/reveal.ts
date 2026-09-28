@@ -58,9 +58,9 @@ function gate(attr: string, graceMs: number) {
 export const PB_REVEAL_GATE_SCRIPT = `(${gate.toString()})(${JSON.stringify(REVEAL_ATTR)},${REVEAL_GRACE_MS})`;
 
 // Parts are marked in the figure's markup: [data-reveal="ring" | "fade" | "rise" | "dot" | "draw" |
-// "wait"] inside a [data-reveal-root="on"] (the figure; "off" when its page turns the animation
-// off, so nothing is held). !important: the parts' final state is an inline style. Printing
-// shows the final state whatever the reveal is doing.
+// "wait" | "tint" | "word"] inside a [data-reveal-root="on"] (the figure; "off" when its page
+// turns the animation off, so nothing is held). !important: the parts' final state is an inline
+// style. Printing shows the final state whatever the reveal is doing.
 export const PB_REVEAL_GATE_STYLE =
   `html[${REVEAL_ATTR}=pending] [data-reveal-root=on] [data-reveal=ring]{box-shadow:0 0 0 1.5px rgba(26,25,23,0)!important}` +
   `html[${REVEAL_ATTR}=pending] [data-reveal-root=on] [data-reveal=fade]{opacity:0!important}` +
@@ -70,4 +70,8 @@ export const PB_REVEAL_GATE_STYLE =
   // Investor Reporting: an underline drawn under a figure, and a status dot waiting in grey
   `html[${REVEAL_ATTR}=pending] [data-reveal-root=on] [data-reveal=draw]{background-size:0% 1.5px!important}` +
   `html[${REVEAL_ATTR}=pending] [data-reveal-root=on] [data-reveal=wait]{background:#D9D6CF!important}` +
-  `@media print{[data-reveal-root] [data-reveal]{opacity:1!important;transform:none!important}[data-reveal-root] [data-reveal=ring]{box-shadow:0 0 0 1.5px #1A1917!important}[data-reveal-root] [data-reveal=dot],[data-reveal-root] [data-reveal=wait]{background:#157F52!important}[data-reveal-root] [data-reveal=draw]{background-size:100% 1.5px!important}}`;
+  // Mandate Guardrails, with those two: a result bar waiting untinted, its status word faint,
+  // until it turns green
+  `html[${REVEAL_ATTR}=pending] [data-reveal-root=on] [data-reveal=tint]{background:#F1EEE8!important}` +
+  `html[${REVEAL_ATTR}=pending] [data-reveal-root=on] [data-reveal=word]{color:#8A887F!important}` +
+  `@media print{[data-reveal-root] [data-reveal]{opacity:1!important;transform:none!important}[data-reveal-root] [data-reveal=ring]{box-shadow:0 0 0 1.5px #1A1917!important}[data-reveal-root] [data-reveal=dot],[data-reveal-root] [data-reveal=wait]{background:#157F52!important}[data-reveal-root] [data-reveal=draw]{background-size:100% 1.5px!important}[data-reveal-root] [data-reveal=tint]{background:#E4F0EA!important}[data-reveal-root] [data-reveal=word]{color:#13784E!important}}`;

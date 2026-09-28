@@ -24,7 +24,8 @@ export type Inline = string | Array<string | Link>;
     Reporting: "The send tool is not exposed to the model"). */
 export type StepCell = string | null | { faint: string };
 
-/** A "Recently updated" row: the note alone, or (Investor Reporting) after its date. */
+/** A "Recently updated" row: the note alone, or (Investor Reporting, Mandate Guardrails) after
+    its date. */
 export type Update = Rich | { date: string; text: string };
 
 export type Block =
@@ -46,13 +47,15 @@ export type Block =
   | { type: "related"; slug: string; label: string; title: string; text: string; cta: string }
   /** §03: who does what at each step, in three lanes. `null` is an empty cell, set faint:
       "—", or `empty` where the page says so in words (Capital Call Flow: "Nothing"). `plain`:
-      no hairline above the table and 24px above it, not 28 (NAV Pack Review). */
+      no hairline above the table and 24px above it, not 28 (NAV Pack Review), or
+      `spaceAbove` (Mandate Guardrails: 36px, under the figure it follows). */
   | {
       type: "stepTable";
       head: [string, string, string, string];
       rows: Array<{ step: string; cells: [StepCell, StepCell, StepCell] }>;
       empty?: string;
       plain?: boolean;
+      spaceAbove?: 36;
     }
   /** A boxed note, e.g. "Never automated": a 1.5px ink border 28px under what precedes it, or
       with `quiet` a hairline one 32px under it, with slightly tighter padding (NAV Pack Review). */
@@ -64,8 +67,14 @@ export type Block =
   | { type: "bullets"; items: Rich[] }
   /** "Kept for every run": a two-column numbered list. */
   | { type: "kept"; items: string[] }
-  /** "What is hard for machines": each difficulty beside what we do about it. */
-  | { type: "hardWe"; labels: [string, string]; items: Array<{ hard: string; we: string }> }
+  /** Small print under a list: 13.5px / 1.6, secondary, 16px under it or `spaceAbove` 12.
+      `greedy`: it wraps greedily, without the site's text-wrap: pretty (Mandate Guardrails' note
+      under "How we know it works"; its retention note under "Kept for every run" is pretty). */
+  | { type: "note"; text: string; spaceAbove?: 12; greedy?: boolean }
+  /** "What is hard for machines": each difficulty beside what we do about it, 16px under what
+      precedes the pairs, or `spaceAbove` 24 where they resume after a figure (Mandate
+      Guardrails). */
+  | { type: "hardWe"; labels: [string, string]; items: Array<{ hard: string; we: string }>; spaceAbove?: 24 }
   /** The dark mid-page band, with the page CTA. `tracked`: the button's -0.005em tracking,
       which Loan Ops Ledger has and Covenant Watch does not. */
   | { type: "midCta"; title: string; text: string; tracked?: boolean }
@@ -83,7 +92,9 @@ export type Block =
       greedyNote?: boolean;
       tight?: boolean;
     }
-  | { type: "terms"; items: Array<{ term: string; def: string }> }
+  /** Glossary rows. `note`: a regional usage note set in italics after the definition (Mandate
+      Guardrails: 'UK/EU "IMA"; US also "investment advisory agreement".'). */
+  | { type: "terms"; items: Array<{ term: string; def: string; note?: string }> }
   | { type: "updates"; items: Update[] }
   | { type: "faq"; items: Array<{ q: string; a: Inline }> };
 

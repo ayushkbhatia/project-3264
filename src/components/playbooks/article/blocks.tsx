@@ -168,10 +168,10 @@ function RelatedCard({ slug, label, title, text, cta }: Extract<Block, { type: "
 
 /** §03's step table: four columns from a 600px column, one stacked column (with lane labels
     on every cell) below it. Exposed as a table, its step names as row headers. */
-function StepTable({ head, rows, empty = "—", plain }: Extract<Block, { type: "stepTable" }>) {
+function StepTable({ head, rows, empty = "—", plain, spaceAbove }: Extract<Block, { type: "stepTable" }>) {
   const cols = "@min-[599.5px]:grid-cols-[minmax(0,0.62fr)_repeat(3,minmax(0,1fr))]";
   return (
-    <div role="table" className={plain ? "mt-6" : "mt-7 border-t border-rule-2"}>
+    <div role="table" className={plain ? (spaceAbove === 36 ? "mt-9" : "mt-6") : "mt-7 border-t border-rule-2"}>
       <div
         role="row"
         className={cx(
@@ -352,9 +352,16 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
         </ul>
       );
 
+    case "note":
+      return (
+        <p className={cx("mb-0 text-[13.5px] leading-[1.6] text-sec", block.spaceAbove === 12 ? "mt-3" : "mt-4", block.greedy && "[text-wrap:wrap]")}>
+          {block.text}
+        </p>
+      );
+
     case "hardWe":
       return (
-        <div className="mt-4 border-t border-ink">
+        <div className={cx("border-t border-ink", block.spaceAbove === 24 ? "mt-6" : "mt-4")}>
           {block.items.map((item) => (
             <div key={item.hard} className="flex flex-wrap gap-x-7 gap-y-2 border-b border-rule-2 py-4">
               {[item.hard, item.we].map((text, i) => (
@@ -416,7 +423,15 @@ export function RenderBlock({ block, ctx }: { block: Block; ctx: BlockContext })
           {block.items.map((item) => (
             <div key={item.term} className="flex flex-wrap gap-x-6 gap-y-[3px] border-b border-rule-2 py-[13px]">
               <dt className="m-0 flex-[0_0_200px] text-[14px] leading-[1.45] font-medium tracking-[-0.01em]">{item.term}</dt>
-              <dd className="m-0 min-w-0 flex-[1_1_280px] text-[14px] leading-[1.6] text-sec">{item.def}</dd>
+              <dd className="m-0 min-w-0 flex-[1_1_280px] text-[14px] leading-[1.6] text-sec">
+                {item.def}
+                {item.note ? (
+                  <>
+                    {" "}
+                    <em className="text-mut">{item.note}</em>
+                  </>
+                ) : null}
+              </dd>
             </div>
           ))}
         </dl>

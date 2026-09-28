@@ -48,6 +48,8 @@ export function readMinutes(article: PlaybookArticle, cta: Link, showBuilt: bool
         return b.items.forEach(rich);
       case "kept":
         return b.items.forEach((it, i) => add(String(i + 1).padStart(2, "0"), it));
+      case "note":
+        return add(b.text);
       case "hardWe":
         return b.items.forEach((it) => add(b.labels[0], it.hard, b.labels[1], it.we));
       case "midCta":
@@ -59,7 +61,7 @@ export function readMinutes(article: PlaybookArticle, cta: Link, showBuilt: bool
         b.items.forEach((it) => add(it.date, it.title, it.text));
         return add(b.note);
       case "terms":
-        return b.items.forEach((it) => add(it.term, it.def));
+        return b.items.forEach((it) => add(it.term, it.def, it.note));
       case "updates":
         return b.items.forEach((it) => (typeof it === "object" && "date" in it ? add(it.date, it.text) : rich(it)));
       case "faq":
