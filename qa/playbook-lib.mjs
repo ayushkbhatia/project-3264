@@ -1,14 +1,26 @@
-// Shared helpers for the Covenant Watch QA scripts: the reference prototype on :4104 (see
-// .claude/launch.json) against the port. Motion is frozen with reduced motion unless a script
-// asks otherwise (the hero figure then shows its final state on both sides).
+// Shared helpers for the playbook-page QA scripts: a page's reference prototype (served per
+// .claude/launch.json) against the port. Pick the page with --page (default covenant-watch);
+// point at the port with BASE_URL (default http://localhost:3000), or PORT_URL / REF_URL for
+// full URLs. Motion is frozen with reduced motion unless a script asks otherwise (the hero
+// figure then shows its final state on both sides).
 //
 // The image waits here are bounded: under `next dev` the first request for each new image size
 // is optimised on demand, and a wait with no limit can stall a run at a new width.
 
+import { arg } from "./pb-lib.mjs";
+
 export { arg, diffPng, flag, launch, open, outDir, pct } from "./pb-lib.mjs";
 
-export const REF = process.env.REF_URL || "http://127.0.0.1:4104/Covenant%20Watch.dc.html";
-export const PORT = process.env.PORT_URL || "http://localhost:3000/playbooks/covenant-watch";
+const PAGES = {
+  "covenant-watch": { file: "Covenant%20Watch.dc.html", refPort: 4104 },
+  "loan-ops-ledger": { file: "Loan%20Ops%20Ledger.dc.html", refPort: 4105 },
+};
+
+export const PAGE = arg("page", "covenant-watch");
+if (!PAGES[PAGE]) throw new Error(`--page must be one of ${Object.keys(PAGES).join(", ")}`);
+
+export const REF = process.env.REF_URL || `http://127.0.0.1:${PAGES[PAGE].refPort}/${PAGES[PAGE].file}`;
+export const PORT = process.env.PORT_URL || `${process.env.BASE_URL || "http://localhost:3000"}/playbooks/${PAGE}`;
 
 /** [name, port selector, reference selector]. */
 export const SECTIONS = [

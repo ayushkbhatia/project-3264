@@ -1,22 +1,22 @@
 #!/usr/bin/env node
-// Covenant Watch: every section, reference vs port, pixel diff per section and width (reduced
+// A playbook page: every section, reference vs port, pixel diff per section and width (reduced
 // motion on both sides, every lazy image loaded), plus the document heights and the sidebar.
 //
-//   PORT_URL=http://localhost:3000/playbooks/covenant-watch node qa/cw-sections.mjs [--w 1440,1280,1024,768,390] [--only hero,runs]
+//   BASE_URL=http://localhost:3000 node qa/playbook-sections.mjs --page loan-ops-ledger [--w 1440,1280,1024,768,390] [--only hero,runs]
 //
-// Writes ref / port / diff PNGs to qa/__screens__/cw-sections/. Expected differences: below
+// Writes ref / port / diff PNGs to qa/__screens__/playbook-sections/<page>/. Expected differences: below
 // 1000px the port's header has the menu button the reference lacks (the Playbooks page's
 // specs/08), and below 480px the footer's side padding is 20px (the same).
 
 import path from "node:path";
-import { REF, PORT, SECTIONS, arg, diffPng, launch, loadAll, open, outDir, pct, settle, shootEl } from "./cw-lib.mjs";
+import { PAGE, REF, PORT, SECTIONS, arg, diffPng, launch, loadAll, open, outDir, pct, settle, shootEl } from "./playbook-lib.mjs";
 
 const widths = String(arg("w", "1440,1280")).split(",").map(Number);
 
 const hideSticky = (p) =>
   p.addStyleTag({ content: 'header, [data-pb-tocbar], [style*="top: 68px"] { visibility: hidden !important; }' });
 const only = arg("only", null)?.split(",");
-const out = outDir("cw-sections");
+const out = outDir(`playbook-sections/${PAGE}`);
 
 const browser = await launch();
 try {

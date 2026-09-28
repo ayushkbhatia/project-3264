@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-// Covenant Watch accessibility: axe-core (WCAG 2.1 AA + best practice) at 1440 and 390, with
+// A playbook page's accessibility: axe-core (WCAG 2.1 AA + best practice) at 1440 and 390, with
 // the FAQ and the phone contents open too; landmarks and the heading outline; a Tab sweep in
 // which every stop shows a focus ring and none is hidden under the sticky header or the phone
 // bar; hit areas of at least 24px; and no horizontal scroll from 320px up.
 //
-//   PORT_URL=… node qa/cw-a11y.mjs
+//   BASE_URL=… node qa/playbook-a11y.mjs --page loan-ops-ledger
 
 import { createRequire } from "node:module";
 import fs from "node:fs";
-import { PORT, launch, loadAll } from "./cw-lib.mjs";
+import { PORT, launch, loadAll } from "./playbook-lib.mjs";
 
 const AXE = fs.readFileSync(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
 let fails = 0;
