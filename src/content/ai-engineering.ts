@@ -27,7 +27,7 @@ export const nav: HeaderNavItem[] = [
   { label: "AI Transformation", href: routes.aiTransformation },
   { label: "Industries", href: "/#industries" },
   { label: "Work", href: "/#work" },
-  { label: "Playbooks", href: "/#playbooks" },
+  { label: "Playbooks", href: routes.playbooks },
   { label: "Company", href: routes.company },
 ];
 
@@ -66,7 +66,7 @@ export const footerColumns: FooterColumn[] = [
   {
     head: "Resources",
     links: [
-      { label: "Playbooks", href: "/#playbooks" },
+      { label: "Playbooks", href: routes.playbooks },
       { label: "Field notes", href: "/#playbooks" },
       { label: "Security", href: routes.companyHow },
     ],
