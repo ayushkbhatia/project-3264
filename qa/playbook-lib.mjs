@@ -42,6 +42,14 @@ const PAGES = {
   // underline drawing. No ring or fades: its own check in playbook-behaviour.mjs, which also
   // covers the final state for a reader who has not reached the figure within 4s.
   "investor-reporting": { file: "Investor%20Reporting.dc.html", refPort: 4108, reveal: {} },
+  // F1: the five register rows 150ms apart, then Tamsin's row turns red. No ring either (its own
+  // check in playbook-behaviour.mjs); `rise` (the last row) is what the settle check reads.
+  "side-letter-register": {
+    file: "Side-Letter%20Register.dc.html",
+    refPort: 4109,
+    reveal: { rise: { sel: '[data-reveal="fade"]', text: "SL-LSH-9.0" } },
+    settles: true,
+  },
 };
 
 export const PAGE = arg("page", "covenant-watch");
