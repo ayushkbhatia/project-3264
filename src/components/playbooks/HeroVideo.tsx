@@ -25,6 +25,7 @@ export function HeroVideo() {
     if (!video) return;
     const reduce = window.matchMedia(REDUCED_MOTION);
     let attached = false;
+    const sources: HTMLSourceElement[] = [];
     const attach = () => {
       if (attached || reduce.matches) return;
       attached = true;
@@ -34,6 +35,7 @@ export function HeroVideo() {
         source.type = "video/mp4";
         if (media) source.media = media;
         video.appendChild(source);
+        sources.push(source);
       }
       video.load();
     };
@@ -45,6 +47,9 @@ export function HeroVideo() {
     return () => {
       unmount();
       reduce.removeEventListener("change", attach);
+      // The sources are ours, not React's: take them out, or a remount (Strict Mode's in
+      // development) would append a second pair to the same element.
+      sources.forEach((s) => s.remove());
     };
   }, []);
 
