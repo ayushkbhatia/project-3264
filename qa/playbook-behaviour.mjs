@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Covenant Watch behaviour (README, "Interactions & behaviour"), port against the reference:
+// A playbook page's behaviour (its handoff README, "Interactions & behaviour"), port against
+// the reference:
 //   1. scroll-spy: active entry, active 05 subsection, rail height and progress bar at every
 //      400px of scroll, at 1440 (sidebar) and 390 (the phone bar's label)
 //   2. anchors: every contents link lands its target 120px below the viewport top
@@ -7,11 +8,15 @@
 //   4. copy link: clipboard, "Link copied" for 1.8s
 //   5. phone bar: opens, closes on an entry, on Escape (focus returns) and on an outside click
 //   6. evidence line: hovering a row highlights its segment and inks its label
-//   7. hero reveal (motion on): held from the first frame, then ring / values / card in turn
+//   7. hero reveal (motion on): held from the first frame, then its parts in turn; on Loan Ops
+//      Ledger also the status dot's red-to-green, and the final state when the reader has not
+//      reached the figure within 4s
+//   8. Loan Ops Ledger only: the hero notice's "Show full notice" toggle below a 500px column,
+//      and F5's row hover
 //
-//   PORT_URL=… node qa/cw-behaviour.mjs
+//   BASE_URL=… node qa/playbook-behaviour.mjs --page loan-ops-ledger [--only spy,reveal]
 
-import { REF, PORT, launch, open, settle } from "./cw-lib.mjs";
+import { PAGE, REF, PORT, launch, open, settle } from "./playbook-lib.mjs";
 
 const ok = (b) => (b ? "ok  " : "FAIL");
 let fails = 0;
@@ -218,12 +223,14 @@ try {
         const ring = document.querySelector('[data-reveal="ring"]');
         const fade = document.querySelector('[data-reveal="fade"]');
         const rise = document.querySelector('[data-reveal="rise"]');
+        const dot = document.querySelector('[data-reveal="dot"]');
         if (ring) {
           window.__samples.push({
             t: Math.round(performance.now() - t0),
             ring: getComputedStyle(ring).boxShadow.includes("rgb(26, 25, 23)") && !getComputedStyle(ring).boxShadow.includes("rgba(26, 25, 23, 0)"),
             fade: +getComputedStyle(fade).opacity,
             rise: +getComputedStyle(rise).opacity,
+            dot: dot ? getComputedStyle(dot).backgroundColor : null,
             gate: document.documentElement.getAttribute("data-pb-reveal"),
           });
         }
@@ -246,7 +253,76 @@ try {
     check(!!(firstRing && firstFade && firstRise) && firstRing.t < firstFade.t && firstFade.t < firstRise.t, `reveal (${label}): ring ${firstRing?.t}ms, values ${firstFade?.t}ms, card ${firstRise?.t}ms`);
     const last = s[s.length - 1];
     check(last.ring && last.fade === 1 && last.rise === 1, `reveal (${label}): ends in the final state`);
+    if (first?.dot) {
+      const green = s.find((x) => x.dot === "rgb(21, 127, 82)");
+      check(first.dot === "rgb(196, 52, 30)" && !!green && !!firstRise && green.t > firstRise.t, `reveal (${label}): status dot red, then green at ${green?.t}ms`);
+    }
     await ctx.close();
+  }
+
+  // Loan Ops Ledger: a reader who has not reached the hero within 4s gets its final state.
+  if (want("reveal") && PAGE === "loan-ops-ledger") {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 800 }, reducedMotion: "no-preference" });
+    const p = await ctx.newPage();
+    await p.goto(PORT, { waitUntil: "domcontentloaded" });
+    const read = () =>
+      p.evaluate(() => ({
+        rise: +getComputedStyle(document.querySelector('[data-reveal="rise"]')).opacity,
+        dot: getComputedStyle(document.querySelector('[data-reveal="dot"]')).backgroundColor,
+      }));
+    await p.waitForTimeout(2500);
+    const before = await read();
+    await p.waitForTimeout(3000);
+    const after = await read();
+    check(before.rise === 0 && after.rise === 1 && after.dot === "rgb(21, 127, 82)", `reveal (not reached): held at 2.5s, final state after 4s (${JSON.stringify(after)})`);
+    await ctx.close();
+  }
+
+  // Loan Ops Ledger: the notice toggle below a 500px column, and F5's row hover.
+  if (want("lol") && PAGE === "loan-ops-ledger") {
+    const ref = await open(browser, REF, 390, 844);
+    const port = await open(browser, PORT, 390, 844);
+    await settle(ref.page);
+    const noticeState = (p) =>
+      p.evaluate(() => {
+        const fig = document.querySelector("figure");
+        const btn = [...fig.querySelectorAll("button")].find((b) => /full notice/.test(b.textContent));
+        return { label: btn?.textContent.trim(), fields: [...fig.querySelectorAll("div")].filter((d) => d.textContent === "Borrower" && d.getClientRects().length).length, h: fig.offsetHeight };
+      });
+    const [a0, b0] = await Promise.all([noticeState(ref.page), noticeState(port.page)]);
+    check(a0.label === "Show full notice" && b0.label === "Show full notice" && a0.fields === 0 && b0.fields === 0 && a0.h === b0.h, `notice @390 at rest: collapsed, button "${b0.label}", figure height ref ${a0.h} port ${b0.h}`);
+    for (const p of [ref.page, port.page]) await p.locator("figure").first().getByRole("button", { name: /full notice/ }).click();
+    await Promise.all([ref.page.waitForTimeout(150), port.page.waitForTimeout(150)]);
+    const [a1, b1] = await Promise.all([noticeState(ref.page), noticeState(port.page)]);
+    const expanded = await port.page.locator("figure").first().getByRole("button", { name: /full notice/ }).getAttribute("aria-expanded");
+    check(a1.label === "Hide full notice" && b1.label === "Hide full notice" && a1.fields === 1 && b1.fields === 1 && a1.h === b1.h && expanded === "true", `notice @390 opened: "${b1.label}", aria-expanded ${expanded}, figure height ref ${a1.h} port ${b1.h}`);
+    await ref.ctx.close();
+    await port.ctx.close();
+
+    const r2 = await open(browser, REF, 1440, 900);
+    const p2 = await open(browser, PORT, 1440, 900);
+    const rowBg = (p, i) =>
+      p.evaluate((i) => {
+        const fig = [...document.querySelectorAll("figure")].find((f) => f.textContent.includes("model / code / person"));
+        const rows = [...fig.querySelectorAll("div")].filter((d) => /^\d (Intake|Read|Match|Recompute|Class|Investigate|Book)$/.test(d.firstElementChild?.textContent?.trim() ?? ""));
+        return rows.map((r) => getComputedStyle(r).backgroundColor)[i];
+      }, i);
+    let ok = true;
+    for (const i of [0, 3, 6]) {
+      for (const p of [r2.page, p2.page]) {
+        const fig = p.locator("figure", { hasText: "model / code / person" });
+        await fig.getByText(new RegExp(`^${i + 1} `)).first().hover();
+      }
+      await Promise.all([r2.page.waitForTimeout(250), p2.page.waitForTimeout(250)]);
+      const [a, b] = await Promise.all([rowBg(r2.page, i), rowBg(p2.page, i)]);
+      if (a !== "rgb(241, 238, 232)" || b !== a) {
+        ok = false;
+        console.log(`     F5 row ${i}: ref ${a} port ${b}`);
+      }
+    }
+    check(ok, "F5: hovering a step tints its row #F1EEE8, as in the reference");
+    await r2.ctx.close();
+    await p2.ctx.close();
   }
 } finally {
   await browser.close();

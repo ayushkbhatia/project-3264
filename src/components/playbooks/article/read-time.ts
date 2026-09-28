@@ -24,7 +24,8 @@ export function readMinutes(article: PlaybookArticle, cta: Link, showBuilt: bool
       case "p":
         return add(b.text);
       case "roles":
-        return b.items.forEach((it, i) => add(String(i + 1), it.role, it.text));
+        b.items.forEach((it, i) => add(String(i + 1), it.role, it.text));
+        return add(b.note);
       case "io":
         return b.cards.forEach((c) => add(c.label, ...c.items));
       case "breaks":
@@ -51,7 +52,9 @@ export function readMinutes(article: PlaybookArticle, cta: Link, showBuilt: bool
       case "linkCard":
         return add(b.label, b.title, b.link.label, "→");
       case "rules":
-        return b.items.forEach((it) => add(it.date, it.title, it.text));
+        add(b.status);
+        b.items.forEach((it) => add(it.date, it.title, it.text));
+        return add(b.note);
       case "terms":
         return b.items.forEach((it) => add(it.term, it.def));
       case "updates":

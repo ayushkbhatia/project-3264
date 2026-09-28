@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-// Covenant Watch: the page's visible text, reference vs port, region by region (the copy is
-// set verbatim from the prototype, so any difference is a transcription slip). Whitespace is
-// normalised; the port's server-rendered read time is compared like any other string.
+// A playbook page's visible text, reference vs port, region by region (the copy is set
+// verbatim from the prototype, so any difference is a transcription slip). Whitespace is
+// normalised; screen-reader-only text is left out; the port's server-rendered read time is
+// compared like any other string.
 //
-//   PORT_URL=… node qa/cw-text.mjs [--w 1440,390]
+//   BASE_URL=… node qa/playbook-text.mjs --page loan-ops-ledger [--w 1440,390]
 
-import { REF, PORT, arg, launch, open, settle } from "./cw-lib.mjs";
+import { REF, PORT, arg, launch, open, settle } from "./playbook-lib.mjs";
 
 const widths = String(arg("w", "1440,390")).split(",").map(Number);
 const REGIONS = [
@@ -32,6 +33,7 @@ try {
     const ref = await open(browser, REF, w);
     const port = await open(browser, PORT, w);
     await settle(ref.page);
+    await port.page.addStyleTag({ content: ".sr-only { display: none !important; }" });
     for (const [name, sel] of REGIONS) {
       const get = (p) => p.evaluate((s) => document.querySelector(s)?.innerText ?? "", sel);
       const [a, b] = (await Promise.all([get(ref.page), get(port.page)])).map(norm);

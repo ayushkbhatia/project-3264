@@ -103,7 +103,7 @@ export function PlaybookPage({
   showBuilt?: boolean;
 }) {
   const cta = article.cta[ctaVariant];
-  const ctx: BlockContext = { figures, cta };
+  const ctx: BlockContext = { figures, cta, blockLabels: article.blockLabels };
   return (
     <>
       <Header nav={articleNav} cta={headerCta} homeHref="/" collapseBelow="1000" menu progress />

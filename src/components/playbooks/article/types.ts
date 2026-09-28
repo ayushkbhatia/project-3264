@@ -14,12 +14,14 @@ export type Rich = string | { lead: string; text?: string };
 export type Block =
   /** Body paragraph: 15.5px / 1.7, 16px under what precedes it. */
   | { type: "p"; text: string }
-  /** §01: who does each step today. Numbered rows, role left (210px), what they do right. */
-  | { type: "roles"; items: Array<{ role: string; text: string }> }
+  /** §01: who does each step today. Numbered rows, role left (210px), what they do right,
+      and an optional small note under the list. */
+  | { type: "roles"; items: Array<{ role: string; text: string }>; note?: string }
   /** §01: the Inputs and Outputs cards. */
   | { type: "io"; cards: Array<{ label: string; items: string[] }> }
-  /** §02: numbered failure modes, each an h3 and a paragraph. */
-  | { type: "breaks"; items: Array<{ title: string; text: string }> }
+  /** §02: numbered failure modes, each an h3 and a paragraph, optionally followed by a
+      figure (a slot in the figure map) inside the same row. */
+  | { type: "breaks"; items: Array<{ title: string; text: string; figure?: string }> }
   /** A card linking to a related page, with a painted thumbnail and playbook badges on it. */
   | { type: "platformCard"; icons: string[]; title: string; text: string; link: Link }
   /** §03: who does what at each step, in three lanes. `null` is an empty cell ("—"). */
@@ -39,12 +41,13 @@ export type Block =
   | { type: "kept"; items: string[] }
   /** "What is hard for machines": each difficulty beside what we do about it. */
   | { type: "hardWe"; labels: [string, string]; items: Array<{ hard: string; we: string }> }
-  /** The dark mid-page band, with the page CTA. */
-  | { type: "midCta"; title: string; text: string }
+  /** The dark mid-page band, with the page CTA. `tracked`: the button's -0.005em tracking,
+      which Loan Ops Ledger has and Covenant Watch does not. */
+  | { type: "midCta"; title: string; text: string; tracked?: boolean }
   /** A plain related-page card: small label, title, and an underlined link on the right. */
   | { type: "linkCard"; label: string; title: string; link: Link }
-  /** Dated rules rows. */
-  | { type: "rules"; items: Array<{ date: string; title: string; text: string }> }
+  /** Dated rules rows, optionally under a "Status as of …" line and over a closing note. */
+  | { type: "rules"; items: Array<{ date: string; title: string; text: string }>; status?: string; note?: string }
   | { type: "terms"; items: Array<{ term: string; def: string }> }
   | { type: "updates"; items: Rich[] }
   | { type: "faq"; items: Array<{ q: string; a: string }> };
@@ -95,6 +98,10 @@ export type PlaybookArticle = {
     items: Array<{ slug: string; blurb: string }>;
   };
   closing: { title: string; text: string };
+  /** The mono labels on cards, the callout and the Hard / We pairs are block-level on some
+      pages (Loan Ops Ledger) and inline on others (Covenant Watch), which changes their line
+      box and so the spacing under them. */
+  blockLabels?: boolean;
 };
 
 export type CtaVariant = keyof PlaybookArticle["cta"];

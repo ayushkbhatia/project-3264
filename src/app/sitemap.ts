@@ -10,5 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: new URL("/industries/private-credit", origin).href, changeFrequency: "monthly", priority: 0.8 },
     { url: new URL("/playbooks", origin).href, changeFrequency: "weekly", priority: 0.8 },
     { url: new URL("/playbooks/covenant-watch", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },
+    { url: new URL("/playbooks/loan-ops-ledger", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },
   ];
 }
