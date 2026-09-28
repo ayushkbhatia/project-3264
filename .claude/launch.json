@@ -8,7 +8,8 @@
         "run",
         "dev"
       ],
-      "port": 3000
+      "port": 3000,
+      "autoPort": true
     },
     {
       "name": "design reference",
@@ -67,15 +68,28 @@
       "port": 4103
     },
     {
+      "name": "design reference: covenant watch",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4104",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_covenant_watch"
+      ],
+      "port": 4104
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [
         "next",
-        "start",
-        "-p",
-        "3100"
+        "start"
       ],
-      "port": 3100
+      "port": 3100,
+      "autoPort": true
     }
   ]
 }
