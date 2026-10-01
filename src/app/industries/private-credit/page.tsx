@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/app/shared-metadata";
 import { Footer } from "@/components/home/Footer";
 import { Header } from "@/components/home/Header";
 import { CtaBand } from "@/components/private-credit/primitives";
@@ -21,13 +21,7 @@ import { PrivateCreditMotionRoot } from "@/motion/private-credit/react";
 // ring, the four pinned sequences and the two looping sections. Every section binds its
 // elements to it by name through useBind(); see src/motion/private-credit/react.js.
 
-const title = "3264.ai — Private Credit";
-
-export const metadata: Metadata = {
-  title,
-  description: hero.standfirst,
-  openGraph: { title, description: hero.standfirst, url: "./" },
-};
+export const metadata = pageMetadata({ title: "3264.ai — Private Credit", description: hero.standfirst });
 
 export default function PrivateCreditPage() {
   return (
