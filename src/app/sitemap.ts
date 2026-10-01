@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: new URL("/playbooks/side-letter-register", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },
     { url: new URL("/playbooks/mandate-guardrails", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },
     { url: new URL("/essays", origin).href, changeFrequency: "weekly", priority: 0.8 },
+    { url: new URL("/contact", origin).href, changeFrequency: "yearly", priority: 0.6 },
     ...getEssays().map(({ front }) => ({
       url: new URL(essayHref(front.slug), origin).href,
       lastModified: front.date,

@@ -156,18 +156,24 @@ export function HairlineGrid({
 /**
  * The page's 32-column signature texture. Decorative.
  * - hero: vertical + 68px horizontal rules, fading out downward
+ * - half: the same rules at 16 columns across a half-width panel, fading out more slowly (the
+ *   Contact page's left half, design_handoff_contact)
  * - closing: vertical rules only, fading out upward
  */
-export function GridTexture({ variant }: { variant: "hero" | "closing" }) {
-  const style =
+export function GridTexture({ variant }: { variant: "hero" | "half" | "closing" }) {
+  const fade =
     variant === "hero"
+      ? "linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.35) 46%, transparent 88%)"
+      : "linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.35) 60%, transparent 100%)";
+  const style =
+    variant === "hero" || variant === "half"
       ? {
           opacity: "calc(var(--tex) * 0.34)",
           backgroundImage:
             "linear-gradient(to right, rgba(20,20,18,0.07) 1px, transparent 1px), linear-gradient(to bottom, rgba(20,20,18,0.05) 1px, transparent 1px)",
-          backgroundSize: "calc(100% / 32) 68px",
-          maskImage: "linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.35) 46%, transparent 88%)",
-          WebkitMaskImage: "linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.35) 46%, transparent 88%)",
+          backgroundSize: variant === "hero" ? "calc(100% / 32) 68px" : "calc(100% / 16) 68px",
+          maskImage: fade,
+          WebkitMaskImage: fade,
         }
       : {
           opacity: "calc(var(--tex) * 0.4)",
