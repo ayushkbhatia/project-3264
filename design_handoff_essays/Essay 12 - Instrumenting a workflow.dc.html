@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Instrumenting a workflow before you automate it — 3264.ai</title>
+<meta name="description" content="The best dataset for automating a back-office decision is the record of people making it. Most firms throw that record away. Capture it first, and the automation that follows will be cheaper, better tested and easier to justify." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+html { scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+html, body { margin:0; padding:0; overflow-x:clip; }
+body { --a:#157F52; --bad:#C4341E; --line:rgba(20,20,18,0.13); --line2:rgba(20,20,18,0.075); --mut:#6E6D67; --sec:#55544E; background:#F6F5F2; color:#1A1917; font-family:"Instrument Sans","Helvetica Neue",Helvetica,sans-serif; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { color:inherit; text-decoration:none; }
+a:hover { color:var(--a); }
+::selection { background:var(--a); color:#FFFFFF; }
+</style>
+</helmet>
+
+<header style="position:sticky; top:0; z-index:100; backdrop-filter:blur(14px); background:rgba(246,245,242,0.78); border-bottom:1px solid var(--line2)">
+  <div style="max-width:1280px; margin:0 auto; padding:0 40px; height:68px; display:flex; align-items:center; gap:clamp(20px, 3vw, 48px)">
+    <a href="3264 Home.dc.html" style="font-size:19px; font-weight:500; letter-spacing:-0.03em">3264<span>.ai</span></a>
+    <nav style="display:flex; gap:clamp(14px, 1.9vw, 30px); white-space:nowrap; min-width:0; overflow-x:auto; scrollbar-width:none; -webkit-mask-image:linear-gradient(90deg, #000 calc(100% - 28px), transparent); mask-image:linear-gradient(90deg, #000 calc(100% - 28px), transparent); padding-right:28px; font-size:clamp(13px, 1.5vw, 14px); color:var(--sec); flex:1">
+      <a href="AI Engineering.dc.html">AI Engineering</a>
+      <a href="AI Transformation.dc.html">AI Transformation</a>
+      <a href="3264 Home.dc.html#industries">Industries</a>
+      <a href="3264 Home.dc.html#work">Work</a>
+      <a href="Playbooks.dc.html">Playbooks</a>
+        <a href="Essays.dc.html" style="color:#1A1917">Essays</a>
+      <a href="Company.dc.html">Company</a>
+    </nav>
+    <a href="AI Engineering.dc.html#engagement" style="flex:none; white-space:nowrap; display:flex; align-items:center; gap:10px; height:36px; padding:0 16px; border:1px solid var(--line); border-radius:6px; background:#FFFFFF; font-size:13.5px; letter-spacing:-0.01em" style-hover="border-color:var(--a); color:var(--a)">Book an audit</a>
+  </div>
+  <div ref="{{ progRef }}" aria-hidden="true" style="position:absolute; left:0; right:0; bottom:-1px; height:2px; background:#157F52; transform:scaleX(0); transform-origin:0 50%"></div>
+</header>
+
+<sc-if value="{{ noSide }}" hint-placeholder-val="{{ false }}">
+<div style="position:sticky; top:68px; z-index:90; background:rgba(246,245,242,0.94); backdrop-filter:blur(12px); border-bottom:1px solid #E8E5DF">
+  <div style="position:relative; max-width:760px; margin:0 auto; padding:0 clamp(20px, 4vw, 40px); box-sizing:border-box">
+    <button type="button" onClick="{{ toggleMini }}" aria-expanded="{{ miniA }}" style="width:100%; height:44px; display:flex; align-items:center; gap:14px; padding:0; background:none; border:0; font:inherit; color:#1A1917; cursor:pointer; text-align:left">
+      <span style="flex:none; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67">On this page</span>
+      <span style="flex:1 1 auto; min-width:0; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ curLabel }}</span>
+      <span style="flex:none; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:14px; color:#55544E">{{ miniIcon }}</span>
+    </button>
+    <sc-if value="{{ miniOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute; left:clamp(12px, 3vw, 32px); right:clamp(12px, 3vw, 32px); top:48px; box-sizing:border-box; padding:6px; border:1px solid #E8E5DF; border-radius:12px; background:#FBFAF8; box-shadow:0 24px 48px -20px rgba(20,20,18,0.25); display:grid; gap:2px; max-height:70vh; overflow:auto">
+      <sc-for list="{{ toc }}" as="t" hint-placeholder-count="10">
+      <a href="{{ t.href }}" onClick="{{ closeMini }}" style="display:flex; gap:10px; align-items:baseline; padding:8px 10px; border-radius:8px; background:{{ t.bg }}; color:{{ t.fg }}; font-size:13.5px" style-hover="color:#1A1917"><span style="flex:0 0 18px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; color:#6E6D67">{{ t.num }}</span><span>{{ t.label }}</span></a>
+      </sc-for>
+    </div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
+<div style="max-width:1048px; margin:0 auto; padding:0 clamp(20px, 4vw, 40px); box-sizing:border-box; display:flex; justify-content:center; gap:88px; align-items:flex-start">
+  <sc-if value="{{ sideOn }}" hint-placeholder-val="{{ true }}">
+  <aside style="flex:0 0 200px; position:sticky; top:40px; max-height:calc(100vh - 40px); overflow-y:auto; box-sizing:border-box; padding:60px 0 32px">
+    <a href="Essays.dc.html" style="display:inline-flex; font-size:13.5px; color:#55544E">← All essays</a>
+    <div style="margin:32px 0 0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67">On this page</div>
+    <nav aria-label="On this page" style="position:relative; margin:10px 0 0; padding:0 0 0 12px">
+      <span aria-hidden="true" style="position:absolute; left:0; top:0; bottom:0; width:1.5px; background:#E8E5DF"></span>
+      <span ref="{{ railRef }}" aria-hidden="true" style="position:absolute; left:0; top:0; width:1.5px; height:0; background:#1A1917; transition:height 200ms linear"></span>
+      <sc-for list="{{ toc }}" as="t" hint-placeholder-count="10">
+      <div data-toc="{{ t.id }}" style="padding:1px 0">
+        <a href="{{ t.href }}" style="display:flex; gap:8px; align-items:baseline; padding:6px 10px; border-radius:7px; background:{{ t.bg }}; color:{{ t.fg }}; font-size:13px; letter-spacing:-0.005em; line-height:1.3; transition:background 160ms ease, color 160ms ease" style-hover="color:#1A1917"><span style="flex:0 0 17px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; color:#6E6D67">{{ t.num }}</span><span>{{ t.label }}</span></a>
+        <sc-if value="{{ t.hasSubs }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid; gap:1px; margin:3px 0 6px 35px">
+          <sc-for list="{{ t.subs }}" as="u" hint-placeholder-count="5">
+          <a href="{{ u.href }}" style="display:block; padding:4px 0 4px 10px; border-left:1px solid {{ u.bd }}; font-size:12px; line-height:1.35; color:{{ u.fg }}" style-hover="color:#1A1917">{{ u.label }}</a>
+          </sc-for>
+        </div>
+        </sc-if>
+      </div>
+      </sc-for>
+    </nav>
+    <div style="margin:32px 0 0; padding:18px; border-radius:12px; background:#EEEBE4">
+      <div style="font-size:14.5px; letter-spacing:-0.012em; line-height:1.4">Questions about this essay? Talk to the team.</div>
+      <a href="{{ ctaHref }}" style="margin:12px 0 0; display:flex; align-items:center; justify-content:center; height:36px; padding:0 12px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-size:12.5px; font-weight:500; letter-spacing:-0.005em" style-hover="background:var(--a); color:#FFFFFF">{{ cta }}</a>
+    </div>
+  </aside>
+  </sc-if>
+
+  <main ref="{{ mainRef }}" style="flex:1 1 auto; min-width:0; max-width:680px; padding:60px 0 0">
+
+    <div id="top" data-screen-label="Hero" style="scroll-margin-top:120px">
+      <sc-if value="{{ noSide }}" hint-placeholder-val="{{ false }}"><a href="Essays.dc.html" style="display:inline-flex; margin:0 0 24px; font-size:13.5px; color:#55544E">← All essays</a></sc-if>
+      <div style="font-size:13px; color:#55544E">Essay · <a href="Essays.dc.html" style="color:#1A1917; border-bottom:1px solid rgba(20,20,18,0.25)" style-hover="color:var(--a); border-color:var(--a)">Operations</a></div>
+      <h1 style="margin:14px 0 0; font-size:clamp(34px, 3.8vw, 48px); font-weight:400; letter-spacing:-0.038em; line-height:1.02">Instrumenting a workflow before you automate it</h1>
+      <p style="margin:16px 0 0; font-size:clamp(16.5px, 1.4vw, 18.5px); line-height:1.45; letter-spacing:-0.01em; color:#55544E; text-wrap:pretty">The best dataset for automating a back-office decision is the record of people making it. Most firms throw that record away. Capture it first, and the automation that follows will be cheaper, better tested and easier to justify.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:6px 16px; align-items:center; margin:22px 0 0; padding:12px 0 0; border-top:1px solid #E8E5DF; font-size:12.5px; color:#6E6D67"><span>29 September 2026</span><sc-if value="{{ hasRead }}" hint-placeholder-val="{{ false }}"><span>{{ readLabel }}</span></sc-if><button type="button" onClick="{{ copyLink }}" style="margin:0 0 0 auto; padding:0; background:none; border:0; font:inherit; font-size:12.5px; color:#1A1917; cursor:pointer" style-hover="color:var(--a)">{{ copyLabel }}</button></div>
+      <div style="display:flex; align-items:center; gap:12px; margin:26px 0 0"><span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background:#1A1917; color:#F4F3F0; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; letter-spacing:0.02em">3264</span><span style="display:flex; flex-direction:column"><span style="font-size:14px; line-height:1.3">3264.ai</span><span style="font-size:12.5px; line-height:1.3; color:#6E6D67">Field notes · No. 12</span></span></div>
+      
+      <figure style="margin:32px 0 0"><div aria-hidden="true" style="aspect-ratio:16 / 9; border-radius:16px; border:1px solid rgba(20,20,18,0.06); background:#E2DFD8 url('assets/playbooks/feat-nav-pack-review.png') center / cover"></div></figure>
+    </div>
+
+    <section id="intro" data-screen-label="Introduction" style="padding:40px 0 0"><p style="margin:18px 0 0; font-size:19px; line-height:1.65; color:#1A1917; text-wrap:pretty">Every automation business case contains a baseline, stated or not: this process takes the team so many hours a week and gets so much wrong. Usually that baseline is a guess. The automation is then measured against the guess, and the result is another guess.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Before automating anything, measure it. And while you are measuring, capture the decisions people make, because those decisions are the raw material for almost everything that follows: the tests, the training data if you need it, and the proof that the new system is better than the old one.</p></section>
+
+    <section id="small-decisions-add-up" data-screen-label="Small decisions add up" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Small decisions add up</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">A task that takes under a minute looks too small to matter. At volume, it is not.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Take an illustrative middle-office team that triages inbound messages from agent banks and fund administrators: payment notices, rate-setting notices, consent requests, statements, the occasional request to change bank details. Say 150 messages a day at 45 seconds each. That is nearly two hours a day, or roughly 470 hours a year, before counting the cost of switching in and out of other work every few minutes. None of it shows up in any management report, because nobody measures it.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">The same pattern hides in covenant certificate intake, capital call receipt matching, DDQ routing and NAV pack queries. Each is a small decision repeated thousands of times.</p></section>
+
+    <section id="what-to-instrument" data-screen-label="What to instrument" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">What to instrument</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">For each item that passes through a process, capture five things.</p><ol style="list-style:none; margin:20px 0 0; padding:0; display:grid; gap:12px"><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">01</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Arrival.</strong> When it arrived, from whom, in what format, and for which fund or facility. Timing matters because volume is rarely even. Compliance certificates, for example, typically arrive 45 to 60 days after quarter end<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-1" style="color:#157F52; padding:0 1px">1</a></sup>, so a covenant team's workload peaks on a predictable calendar.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">02</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Handling time.</strong> From first opening to decision, including time spent waiting for someone else.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">03</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">The decision and its reason.</strong> What the person decided, and why, recorded as a reason code and not only as free text.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">04</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Exceptions and rework.</strong> What bounced back, what was corrected later, and by whom.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">05</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Handoffs.</strong> Every time work changes hands, and how long it sat in between.</span></li></ol></section>
+
+    <section id="an-example-reason-codes-for-inbound-messages" data-screen-label="An example: reason codes for inbound messages" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">An example: reason codes for inbound messages</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Reason codes work best when they are few, do not overlap, and are tied to what happens next. For the message triage described above, a starting set might be:</p><figure style="margin:32px 0 0"><div style="border-radius:16px; padding:12px; background:linear-gradient(rgba(251,250,248,0.72), rgba(251,250,248,0.72)), #EEEBE4 url('assets/playbooks/feat-nav-pack-review.png') center / cover; border:1px solid rgba(20,20,18,0.06)"><div style="padding:14px 16px 8px; border-radius:11px; background:rgba(255,255,255,0.93); box-shadow:0 12px 32px -20px rgba(20,20,18,0.3)"><div style="overflow-x:auto"><table style="width:100%; min-width:540px; border-collapse:collapse; text-align:left"><thead><tr><th style="padding:0 14px 8px 0; border-bottom:1px solid #1A1917; font-size:11.5px; font-weight:500; line-height:1.4; color:#55544E; vertical-align:bottom">Code</th><th style="padding:0 14px 8px 0; border-bottom:1px solid #1A1917; font-size:11.5px; font-weight:500; line-height:1.4; color:#55544E; vertical-align:bottom">Meaning</th><th style="padding:0 14px 8px 0; border-bottom:1px solid #1A1917; font-size:11.5px; font-weight:500; line-height:1.4; color:#55544E; vertical-align:bottom">What happens next</th></tr></thead><tbody><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">PAY-INT</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Interest payment notice</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Match to expected interest in the loan system</td></tr><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">PAY-PRIN</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Principal repayment or prepayment notice</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Update the expected balance and check prepayment terms</td></tr><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">RATE-SET</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Rate-setting notice</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Check the base rate and fixing date against the facility terms</td></tr><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">CONSENT</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Consent, waiver or amendment request</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Route to the deal team with the relevant clauses</td></tr><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">STMT</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Statement or report</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">File against the facility, and extract figures where required</td></tr><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">BANK-CHG</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Request to change payment details</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Block, open a case and verify by call-back to a known contact</td></tr><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">OTHER</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">None of the above</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Route to a senior analyst, and review the code set monthly</td></tr></tbody></table></div></div></div></figure><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">BANK-CHG deserves its own code even if it is rare. Business email compromise losses reported to the FBI reached $2.77bn in 2024<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-2" style="color:#157F52; padding:0 1px">2</a></sup>, and a request to change payment details should never be acted on from the message alone. A dedicated code makes these requests measurable, and it makes it easy to show that every one of them was verified through a separate channel.</p></section>
+
+    <section id="decisions-are-labels" data-screen-label="Decisions are labels" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Decisions are labels</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">The most valuable output of instrumentation is a dataset of decisions. Each time an analyst classifies a message, accepts or rejects an explanation for a reconciliation break, or queries a figure on a certificate, they produce a labelled example: an input, the correct output, and a reason.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Most firms discard that example the moment it is made. The decision lives in an email reply, a spreadsheet cell or someone's memory. Capture it in a structured form instead, and three things become possible:</p><ul style="margin:18px 0 0; padding:0 0 0 20px; display:grid; gap:10px; font-size:17px; line-height:1.7; color:#2C2B27"><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">a golden set</strong> for testing any automation against real cases;</li><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">training data</strong>, if fine-tuning a model turns out to make sense;</li><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">a baseline error rate</strong>, measured by how often decisions are later reversed or corrected.</li></ul></section>
+
+    <section id="when-a-small-model-beats-a-big-one" data-screen-label="When a small model beats a big one" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">When a small model beats a big one</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">For a narrow, stable task with plenty of labelled history, such as triaging messages, classifying documents or assigning break classes, a small model fine-tuned on your own decisions can match or beat a general-purpose frontier model at a fraction of the cost and latency. The frontier model is a generalist. Your task follows your conventions, and your labels encode them.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Whether that holds for your task is an empirical question, so test it properly:</p><ol style="list-style:none; margin:20px 0 0; padding:0; display:grid; gap:12px"><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">01</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty">Export the labelled decisions, remove duplicates, and hold back a test set of 10–20% that no model sees during training.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">02</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty">Score a frontier model on the held-out set with a well-written prompt. That score is the bar to beat.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">03</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty">Fine-tune a smaller model on the rest, and score it on the same held-out set, class by class rather than as one average.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">04</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty">In production, show every prediction to a reviewer, feed corrections back as new labels, and retrain on a schedule.</span></li></ol><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">There are costs to weigh. A fine-tuned model ties you to a provider's fine-tuning lifecycle. Small models can degrade quickly on inputs unlike their training data. And no model will be better than the labels it learned from. Sometimes the cheaper path is simply running the frontier model more efficiently. On Anthropic's API, for instance, batch processing for overnight work is 50% off, and cached reads of long, stable instructions cost about a tenth of the normal input price<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-3" style="color:#157F52; padding:0 1px">3</a></sup>.</p><div style="margin:44px 0 0; box-sizing:border-box; display:flex; flex-wrap:wrap; gap:16px 28px; align-items:center; justify-content:space-between; padding:22px 24px; border-radius:16px; background:#1A1917; color:#F4F3F0"><div style="flex:1 1 340px; min-width:0"><div style="font-size:18px; letter-spacing:-0.018em; line-height:1.3">Talk to the team</div><p style="margin:6px 0 0; font-size:13.5px; line-height:1.55; color:rgba(244,243,240,0.8); text-wrap:pretty">Thirty minutes on one workflow: where its errors come from today, and what a harness would check before anything is relied on.</p></div><a href="{{ ctaHref }}" style="flex:none; display:inline-flex; align-items:center; height:40px; padding:0 18px; box-sizing:border-box; background:#F4F3F0; color:#1A1917; border-radius:6px; font-size:13.5px; font-weight:500" style-hover="background:#FFFFFF; color:#1A1917">{{ cta }}</a></div></section>
+
+    <section id="label-quality-bounds-everything" data-screen-label="Label quality bounds everything" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Label quality bounds everything</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">A labelled dataset is only as good as the agreement behind it. Have two reviewers label the same sample independently and measure their agreement with Cohen's kappa, which corrects for agreement by chance. Values below 0.60 are commonly treated as inadequate<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-4" style="color:#157F52; padding:0 1px">4</a></sup>. We recommend reaching 0.80 before a label set is used to accept a system.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Where the reviewers disagree, send the case to a named decision-maker, and write their decision down as a rule<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-5" style="color:#157F52; padding:0 1px">5</a></sup>. Those written rules often turn out to be the most useful thing the exercise produces, because they capture tacit knowledge that lived only in experienced people's heads.</p></section>
+
+    <section id="a-two-week-instrumentation-sprint" data-screen-label="A two-week instrumentation sprint" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">A two-week instrumentation sprint</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Instrumentation does not need to be a project of its own. Two weeks is usually enough to establish a baseline.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Week one: map and capture.</strong></p><ul style="margin:18px 0 0; padding:0 0 0 20px; display:grid; gap:10px; font-size:17px; line-height:1.7; color:#2C2B27"><li style="padding-left:2px; text-wrap:pretty">Map the process: arrivals, steps, systems, handoffs.</li><li style="padding-left:2px; text-wrap:pretty">Add lightweight capture to the tools people already use: reason codes, timestamps, a shared log.</li><li style="padding-left:2px; text-wrap:pretty">Pull whatever history exists in email, tickets and spreadsheets.</li></ul><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Week two: label and measure.</strong></p><ul style="margin:18px 0 0; padding:0 0 0 20px; display:grid; gap:10px; font-size:17px; line-height:1.7; color:#2C2B27"><li style="padding-left:2px; text-wrap:pretty">Sample around 200 historical items and have two reviewers label them independently.</li><li style="padding-left:2px; text-wrap:pretty">Compute the baseline: volume, cycle time, handling time, error and rework rate, and cost per item.</li><li style="padding-left:2px; text-wrap:pretty">Identify the decisions with the most volume and the clearest labels.</li></ul><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">The output is a baseline sheet and a ranked list of automation candidates, each with its cost, its risk and its expected return.</p></section>
+
+    <section id="what-a-baseline-makes-possible" data-screen-label="What a baseline makes possible" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">What a baseline makes possible</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">With a measured baseline, the rest of the programme becomes honest.</p><ul style="margin:18px 0 0; padding:0 0 0 20px; display:grid; gap:10px; font-size:17px; line-height:1.7; color:#2C2B27"><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Business cases</strong> compare the new system with the week before it arrived, not with a vendor's claim.</li><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Acceptance thresholds</strong> are agreed before the build, not after the results.</li><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Monthly reporting</strong> after launch uses the same metrics, measured the same way.</li><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">The golden set keeps growing,</strong> because every reviewer decision in production is another labelled case.</li></ul></section>
+
+    <section id="common-mistakes" data-screen-label="Common mistakes" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Common mistakes</h2><ul style="margin:18px 0 0; padding:0 0 0 20px; display:grid; gap:10px; font-size:17px; line-height:1.7; color:#2C2B27"><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Measuring only the happy path.</strong> The exceptions are usually where the time goes.</li><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Free-text reasons only.</strong> They are impossible to analyse at volume. Use codes, with a free-text field alongside.</li><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Measuring handling time but not waiting time.</strong> Queues often matter more than effort.</li><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Borrowing someone else's savings figures as your baseline.</strong> For most back-office processes, the only published time-savings figures are vendor claims.</li><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Letting people label their own work without a second reviewer.</strong> Agreement has to be measured, not assumed.</li></ul></section>
+
+    <section id="define-better-before-building-it" data-screen-label="Define better before building it" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Define better before building it</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Automation projects fail quietly when nobody can say what "better" means. Two weeks of instrumentation buys that definition, and it buys a dataset that makes the automation possible in the first place.</p><a href="Loan Ops Ledger.dc.html" style="margin:40px 0 0; box-sizing:border-box; display:flex; flex-wrap:wrap; align-items:center; gap:16px 22px; padding:14px; border:1px solid #E8E5DF; border-radius:16px; background:#FBFAF8; color:#1A1917" style-hover="border-color:rgba(20,20,18,0.3); color:#1A1917"><span style="position:relative; flex:0 0 164px; height:88px; border-radius:11px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/loan-ops-ledger.png') center / cover"><span aria-hidden="true" style="position:absolute; left:50%; top:50%; height:52%; aspect-ratio:1 / 1; transform:translate(-50%, -50%); box-sizing:border-box; display:flex; align-items:center; justify-content:center; border-radius:28%; background:rgba(250,249,246,0.62); backdrop-filter:blur(18px) saturate(1.3); border:1px solid rgba(255,255,255,0.72); box-shadow:inset 0 1px 0 rgba(255,255,255,0.85), 0 18px 40px -16px rgba(20,20,18,0.38)"><svg viewBox="0 0 48 48" fill="none" stroke="#1A1917" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style="display:block; width:48%; height:48%"><rect x="10" y="5" width="28" height="38" rx="2"></rect><path d="M16 5v38"></path><path d="M29 5v9l2.5-2 2.5 2V5"></path><path d="M21 22h5M29.5 22H33M21 28h5M29.5 28H33M21 34h5M29.5 34H33"></path></svg></span></span><span style="flex:1 1 300px; min-width:0"><span style="display:block; font-size:12px; color:#6E6D67">Related playbook · Private Credit</span><span style="display:block; margin:4px 0 0; font-size:16px; letter-spacing:-0.015em; line-height:1.3">Loan Ops Ledger</span><span style="display:block; margin:4px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">Agent notices matched to the loan system every day, with each break explained before month end.</span></span><span style="flex:none; font-size:13px; padding:0 0 1px; border-bottom:1px solid rgba(20,20,18,0.3)">Read the playbook →</span></a></section>
+
+    <section id="sources" data-screen-label="Sources" style="padding:72px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:19px; font-weight:500; letter-spacing:-0.018em; line-height:1.3">Sources</h2><ol style="list-style:none; margin:16px 0 0; padding:0; border-top:1px solid #1A1917"><li id="ref-1" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">1</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">Financial Covenants in Private Credit Transactions. Sidley Austin LLP, 2026-03-24. <a href="https://www.sidley.com/en/insights/newsupdates/2026/03/financial-covenants-in-private-credit-transactions" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">sidley.com</a></span></li><li id="ref-2" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">2</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">2024 IC3 Annual Report. FBI Internet Crime Complaint Center, 2025-04. <a href="https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">ic3.gov</a></span></li><li id="ref-3" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">3</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">Models overview (Claude API docs). Anthropic, living document. <a href="https://platform.claude.com/docs/en/about-claude/models/overview" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">platform.claude.com</a></span></li><li id="ref-4" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">4</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">Interrater reliability: the kappa statistic (Biochemia Medica 22(3):276-282). McHugh, 2012. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3900052/" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">pmc.ncbi.nlm.nih.gov</a></span></li><li id="ref-5" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">5</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">AI Evals: Everything You Need to Know (Evals FAQ). Hamel Husain and Shreya Shankar, page dated 2026-09-18 (modified 2026-09-21). <a href="https://hamel.dev/blog/posts/evals-faq/" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">hamel.dev</a></span></li></ol></section>
+
+  </main>
+</div>
+
+<section data-screen-label="More essays" style="max-width:1048px; margin:0 auto; padding:120px clamp(20px, 4vw, 40px) 0; box-sizing:border-box">
+  <div style="display:flex; flex-wrap:wrap; gap:10px 24px; align-items:baseline; justify-content:space-between; padding:0 0 18px; border-bottom:1px solid #E8E5DF">
+    <h2 style="margin:0; font-size:clamp(22px, 2.2vw, 28px); font-weight:400; letter-spacing:-0.026em; line-height:1.15">More essays</h2>
+    <a href="Essays.dc.html" style="font-size:13.5px; color:#55544E" style-hover="color:var(--a)">All essays →</a>
+  </div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap:28px 20px; margin:24px 0 0">
+    <a href="Essay 13 - Generated interfaces need schemas.dc.html" style="display:flex; flex-direction:column; color:#1A1917" style-hover="color:var(--a)">
+      <span aria-hidden="true" style="display:block; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-covenant-watch.png') center / cover"></span>
+      <span style="margin:14px 0 0; font-size:12px; color:#6E6D67">No. 13 · Engineering</span>
+      <span style="margin:4px 0 0; font-size:17.5px; letter-spacing:-0.02em; line-height:1.25">Generated interfaces need schemas</span>
+      <span style="margin:6px 0 0; font-size:13.5px; line-height:1.55; color:#55544E">Models can now compose screens, reports and dashboards on request. In a regulated firm, the safe version is a model that fills a typed layout from an approved set of components, bound to reconciled data it never types itself.</span>
+    </a>
+    <a href="Essay 14 - Many lanes one production.dc.html" style="display:flex; flex-direction:column; color:#1A1917" style-hover="color:var(--a)">
+      <span aria-hidden="true" style="display:block; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-research-intake.png') center / cover"></span>
+      <span style="margin:14px 0 0; font-size:12px; color:#6E6D67">No. 14 · Engineering</span>
+      <span style="margin:4px 0 0; font-size:17.5px; letter-spacing:-0.02em; line-height:1.25">Many lanes, one production</span>
+      <span style="margin:6px 0 0; font-size:13.5px; line-height:1.55; color:#55544E">AI features change prompts, data, tools and model versions at the same time. Shared staging turns every change into a queue. Give each engineer a complete lane of their own, and make the gate into production the only thing they share.</span>
+    </a>
+    <a href="Essay 15 - When reading is nearly free.dc.html" style="display:flex; flex-direction:column; color:#1A1917" style-hover="color:var(--a)">
+      <span aria-hidden="true" style="display:block; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-side-letter-register.png') center / cover"></span>
+      <span style="margin:14px 0 0; font-size:12px; color:#6E6D67">No. 15 · Strategy</span>
+      <span style="margin:4px 0 0; font-size:17.5px; letter-spacing:-0.02em; line-height:1.25">When reading is nearly free</span>
+      <span style="margin:6px 0 0; font-size:13.5px; line-height:1.55; color:#55544E">The cost of having a model read a document keeps falling. In fund operations, the constraint is moving from how much can be read to how much can be verified and signed. Plan for that shift now.</span>
+    </a>
+  
+  
+  
+  </div>
+</section>
+
+<section data-screen-label="Closing" style="padding:104px clamp(20px, 4vw, 40px); border-bottom:1px solid var(--line2)">
+  <div style="position:relative; overflow:hidden; max-width:968px; margin:0 auto; border:1px solid var(--line); border-radius:18px; background:#E8E2D2 url('assets/valley-pastel.png') center 60% / cover; padding:clamp(40px,5vw,64px) clamp(24px,4vw,56px); display:flex; gap:32px; flex-wrap:wrap; align-items:flex-end; justify-content:space-between">
+    <div style="position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(248,246,240,0.7) 0%, rgba(248,246,240,0.5) 60%, rgba(248,246,240,0.35) 100%)"></div>
+    <div style="position:relative; flex:3 1 420px; min-width:0">
+      <h2 style="margin:0; max-width:620px; font-size:clamp(26px, 2.8vw, 38px); font-weight:400; letter-spacing:-0.032em; line-height:1.08; text-wrap:balance">Bring one process. We will measure it.</h2>
+      <p style="margin:16px 0 0; max-width:520px; font-size:15px; line-height:1.6; color:#2C2B27; text-wrap:pretty">Thirty minutes on one workflow: where its errors come from today, and what a harness would check.</p>
+    </div>
+    <div style="position:relative; display:flex; flex-direction:column; gap:12px; align-items:flex-start">
+      <a href="{{ ctaHref }}" style="display:inline-flex; align-items:center; height:42px; padding:0 20px; background:#1A1917; color:#FFFFFF; border-radius:6px; font-size:14px; font-weight:500; letter-spacing:-0.005em" style-hover="background:var(--a); color:#FFFFFF">{{ cta }}</a>
+    </div>
+  </div>
+</section>
+
+<footer data-screen-label="Footer" style="padding:70px 40px 40px">
+  <div style="max-width:1280px; margin:0 auto">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr))">
+      <div style="padding:0 28px 0 0; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Services</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="AI Engineering.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">AI Engineering</a>
+          <a href="AI Transformation.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">AI Transformation</a>
+          <a href="3264 Home.dc.html#capabilities" style="color:var(--sec)" style-hover="color:var(--a)">Deployment &amp; Run</a>
+          <a href="3264 Home.dc.html#capabilities" style="color:var(--sec)" style-hover="color:var(--a)">Evaluation suites</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Industries</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Private Credit.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Private Credit</a>
+          <a href="Private Equity.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Private Equity</a>
+          <a href="3264 Home.dc.html#industries" style="color:var(--sec)" style-hover="color:var(--a)">Fund Management</a>
+          <a href="3264 Home.dc.html#industries" style="color:var(--sec)" style-hover="color:var(--a)">Asset Management</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Company</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Company.dc.html#who" style="color:var(--sec)" style-hover="color:var(--a)">Who we are</a>
+          <a href="Company.dc.html#how" style="color:var(--sec)" style-hover="color:var(--a)">How we work</a>
+          <a href="3264 Home.dc.html#work" style="color:var(--sec)" style-hover="color:var(--a)">Case studies</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Resources</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Playbooks.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Playbooks</a>
+          <a href="3264 Home.dc.html#playbooks" style="color:var(--sec)" style-hover="color:var(--a)">Field notes</a>
+          <a href="Company.dc.html#how" style="color:var(--sec)" style-hover="color:var(--a)">Security</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Connect</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="AI Engineering.dc.html#engagement" style="color:var(--sec)" style-hover="color:var(--a)">Book a call</a>
+          <a href="mailto:hello@3264.ai" style="color:var(--sec)" style-hover="color:var(--a)">hello@3264.ai</a>
+          <a href="AI Engineering.dc.html#engagement" style="color:var(--sec)" style-hover="color:var(--a)">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin:64px 0 0; padding-top:22px; border-top:1px solid var(--line2); font-size:13px; letter-spacing:-0.005em; color:var(--mut)">
+      <div style="display:flex; align-items:center; gap:11px; min-width:0">
+        <span style="font-size:15px; font-weight:500; letter-spacing:-0.03em; color:#1A1917">3264<span>.ai</span></span>
+        <span>&copy; 2026 Bearing Deployment Company Inc. All rights reserved.</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px">
+        <span style="display:flex; align-items:center; gap:7px"><span style="width:6px; height:6px; border-radius:50%; background:var(--a)"></span>All systems operational</span>
+      </div>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ctaLabel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Book a mapping session&quot;,&quot;Book a two-week audit&quot;],&quot;default&quot;:&quot;Book a mapping session&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Page&quot;},&quot;showBuilt&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Page&quot;},&quot;animateHero&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+class Component extends DCLogic {
+  state = { vw: 1440, mw: 680, act: "top", sub: null, g1: 0, g1h: null, mini: false, notice: false, fq: [true, false, false, false, false, false], g3h: -1, ev: -1, copied: false, readMin: 0, x2: false };
+  mainRef = React.createRef(); railRef = React.createRef(); progRef = React.createRef(); g1Ref = React.createRef();
+
+  SECTIONS = [
+    {"id":"top","label":"Overview"},
+    {"id":"small-decisions-add-up","label":"Small decisions add up"},
+    {"id":"what-to-instrument","label":"What to instrument"},
+    {"id":"an-example-reason-codes-for-inbound-messages","label":"An example: reason codes for inbound messages"},
+    {"id":"decisions-are-labels","label":"Decisions are labels"},
+    {"id":"when-a-small-model-beats-a-big-one","label":"When a small model beats a big one"},
+    {"id":"label-quality-bounds-everything","label":"Label quality bounds everything"},
+    {"id":"a-two-week-instrumentation-sprint","label":"A two-week instrumentation sprint"},
+    {"id":"what-a-baseline-makes-possible","label":"What a baseline makes possible"},
+    {"id":"common-mistakes","label":"Common mistakes"},
+    {"id":"define-better-before-building-it","label":"Define better before building it"},
+    {"id":"sources","label":"Sources"}
+  ];
+
+  G2 = [];
+
+  G3 = [];
+
+  componentDidMount() {
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.measure);
+    if (window.ResizeObserver && this.mainRef.current) { this.ro = new ResizeObserver(() => { this.measure(); this.onScroll(); }); this.ro.observe(this.mainRef.current); }
+    this.measure(); this.spy(); this.startG1();
+    this._rt = setTimeout(() => this.readTime(), 900);
+  }
+  componentDidUpdate() {
+    const st = this.state, anim = this.props.animateHero ?? true, built = this.props.showBuilt ?? true;
+    const key = [st.act, st.sub, st.mw, st.vw, built].join("|");
+    if (key !== this._lastKey) { this._lastKey = key; this.onScroll(); }
+    if (this._lastAnim !== undefined && anim !== this._lastAnim) this.startG1();
+    this._lastAnim = anim;
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll); window.removeEventListener("resize", this.measure);
+    if (this.ro) this.ro.disconnect();
+    this.clearG1(); clearTimeout(this._rt); clearTimeout(this._ct); cancelAnimationFrame(this._raf);
+  }
+
+  measure = () => {
+    const m = this.mainRef.current, vw = window.innerWidth, mw = m ? Math.round(m.getBoundingClientRect().width) : vw;
+    if (vw !== this.state.vw || Math.abs(mw - this.state.mw) > 1) this.setState({ vw, mw });
+  };
+  onScroll = () => { if (!this._raf) this._raf = requestAnimationFrame(() => { this._raf = 0; this.spy(); }); };
+
+  // Scroll-spy: active section, active subsection, top progress bar and the sidebar coverage rail.
+  spy() {
+    const vh = window.innerHeight, line = Math.min(170, vh * 0.3), H = document.documentElement.scrollHeight - vh;
+    const pb = this.progRef.current;
+    if (pb) pb.style.transform = "scaleX(" + (H > 0 ? Math.min(1, Math.max(0, window.scrollY / H)) : 0).toFixed(4) + ")";
+    let act = "top", el = null, sub = null;
+    for (const s of this.SECTIONS) { const e = document.getElementById(s.id); if (e && e.getBoundingClientRect().top <= line) { act = s.id; el = e; } }
+    const S = this.SECTIONS.find((s) => s.id === act);
+    if (S && S.subs && (this.props.showBuilt ?? true)) for (const [id] of S.subs) { const e = document.getElementById(id); if (e && e.getBoundingClientRect().top <= line) sub = id; }
+    const rail = this.railRef.current;
+    if (rail && rail.parentNode) {
+      const it = rail.parentNode.querySelector('[data-toc="' + act + '"]');
+      if (it) {
+        let f = 0;
+        if (el) { const r = el.getBoundingClientRect(); f = Math.min(1, Math.max(0, (line - r.top) / Math.max(1, r.height))); }
+        rail.style.height = (it.offsetTop + f * it.offsetHeight).toFixed(1) + "px";
+      }
+    }
+    if (act !== this.state.act || sub !== this.state.sub) this.setState({ act, sub });
+  }
+
+  // Hero figure: one restrained reveal on scroll-in; any failure or reduced motion shows the end state.
+  clearG1() { (this._g1t || []).forEach(clearTimeout); this._g1t = []; if (this.io) { this.io.disconnect(); this.io = null; } }
+  startG1() {
+    this.clearG1(); this._g1run = false;
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!(this.props.animateHero ?? true) || reduce || !("IntersectionObserver" in window)) { this.setState({ g1: 7 }); return; }
+    const run = () => {
+      this._g1run = true;
+      this.setState({ g1: 0 });
+      [1, 2, 3, 4, 5, 6, 7].forEach((s, i) => this._g1t.push(setTimeout(() => this.setState({ g1: s }), 300 + i * 120)));
+      this._g1t.push(setTimeout(() => { if (this.state.g1 !== 7) this.setState({ g1: 7 }); }, 4000));
+    };
+    const el = this.g1Ref.current;
+    if (!el) { this.setState({ g1: 7 }); return; }
+    this._g1t.push(setTimeout(() => { if (!this._g1run) { if (this.io) { this.io.disconnect(); this.io = null; } if (this.state.g1 !== 7) this.setState({ g1: 7 }); } }, 4000));
+    this.io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { this.io.disconnect(); this.io = null; run(); } }, { threshold: 0, rootMargin: "0px 0px -35% 0px" });
+    this.io.observe(el);
+  }
+
+  readTime() {
+    const m = this.mainRef.current; if (!m) return;
+    const words = (s) => (s || "").trim().split(/\s+/).filter(Boolean).length;
+    let n = words(m.innerText);
+    m.querySelectorAll("[data-fig]").forEach((f) => { n -= words(f.innerText); });
+    const readMin = Math.max(1, Math.round(n / 230));
+    if (readMin !== this.state.readMin) this.setState({ readMin });
+  }
+
+  copyLink = () => {
+    const done = () => { this.setState({ copied: true }); clearTimeout(this._ct); this._ct = setTimeout(() => this.setState({ copied: false }), 1800); };
+    try { navigator.clipboard.writeText(window.location.href).then(done, () => {}); } catch (e) {}
+  };
+  toggleMini = () => this.setState((s) => ({ mini: !s.mini }));
+  closeMini = () => this.setState({ mini: false });
+  toggleNotice = () => this.setState((s) => ({ notice: !s.notice }));
+  toggleFaq = (e) => { const i = +e.currentTarget.getAttribute("data-i"); this.setState((s) => { const fq = s.fq.slice(); fq[i] = !fq[i]; return { fq }; }); };
+  g3Enter = (e) => this.setState({ g3h: +e.currentTarget.getAttribute("data-s") });
+  g3Leave = () => this.setState({ g3h: -1 });
+  evEnter = (e) => this.setState({ ev: +e.currentTarget.getAttribute("data-ev") });
+  evLeave = () => this.setState({ ev: -1 });
+  irEnter = (e) => this.setState({ g1h: e.currentTarget.getAttribute("data-f") });
+  irLeave = () => this.setState({ g1h: null });
+
+  riEnter = (e) => this.setState({ g1h: e.currentTarget.getAttribute("data-c") });
+  riLeave = () => this.setState({ g1h: null });
+  xEnter = () => this.setState({ x2: true });
+  xLeave = () => this.setState({ x2: false });
+  xToggle = () => this.setState({ x2: true });
+
+  renderVals() {
+    const st = this.state, vw = st.vw, mw = st.mw, built = this.props.showBuilt ?? true, flags = this.props.showFlags ?? true;
+    const cta = this.props.ctaLabel === "Book a two-week audit" ? "Book a two-week audit" : "Book a mapping session";
+    const ctaHref = cta === "Book a two-week audit" ? "AI Engineering.dc.html#engagement" : "mailto:hello@3264.ai?subject=Essays";
+    const sideOn = vw >= 1048, idx = Math.max(0, this.SECTIONS.findIndex((s) => s.id === st.act)), cur = this.SECTIONS[idx];
+    const toc = this.SECTIONS.map((s, i) => ({
+      id: s.id, href: "#" + s.id, num: s.num || "", label: s.label,
+      bg: i === idx ? "#EEEBE4" : "transparent", fg: i <= idx ? "#1A1917" : "#6E6D67",
+      hasSubs: !!(s.subs && built && i === idx),
+      subs: (s.subs || []).map(([id, label]) => { const on = st.sub === id; return { href: "#" + id, label, fg: on ? "#1A1917" : "#6E6D67", bd: on ? "#1A1917" : "#D9D6CF" }; })
+    }));
+    const g1 = st.g1, ev = {};
+    for (let i = 0; i < 8; i++) { ev["s" + i] = st.ev === i ? "#F1E6CF" : "transparent"; ev["l" + i] = st.ev === i ? "#1A1917" : "#6E6D67"; }
+    const g4w = mw >= 520, rnw = mw >= 600;
+    const g2rows = this.G2.map((r) => Object.assign({}, r, { dc: r.bad ? "#C4341E" : "#1A1917", sc: r.ok ? "#157F52" : "#C4341E", hasOwn: !!r.own }));
+    const txt = (v) => v ? v.t + (v.sub ? " · " + v.sub : "") + (v.dash ? " (proposal)" : "") : "—";
+    const cell = (v) => ({ has: !!v, none: !v, t: v ? v.t : "", sub: v && v.sub ? v.sub : "", hasSub: !!(v && v.sub), bs: v && v.dash ? "dashed" : "solid" });
+    const g3steps = this.G3.map((s, i) => ({ i, n: String(i + 1), name: s[0], m: txt(s[1]), c: txt(s[2]), p: txt(s[3]), mc: s[1] ? "#1A1917" : "#8A887F", cc: s[2] ? "#1A1917" : "#8A887F", pc: s[3] ? "#1A1917" : "#8A887F" }));
+    const g3rows = this.G3.map((s, i) => ({ i, n: String(i + 1), name: s[0], bg: st.g3h === i ? "#F1EEE8" : "transparent", hc: st.g3h === i ? "#1A1917" : "#55544E", cells: [cell(s[1]), cell(s[2]), cell(s[3])] }));
+    const out = {
+      progRef: this.progRef, mainRef: this.mainRef, railRef: this.railRef, g1Ref: this.g1Ref,
+      sideOn, noSide: !sideOn, toc, curLabel: (cur.num ? cur.num + " " : "") + cur.label,
+      miniOpen: st.mini && !sideOn, miniA: String(st.mini), miniIcon: st.mini ? "−" : "+", toggleMini: this.toggleMini, closeMini: this.closeMini,
+      cta, ctaHref, hasRead: st.readMin > 0, readLabel: st.readMin + " min read", copyLink: this.copyLink, copyLabel: st.copied ? "Link copied" : "Copy link",
+      noticeFull: mw >= 500 || st.notice, noticeToggle: mw < 500, noticeLabel: st.notice ? "Hide full notice" : "Show full notice", toggleNotice: this.toggleNotice,
+      g1Cols: mw >= 560 ? "repeat(4, minmax(0,1fr))" : "repeat(2, minmax(0,1fr))", g1Wide: mw >= 500, g1Narrow: mw < 500,
+      g1Ring: g1 >= 1 ? "0 0 0 1.5px #1A1917" : "0 0 0 1.5px rgba(26,25,23,0)", g1Diff: g1 >= 2 ? 1 : 0, g1Chip: g1 >= 3 ? 1 : 0, g1ChipY: g1 >= 3 ? "none" : "translateY(6px)", g1Dot: g1 >= 4 ? "#157F52" : "#C4341E",
+      g4Cols: g4w ? "minmax(0,1.1fr) minmax(0,1.4fr) minmax(0,0.7fr)" : "minmax(0,1fr) auto", g4In: g4w ? "block" : "none", g4Sub: g4w ? "none" : "block",
+      rnCols: rnw ? "minmax(0,0.62fr) repeat(3, minmax(0,1fr))" : "minmax(0,1fr)", rnHead: rnw ? "grid" : "none", rnLab: rnw ? "none" : "block", rnGap: rnw ? "6px 22px" : "8px",
+      g2Table: mw >= 600, g2Cards: mw < 600, g2rows,
+      ev, evEnter: this.evEnter, evLeave: this.evLeave,
+      built, notBuilt: !built,
+      g3Grid: mw >= 540, g3Cards: mw < 540, g3steps, g3rows, g3Enter: this.g3Enter, g3Leave: this.g3Leave,
+      anWide: mw >= 600, anNarrow: mw < 600, lcWide: mw >= 600, lcNarrow: mw < 600,
+      flags, toggleFaq: this.toggleFaq,
+      ri: (() => { const o = {}, h = st.g1h, g = st.g1, HL = "#F1E6CF", order = [1, 2, 3, 4, 5, 7, 6]; for (let k = 1; k <= 7; k++) { const done = g >= order.indexOf(k) + 1, bad = k === 6 && done; o["s" + k] = bad ? "#C4341E" : done ? "#1A1917" : "#8A887F"; o["n" + k] = bad ? "#C4341E" : "#55544E"; o["h" + k] = h === String(k) ? HL : "transparent"; o["b" + k] = h === String(k) ? HL : bad ? "#F6E3DF" : "transparent"; } o.d6 = g >= 7 ? "#C4341E" : "transparent"; o.u6 = g >= 7 ? "100% 1.5px" : "0% 1.5px"; return o; })(),
+      riEnter: this.riEnter, riLeave: this.riLeave, riTop: mw >= 600 ? "minmax(0,1.45fr) minmax(0,1fr)" : "minmax(0,1fr)", riCols: mw >= 560 ? "22px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr)" : "22px minmax(0,1fr)", riHead: mw >= 560 ? "grid" : "none", riLab: mw >= 560 ? "none" : "block", riSub: mw >= 560 ? "auto" : "2",
+      xCols: mw >= 600 ? "minmax(0,1.05fr) minmax(0,0.95fr) minmax(0,0.8fr) minmax(0,1.1fr) minmax(0,1.2fr)" : "minmax(0,1fr) minmax(0,1fr)", xHead: mw >= 600 ? "grid" : "none", xHide: mw >= 600 ? "block" : "none", xNar: mw >= 600 ? "none" : "block", xDiff: st.x2 ? "block" : "none", xEnter: this.xEnter, xLeave: this.xLeave, xToggle: this.xToggle,
+      fbCols: mw >= 560 ? "150px minmax(0,1fr) 76px" : "minmax(0,1fr)", fbAl: mw >= 560 ? "right" : "left",
+      cwT: mw >= 520 ? "26px minmax(0,1.7fr) minmax(0,0.75fr) minmax(0,0.75fr) minmax(0,0.8fr)" : "22px minmax(0,1fr) auto auto", cwSrc: mw >= 520 ? "block" : "none",
+      cwQ: mw >= 560 ? "repeat(8, minmax(0,1fr))" : "repeat(4, minmax(0,1fr))", cwBr: mw >= 560 ? "5 / span 4" : "1 / -1",
+      cwC: mw >= 560 ? "14px minmax(0,1.25fr) minmax(0,1fr)" : "14px minmax(0,1fr)", cwRc: mw >= 560 ? "auto" : "2 / -1",
+      dtCols: mw >= 560 ? "repeat(3, minmax(0,1fr))" : "minmax(0,1fr)", dtHead: mw >= 560 ? "grid" : "none", dtLab: mw >= 560 ? "none" : "block",
+      sCols: mw >= 640 ? "minmax(0,1.45fr) repeat(5, minmax(0,1fr))" : "minmax(0,1.3fr) repeat(3, minmax(0,1fr))", sHide: mw >= 640 ? "block" : "none",
+      wCols: mw >= 600 ? "minmax(0,1.65fr) repeat(3, minmax(0,0.95fr)) minmax(0,1.3fr)" : "minmax(0,1fr) minmax(0,0.9fr)", wHide: mw >= 600 ? "block" : "none", wSub: mw >= 600 ? "none" : "block", wHead: mw >= 600 ? "grid" : "none",
+      pCols: mw >= 600 ? "minmax(0,1.15fr) minmax(0,0.62fr) minmax(0,1.55fr) minmax(0,1.2fr)" : "minmax(0,1fr)", pHead: mw >= 600 ? "grid" : "none", pLab: mw >= 600 ? "none" : "block", pGap: mw >= 600 ? "4px 12px" : "6px",
+      g1Row: g1 >= 1 ? 1 : 0, g1Exp: g1 >= 2 ? 1 : 0, g1St: g1 >= 2 ? "Break · explained" : "Break",
+      tCols: mw >= 540 ? "minmax(0,1.45fr) minmax(0,1.05fr) minmax(0,1.05fr) minmax(0,0.9fr) minmax(0,1.05fr)" : "minmax(0,1fr) auto",
+      tbCols: mw >= 540 ? "minmax(0,1.75fr) minmax(0,0.55fr) minmax(0,0.65fr) minmax(0,0.95fr) minmax(0,0.9fr)" : "minmax(0,1fr) auto",
+      tHide: mw >= 540 ? "block" : "none", tNar: mw >= 540 ? "none" : "block", tStCol: mw >= 540 ? "auto" : "1 / -1", tHead: mw >= 540 ? "grid" : "none",
+      plCols: mw >= 560 ? "minmax(0,1.2fr) minmax(0,0.95fr) minmax(0,1fr) minmax(0,0.65fr) minmax(0,1.2fr)" : "minmax(0,1fr)", plHead: mw >= 560 ? "grid" : "none", plLab: mw >= 560 ? "none" : "inline", plAl: mw >= 560 ? "right" : "left",
+      lnCols: mw >= 600 ? "minmax(0,0.62fr) repeat(3, minmax(0,1fr))" : "minmax(0,1fr)",
+      scCols: mw >= 600 ? "minmax(0,1.45fr) minmax(0,0.95fr) minmax(0,0.85fr) minmax(0,1.25fr)" : "minmax(0,1fr)", scAl: mw >= 600 ? "right" : "left",
+      irEnter: this.irEnter, irLeave: this.irLeave,
+      ...(() => { const o = {}, h = st.g1h, HL = "#F1E6CF"; [["1", 1], ["2", 2], ["g", 3], ["3", 4], ["4", 5], ["n", 6]].forEach(([k, n]) => { o["g1D" + k] = g1 >= n ? "#157F52" : "#D9D6CF"; o["g1B" + k] = h === k ? HL : (k === "g" || k === "n") ? "#EEEBE4" : "transparent"; }); [["1", 1], ["2", 2], ["3", 4], ["4", 5]].forEach(([k, n]) => { o["g1U" + k] = g1 >= n ? "100% 1.5px" : "0% 1.5px"; o["g1F" + k] = h === k ? HL : "transparent"; }); return o; })(),
+      irCols: mw >= 560 ? "20px minmax(0,0.72fr) minmax(0,1.15fr) minmax(0,1.6fr) minmax(0,0.62fr)" : "20px minmax(0,1fr) auto", irHead: mw >= 560 ? "grid" : "none",
+      irHide: mw >= 560 ? "block" : "none", irNar: mw >= 560 ? "none" : "inline", irAl: mw >= 560 ? "right" : "left", irStCol: mw >= 560 ? "auto" : "3", irStRow: mw >= 560 ? "auto" : "1", irBasisCol: mw >= 560 ? "auto" : "2 / -1", irSrcCol: mw >= 560 ? "3 / 5" : "2 / -1",
+      caCols: mw >= 540 ? "minmax(0,1.3fr) minmax(0,0.75fr) minmax(0,1.5fr)" : "minmax(0,1fr) auto",
+      ddCols: mw >= 560 ? "minmax(0,0.8fr) minmax(0,1.3fr)" : "minmax(0,1fr)", ddDiv: mw >= 560 ? "1px solid #E8E5DF" : "0", ddDivT: mw >= 560 ? "0" : "1px dashed #E8E5DF",
+      ...(() => { const o = {}; for (let k = 1; k <= 5; k++) o["slR" + k] = g1 >= k ? 1 : 0; const red = g1 >= 6; o.s3Bg = red ? "#F6E3DF" : "transparent"; o.s3Sh = red ? "inset 2px 0 0 #C4341E" : "inset 0 0 0 0 transparent"; o.s3Fg = red ? "#C4341E" : "#1A1917"; o.s3Dot = red ? "#C4341E" : "transparent"; o.s3Ring = red ? "#C4341E" : "#8A887F"; return o; })(),
+      slCols: mw >= 560 ? "minmax(0,0.8fr) minmax(0,1.7fr) minmax(0,0.62fr) minmax(0,1.2fr)" : "minmax(0,1fr)",
+      cmCols: mw >= 560 ? "minmax(0,0.62fr) minmax(0,1.6fr) minmax(0,0.9fr) minmax(0,1.05fr)" : "minmax(0,1fr)", cmAl: mw >= 560 ? "right" : "left",
+      mfnWide: mw >= 520, mfnNarrow: mw < 520,
+      g3sCols: mw >= 600 ? "minmax(0,0.85fr) repeat(3, minmax(0,1fr))" : "minmax(0,1fr)",
+      mgU: g1 >= 1 ? "100% 1.5px" : "0% 1.5px", mgN: g1 >= 2 ? 1 : 0, mgPB: g1 >= 3 ? "#E4F0EA" : "#F1EEE8", mgPC: g1 >= 3 ? "#157F52" : "#8A887F", mgPD: g1 >= 3 ? "#157F52" : "#D9D6CF",
+      pcCols: mw >= 560 ? "18px minmax(0,.72fr) minmax(0,1.55fr) minmax(0,.95fr) minmax(0,.95fr) minmax(0,.66fr)" : "18px minmax(0,1fr)",
+      mgL: mw >= 600 ? "repeat(2, minmax(0,1fr))" : "minmax(0,1fr)",
+      btCols: mw >= 540 ? "minmax(0,.85fr) minmax(0,1.9fr) minmax(0,.7fr) minmax(0,.8fr)" : "minmax(0,.9fr) minmax(0,1.6fr) minmax(0,.8fr)",
+      dnCols: mw >= 540 ? "minmax(0,2fr) minmax(0,.8fr) minmax(0,.7fr) minmax(0,.6fr)" : "minmax(0,1fr) auto auto",
+      ...(() => { const o = {}; for (let k = 1; k <= 5; k++) o["crD" + k] = g1 >= k ? 1 : 0; o.crOut = g1 >= 4 ? "0 0 0 1.5px #C4341E" : "0 0 0 1.5px rgba(196,52,30,0)"; o.crS4 = g1 >= 4 ? "100% 1.5px" : "0% 1.5px"; o.crMom = g1 >= 6 ? 1 : 0; return o; })(),
+      crCols: mw >= 540 ? "minmax(0,1fr) 78px 78px 64px" : "minmax(0,1fr) 58px 58px",
+      vbCols: mw >= 540 ? "minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.72fr) minmax(0,.8fr)" : "minmax(0,1fr) auto"
+    };
+    for (let i = 0; i < 6; i++) { out["fq" + i] = !!st.fq[i]; out["fqi" + i] = st.fq[i] ? "−" : "+"; out["fqa" + i] = String(!!st.fq[i]); }
+    return out;
+  }
+}
+</script>
+</body>
+</html>

@@ -215,6 +215,48 @@ template the nine playbook pages share.
   `next start`: under `next dev` the first request for each new image size is optimised on
   demand and can stall a run at a new width.
 
+## Essays
+
+`/essays` and the fifteen essays under it (`/essays/<slug>`) are a port of
+[`design_handoff_essays/`](design_handoff_essays/README.md): the index prototype
+(`Essays.dc.html`) and one prototype per essay, all from one template. The prototypes win over
+the README.
+
+- The essays are Markdown, one file each in `src/content/essays/` (`NN-<slug>.md`): a short
+  frontmatter (`key: <JSON>` per line: number, slug, title, summary, category, date, painting,
+  related playbook, featured slots), then the article. `scripts/essays-content.mjs` split them out
+  of the handoff's drafts (`content/field-notes-drafts.md`); edit the files directly from here on.
+  To add an essay, add a file: the index, the routes, "More essays" and the sitemap follow.
+- `src/content/essays-source.ts` reads them on the server at build time and checks them (unknown
+  category, painting or playbook, a second lead, or Markdown outside the template's subset fails
+  the build). `src/components/essays/markdown.ts` is the parser: paragraphs, `###` sections
+  (`### 1. Ownership` is numbered "01"), lists, tables, a code fence, bold, italic, code and
+  references (`[1]`, `[3, 4]`). The fixed copy is in `src/content/essays.ts`.
+- The essay page is the playbook pages' article shell: `ArticleShell` (contents, scroll-spy, the
+  phone bar), the header's progress bar, `CopyLink`, the dark band and the related-playbook card
+  (`Blocks`) and `ArticleClosing`. The hero, body, sources and More essays are its own
+  (`src/components/essays/`). The index's sign-up card and closing tile are the Playbooks page's
+  (`SubscribeCard`, `ClosingCta`), with the Essays copy; sign-ups name their list.
+- The read time is computed from each essay's body on the server, the prototypes' rule (main
+  column words / 230, rounded), and the index shows the same figure. The index prototype's
+  "6 min read" is the drafts' estimate, which the handoff asks production to recompute.
+- The paintings are the playbook washes, byte for byte, so they come from the same WebP sources
+  (`src/components/essays/media.ts`).
+- Site-wide, as the handoff asks: Essays joins the header nav (seven links, with the design's
+  fluid gaps, falling back to a sideways scroll that each page's collapse width keeps out of
+  sight), the footer's "Field notes" becomes Essays, and the home page's three field notes link
+  to their essays.
+- Departures, all deliberate: 20px gutters on phones on the index too (the essay pages have them
+  by design; the index prototype keeps 40px at 390); the header's menu below 1000px, as on
+  Playbooks; the hero's category opens the index filtered to it; sources open in a new tab;
+  tables and the code block scroll inside a focusable box.
+- QA: serve the reference on :4111 (`.claude/launch.json`), build and `next start`, then
+  `node qa/es-index.mjs --w 1440,1280,1024,768,390` (every section, and each filter),
+  `node qa/es-essays.mjs --w 1440,1024,390 [--only 01,13] [--quiet]` (each essay against its
+  prototype: page height, read time, every section's pixels and text) and
+  `node qa/es-a11y.mjs` (axe, outline, Tab sweep, filter and URL, anchors, copy link, scroll-spy,
+  phone bar, overflow, and every page's nav fit at its collapse width).
+
 ## Environment
 
 Copy `.env.example` to `.env.local` and fill in the values. `.env.local` is

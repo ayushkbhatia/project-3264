@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>3264.ai — Essays</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+html, body { margin:0; padding:0; overflow-x:clip; }
+body { --a:#157F52; --bad:#C4341E; --line:rgba(20,20,18,0.13); --line2:rgba(20,20,18,0.075); --mut:#6E6D67; --sec:#55544E; background:#F6F5F2; color:#1A1917; font-family:"Instrument Sans","Helvetica Neue",Helvetica,sans-serif; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { color:inherit; text-decoration:none; }
+a:hover { color:var(--a); }
+::selection { background:var(--a); color:#FFFFFF; }
+</style>
+</helmet>
+
+<header style="position:sticky; top:0; z-index:100; backdrop-filter:blur(14px); background:rgba(246,245,242,0.78); border-bottom:1px solid var(--line2)">
+  <div style="max-width:1280px; margin:0 auto; padding:0 40px; height:68px; display:flex; align-items:center; gap:clamp(20px, 3vw, 48px)">
+    <a href="3264 Home.dc.html" style="font-size:19px; font-weight:500; letter-spacing:-0.03em">3264<span>.ai</span></a>
+    <nav style="display:flex; gap:clamp(14px, 1.9vw, 30px); white-space:nowrap; min-width:0; overflow-x:auto; scrollbar-width:none; -webkit-mask-image:linear-gradient(90deg, #000 calc(100% - 28px), transparent); mask-image:linear-gradient(90deg, #000 calc(100% - 28px), transparent); padding-right:28px; font-size:clamp(13px, 1.5vw, 14px); color:var(--sec); flex:1">
+      <a href="AI Engineering.dc.html">AI Engineering</a>
+      <a href="AI Transformation.dc.html">AI Transformation</a>
+      <a href="3264 Home.dc.html#industries">Industries</a>
+      <a href="3264 Home.dc.html#work">Work</a>
+      <a href="Playbooks.dc.html">Playbooks</a>
+        <a href="#top" style="color:#1A1917">Essays</a>
+      <a href="Company.dc.html">Company</a>
+    </nav>
+    <a href="AI Engineering.dc.html#engagement" style="flex:none; white-space:nowrap; display:flex; align-items:center; gap:10px; height:36px; padding:0 16px; border:1px solid var(--line); border-radius:6px; background:#FFFFFF; font-size:13.5px; letter-spacing:-0.01em" style-hover="border-color:var(--a); color:var(--a)">Book an audit</a>
+  </div>
+</header>
+
+<section id="top" data-screen-label="Essays header" style="padding:88px 40px 0; scroll-margin-top:68px">
+  <div style="max-width:1280px; margin:0 auto">
+    <h1 style="margin:0; font-size:clamp(44px, 5.4vw, 76px); font-weight:400; letter-spacing:-0.04em; line-height:1">Essays</h1>
+    <p style="margin:18px 0 0; max-width:640px; font-size:clamp(16.5px, 1.4vw, 19px); line-height:1.5; color:#55544E; text-wrap:pretty">Field notes for the executives, operators and engineers building AI systems at banks, fund managers and asset managers.</p>
+    <div style="display:flex; flex-wrap:wrap; gap:6px; margin:36px 0 0; padding:0 0 20px; border-bottom:1px solid var(--line)">
+      <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
+      <button type="button" onClick="{{ pickCat }}" data-cat="{{ c.name }}" aria-pressed="{{ c.on }}" style="display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 14px 0 15px; border-radius:999px; border:1px solid {{ c.bd }}; background:{{ c.bg }}; color:{{ c.fg }}; font:inherit; font-size:13.5px; letter-spacing:-0.01em; cursor:pointer; transition:background 160ms ease, color 160ms ease"><span>{{ c.name }}</span><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:{{ c.nc }}">{{ c.n }}</span></button>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<sc-if value="{{ showFeat }}" hint-placeholder-val="{{ true }}">
+<section data-screen-label="Lead essay" style="padding:40px 40px 0">
+  <a href="Essay 11 - Why extraction pilots stall.dc.html" style="max-width:1280px; margin:0 auto; box-sizing:border-box; display:flex; flex-wrap:wrap; gap:28px 56px; align-items:center; color:#1A1917" style-hover="color:var(--a)">
+    <span aria-hidden="true" style="flex:1.25 1 520px; min-width:0; aspect-ratio:16 / 10; border-radius:20px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-capital-call-flow.png') center / cover"></span>
+    <span style="flex:1 1 380px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 11</span><span>Strategy</span><span>6 min read</span></span><span style="margin:16px 0 0; font-size:clamp(30px, 3.2vw, 46px); letter-spacing:-0.036em; line-height:1.04; text-wrap:balance">Why document extraction pilots stall at 80% accuracy</span><span style="margin:16px 0 0; font-size:17px; line-height:1.55; color:#55544E; text-wrap:pretty">The demo reads the clean page. Production reads the scanned schedule, the amended definition and the table that breaks across two pages. The last fifth of the accuracy is where the work, and the risk, sits.</span><span style="margin:24px 0 0; align-self:flex-start; font-size:14px; letter-spacing:-0.01em; border-bottom:1px solid rgba(20,20,18,0.35); padding-bottom:2px">Read the essay →</span></span>
+  </a>
+</section>
+<section data-screen-label="Start here" style="padding:64px 40px 0">
+  <div style="max-width:1280px; margin:0 auto; box-sizing:border-box; display:flex; flex-wrap:wrap; gap:40px; padding:40px 0 0; border-top:1px solid var(--line)">
+    <a href="Essay 03 - A procurement checklist for AI vendors.dc.html" style="flex:1 1 420px; min-width:0; display:flex; flex-direction:column; color:#1A1917" style-hover="color:var(--a)">
+      <span aria-hidden="true" style="display:block; aspect-ratio:16 / 9; border-radius:16px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-mandate-guardrails.png') center / cover"></span>
+      <span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; margin:18px 0 0; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 03</span><span>Strategy</span><span>6 min read</span></span>
+      <span style="margin:10px 0 0; font-size:clamp(22px, 2.1vw, 28px); letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">A procurement checklist for AI vendors, from the build side</span>
+      <span style="margin:10px 0 0; max-width:560px; font-size:15.5px; line-height:1.55; color:#55544E; text-wrap:pretty">The model is the one component every vendor can buy. The harness around it decides whether a system survives an audit, a model retirement and a bad quarter. These are the questions we would ask if we were sitting on your side of the table.</span>
+    </a>
+    <a href="Essay 12 - Instrumenting a workflow.dc.html" style="flex:1 1 420px; min-width:0; display:flex; flex-direction:column; color:#1A1917" style-hover="color:var(--a)">
+      <span aria-hidden="true" style="display:block; aspect-ratio:16 / 9; border-radius:16px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-nav-pack-review.png') center / cover"></span>
+      <span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; margin:18px 0 0; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 12</span><span>Operations</span><span>6 min read</span></span>
+      <span style="margin:10px 0 0; font-size:clamp(22px, 2.1vw, 28px); letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Instrumenting a workflow before you automate it</span>
+      <span style="margin:10px 0 0; max-width:560px; font-size:15.5px; line-height:1.55; color:#55544E; text-wrap:pretty">The best dataset for automating a back-office decision is the record of people making it. Most firms throw that record away. Capture it first, and the automation that follows will be cheaper, better tested and easier to justify.</span>
+    </a>
+  </div>
+</section>
+</sc-if>
+
+<section data-screen-label="All essays" style="padding:88px 40px 0">
+  <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap; gap:4px 48px">
+    <div style="flex:0 0 200px"><div style="position:sticky; top:96px; padding:20px 0 0"><h2 style="margin:0; font-size:clamp(26px, 2.4vw, 34px); font-weight:400; letter-spacing:-0.03em; line-height:1.1">{{ listLabel }}</h2><div style="margin:8px 0 0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#6E6D67">{{ listCount }}</div></div></div>
+    <div style="flex:1 1 560px; min-width:0; border-bottom:1px solid var(--line)">
+        <sc-if value="{{ v.e01 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 01 - An index is not understanding.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/capital-call-flow.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 01</span><span>Engineering</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">An index is not understanding</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">Structured maps of a credit agreement help an AI system find the right clause faster. They do not make its reading right. Build them as tools the system keeps using, not documents it reads once.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e02 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 02 - Twelve rules for agents that touch money.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/client-reporting-flow.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 02</span><span>Governance</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">Twelve rules for AI agents that touch money</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">In lending and fund operations, a wrong answer becomes a wire, a missed breach or a sentence in an investor letter. These are the design rules we apply whenever a model sits anywhere near that path.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e03 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 03 - A procurement checklist for AI vendors.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-mandate-guardrails.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 03</span><span>Strategy</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">A procurement checklist for AI vendors, from the build side</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">The model is the one component every vendor can buy. The harness around it decides whether a system survives an audit, a model retirement and a bad quarter. These are the questions we would ask if we were sitting on your side of the table.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e04 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 04 - Chat is an input.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/covenant-watch.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 04</span><span>Product</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">Chat is an input, not an interface</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">Language is the fastest way to say what you want. It is a poor way to show a controller what a system did. Operations software needs both halves, and they call for different designs.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e05 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 05 - Review loops that converge.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/investor-reporting.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 05</span><span>Engineering</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">Draft, check, repeat: review loops that converge</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">Pairing a model that drafts with a model that critiques can lift the quality of AI output. Without a defined bar, checks that run in code and a rule for stopping, the loop mostly burns tokens.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e06 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 06 - When operators can change the software.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/loan-ops-ledger.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 06</span><span>Strategy</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">When the people who run the process can change the software</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">Operators can now describe a tool and have a coding agent build it in an afternoon. The speed is real. In a regulated firm it needs a workshop, a gate and a record, or the afternoon's work becomes next year's audit finding.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e07 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 07 - Define done before you build.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/mandate-guardrails.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 07</span><span>Engineering</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">Define done before you build</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">Prompts drift and model runs vary. An ordered list of events, each with a proof that can be checked against the real system, gives an AI workflow a finish line that holds across rewrites, model changes and restarts.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e08 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 08 - A workshop not the vault.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/nav-pack-review.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 08</span><span>Engineering</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">A workshop, not the vault</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">AI systems stall when they cannot provision, test or verify their own work. Handing them production access is the wrong fix. Give them a complete environment of their own, and let only reviewed changes cross into yours.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e09 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 09 - Flexible where it is safe.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/research-intake.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 09</span><span>Engineering</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">Flexible where it's safe, fixed where it matters</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">Composable tools let an AI system choose its own path through an investigation. A money path should have no path to choose. Designing the tool layer for credit and fund workflows starts with knowing which is which.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e10 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 10 - What coding agents teach us.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/side-letter-register.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 10</span><span>Engineering</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">What coding agents teach us about back-office automation</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">Coding agents became genuinely useful before most enterprise agents did. The reasons are structural: a tight loop, tools that fail loudly, and an environment full of checks. Operations teams can borrow all three.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e11 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 11 - Why extraction pilots stall.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-capital-call-flow.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 11</span><span>Strategy</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">Why document extraction pilots stall at 80% accuracy</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">The demo reads the clean page. Production reads the scanned schedule, the amended definition and the table that breaks across two pages. The last fifth of the accuracy is where the work, and the risk, sits.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e12 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 12 - Instrumenting a workflow.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-nav-pack-review.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 12</span><span>Operations</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">Instrumenting a workflow before you automate it</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">The best dataset for automating a back-office decision is the record of people making it. Most firms throw that record away. Capture it first, and the automation that follows will be cheaper, better tested and easier to justify.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e13 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 13 - Generated interfaces need schemas.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-covenant-watch.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 13</span><span>Engineering</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">Generated interfaces need schemas</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">Models can now compose screens, reports and dashboards on request. In a regulated firm, the safe version is a model that fills a typed layout from an approved set of components, bound to reconciled data it never types itself.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e14 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 14 - Many lanes one production.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-research-intake.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 14</span><span>Engineering</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">Many lanes, one production</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">AI features change prompts, data, tools and model versions at the same time. Shared staging turns every change into a queue. Give each engineer a complete lane of their own, and make the gate into production the only thing they share.</span></span>
+        </a>
+        </sc-if>
+        <sc-if value="{{ v.e15 }}" hint-placeholder-val="{{ true }}">
+        <a href="Essay 15 - When reading is nearly free.dc.html" style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--line); color:#1A1917" style-hover="color:var(--a)">
+          <span aria-hidden="true" style="flex:0 0 clamp(150px, 20vw, 232px); min-width:0; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-side-letter-register.png') center / cover"></span>
+          <span style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column"><span style="display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12.5px; color:#6E6D67"><span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#1A1917">No. 15</span><span>Strategy</span><span>6 min read</span></span><span style="margin:10px 0 0; font-size:clamp(20px, 1.9vw, 24px); letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">When reading is nearly free</span><span style="margin:8px 0 0; max-width:620px; font-size:15px; line-height:1.55; color:#55544E; text-wrap:pretty">The cost of having a model read a document keeps falling. In fund operations, the constraint is moving from how much can be read to how much can be verified and signed. Plan for that shift now.</span></span>
+        </a>
+        </sc-if>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Subscribe" style="padding:96px 40px 0">
+  <div style="max-width:1280px; margin:0 auto; display:flex">
+    <div style="position:relative; flex:1 1 480px; min-width:0; overflow:hidden; border-radius:20px; background:#B8321F; color:#FFFFFF; padding:clamp(28px,3vw,40px)">
+      <img src="assets/subscribe-wash.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%" />
+      <div style="position:absolute; inset:0; background:linear-gradient(100deg, rgba(74,16,10,0.62) 0%, rgba(74,16,10,0.34) 55%, rgba(74,16,10,0.06) 100%)"></div>
+      <div style="position:relative">
+        <div style="font-size:24px; letter-spacing:-0.025em; line-height:1.2; color:#FFFFFF; text-shadow:0 1px 14px rgba(74,16,10,0.35)">Get new essays by email</div>
+        <div style="margin:8px 0 0; font-size:15px; line-height:1.5; color:rgba(255,255,255,0.92); text-shadow:0 1px 12px rgba(74,16,10,0.35)">One email when we publish. Nothing else.</div>
+        <sc-if value="{{ notSub }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ subscribe }}" style="display:flex; gap:6px; margin:24px 0 0; max-width:480px; padding:5px; border-radius:10px; background:#FFFFFF">
+          <input type="email" required="{{ true }}" placeholder="Work email" aria-label="Work email" style="flex:1 1 auto; min-width:0; height:42px; padding:0 12px; border:0; background:transparent; font:inherit; font-size:15px; color:#1A1917; outline:none" />
+          <button type="submit" style="flex:none; height:42px; padding:0 20px; border:0; border-radius:7px; background:#157F52; color:#FFFFFF; font:inherit; font-size:14.5px; font-weight:500; cursor:pointer" style-hover="background:#0F6A43">Subscribe</button>
+        </form>
+        </sc-if>
+        <sc-if value="{{ sub }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; align-items:center; gap:10px; height:52px; margin:24px 0 0; font-size:15px"><span style="width:8px; height:8px; border-radius:50%; background:#6FCF97"></span>You are on the list.</div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Closing" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+  <div style="position:relative; overflow:hidden; max-width:1280px; margin:0 auto; border:1px solid var(--line); border-radius:20px; background:#E8E2D2 url('assets/valley-pastel.png') center 60% / cover; padding:clamp(48px,6vw,88px) clamp(32px,5vw,72px); display:flex; gap:48px; flex-wrap:wrap; align-items:flex-end; justify-content:space-between">
+    <div style="position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(248,246,240,0.7) 0%, rgba(248,246,240,0.5) 60%, rgba(248,246,240,0.35) 100%)"></div>
+    <div style="position:relative; flex:3 1 480px; min-width:0">
+      <div style="font-size:13px; letter-spacing:-0.005em; color:#2C2B27">Start</div>
+      <h2 style="margin:22px 0 0; max-width:760px; font-size:clamp(32px, 3.6vw, 52px); font-weight:400; letter-spacing:-0.035em; line-height:1.04; text-wrap:balance">Talk to the team behind these essays.<br />A two-week audit starts with one process.</h2>
+      <p style="margin:20px 0 0; max-width:560px; font-size:16.5px; line-height:1.6; color:#2C2B27; text-wrap:pretty">We price the build against the baseline the audit measures, and you leave with a ranked use-case ledger either way.</p>
+    </div>
+    <div style="position:relative; display:flex; flex-direction:column; gap:12px; align-items:flex-start">
+      <a href="AI Engineering.dc.html#engagement" style="display:inline-flex; align-items:center; height:46px; padding:0 24px; background:#1A1917; color:#FFFFFF; border-radius:6px; font-size:15px; font-weight:500; letter-spacing:-0.01em" style-hover="background:var(--a); color:#FFFFFF">Book a two-week audit</a>
+    </div>
+  </div>
+</section>
+
+<footer data-screen-label="Footer" style="padding:70px 40px 40px">
+  <div style="max-width:1280px; margin:0 auto">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr))">
+      <div style="padding:0 28px 0 0; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Services</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="AI Engineering.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">AI Engineering</a>
+          <a href="AI Transformation.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">AI Transformation</a>
+          <a href="3264 Home.dc.html#capabilities" style="color:var(--sec)" style-hover="color:var(--a)">Deployment &amp; Run</a>
+          <a href="3264 Home.dc.html#capabilities" style="color:var(--sec)" style-hover="color:var(--a)">Evaluation suites</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Industries</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Private Credit.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Private Credit</a>
+          <a href="Private Equity.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Private Equity</a>
+          <a href="3264 Home.dc.html#industries" style="color:var(--sec)" style-hover="color:var(--a)">Fund Management</a>
+          <a href="3264 Home.dc.html#industries" style="color:var(--sec)" style-hover="color:var(--a)">Asset Management</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Company</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Company.dc.html#who" style="color:var(--sec)" style-hover="color:var(--a)">Who we are</a>
+          <a href="Company.dc.html#how" style="color:var(--sec)" style-hover="color:var(--a)">How we work</a>
+          <a href="3264 Home.dc.html#work" style="color:var(--sec)" style-hover="color:var(--a)">Case studies</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Resources</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="#top" style="color:var(--sec)" style-hover="color:var(--a)">Playbooks</a>
+          <a href="3264 Home.dc.html#playbooks" style="color:var(--sec)" style-hover="color:var(--a)">Field notes</a>
+          <a href="Company.dc.html#how" style="color:var(--sec)" style-hover="color:var(--a)">Security</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Connect</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="AI Engineering.dc.html#engagement" style="color:var(--sec)" style-hover="color:var(--a)">Book a call</a>
+          <a href="mailto:hello@3264.ai" style="color:var(--sec)" style-hover="color:var(--a)">hello@3264.ai</a>
+          <a href="AI Engineering.dc.html#engagement" style="color:var(--sec)" style-hover="color:var(--a)">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin:64px 0 0; padding-top:22px; border-top:1px solid var(--line2); font-size:13px; letter-spacing:-0.005em; color:var(--mut)">
+      <div style="display:flex; align-items:center; gap:11px; min-width:0">
+        <span style="font-size:15px; font-weight:500; letter-spacing:-0.03em; color:#1A1917">3264<span>.ai</span></span>
+        <span>&copy; 2026 Bearing Deployment Company Inc. All rights reserved.</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px">
+        <span style="display:flex; align-items:center; gap:7px"><span style="width:6px; height:6px; border-radius:50%; background:var(--a)"></span>All systems operational</span>
+      </div>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { cat: "All", sub: false };
+  E = { e01: "Engineering", e02: "Governance", e03: "Strategy", e04: "Product", e05: "Engineering", e06: "Strategy", e07: "Engineering", e08: "Engineering", e09: "Engineering", e10: "Engineering", e11: "Strategy", e12: "Operations", e13: "Engineering", e14: "Engineering", e15: "Strategy" };
+  pickCat = (e) => { this.setState({ cat: e.currentTarget.getAttribute("data-cat") }); };
+  subscribe = (e) => { e.preventDefault(); this.setState({ sub: true }); };
+  renderVals() {
+    const cat = this.state.cat, v = {}, count = {}; let n = 0;
+    Object.keys(this.E).forEach((id) => { const c = this.E[id], on = cat === "All" || cat === c; v[id] = on; if (on) n++; count[c] = (count[c] || 0) + 1; });
+    const cats = ["All", "Engineering", "Strategy", "Governance", "Product", "Operations"].map((name) => { const on = name === cat; return { name, n: name === "All" ? Object.keys(this.E).length : count[name] || 0, on: String(on), bg: on ? "#1A1917" : "#FFFFFF", fg: on ? "#FFFFFF" : "#1A1917", bd: on ? "#1A1917" : "rgba(20,20,18,0.13)", nc: on ? "rgba(255,255,255,0.7)" : "#6E6D67" }; });
+    return { cats, pickCat: this.pickCat, v, showFeat: cat === "All", listLabel: cat === "All" ? "All essays" : cat, listCount: n + (n === 1 ? " essay" : " essays"), sub: this.state.sub, notSub: !this.state.sub, subscribe: this.subscribe };
+  }
+}
+</script>
+</body>
+</html>

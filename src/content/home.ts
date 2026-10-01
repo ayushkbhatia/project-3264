@@ -13,6 +13,7 @@ export const routes = {
   privateCredit: "/industries/private-credit",
   privateEquity: "/industries/private-equity",
   playbooks: "/playbooks",
+  essays: "/essays",
   company: "/company",
   companyWho: "/company#who",
   companyHow: "/company#how",
@@ -30,6 +31,7 @@ export const nav: Link[] = [
   { label: "Industries", href: "#industries" },
   { label: "Work", href: "#work" },
   { label: "Playbooks", href: routes.playbooks },
+  { label: "Essays", href: routes.essays },
   { label: "Company", href: routes.company },
 ];
 
@@ -234,9 +236,10 @@ export const playbooks = {
   eyebrow: "06 / Playbooks",
   title: "What we have learned, written down.",
   items: [
-    { eyebrow: "Playbook · 12 pages", title: "Instrumenting a workflow before you automate it", href: "#playbooks" },
-    { eyebrow: "Note", title: "Why document extraction pilots stall at 80% accuracy", href: "#playbooks" },
-    { eyebrow: "Note", title: "A procurement checklist for AI vendors, from the build side", href: "#playbooks" },
+    // The three field notes are essays now (design_handoff_essays marks them as the home page's).
+    { eyebrow: "Playbook · 12 pages", title: "Instrumenting a workflow before you automate it", href: `${routes.essays}/instrumenting-a-workflow-before-you-automate-it` },
+    { eyebrow: "Note", title: "Why document extraction pilots stall at 80% accuracy", href: `${routes.essays}/why-document-extraction-pilots-stall-at-80-accuracy` },
+    { eyebrow: "Note", title: "A procurement checklist for AI vendors, from the build side", href: `${routes.essays}/a-procurement-checklist-for-ai-vendors-from-the-build-side` },
   ],
 } as const;
 
@@ -286,7 +289,7 @@ export const footer = {
       head: "Resources",
       links: [
         { label: "Playbooks", href: routes.playbooks },
-        { label: "Field notes", href: "#playbooks" },
+        { label: "Essays", href: routes.essays },
         { label: "Security", href: routes.companyHow },
       ],
     },

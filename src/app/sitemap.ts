@@ -1,4 +1,6 @@
 import type { MetadataRoute } from "next";
+import { essayHref } from "@/content/essays";
+import { getEssays } from "@/content/essays-source";
 
 // Pages that exist. The nav's other routes (content/home.ts `routes`) 404 until those pages
 // ship; add each one here when it does.
@@ -16,5 +18,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: new URL("/playbooks/investor-reporting", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },
     { url: new URL("/playbooks/side-letter-register", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },
     { url: new URL("/playbooks/mandate-guardrails", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },
+    { url: new URL("/essays", origin).href, changeFrequency: "weekly", priority: 0.8 },
+    ...getEssays().map(({ front }) => ({
+      url: new URL(essayHref(front.slug), origin).href,
+      lastModified: front.date,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
   ];
 }

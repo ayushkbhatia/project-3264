@@ -6,20 +6,22 @@ import { Button, SmartLink, Wordmark } from "./primitives";
 export type { HeaderNavItem };
 
 // The nav is hidden (not removed: the invisible nav is the spacer that keeps the button
-// right-aligned) once it no longer fits on one line. With `menu`, a menu button beside the CTA
-// takes over below that width (MobileMenu.tsx, designed with the Playbooks page); without it,
-// the nav is simply hidden there.
-// - "940": the home page. Its nav needs ~921px (wordmark + 48 + 588 of links + 48 + button +
-//   80 of padding); below that the reference wraps every two-word link and pushes "Book a
-//   call" off the right edge. 940 is also where Capabilities goes single-column.
-// - "1000": Playbooks (design_handoff_playbooks/specs/08), whose "Book an audit" nav fits to
-//   ~950px.
-// - "1024": Private Credit, whose longer "Book a platform review" button makes the nav wrap
-//   below ~1000px (spec 09 asks for the collapse below 1024).
+// right-aligned) below the page's collapse width. With `menu`, a menu button beside the CTA takes
+// over below that width (MobileMenu.tsx, designed with the Playbooks page); without it, the nav is
+// simply hidden there. Since Essays joined the nav (design_handoff_essays) its seven links ease
+// their gaps and type with the viewport, and each collapse width sits above the narrowest width
+// at which that page's links still fit (measured with qa/es-a11y.mjs's nav check), so the nav's
+// sideways-scroll fallback never shows:
+// - "940": the home page, whose short "Book a call" leaves the links fitting down to 861px. 940
+//   is also where Capabilities goes single-column.
+// - "1000": Playbooks and Essays and their article pages (design_handoff_playbooks/specs/08),
+//   "Book an audit": fits down to 910px.
+// - "1024": Private Credit (spec 09), whose longer "Book a platform review" fits down to 993px;
+//   and AI Engineering.
 const COLLAPSE = {
-  "940": "max-[940px]:invisible max-[940px]:w-0 max-[940px]:overflow-hidden",
-  "1000": "max-[999.98px]:invisible max-[999.98px]:w-0 max-[999.98px]:overflow-hidden",
-  "1024": "max-[1023.98px]:invisible max-[1023.98px]:w-0 max-[1023.98px]:overflow-hidden",
+  "940": "max-[940px]:invisible max-[940px]:m-0 max-[940px]:w-0 max-[940px]:overflow-hidden max-[940px]:p-0",
+  "1000": "max-[999.98px]:invisible max-[999.98px]:m-0 max-[999.98px]:w-0 max-[999.98px]:overflow-hidden max-[999.98px]:p-0",
+  "1024": "max-[1023.98px]:invisible max-[1023.98px]:m-0 max-[1023.98px]:w-0 max-[1023.98px]:overflow-hidden max-[1023.98px]:p-0",
 } as const;
 
 // Sticky, blurred, 68px. Both pages' motion modules pin below it (PlatformSequence finds it
@@ -47,7 +49,7 @@ export function Header({
   // On phones this is the only header action, so it gets a 40px tap target there (38 + the
   // border); from 768px up it is the reference's 38px.
   const cta = (
-    <Button href={ctaLink.href} variant="header" className="max-md:h-[38px]">
+    <Button href={ctaLink.href} variant="header" className="flex-none max-md:h-[38px]">
       {ctaLink.label}
     </Button>
   );
@@ -56,11 +58,19 @@ export function Header({
       {/* Below 640px the nav is hidden but still a flex item, so both 48px gaps would stand
           either side of nothing; they shrink there, and the gutter too on the narrowest
           phones, so the longer "Book a platform review" fits at 320px. */}
-      <div className="mx-auto box-content flex h-[68px] max-w-[1280px] items-center gap-12 px-6 max-sm:gap-3 max-[380px]:px-4 md:px-10">
+      <div className="mx-auto box-content flex h-[68px] max-w-[1280px] items-center gap-[clamp(20px,3vw,48px)] px-6 max-sm:gap-3 max-[380px]:px-4 md:px-10">
         <SmartLink href={homeHref} className="text-[19px]">
           <Wordmark />
         </SmartLink>
-        <nav aria-label="Primary" className={`flex flex-1 gap-[30px] text-[14px] text-sec ${COLLAPSE[collapseBelow]}`}>
+        {/* Seven links (Essays joined the six, design_handoff_essays): the gaps and type ease down
+            with the viewport, and if the links still do not fit before the page's collapse width
+            they scroll sideways inside the nav, faded at its right edge. The 6px of padding above
+            and below (and 4px left, given back by the margin) keep the links' focus rings inside
+            the scrolling box, which would otherwise clip them. */}
+        <nav
+          aria-label="Primary"
+          className={`-my-1.5 -ml-1 flex min-w-0 flex-1 gap-[clamp(14px,1.9vw,30px)] overflow-x-auto py-1.5 pr-7 pl-1 text-[clamp(13px,1.5vw,14px)] whitespace-nowrap text-sec [mask-image:linear-gradient(90deg,#000_calc(100%-28px),transparent)] [scrollbar-width:none] ${COLLAPSE[collapseBelow]}`}
+        >
           {nav.map((item) => (
             <SmartLink
               key={item.label}
