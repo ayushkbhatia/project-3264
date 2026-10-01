@@ -257,6 +257,14 @@ the README.
   `node qa/es-a11y.mjs` (axe, outline, Tab sweep, filter and URL, anchors, copy link, scroll-spy,
   phone bar, overflow, and every page's nav fit at its collapse width).
 
+## Share metadata
+
+A page that sets `openGraph` replaces the root layout's, and with it the share image that
+`src/app/opengraph-image.png` supplies. So pages build their metadata with `pageMetadata` from
+`src/app/shared-metadata.ts`, which names the image again with the site name and locale; the X
+card follows og:image. `node qa/share-meta.mjs` checks every sitemap page's share card against
+the production build on :3100.
+
 ## Environment
 
 Copy `.env.example` to `.env.local` and fill in the values. `.env.local` is
