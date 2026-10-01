@@ -1,14 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { subscribe as copy } from "@/content/playbooks";
-import { subscribe } from "./subscribe";
+import { subscribe, type SubscribeList } from "./subscribe";
 
 type Status = "idle" | "submitting" | "success" | "invalid" | "error";
 
 // Survives the card unmounting while the library is filtered (the prototype kept `sub` in page
 // state for the same reason): back to browsing, the card still says "You are on the list."
-let subscribedThisVisit = false;
+// Kept per list, so signing up for playbooks does not read as signed up for essays.
+const subscribedThisVisit = new Set<SubscribeList>();
 
 /**
  * The subscribe card's form (specs/04): idle → submitting → success, with an inline message for
@@ -22,13 +23,14 @@ let subscribedThisVisit = false;
  * the card's type rather than as the browser's bubble. Focus rings are white here: the accent
  * does not read against the red wash.
  */
-export function SubscribeForm() {
-  const [status, setStatus] = useState<Status>(() => (subscribedThisVisit ? "success" : "idle"));
+export function SubscribeForm({ list }: { list: SubscribeList }) {
+  const [status, setStatus] = useState<Status>(() => (subscribedThisVisit.has(list) ? "success" : "idle"));
   const [buttonWidth, setButtonWidth] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
   const hadFocus = useRef(false);
+  const messageId = useId();
 
   // The form (and the focused button with it) is replaced by the success line: move focus there
   // rather than dropping it on the page, which also reads the line out.
@@ -50,8 +52,8 @@ export function SubscribeForm() {
     setButtonWidth(buttonRef.current?.offsetWidth ?? null);
     setStatus("submitting");
     try {
-      await subscribe(input.value);
-      subscribedThisVisit = true;
+      await subscribe(input.value, list);
+      subscribedThisVisit.add(list);
       setStatus("success");
     } catch {
       setStatus("error");
@@ -91,7 +93,7 @@ export function SubscribeForm() {
           placeholder={copy.placeholder}
           aria-label={copy.placeholder}
           aria-invalid={status === "invalid" || undefined}
-          aria-describedby={message ? "subscribe-message" : undefined}
+          aria-describedby={message ? messageId : undefined}
           readOnly={submitting}
           onInput={() => { if (status === "invalid" || status === "error") setStatus("idle"); }}
           className="box-content h-[42px] min-w-0 flex-auto border-0 bg-transparent px-3 py-0 text-[15px] text-ink outline-none read-only:opacity-60"
@@ -108,7 +110,7 @@ export function SubscribeForm() {
         </button>
       </form>
       {message ? (
-        <p id="subscribe-message" role="alert" className="mt-2.5 mb-0 text-[13px] text-white/92">
+        <p id={messageId} role="alert" className="mt-2.5 mb-0 text-[13px] text-white/92">
           {message}
         </p>
       ) : null}

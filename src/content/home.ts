@@ -13,6 +13,7 @@ export const routes = {
   privateCredit: "/industries/private-credit",
   privateEquity: "/industries/private-equity",
   playbooks: "/playbooks",
+  essays: "/essays",
   company: "/company",
   companyWho: "/company#who",
   companyHow: "/company#how",

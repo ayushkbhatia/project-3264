@@ -1,17 +1,27 @@
 import Image from "next/image";
 import { SmartLink } from "@/components/home/primitives";
-import { closing } from "@/content/playbooks";
+import { closing as playbooksClosing } from "@/content/playbooks";
 import { CLOSING_SIZES, closingWash } from "./media";
 
-// Closing tile (specs/07), shown while browsing and filtering: the valley wash under a pale
-// veil, the pitch left and the button bottom right (under the text when the row is narrow).
+// Closing tile (Playbooks specs/07; the Essays index shares it with its own copy), shown while
+// browsing and filtering: the valley wash under a pale veil, the pitch left and the button
+// bottom right (under the text when the row is narrow).
 //
 // Content-box, as in the reference: the tile's 1280px max-width is its content width, and its
 // padding and border sit outside it. So it spans the section's full inner width (1360px at
 // 1440, 40px wider each side than the column above it) and tops out at 1426px. Kept: that
 // breakout is the design as drawn (screenshots/desktop-1440/09-closing.png).
 
-export function ClosingCta() {
+type Closing = {
+  label: string;
+  /** Two lines with a hard break. */
+  titleLines: readonly [string, string];
+  body: string;
+  cta: { label: string; href: string };
+};
+
+/** The Playbooks page's closing by default; the Essays index passes its own copy. */
+export function ClosingCta({ closing = playbooksClosing }: { closing?: Closing }) {
   return (
     <section data-screen-label="Closing" className="border-b border-line2 px-10 py-[118px] max-[479.98px]:px-5">
       <div className="relative mx-auto box-content flex max-w-[1280px] flex-wrap items-end justify-between gap-12 overflow-hidden rounded-[20px] border border-line bg-[#E8E2D2] px-[clamp(32px,5vw,72px)] py-[clamp(48px,6vw,88px)]">

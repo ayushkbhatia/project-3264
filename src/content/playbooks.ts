@@ -41,8 +41,10 @@ export const articleNav = siteNav({ label: "Playbooks", href: routes.playbooks, 
 
 export const headerCta: Link = { label: "Book an audit", href: audit };
 
-// "Deployment & Run", "Evaluation suites" and LinkedIn are placeholders in the handoff too.
-function siteFooter(playbooksHref: string): FooterColumn[] {
+// "Deployment & Run", "Evaluation suites" and LinkedIn are placeholders in the handoff too. The
+// Essays pages share this footer (design_handoff_essays), with Essays in place of the handoffs'
+// "Field notes": `playbooksHref` and `essaysHref` are "#top" on their own index pages.
+export function siteFooter(playbooksHref: string, essaysHref: string = routes.essays): FooterColumn[] {
   return [
     {
       head: "Services",
@@ -75,7 +77,7 @@ function siteFooter(playbooksHref: string): FooterColumn[] {
       links: [
         // the reference sets it in the ordinary link colour, not as the current page
         { label: "Playbooks", href: playbooksHref },
-        { label: "Field notes", href: "/#playbooks" },
+        { label: "Essays", href: essaysHref },
         { label: "Security", href: routes.companyHow },
       ],
     },
