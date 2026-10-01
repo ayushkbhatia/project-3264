@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>When the people who run the process can change the software — 3264.ai</title>
+<meta name="description" content="Operators can now describe a tool and have a coding agent build it in an afternoon. The speed is real. In a regulated firm it needs a workshop, a gate and a record, or the afternoon's work becomes next year's audit finding." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+html { scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+html, body { margin:0; padding:0; overflow-x:clip; }
+body { --a:#157F52; --bad:#C4341E; --line:rgba(20,20,18,0.13); --line2:rgba(20,20,18,0.075); --mut:#6E6D67; --sec:#55544E; background:#F6F5F2; color:#1A1917; font-family:"Instrument Sans","Helvetica Neue",Helvetica,sans-serif; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { color:inherit; text-decoration:none; }
+a:hover { color:var(--a); }
+::selection { background:var(--a); color:#FFFFFF; }
+</style>
+</helmet>
+
+<header style="position:sticky; top:0; z-index:100; backdrop-filter:blur(14px); background:rgba(246,245,242,0.78); border-bottom:1px solid var(--line2)">
+  <div style="max-width:1280px; margin:0 auto; padding:0 40px; height:68px; display:flex; align-items:center; gap:clamp(20px, 3vw, 48px)">
+    <a href="3264 Home.dc.html" style="font-size:19px; font-weight:500; letter-spacing:-0.03em">3264<span>.ai</span></a>
+    <nav style="display:flex; gap:clamp(14px, 1.9vw, 30px); white-space:nowrap; min-width:0; overflow-x:auto; scrollbar-width:none; -webkit-mask-image:linear-gradient(90deg, #000 calc(100% - 28px), transparent); mask-image:linear-gradient(90deg, #000 calc(100% - 28px), transparent); padding-right:28px; font-size:clamp(13px, 1.5vw, 14px); color:var(--sec); flex:1">
+      <a href="AI Engineering.dc.html">AI Engineering</a>
+      <a href="AI Transformation.dc.html">AI Transformation</a>
+      <a href="3264 Home.dc.html#industries">Industries</a>
+      <a href="3264 Home.dc.html#work">Work</a>
+      <a href="Playbooks.dc.html">Playbooks</a>
+        <a href="Essays.dc.html" style="color:#1A1917">Essays</a>
+      <a href="Company.dc.html">Company</a>
+    </nav>
+    <a href="AI Engineering.dc.html#engagement" style="flex:none; white-space:nowrap; display:flex; align-items:center; gap:10px; height:36px; padding:0 16px; border:1px solid var(--line); border-radius:6px; background:#FFFFFF; font-size:13.5px; letter-spacing:-0.01em" style-hover="border-color:var(--a); color:var(--a)">Book an audit</a>
+  </div>
+  <div ref="{{ progRef }}" aria-hidden="true" style="position:absolute; left:0; right:0; bottom:-1px; height:2px; background:#157F52; transform:scaleX(0); transform-origin:0 50%"></div>
+</header>
+
+<sc-if value="{{ noSide }}" hint-placeholder-val="{{ false }}">
+<div style="position:sticky; top:68px; z-index:90; background:rgba(246,245,242,0.94); backdrop-filter:blur(12px); border-bottom:1px solid #E8E5DF">
+  <div style="position:relative; max-width:760px; margin:0 auto; padding:0 clamp(20px, 4vw, 40px); box-sizing:border-box">
+    <button type="button" onClick="{{ toggleMini }}" aria-expanded="{{ miniA }}" style="width:100%; height:44px; display:flex; align-items:center; gap:14px; padding:0; background:none; border:0; font:inherit; color:#1A1917; cursor:pointer; text-align:left">
+      <span style="flex:none; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67">On this page</span>
+      <span style="flex:1 1 auto; min-width:0; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ curLabel }}</span>
+      <span style="flex:none; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:14px; color:#55544E">{{ miniIcon }}</span>
+    </button>
+    <sc-if value="{{ miniOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute; left:clamp(12px, 3vw, 32px); right:clamp(12px, 3vw, 32px); top:48px; box-sizing:border-box; padding:6px; border:1px solid #E8E5DF; border-radius:12px; background:#FBFAF8; box-shadow:0 24px 48px -20px rgba(20,20,18,0.25); display:grid; gap:2px; max-height:70vh; overflow:auto">
+      <sc-for list="{{ toc }}" as="t" hint-placeholder-count="10">
+      <a href="{{ t.href }}" onClick="{{ closeMini }}" style="display:flex; gap:10px; align-items:baseline; padding:8px 10px; border-radius:8px; background:{{ t.bg }}; color:{{ t.fg }}; font-size:13.5px" style-hover="color:#1A1917"><span style="flex:0 0 18px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; color:#6E6D67">{{ t.num }}</span><span>{{ t.label }}</span></a>
+      </sc-for>
+    </div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
+<div style="max-width:1048px; margin:0 auto; padding:0 clamp(20px, 4vw, 40px); box-sizing:border-box; display:flex; justify-content:center; gap:88px; align-items:flex-start">
+  <sc-if value="{{ sideOn }}" hint-placeholder-val="{{ true }}">
+  <aside style="flex:0 0 200px; position:sticky; top:40px; max-height:calc(100vh - 40px); overflow-y:auto; box-sizing:border-box; padding:60px 0 32px">
+    <a href="Essays.dc.html" style="display:inline-flex; font-size:13.5px; color:#55544E">← All essays</a>
+    <div style="margin:32px 0 0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67">On this page</div>
+    <nav aria-label="On this page" style="position:relative; margin:10px 0 0; padding:0 0 0 12px">
+      <span aria-hidden="true" style="position:absolute; left:0; top:0; bottom:0; width:1.5px; background:#E8E5DF"></span>
+      <span ref="{{ railRef }}" aria-hidden="true" style="position:absolute; left:0; top:0; width:1.5px; height:0; background:#1A1917; transition:height 200ms linear"></span>
+      <sc-for list="{{ toc }}" as="t" hint-placeholder-count="10">
+      <div data-toc="{{ t.id }}" style="padding:1px 0">
+        <a href="{{ t.href }}" style="display:flex; gap:8px; align-items:baseline; padding:6px 10px; border-radius:7px; background:{{ t.bg }}; color:{{ t.fg }}; font-size:13px; letter-spacing:-0.005em; line-height:1.3; transition:background 160ms ease, color 160ms ease" style-hover="color:#1A1917"><span style="flex:0 0 17px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; color:#6E6D67">{{ t.num }}</span><span>{{ t.label }}</span></a>
+        <sc-if value="{{ t.hasSubs }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid; gap:1px; margin:3px 0 6px 35px">
+          <sc-for list="{{ t.subs }}" as="u" hint-placeholder-count="5">
+          <a href="{{ u.href }}" style="display:block; padding:4px 0 4px 10px; border-left:1px solid {{ u.bd }}; font-size:12px; line-height:1.35; color:{{ u.fg }}" style-hover="color:#1A1917">{{ u.label }}</a>
+          </sc-for>
+        </div>
+        </sc-if>
+      </div>
+      </sc-for>
+    </nav>
+    <div style="margin:32px 0 0; padding:18px; border-radius:12px; background:#EEEBE4">
+      <div style="font-size:14.5px; letter-spacing:-0.012em; line-height:1.4">Questions about this essay? Talk to the team.</div>
+      <a href="{{ ctaHref }}" style="margin:12px 0 0; display:flex; align-items:center; justify-content:center; height:36px; padding:0 12px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-size:12.5px; font-weight:500; letter-spacing:-0.005em" style-hover="background:var(--a); color:#FFFFFF">{{ cta }}</a>
+    </div>
+  </aside>
+  </sc-if>
+
+  <main ref="{{ mainRef }}" style="flex:1 1 auto; min-width:0; max-width:680px; padding:60px 0 0">
+
+    <div id="top" data-screen-label="Hero" style="scroll-margin-top:120px">
+      <sc-if value="{{ noSide }}" hint-placeholder-val="{{ false }}"><a href="Essays.dc.html" style="display:inline-flex; margin:0 0 24px; font-size:13.5px; color:#55544E">← All essays</a></sc-if>
+      <div style="font-size:13px; color:#55544E">Essay · <a href="Essays.dc.html" style="color:#1A1917; border-bottom:1px solid rgba(20,20,18,0.25)" style-hover="color:var(--a); border-color:var(--a)">Strategy</a></div>
+      <h1 style="margin:14px 0 0; font-size:clamp(34px, 3.8vw, 48px); font-weight:400; letter-spacing:-0.038em; line-height:1.02">When the people who run the process can change the software</h1>
+      <p style="margin:16px 0 0; font-size:clamp(16.5px, 1.4vw, 18.5px); line-height:1.45; letter-spacing:-0.01em; color:#55544E; text-wrap:pretty">Operators can now describe a tool and have a coding agent build it in an afternoon. The speed is real. In a regulated firm it needs a workshop, a gate and a record, or the afternoon's work becomes next year's audit finding.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:6px 16px; align-items:center; margin:22px 0 0; padding:12px 0 0; border-top:1px solid #E8E5DF; font-size:12.5px; color:#6E6D67"><span>29 September 2026</span><sc-if value="{{ hasRead }}" hint-placeholder-val="{{ false }}"><span>{{ readLabel }}</span></sc-if><button type="button" onClick="{{ copyLink }}" style="margin:0 0 0 auto; padding:0; background:none; border:0; font:inherit; font-size:12.5px; color:#1A1917; cursor:pointer" style-hover="color:var(--a)">{{ copyLabel }}</button></div>
+      <div style="display:flex; align-items:center; gap:12px; margin:26px 0 0"><span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background:#1A1917; color:#F4F3F0; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; letter-spacing:0.02em">3264</span><span style="display:flex; flex-direction:column"><span style="font-size:14px; line-height:1.3">3264.ai</span><span style="font-size:12.5px; line-height:1.3; color:#6E6D67">Field notes · No. 06</span></span></div>
+      
+      <figure style="margin:32px 0 0"><div aria-hidden="true" style="aspect-ratio:16 / 9; border-radius:16px; border:1px solid rgba(20,20,18,0.06); background:#E2DFD8 url('assets/playbooks/loan-ops-ledger.png') center / cover"></div></figure>
+    </div>
+
+    <section id="intro" data-screen-label="Introduction" style="padding:40px 0 0"><p style="margin:18px 0 0; font-size:19px; line-height:1.65; color:#1A1917; text-wrap:pretty">Something has shifted in the last two years. The people who run a process can now change the software that supports it. A fund controller describes a helper that matches administrator cash statements to expected capital call receipts. A coding agent writes it. It works, often on the first afternoon.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Some teams are going a step further and placing the coding agent next to the running system itself. A request typed into a chat window becomes a deployed change within minutes: no ticket, no queue, no release train. The person who noticed the problem asks for the fix, watches it ship and uses it the same hour.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">We think this is one of the most useful things to happen to back-office software in a long time. We also think a regulated firm that adopts it without structure will regret it. Both views are worth taking seriously.</p></section>
+
+    <section id="why-the-collapsed-loop-is-so-attractive" data-screen-label="Why the collapsed loop is so attractive" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Why the collapsed loop is so attractive</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Traditional change management puts distance between the person who feels a problem and the person who fixes it. A reconciliation analyst notices that one administrator formats dates differently. That becomes a ticket, the ticket joins a backlog, and the fix arrives three sprints later, by which time the analyst has built a workaround in a spreadsheet.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">When the fix can be requested in plain language and built in minutes, three good things happen. Tools evolve at the speed of the process rather than the speed of the IT calendar. The people with the most context specify the change directly, so less is lost in translation. And small annoyances actually get fixed, instead of accumulating into the manual workarounds that make operations fragile.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">There is a quieter benefit too. If users see only the result and not the code, they can shape software without learning to write it. That widens who gets to improve a process.</p></section>
+
+    <section id="why-regulated-firms-should-hesitate" data-screen-label="Why regulated firms should hesitate" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Why regulated firms should hesitate</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Finance has seen this pattern before. Spreadsheets gave operators the power to build their own tools decades ago, and the industry has spent years managing the consequences under the heading of end-user computing risk. AI-built tools are end-user computing that writes itself, and they inherit every one of those risks, faster:</p><ol style="list-style:none; margin:20px 0 0; padding:0; display:grid; gap:12px"><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">01</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Untested logic reaches the books.</strong> A helper that computes accrued interest, built quickly and used in a NAV tie-out, spreads its error to every figure that depends on it.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">02</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Access sprawls.</strong> An agent that can change a production system needs production credentials. Put it next to production and it has them.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">03</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">The record goes missing.</strong> Who asked for the change, what changed, who checked it? Supervisors expect answers. The SEC's examination priorities for fiscal 2026 include how firms supervise their use of AI, including in back-office operations<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-1" style="color:#157F52; padding:0 1px">1</a></sup>. FINRA's 2026 report recommends prompt and output logs, model version tracking and human review<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-2" style="color:#157F52; padding:0 1px">2</a></sup>.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">04</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Documents become an attack surface.</strong> If the tools being changed read external documents, and the agent changing them can read those tools' inputs, text in a borrower package could end up steering a code change. Prompt injection is the top-ranked risk for LLM applications<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-3" style="color:#157F52; padding:0 1px">3</a></sup>.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">05</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Nobody owns the result.</strong> A tool nobody fully understands, built by someone who has since changed roles, is a key-person risk with no key person.</span></li></ol></section>
+
+    <section id="three-lanes-workshop-gate-production" data-screen-label="Three lanes: workshop, gate, production" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Three lanes: workshop, gate, production</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">The structure we recommend keeps the speed and removes most of the risk. It has three lanes.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">The workshop</strong> is a complete working copy of the environment, with realistic synthetic data: a fictional fund universe with investors, commitments, loans and agreements that behave like the real thing. Operators can request changes freely here, and the coding agent can build, run and test with broad permissions. Nothing in the workshop can reach production data, production credentials or anyone outside the firm.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">The gate</strong> is how a change moves from the workshop to production. It runs automated tests, the evaluation suite and security checks, and it collects the human reviews that the change's risk tier requires. For low-risk changes the gate is automatic and takes minutes. For high-risk changes it waits for people, as it should.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Production</strong> is pinned and monitored. Changes arrive only through the gate. Actions with consequences, such as releasing money or sending anything outside the firm, still run under a named approver's identity.</p></section>
+
+    <section id="who-can-change-what" data-screen-label="Who can change what" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Who can change what</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">The gate is only fast if it is proportionate. A sensible starting point:</p><figure style="margin:32px 0 0"><div style="border-radius:16px; padding:12px; background:linear-gradient(rgba(251,250,248,0.72), rgba(251,250,248,0.72)), #EEEBE4 url('assets/playbooks/loan-ops-ledger.png') center / cover; border:1px solid rgba(20,20,18,0.06)"><div style="padding:14px 16px 8px; border-radius:11px; background:rgba(255,255,255,0.93); box-shadow:0 12px 32px -20px rgba(20,20,18,0.3)"><div style="overflow-x:auto"><table style="width:100%; min-width:540px; border-collapse:collapse; text-align:left"><thead><tr><th style="padding:0 14px 8px 0; border-bottom:1px solid #1A1917; font-size:11.5px; font-weight:500; line-height:1.4; color:#55544E; vertical-align:bottom">Change</th><th style="padding:0 14px 8px 0; border-bottom:1px solid #1A1917; font-size:11.5px; font-weight:500; line-height:1.4; color:#55544E; vertical-align:bottom">Risk</th><th style="padding:0 14px 8px 0; border-bottom:1px solid #1A1917; font-size:11.5px; font-weight:500; line-height:1.4; color:#55544E; vertical-align:bottom">Route to production</th></tr></thead><tbody><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">Report layout, column order, labels</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Low</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Automated checks only</td></tr><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">Saved filters, views, alert thresholds that are not controls</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Low to medium</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Automated checks plus the process owner's sign-off</td></tr><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">Wording in letter or notice templates</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Medium</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Compliance approval</td></tr><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">Calculations: fees, allocations, ratios, accruals</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">High</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Engineering review, unit tests against known cases, controller sign-off</td></tr><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">Data connections and permissions</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">High</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Engineering and security review</td></tr><tr><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#1A1917; font-weight:500; vertical-align:top">Anything that moves money or leaves the firm</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Highest</td><td style="padding:11px 14px 11px 0; border-bottom:1px solid #E8E5DF; font-size:13.5px; line-height:1.5; color:#2C2B27; font-weight:400; vertical-align:top">Full change control and four-eyes approval</td></tr></tbody></table></div></div></div></figure><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Most requests from operators sit in the top two rows. For those, the collapsed loop survives almost intact: ask, try it in the workshop, and ship through an automated gate in minutes. The slower routes apply to the small number of changes that could move a number in a report or a payment, which is exactly where a second pair of eyes earns its cost.</p><div style="margin:44px 0 0; box-sizing:border-box; display:flex; flex-wrap:wrap; gap:16px 28px; align-items:center; justify-content:space-between; padding:22px 24px; border-radius:16px; background:#1A1917; color:#F4F3F0"><div style="flex:1 1 340px; min-width:0"><div style="font-size:18px; letter-spacing:-0.018em; line-height:1.3">Talk to the team</div><p style="margin:6px 0 0; font-size:13.5px; line-height:1.55; color:rgba(244,243,240,0.8); text-wrap:pretty">Thirty minutes on one workflow: where its errors come from today, and what a harness would check before anything is relied on.</p></div><a href="{{ ctaHref }}" style="flex:none; display:inline-flex; align-items:center; height:40px; padding:0 18px; box-sizing:border-box; background:#F4F3F0; color:#1A1917; border-radius:6px; font-size:13.5px; font-weight:500" style-hover="background:#FFFFFF; color:#1A1917">{{ cta }}</a></div></section>
+
+    <section id="one-change-end-to-end" data-screen-label="One change, end to end" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">One change, end to end</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Here is how a typical request moves through the three lanes. A fund controller notices that one administrator has started sending cash statements with dates in a different format, and the receipt-matching helper now misses those lines. She types a request describing the problem and attaches an example file.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">In the workshop, the coding agent reproduces the failure against synthetic statements in the new format. It changes the parser and adds test cases for both formats. It then runs the full matching suite, including the awkward cases already in the synthetic universe: a short payment, a wire with the wrong reference, an investor paying two calls in one transfer.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Everything passes. But the change touches matching logic, which sits in the "calculations" row of the table above, so the gate does not deploy it automatically. An engineer reviews the diff and the test evidence, the controller confirms the behaviour against her example, and the change deploys that afternoon. Total elapsed time: hours, not sprints. Total risk added: a reviewed, tested change with its reasons on record.</p></section>
+
+    <section id="the-record-is-the-documentation" data-screen-label="The record is the documentation" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">The record is the documentation</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Every change that crosses the gate leaves a record:</p><ul style="margin:18px 0 0; padding:0 0 0 20px; display:grid; gap:10px; font-size:17px; line-height:1.7; color:#2C2B27"><li style="padding-left:2px; text-wrap:pretty">who asked, and in what words;</li><li style="padding-left:2px; text-wrap:pretty">the diff the agent produced;</li><li style="padding-left:2px; text-wrap:pretty">test and evaluation results, before and after;</li><li style="padding-left:2px; text-wrap:pretty">who reviewed it and who approved it;</li><li style="padding-left:2px; text-wrap:pretty">when it was deployed, and which version it replaced.</li></ul><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">That record does two jobs. It answers the supervisory questions above. And it is the documentation that end-user tools never had. A year later, anyone can see why a tool behaves the way it does, because the reason is attached to the change that made it so.</p></section>
+
+    <section id="what-it-takes-to-build" data-screen-label="What it takes to build" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">What it takes to build</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">The workshop only works if it is close enough to production that passing there means something. That takes engineering: the same schemas, the same integrations stubbed or sandboxed, synthetic data rich enough to include the awkward cases (an excused investor, a PIK election, an amended covenant definition), and an evaluation suite that runs in both places. It also takes feature flags and one-step rollback, so a change that slips through can be withdrawn as quickly as it arrived.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">The workshop's agent never holds production credentials. The deploy step runs from the gate under a service identity that can only deploy what passed.</p></section>
+
+    <section id="code-is-getting-cheap-protect-what-isn-t" data-screen-label="Code is getting cheap. Protect what isn't." style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Code is getting cheap. Protect what isn't.</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">When code can be regenerated in minutes, it stops being the durable asset. What lasts is the specification of what the tool must do, the tests and evaluation cases that prove it, and the record of each change. A firm that keeps those can rebuild any tool, switch coding agents, or change models without losing its footing. A firm that keeps only the code has kept the part that was easiest to replace.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Let the people who run the process shape their own tools. Make the path to production short, automatic where the risk is low, and impossible to skip.</p><a href="NAV Pack Review.dc.html" style="margin:40px 0 0; box-sizing:border-box; display:flex; flex-wrap:wrap; align-items:center; gap:16px 22px; padding:14px; border:1px solid #E8E5DF; border-radius:16px; background:#FBFAF8; color:#1A1917" style-hover="border-color:rgba(20,20,18,0.3); color:#1A1917"><span style="position:relative; flex:0 0 164px; height:88px; border-radius:11px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/nav-pack-review.png') center / cover"><span aria-hidden="true" style="position:absolute; left:50%; top:50%; height:52%; aspect-ratio:1 / 1; transform:translate(-50%, -50%); box-sizing:border-box; display:flex; align-items:center; justify-content:center; border-radius:28%; background:rgba(250,249,246,0.62); backdrop-filter:blur(18px) saturate(1.3); border:1px solid rgba(255,255,255,0.72); box-shadow:inset 0 1px 0 rgba(255,255,255,0.85), 0 18px 40px -16px rgba(20,20,18,0.38)"><svg viewBox="0 0 48 48" fill="none" stroke="#1A1917" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style="display:block; width:48%; height:48%"><path d="M15 9.5V8a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v26a2 2 0 0 1-2 2h-1.5"></path><rect x="9" y="12" width="24" height="30" rx="2"></rect><path d="m15 27.5 4.5 4.5 8-9"></path></svg></span></span><span style="flex:1 1 300px; min-width:0"><span style="display:block; font-size:12px; color:#6E6D67">Related playbook · Fund Management</span><span style="display:block; margin:4px 0 0; font-size:16px; letter-spacing:-0.015em; line-height:1.3">NAV Pack Review</span><span style="display:block; margin:4px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">Administrator NAV packs tied out line by line to your books, with every break explained before the CFO signs.</span></span><span style="flex:none; font-size:13px; padding:0 0 1px; border-bottom:1px solid rgba(20,20,18,0.3)">Read the playbook →</span></a></section>
+
+    <section id="sources" data-screen-label="Sources" style="padding:72px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:19px; font-weight:500; letter-spacing:-0.018em; line-height:1.3">Sources</h2><ol style="list-style:none; margin:16px 0 0; padding:0; border-top:1px solid #1A1917"><li id="ref-1" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">1</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">Examination Priorities Fiscal Year 2026 (PDF). SEC Division of Examinations, 2025-11. <a href="https://www.sec.gov/files/2026-exam-priorities.pdf" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">sec.gov</a></span></li><li id="ref-2" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">2</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">2026 FINRA Annual Regulatory Oversight Report (PDF), GenAI section. FINRA, 2025-12. <a href="https://www.finra.org/sites/default/files/2025-12/2026-annual-regulatory-oversight-report.pdf" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">finra.org</a></span></li><li id="ref-3" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">3</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">LLM01:2025 Prompt Injection. OWASP GenAI Security Project, 2024-11. <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">genai.owasp.org</a></span></li></ol></section>
+
+  </main>
+</div>
+
+<section data-screen-label="More essays" style="max-width:1048px; margin:0 auto; padding:120px clamp(20px, 4vw, 40px) 0; box-sizing:border-box">
+  <div style="display:flex; flex-wrap:wrap; gap:10px 24px; align-items:baseline; justify-content:space-between; padding:0 0 18px; border-bottom:1px solid #E8E5DF">
+    <h2 style="margin:0; font-size:clamp(22px, 2.2vw, 28px); font-weight:400; letter-spacing:-0.026em; line-height:1.15">More essays</h2>
+    <a href="Essays.dc.html" style="font-size:13.5px; color:#55544E" style-hover="color:var(--a)">All essays →</a>
+  </div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap:28px 20px; margin:24px 0 0">
+    <a href="Essay 03 - A procurement checklist for AI vendors.dc.html" style="display:flex; flex-direction:column; color:#1A1917" style-hover="color:var(--a)">
+      <span aria-hidden="true" style="display:block; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-mandate-guardrails.png') center / cover"></span>
+      <span style="margin:14px 0 0; font-size:12px; color:#6E6D67">No. 03 · Strategy</span>
+      <span style="margin:4px 0 0; font-size:17.5px; letter-spacing:-0.02em; line-height:1.25">A procurement checklist for AI vendors, from the build side</span>
+      <span style="margin:6px 0 0; font-size:13.5px; line-height:1.55; color:#55544E">The model is the one component every vendor can buy. The harness around it decides whether a system survives an audit, a model retirement and a bad quarter. These are the questions we would ask if we were sitting on your side of the table.</span>
+    </a>
+    <a href="Essay 11 - Why extraction pilots stall.dc.html" style="display:flex; flex-direction:column; color:#1A1917" style-hover="color:var(--a)">
+      <span aria-hidden="true" style="display:block; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-capital-call-flow.png') center / cover"></span>
+      <span style="margin:14px 0 0; font-size:12px; color:#6E6D67">No. 11 · Strategy</span>
+      <span style="margin:4px 0 0; font-size:17.5px; letter-spacing:-0.02em; line-height:1.25">Why document extraction pilots stall at 80% accuracy</span>
+      <span style="margin:6px 0 0; font-size:13.5px; line-height:1.55; color:#55544E">The demo reads the clean page. Production reads the scanned schedule, the amended definition and the table that breaks across two pages. The last fifth of the accuracy is where the work, and the risk, sits.</span>
+    </a>
+    <a href="Essay 15 - When reading is nearly free.dc.html" style="display:flex; flex-direction:column; color:#1A1917" style-hover="color:var(--a)">
+      <span aria-hidden="true" style="display:block; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-side-letter-register.png') center / cover"></span>
+      <span style="margin:14px 0 0; font-size:12px; color:#6E6D67">No. 15 · Strategy</span>
+      <span style="margin:4px 0 0; font-size:17.5px; letter-spacing:-0.02em; line-height:1.25">When reading is nearly free</span>
+      <span style="margin:6px 0 0; font-size:13.5px; line-height:1.55; color:#55544E">The cost of having a model read a document keeps falling. In fund operations, the constraint is moving from how much can be read to how much can be verified and signed. Plan for that shift now.</span>
+    </a>
+  
+  
+  
+  </div>
+</section>
+
+<section data-screen-label="Closing" style="padding:104px clamp(20px, 4vw, 40px); border-bottom:1px solid var(--line2)">
+  <div style="position:relative; overflow:hidden; max-width:968px; margin:0 auto; border:1px solid var(--line); border-radius:18px; background:#E8E2D2 url('assets/valley-pastel.png') center 60% / cover; padding:clamp(40px,5vw,64px) clamp(24px,4vw,56px); display:flex; gap:32px; flex-wrap:wrap; align-items:flex-end; justify-content:space-between">
+    <div style="position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(248,246,240,0.7) 0%, rgba(248,246,240,0.5) 60%, rgba(248,246,240,0.35) 100%)"></div>
+    <div style="position:relative; flex:3 1 420px; min-width:0">
+      <h2 style="margin:0; max-width:620px; font-size:clamp(26px, 2.8vw, 38px); font-weight:400; letter-spacing:-0.032em; line-height:1.08; text-wrap:balance">Bring one process. We will measure it.</h2>
+      <p style="margin:16px 0 0; max-width:520px; font-size:15px; line-height:1.6; color:#2C2B27; text-wrap:pretty">Thirty minutes on one workflow: where its errors come from today, and what a harness would check.</p>
+    </div>
+    <div style="position:relative; display:flex; flex-direction:column; gap:12px; align-items:flex-start">
+      <a href="{{ ctaHref }}" style="display:inline-flex; align-items:center; height:42px; padding:0 20px; background:#1A1917; color:#FFFFFF; border-radius:6px; font-size:14px; font-weight:500; letter-spacing:-0.005em" style-hover="background:var(--a); color:#FFFFFF">{{ cta }}</a>
+    </div>
+  </div>
+</section>
+
+<footer data-screen-label="Footer" style="padding:70px 40px 40px">
+  <div style="max-width:1280px; margin:0 auto">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr))">
+      <div style="padding:0 28px 0 0; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Services</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="AI Engineering.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">AI Engineering</a>
+          <a href="AI Transformation.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">AI Transformation</a>
+          <a href="3264 Home.dc.html#capabilities" style="color:var(--sec)" style-hover="color:var(--a)">Deployment &amp; Run</a>
+          <a href="3264 Home.dc.html#capabilities" style="color:var(--sec)" style-hover="color:var(--a)">Evaluation suites</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Industries</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Private Credit.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Private Credit</a>
+          <a href="Private Equity.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Private Equity</a>
+          <a href="3264 Home.dc.html#industries" style="color:var(--sec)" style-hover="color:var(--a)">Fund Management</a>
+          <a href="3264 Home.dc.html#industries" style="color:var(--sec)" style-hover="color:var(--a)">Asset Management</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Company</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Company.dc.html#who" style="color:var(--sec)" style-hover="color:var(--a)">Who we are</a>
+          <a href="Company.dc.html#how" style="color:var(--sec)" style-hover="color:var(--a)">How we work</a>
+          <a href="3264 Home.dc.html#work" style="color:var(--sec)" style-hover="color:var(--a)">Case studies</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Resources</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Playbooks.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Playbooks</a>
+          <a href="3264 Home.dc.html#playbooks" style="color:var(--sec)" style-hover="color:var(--a)">Field notes</a>
+          <a href="Company.dc.html#how" style="color:var(--sec)" style-hover="color:var(--a)">Security</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Connect</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="AI Engineering.dc.html#engagement" style="color:var(--sec)" style-hover="color:var(--a)">Book a call</a>
+          <a href="mailto:hello@3264.ai" style="color:var(--sec)" style-hover="color:var(--a)">hello@3264.ai</a>
+          <a href="AI Engineering.dc.html#engagement" style="color:var(--sec)" style-hover="color:var(--a)">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin:64px 0 0; padding-top:22px; border-top:1px solid var(--line2); font-size:13px; letter-spacing:-0.005em; color:var(--mut)">
+      <div style="display:flex; align-items:center; gap:11px; min-width:0">
+        <span style="font-size:15px; font-weight:500; letter-spacing:-0.03em; color:#1A1917">3264<span>.ai</span></span>
+        <span>&copy; 2026 Bearing Deployment Company Inc. All rights reserved.</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px">
+        <span style="display:flex; align-items:center; gap:7px"><span style="width:6px; height:6px; border-radius:50%; background:var(--a)"></span>All systems operational</span>
+      </div>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ctaLabel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Book a mapping session&quot;,&quot;Book a two-week audit&quot;],&quot;default&quot;:&quot;Book a mapping session&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Page&quot;},&quot;showBuilt&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Page&quot;},&quot;animateHero&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+class Component extends DCLogic {
+  state = { vw: 1440, mw: 680, act: "top", sub: null, g1: 0, g1h: null, mini: false, notice: false, fq: [true, false, false, false, false, false], g3h: -1, ev: -1, copied: false, readMin: 0, x2: false };
+  mainRef = React.createRef(); railRef = React.createRef(); progRef = React.createRef(); g1Ref = React.createRef();
+
+  SECTIONS = [
+    {"id":"top","label":"Overview"},
+    {"id":"why-the-collapsed-loop-is-so-attractive","label":"Why the collapsed loop is so attractive"},
+    {"id":"why-regulated-firms-should-hesitate","label":"Why regulated firms should hesitate"},
+    {"id":"three-lanes-workshop-gate-production","label":"Three lanes: workshop, gate, production"},
+    {"id":"who-can-change-what","label":"Who can change what"},
+    {"id":"one-change-end-to-end","label":"One change, end to end"},
+    {"id":"the-record-is-the-documentation","label":"The record is the documentation"},
+    {"id":"what-it-takes-to-build","label":"What it takes to build"},
+    {"id":"code-is-getting-cheap-protect-what-isn-t","label":"Code is getting cheap. Protect what isn't."},
+    {"id":"sources","label":"Sources"}
+  ];
+
+  G2 = [];
+
+  G3 = [];
+
+  componentDidMount() {
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.measure);
+    if (window.ResizeObserver && this.mainRef.current) { this.ro = new ResizeObserver(() => { this.measure(); this.onScroll(); }); this.ro.observe(this.mainRef.current); }
+    this.measure(); this.spy(); this.startG1();
+    this._rt = setTimeout(() => this.readTime(), 900);
+  }
+  componentDidUpdate() {
+    const st = this.state, anim = this.props.animateHero ?? true, built = this.props.showBuilt ?? true;
+    const key = [st.act, st.sub, st.mw, st.vw, built].join("|");
+    if (key !== this._lastKey) { this._lastKey = key; this.onScroll(); }
+    if (this._lastAnim !== undefined && anim !== this._lastAnim) this.startG1();
+    this._lastAnim = anim;
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll); window.removeEventListener("resize", this.measure);
+    if (this.ro) this.ro.disconnect();
+    this.clearG1(); clearTimeout(this._rt); clearTimeout(this._ct); cancelAnimationFrame(this._raf);
+  }
+
+  measure = () => {
+    const m = this.mainRef.current, vw = window.innerWidth, mw = m ? Math.round(m.getBoundingClientRect().width) : vw;
+    if (vw !== this.state.vw || Math.abs(mw - this.state.mw) > 1) this.setState({ vw, mw });
+  };
+  onScroll = () => { if (!this._raf) this._raf = requestAnimationFrame(() => { this._raf = 0; this.spy(); }); };
+
+  // Scroll-spy: active section, active subsection, top progress bar and the sidebar coverage rail.
+  spy() {
+    const vh = window.innerHeight, line = Math.min(170, vh * 0.3), H = document.documentElement.scrollHeight - vh;
+    const pb = this.progRef.current;
+    if (pb) pb.style.transform = "scaleX(" + (H > 0 ? Math.min(1, Math.max(0, window.scrollY / H)) : 0).toFixed(4) + ")";
+    let act = "top", el = null, sub = null;
+    for (const s of this.SECTIONS) { const e = document.getElementById(s.id); if (e && e.getBoundingClientRect().top <= line) { act = s.id; el = e; } }
+    const S = this.SECTIONS.find((s) => s.id === act);
+    if (S && S.subs && (this.props.showBuilt ?? true)) for (const [id] of S.subs) { const e = document.getElementById(id); if (e && e.getBoundingClientRect().top <= line) sub = id; }
+    const rail = this.railRef.current;
+    if (rail && rail.parentNode) {
+      const it = rail.parentNode.querySelector('[data-toc="' + act + '"]');
+      if (it) {
+        let f = 0;
+        if (el) { const r = el.getBoundingClientRect(); f = Math.min(1, Math.max(0, (line - r.top) / Math.max(1, r.height))); }
+        rail.style.height = (it.offsetTop + f * it.offsetHeight).toFixed(1) + "px";
+      }
+    }
+    if (act !== this.state.act || sub !== this.state.sub) this.setState({ act, sub });
+  }
+
+  // Hero figure: one restrained reveal on scroll-in; any failure or reduced motion shows the end state.
+  clearG1() { (this._g1t || []).forEach(clearTimeout); this._g1t = []; if (this.io) { this.io.disconnect(); this.io = null; } }
+  startG1() {
+    this.clearG1(); this._g1run = false;
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!(this.props.animateHero ?? true) || reduce || !("IntersectionObserver" in window)) { this.setState({ g1: 7 }); return; }
+    const run = () => {
+      this._g1run = true;
+      this.setState({ g1: 0 });
+      [1, 2, 3, 4, 5, 6, 7].forEach((s, i) => this._g1t.push(setTimeout(() => this.setState({ g1: s }), 300 + i * 120)));
+      this._g1t.push(setTimeout(() => { if (this.state.g1 !== 7) this.setState({ g1: 7 }); }, 4000));
+    };
+    const el = this.g1Ref.current;
+    if (!el) { this.setState({ g1: 7 }); return; }
+    this._g1t.push(setTimeout(() => { if (!this._g1run) { if (this.io) { this.io.disconnect(); this.io = null; } if (this.state.g1 !== 7) this.setState({ g1: 7 }); } }, 4000));
+    this.io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { this.io.disconnect(); this.io = null; run(); } }, { threshold: 0, rootMargin: "0px 0px -35% 0px" });
+    this.io.observe(el);
+  }
+
+  readTime() {
+    const m = this.mainRef.current; if (!m) return;
+    const words = (s) => (s || "").trim().split(/\s+/).filter(Boolean).length;
+    let n = words(m.innerText);
+    m.querySelectorAll("[data-fig]").forEach((f) => { n -= words(f.innerText); });
+    const readMin = Math.max(1, Math.round(n / 230));
+    if (readMin !== this.state.readMin) this.setState({ readMin });
+  }
+
+  copyLink = () => {
+    const done = () => { this.setState({ copied: true }); clearTimeout(this._ct); this._ct = setTimeout(() => this.setState({ copied: false }), 1800); };
+    try { navigator.clipboard.writeText(window.location.href).then(done, () => {}); } catch (e) {}
+  };
+  toggleMini = () => this.setState((s) => ({ mini: !s.mini }));
+  closeMini = () => this.setState({ mini: false });
+  toggleNotice = () => this.setState((s) => ({ notice: !s.notice }));
+  toggleFaq = (e) => { const i = +e.currentTarget.getAttribute("data-i"); this.setState((s) => { const fq = s.fq.slice(); fq[i] = !fq[i]; return { fq }; }); };
+  g3Enter = (e) => this.setState({ g3h: +e.currentTarget.getAttribute("data-s") });
+  g3Leave = () => this.setState({ g3h: -1 });
+  evEnter = (e) => this.setState({ ev: +e.currentTarget.getAttribute("data-ev") });
+  evLeave = () => this.setState({ ev: -1 });
+  irEnter = (e) => this.setState({ g1h: e.currentTarget.getAttribute("data-f") });
+  irLeave = () => this.setState({ g1h: null });
+
+  riEnter = (e) => this.setState({ g1h: e.currentTarget.getAttribute("data-c") });
+  riLeave = () => this.setState({ g1h: null });
+  xEnter = () => this.setState({ x2: true });
+  xLeave = () => this.setState({ x2: false });
+  xToggle = () => this.setState({ x2: true });
+
+  renderVals() {
+    const st = this.state, vw = st.vw, mw = st.mw, built = this.props.showBuilt ?? true, flags = this.props.showFlags ?? true;
+    const cta = this.props.ctaLabel === "Book a two-week audit" ? "Book a two-week audit" : "Book a mapping session";
+    const ctaHref = cta === "Book a two-week audit" ? "AI Engineering.dc.html#engagement" : "mailto:hello@3264.ai?subject=Essays";
+    const sideOn = vw >= 1048, idx = Math.max(0, this.SECTIONS.findIndex((s) => s.id === st.act)), cur = this.SECTIONS[idx];
+    const toc = this.SECTIONS.map((s, i) => ({
+      id: s.id, href: "#" + s.id, num: s.num || "", label: s.label,
+      bg: i === idx ? "#EEEBE4" : "transparent", fg: i <= idx ? "#1A1917" : "#6E6D67",
+      hasSubs: !!(s.subs && built && i === idx),
+      subs: (s.subs || []).map(([id, label]) => { const on = st.sub === id; return { href: "#" + id, label, fg: on ? "#1A1917" : "#6E6D67", bd: on ? "#1A1917" : "#D9D6CF" }; })
+    }));
+    const g1 = st.g1, ev = {};
+    for (let i = 0; i < 8; i++) { ev["s" + i] = st.ev === i ? "#F1E6CF" : "transparent"; ev["l" + i] = st.ev === i ? "#1A1917" : "#6E6D67"; }
+    const g4w = mw >= 520, rnw = mw >= 600;
+    const g2rows = this.G2.map((r) => Object.assign({}, r, { dc: r.bad ? "#C4341E" : "#1A1917", sc: r.ok ? "#157F52" : "#C4341E", hasOwn: !!r.own }));
+    const txt = (v) => v ? v.t + (v.sub ? " · " + v.sub : "") + (v.dash ? " (proposal)" : "") : "—";
+    const cell = (v) => ({ has: !!v, none: !v, t: v ? v.t : "", sub: v && v.sub ? v.sub : "", hasSub: !!(v && v.sub), bs: v && v.dash ? "dashed" : "solid" });
+    const g3steps = this.G3.map((s, i) => ({ i, n: String(i + 1), name: s[0], m: txt(s[1]), c: txt(s[2]), p: txt(s[3]), mc: s[1] ? "#1A1917" : "#8A887F", cc: s[2] ? "#1A1917" : "#8A887F", pc: s[3] ? "#1A1917" : "#8A887F" }));
+    const g3rows = this.G3.map((s, i) => ({ i, n: String(i + 1), name: s[0], bg: st.g3h === i ? "#F1EEE8" : "transparent", hc: st.g3h === i ? "#1A1917" : "#55544E", cells: [cell(s[1]), cell(s[2]), cell(s[3])] }));
+    const out = {
+      progRef: this.progRef, mainRef: this.mainRef, railRef: this.railRef, g1Ref: this.g1Ref,
+      sideOn, noSide: !sideOn, toc, curLabel: (cur.num ? cur.num + " " : "") + cur.label,
+      miniOpen: st.mini && !sideOn, miniA: String(st.mini), miniIcon: st.mini ? "−" : "+", toggleMini: this.toggleMini, closeMini: this.closeMini,
+      cta, ctaHref, hasRead: st.readMin > 0, readLabel: st.readMin + " min read", copyLink: this.copyLink, copyLabel: st.copied ? "Link copied" : "Copy link",
+      noticeFull: mw >= 500 || st.notice, noticeToggle: mw < 500, noticeLabel: st.notice ? "Hide full notice" : "Show full notice", toggleNotice: this.toggleNotice,
+      g1Cols: mw >= 560 ? "repeat(4, minmax(0,1fr))" : "repeat(2, minmax(0,1fr))", g1Wide: mw >= 500, g1Narrow: mw < 500,
+      g1Ring: g1 >= 1 ? "0 0 0 1.5px #1A1917" : "0 0 0 1.5px rgba(26,25,23,0)", g1Diff: g1 >= 2 ? 1 : 0, g1Chip: g1 >= 3 ? 1 : 0, g1ChipY: g1 >= 3 ? "none" : "translateY(6px)", g1Dot: g1 >= 4 ? "#157F52" : "#C4341E",
+      g4Cols: g4w ? "minmax(0,1.1fr) minmax(0,1.4fr) minmax(0,0.7fr)" : "minmax(0,1fr) auto", g4In: g4w ? "block" : "none", g4Sub: g4w ? "none" : "block",
+      rnCols: rnw ? "minmax(0,0.62fr) repeat(3, minmax(0,1fr))" : "minmax(0,1fr)", rnHead: rnw ? "grid" : "none", rnLab: rnw ? "none" : "block", rnGap: rnw ? "6px 22px" : "8px",
+      g2Table: mw >= 600, g2Cards: mw < 600, g2rows,
+      ev, evEnter: this.evEnter, evLeave: this.evLeave,
+      built, notBuilt: !built,
+      g3Grid: mw >= 540, g3Cards: mw < 540, g3steps, g3rows, g3Enter: this.g3Enter, g3Leave: this.g3Leave,
+      anWide: mw >= 600, anNarrow: mw < 600, lcWide: mw >= 600, lcNarrow: mw < 600,
+      flags, toggleFaq: this.toggleFaq,
+      ri: (() => { const o = {}, h = st.g1h, g = st.g1, HL = "#F1E6CF", order = [1, 2, 3, 4, 5, 7, 6]; for (let k = 1; k <= 7; k++) { const done = g >= order.indexOf(k) + 1, bad = k === 6 && done; o["s" + k] = bad ? "#C4341E" : done ? "#1A1917" : "#8A887F"; o["n" + k] = bad ? "#C4341E" : "#55544E"; o["h" + k] = h === String(k) ? HL : "transparent"; o["b" + k] = h === String(k) ? HL : bad ? "#F6E3DF" : "transparent"; } o.d6 = g >= 7 ? "#C4341E" : "transparent"; o.u6 = g >= 7 ? "100% 1.5px" : "0% 1.5px"; return o; })(),
+      riEnter: this.riEnter, riLeave: this.riLeave, riTop: mw >= 600 ? "minmax(0,1.45fr) minmax(0,1fr)" : "minmax(0,1fr)", riCols: mw >= 560 ? "22px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr)" : "22px minmax(0,1fr)", riHead: mw >= 560 ? "grid" : "none", riLab: mw >= 560 ? "none" : "block", riSub: mw >= 560 ? "auto" : "2",
+      xCols: mw >= 600 ? "minmax(0,1.05fr) minmax(0,0.95fr) minmax(0,0.8fr) minmax(0,1.1fr) minmax(0,1.2fr)" : "minmax(0,1fr) minmax(0,1fr)", xHead: mw >= 600 ? "grid" : "none", xHide: mw >= 600 ? "block" : "none", xNar: mw >= 600 ? "none" : "block", xDiff: st.x2 ? "block" : "none", xEnter: this.xEnter, xLeave: this.xLeave, xToggle: this.xToggle,
+      fbCols: mw >= 560 ? "150px minmax(0,1fr) 76px" : "minmax(0,1fr)", fbAl: mw >= 560 ? "right" : "left",
+      cwT: mw >= 520 ? "26px minmax(0,1.7fr) minmax(0,0.75fr) minmax(0,0.75fr) minmax(0,0.8fr)" : "22px minmax(0,1fr) auto auto", cwSrc: mw >= 520 ? "block" : "none",
+      cwQ: mw >= 560 ? "repeat(8, minmax(0,1fr))" : "repeat(4, minmax(0,1fr))", cwBr: mw >= 560 ? "5 / span 4" : "1 / -1",
+      cwC: mw >= 560 ? "14px minmax(0,1.25fr) minmax(0,1fr)" : "14px minmax(0,1fr)", cwRc: mw >= 560 ? "auto" : "2 / -1",
+      dtCols: mw >= 560 ? "repeat(3, minmax(0,1fr))" : "minmax(0,1fr)", dtHead: mw >= 560 ? "grid" : "none", dtLab: mw >= 560 ? "none" : "block",
+      sCols: mw >= 640 ? "minmax(0,1.45fr) repeat(5, minmax(0,1fr))" : "minmax(0,1.3fr) repeat(3, minmax(0,1fr))", sHide: mw >= 640 ? "block" : "none",
+      wCols: mw >= 600 ? "minmax(0,1.65fr) repeat(3, minmax(0,0.95fr)) minmax(0,1.3fr)" : "minmax(0,1fr) minmax(0,0.9fr)", wHide: mw >= 600 ? "block" : "none", wSub: mw >= 600 ? "none" : "block", wHead: mw >= 600 ? "grid" : "none",
+      pCols: mw >= 600 ? "minmax(0,1.15fr) minmax(0,0.62fr) minmax(0,1.55fr) minmax(0,1.2fr)" : "minmax(0,1fr)", pHead: mw >= 600 ? "grid" : "none", pLab: mw >= 600 ? "none" : "block", pGap: mw >= 600 ? "4px 12px" : "6px",
+      g1Row: g1 >= 1 ? 1 : 0, g1Exp: g1 >= 2 ? 1 : 0, g1St: g1 >= 2 ? "Break · explained" : "Break",
+      tCols: mw >= 540 ? "minmax(0,1.45fr) minmax(0,1.05fr) minmax(0,1.05fr) minmax(0,0.9fr) minmax(0,1.05fr)" : "minmax(0,1fr) auto",
+      tbCols: mw >= 540 ? "minmax(0,1.75fr) minmax(0,0.55fr) minmax(0,0.65fr) minmax(0,0.95fr) minmax(0,0.9fr)" : "minmax(0,1fr) auto",
+      tHide: mw >= 540 ? "block" : "none", tNar: mw >= 540 ? "none" : "block", tStCol: mw >= 540 ? "auto" : "1 / -1", tHead: mw >= 540 ? "grid" : "none",
+      plCols: mw >= 560 ? "minmax(0,1.2fr) minmax(0,0.95fr) minmax(0,1fr) minmax(0,0.65fr) minmax(0,1.2fr)" : "minmax(0,1fr)", plHead: mw >= 560 ? "grid" : "none", plLab: mw >= 560 ? "none" : "inline", plAl: mw >= 560 ? "right" : "left",
+      lnCols: mw >= 600 ? "minmax(0,0.62fr) repeat(3, minmax(0,1fr))" : "minmax(0,1fr)",
+      scCols: mw >= 600 ? "minmax(0,1.45fr) minmax(0,0.95fr) minmax(0,0.85fr) minmax(0,1.25fr)" : "minmax(0,1fr)", scAl: mw >= 600 ? "right" : "left",
+      irEnter: this.irEnter, irLeave: this.irLeave,
+      ...(() => { const o = {}, h = st.g1h, HL = "#F1E6CF"; [["1", 1], ["2", 2], ["g", 3], ["3", 4], ["4", 5], ["n", 6]].forEach(([k, n]) => { o["g1D" + k] = g1 >= n ? "#157F52" : "#D9D6CF"; o["g1B" + k] = h === k ? HL : (k === "g" || k === "n") ? "#EEEBE4" : "transparent"; }); [["1", 1], ["2", 2], ["3", 4], ["4", 5]].forEach(([k, n]) => { o["g1U" + k] = g1 >= n ? "100% 1.5px" : "0% 1.5px"; o["g1F" + k] = h === k ? HL : "transparent"; }); return o; })(),
+      irCols: mw >= 560 ? "20px minmax(0,0.72fr) minmax(0,1.15fr) minmax(0,1.6fr) minmax(0,0.62fr)" : "20px minmax(0,1fr) auto", irHead: mw >= 560 ? "grid" : "none",
+      irHide: mw >= 560 ? "block" : "none", irNar: mw >= 560 ? "none" : "inline", irAl: mw >= 560 ? "right" : "left", irStCol: mw >= 560 ? "auto" : "3", irStRow: mw >= 560 ? "auto" : "1", irBasisCol: mw >= 560 ? "auto" : "2 / -1", irSrcCol: mw >= 560 ? "3 / 5" : "2 / -1",
+      caCols: mw >= 540 ? "minmax(0,1.3fr) minmax(0,0.75fr) minmax(0,1.5fr)" : "minmax(0,1fr) auto",
+      ddCols: mw >= 560 ? "minmax(0,0.8fr) minmax(0,1.3fr)" : "minmax(0,1fr)", ddDiv: mw >= 560 ? "1px solid #E8E5DF" : "0", ddDivT: mw >= 560 ? "0" : "1px dashed #E8E5DF",
+      ...(() => { const o = {}; for (let k = 1; k <= 5; k++) o["slR" + k] = g1 >= k ? 1 : 0; const red = g1 >= 6; o.s3Bg = red ? "#F6E3DF" : "transparent"; o.s3Sh = red ? "inset 2px 0 0 #C4341E" : "inset 0 0 0 0 transparent"; o.s3Fg = red ? "#C4341E" : "#1A1917"; o.s3Dot = red ? "#C4341E" : "transparent"; o.s3Ring = red ? "#C4341E" : "#8A887F"; return o; })(),
+      slCols: mw >= 560 ? "minmax(0,0.8fr) minmax(0,1.7fr) minmax(0,0.62fr) minmax(0,1.2fr)" : "minmax(0,1fr)",
+      cmCols: mw >= 560 ? "minmax(0,0.62fr) minmax(0,1.6fr) minmax(0,0.9fr) minmax(0,1.05fr)" : "minmax(0,1fr)", cmAl: mw >= 560 ? "right" : "left",
+      mfnWide: mw >= 520, mfnNarrow: mw < 520,
+      g3sCols: mw >= 600 ? "minmax(0,0.85fr) repeat(3, minmax(0,1fr))" : "minmax(0,1fr)",
+      mgU: g1 >= 1 ? "100% 1.5px" : "0% 1.5px", mgN: g1 >= 2 ? 1 : 0, mgPB: g1 >= 3 ? "#E4F0EA" : "#F1EEE8", mgPC: g1 >= 3 ? "#157F52" : "#8A887F", mgPD: g1 >= 3 ? "#157F52" : "#D9D6CF",
+      pcCols: mw >= 560 ? "18px minmax(0,.72fr) minmax(0,1.55fr) minmax(0,.95fr) minmax(0,.95fr) minmax(0,.66fr)" : "18px minmax(0,1fr)",
+      mgL: mw >= 600 ? "repeat(2, minmax(0,1fr))" : "minmax(0,1fr)",
+      btCols: mw >= 540 ? "minmax(0,.85fr) minmax(0,1.9fr) minmax(0,.7fr) minmax(0,.8fr)" : "minmax(0,.9fr) minmax(0,1.6fr) minmax(0,.8fr)",
+      dnCols: mw >= 540 ? "minmax(0,2fr) minmax(0,.8fr) minmax(0,.7fr) minmax(0,.6fr)" : "minmax(0,1fr) auto auto",
+      ...(() => { const o = {}; for (let k = 1; k <= 5; k++) o["crD" + k] = g1 >= k ? 1 : 0; o.crOut = g1 >= 4 ? "0 0 0 1.5px #C4341E" : "0 0 0 1.5px rgba(196,52,30,0)"; o.crS4 = g1 >= 4 ? "100% 1.5px" : "0% 1.5px"; o.crMom = g1 >= 6 ? 1 : 0; return o; })(),
+      crCols: mw >= 540 ? "minmax(0,1fr) 78px 78px 64px" : "minmax(0,1fr) 58px 58px",
+      vbCols: mw >= 540 ? "minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.72fr) minmax(0,.8fr)" : "minmax(0,1fr) auto"
+    };
+    for (let i = 0; i < 6; i++) { out["fq" + i] = !!st.fq[i]; out["fqi" + i] = st.fq[i] ? "−" : "+"; out["fqa" + i] = String(!!st.fq[i]); }
+    return out;
+  }
+}
+</script>
+</body>
+</html>

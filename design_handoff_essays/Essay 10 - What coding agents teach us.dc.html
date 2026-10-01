@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>What coding agents teach us about back-office automation — 3264.ai</title>
+<meta name="description" content="Coding agents became genuinely useful before most enterprise agents did. The reasons are structural: a tight loop, tools that fail loudly, and an environment full of checks. Operations teams can borrow all three." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+html { scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+html, body { margin:0; padding:0; overflow-x:clip; }
+body { --a:#157F52; --bad:#C4341E; --line:rgba(20,20,18,0.13); --line2:rgba(20,20,18,0.075); --mut:#6E6D67; --sec:#55544E; background:#F6F5F2; color:#1A1917; font-family:"Instrument Sans","Helvetica Neue",Helvetica,sans-serif; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { color:inherit; text-decoration:none; }
+a:hover { color:var(--a); }
+::selection { background:var(--a); color:#FFFFFF; }
+</style>
+</helmet>
+
+<header style="position:sticky; top:0; z-index:100; backdrop-filter:blur(14px); background:rgba(246,245,242,0.78); border-bottom:1px solid var(--line2)">
+  <div style="max-width:1280px; margin:0 auto; padding:0 40px; height:68px; display:flex; align-items:center; gap:clamp(20px, 3vw, 48px)">
+    <a href="3264 Home.dc.html" style="font-size:19px; font-weight:500; letter-spacing:-0.03em">3264<span>.ai</span></a>
+    <nav style="display:flex; gap:clamp(14px, 1.9vw, 30px); white-space:nowrap; min-width:0; overflow-x:auto; scrollbar-width:none; -webkit-mask-image:linear-gradient(90deg, #000 calc(100% - 28px), transparent); mask-image:linear-gradient(90deg, #000 calc(100% - 28px), transparent); padding-right:28px; font-size:clamp(13px, 1.5vw, 14px); color:var(--sec); flex:1">
+      <a href="AI Engineering.dc.html">AI Engineering</a>
+      <a href="AI Transformation.dc.html">AI Transformation</a>
+      <a href="3264 Home.dc.html#industries">Industries</a>
+      <a href="3264 Home.dc.html#work">Work</a>
+      <a href="Playbooks.dc.html">Playbooks</a>
+        <a href="Essays.dc.html" style="color:#1A1917">Essays</a>
+      <a href="Company.dc.html">Company</a>
+    </nav>
+    <a href="AI Engineering.dc.html#engagement" style="flex:none; white-space:nowrap; display:flex; align-items:center; gap:10px; height:36px; padding:0 16px; border:1px solid var(--line); border-radius:6px; background:#FFFFFF; font-size:13.5px; letter-spacing:-0.01em" style-hover="border-color:var(--a); color:var(--a)">Book an audit</a>
+  </div>
+  <div ref="{{ progRef }}" aria-hidden="true" style="position:absolute; left:0; right:0; bottom:-1px; height:2px; background:#157F52; transform:scaleX(0); transform-origin:0 50%"></div>
+</header>
+
+<sc-if value="{{ noSide }}" hint-placeholder-val="{{ false }}">
+<div style="position:sticky; top:68px; z-index:90; background:rgba(246,245,242,0.94); backdrop-filter:blur(12px); border-bottom:1px solid #E8E5DF">
+  <div style="position:relative; max-width:760px; margin:0 auto; padding:0 clamp(20px, 4vw, 40px); box-sizing:border-box">
+    <button type="button" onClick="{{ toggleMini }}" aria-expanded="{{ miniA }}" style="width:100%; height:44px; display:flex; align-items:center; gap:14px; padding:0; background:none; border:0; font:inherit; color:#1A1917; cursor:pointer; text-align:left">
+      <span style="flex:none; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67">On this page</span>
+      <span style="flex:1 1 auto; min-width:0; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ curLabel }}</span>
+      <span style="flex:none; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:14px; color:#55544E">{{ miniIcon }}</span>
+    </button>
+    <sc-if value="{{ miniOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute; left:clamp(12px, 3vw, 32px); right:clamp(12px, 3vw, 32px); top:48px; box-sizing:border-box; padding:6px; border:1px solid #E8E5DF; border-radius:12px; background:#FBFAF8; box-shadow:0 24px 48px -20px rgba(20,20,18,0.25); display:grid; gap:2px; max-height:70vh; overflow:auto">
+      <sc-for list="{{ toc }}" as="t" hint-placeholder-count="10">
+      <a href="{{ t.href }}" onClick="{{ closeMini }}" style="display:flex; gap:10px; align-items:baseline; padding:8px 10px; border-radius:8px; background:{{ t.bg }}; color:{{ t.fg }}; font-size:13.5px" style-hover="color:#1A1917"><span style="flex:0 0 18px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; color:#6E6D67">{{ t.num }}</span><span>{{ t.label }}</span></a>
+      </sc-for>
+    </div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
+<div style="max-width:1048px; margin:0 auto; padding:0 clamp(20px, 4vw, 40px); box-sizing:border-box; display:flex; justify-content:center; gap:88px; align-items:flex-start">
+  <sc-if value="{{ sideOn }}" hint-placeholder-val="{{ true }}">
+  <aside style="flex:0 0 200px; position:sticky; top:40px; max-height:calc(100vh - 40px); overflow-y:auto; box-sizing:border-box; padding:60px 0 32px">
+    <a href="Essays.dc.html" style="display:inline-flex; font-size:13.5px; color:#55544E">← All essays</a>
+    <div style="margin:32px 0 0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67">On this page</div>
+    <nav aria-label="On this page" style="position:relative; margin:10px 0 0; padding:0 0 0 12px">
+      <span aria-hidden="true" style="position:absolute; left:0; top:0; bottom:0; width:1.5px; background:#E8E5DF"></span>
+      <span ref="{{ railRef }}" aria-hidden="true" style="position:absolute; left:0; top:0; width:1.5px; height:0; background:#1A1917; transition:height 200ms linear"></span>
+      <sc-for list="{{ toc }}" as="t" hint-placeholder-count="10">
+      <div data-toc="{{ t.id }}" style="padding:1px 0">
+        <a href="{{ t.href }}" style="display:flex; gap:8px; align-items:baseline; padding:6px 10px; border-radius:7px; background:{{ t.bg }}; color:{{ t.fg }}; font-size:13px; letter-spacing:-0.005em; line-height:1.3; transition:background 160ms ease, color 160ms ease" style-hover="color:#1A1917"><span style="flex:0 0 17px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; color:#6E6D67">{{ t.num }}</span><span>{{ t.label }}</span></a>
+        <sc-if value="{{ t.hasSubs }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid; gap:1px; margin:3px 0 6px 35px">
+          <sc-for list="{{ t.subs }}" as="u" hint-placeholder-count="5">
+          <a href="{{ u.href }}" style="display:block; padding:4px 0 4px 10px; border-left:1px solid {{ u.bd }}; font-size:12px; line-height:1.35; color:{{ u.fg }}" style-hover="color:#1A1917">{{ u.label }}</a>
+          </sc-for>
+        </div>
+        </sc-if>
+      </div>
+      </sc-for>
+    </nav>
+    <div style="margin:32px 0 0; padding:18px; border-radius:12px; background:#EEEBE4">
+      <div style="font-size:14.5px; letter-spacing:-0.012em; line-height:1.4">Questions about this essay? Talk to the team.</div>
+      <a href="{{ ctaHref }}" style="margin:12px 0 0; display:flex; align-items:center; justify-content:center; height:36px; padding:0 12px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-size:12.5px; font-weight:500; letter-spacing:-0.005em" style-hover="background:var(--a); color:#FFFFFF">{{ cta }}</a>
+    </div>
+  </aside>
+  </sc-if>
+
+  <main ref="{{ mainRef }}" style="flex:1 1 auto; min-width:0; max-width:680px; padding:60px 0 0">
+
+    <div id="top" data-screen-label="Hero" style="scroll-margin-top:120px">
+      <sc-if value="{{ noSide }}" hint-placeholder-val="{{ false }}"><a href="Essays.dc.html" style="display:inline-flex; margin:0 0 24px; font-size:13.5px; color:#55544E">← All essays</a></sc-if>
+      <div style="font-size:13px; color:#55544E">Essay · <a href="Essays.dc.html" style="color:#1A1917; border-bottom:1px solid rgba(20,20,18,0.25)" style-hover="color:var(--a); border-color:var(--a)">Engineering</a></div>
+      <h1 style="margin:14px 0 0; font-size:clamp(34px, 3.8vw, 48px); font-weight:400; letter-spacing:-0.038em; line-height:1.02">What coding agents teach us about back-office automation</h1>
+      <p style="margin:16px 0 0; font-size:clamp(16.5px, 1.4vw, 18.5px); line-height:1.45; letter-spacing:-0.01em; color:#55544E; text-wrap:pretty">Coding agents became genuinely useful before most enterprise agents did. The reasons are structural: a tight loop, tools that fail loudly, and an environment full of checks. Operations teams can borrow all three.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:6px 16px; align-items:center; margin:22px 0 0; padding:12px 0 0; border-top:1px solid #E8E5DF; font-size:12.5px; color:#6E6D67"><span>29 September 2026</span><sc-if value="{{ hasRead }}" hint-placeholder-val="{{ false }}"><span>{{ readLabel }}</span></sc-if><button type="button" onClick="{{ copyLink }}" style="margin:0 0 0 auto; padding:0; background:none; border:0; font:inherit; font-size:12.5px; color:#1A1917; cursor:pointer" style-hover="color:var(--a)">{{ copyLabel }}</button></div>
+      <div style="display:flex; align-items:center; gap:12px; margin:26px 0 0"><span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background:#1A1917; color:#F4F3F0; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; letter-spacing:0.02em">3264</span><span style="display:flex; flex-direction:column"><span style="font-size:14px; line-height:1.3">3264.ai</span><span style="font-size:12.5px; line-height:1.3; color:#6E6D67">Field notes · No. 10</span></span></div>
+      
+      <figure style="margin:32px 0 0"><div aria-hidden="true" style="aspect-ratio:16 / 9; border-radius:16px; border:1px solid rgba(20,20,18,0.06); background:#E2DFD8 url('assets/playbooks/side-letter-register.png') center / cover"></div></figure>
+    </div>
+
+    <section id="intro" data-screen-label="Introduction" style="padding:40px 0 0"><p style="margin:18px 0 0; font-size:19px; line-height:1.65; color:#1A1917; text-wrap:pretty">Over the past two years, coding agents such as Claude Code and Codex went from novelty to everyday tool for many software engineers. Over the same period, plenty of enterprise agent pilots in finance never made it past the demonstration.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">The difference is not the model. Coding agents and enterprise agents are built on the same families of models, often the same versions. What coding agents have is a better setup around the model. That setup is worth studying closely by anyone automating back-office work, because most of it can be copied.</p></section>
+
+    <section id="the-loop-runs-on-evidence" data-screen-label="The loop runs on evidence" style="padding:64px 0 0; scroll-margin-top:120px"><div style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#6E6D67; margin:0 0 10px">01</div><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">The loop runs on evidence</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">A coding agent works in a cycle. It gathers context by reading files and searching the codebase. It acts by editing code or running a command. Then it verifies by running the tests, checking the output and reading the error, and it repeats until the evidence is clean. Small requests finish in a few turns. Larger ones loop many times.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Every agent loops. What makes this loop work is that each turn produces evidence the model can check against something outside itself: a failing test, a compiler error, a diff. The model is not asked to judge whether it did well. It is shown.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">For operations:</strong> design the process so that every step produces checkable evidence. That means a tie-out result, a reconciliation difference, or a validator's verdict on an extracted figure, not the model's own summary of what it believes it did.</p></section>
+
+    <section id="the-environment-does-most-of-the-verifying" data-screen-label="The environment does most of the verifying" style="padding:64px 0 0; scroll-margin-top:120px"><div style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#6E6D67; margin:0 0 10px">02</div><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">The environment does most of the verifying</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Software comes with a dense layer of automatic checks that grew up over decades: type checkers, compilers, linters, test suites, build pipelines. A coding agent inherits all of it on day one. When its change breaks something, the environment says so immediately and precisely. That is the main reason coding agents can be trusted with long tasks.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Back-office work has very little of this. There is no compiler for a covenant calculation and no linter for an investor letter. So the first job in automating an operations process is to build the checks the environment is missing:</p><ul style="margin:18px 0 0; padding:0 0 0 20px; display:grid; gap:10px; font-size:17px; line-height:1.7; color:#2C2B27"><li style="padding-left:2px; text-wrap:pretty">tie-outs to a book of record;</li><li style="padding-left:2px; text-wrap:pretty">tolerance engines for line-by-line comparisons;</li><li style="padding-left:2px; text-wrap:pretty">recomputation of every derived figure from its cited inputs;</li><li style="padding-left:2px; text-wrap:pretty">number-binding checks that stop drafted text quoting a figure no calculation produced.</li></ul><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">We think this is the most underrated part of AI delivery in finance. You buy the model. You have to build the checks.</p></section>
+
+    <section id="tools-fail-loudly" data-screen-label="Tools fail loudly" style="padding:64px 0 0; scroll-margin-top:120px"><div style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#6E6D67; margin:0 0 10px">03</div><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Tools fail loudly</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">The tools a coding agent uses are narrow and strict. Anthropic's text editor tool, for example, replaces a string only when the text to be replaced matches exactly and uniquely. If it matches nowhere, or in several places, the tool returns an error instead of guessing. That failure is useful. It sends the agent back to gather more evidence before trying again.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">For operations:</strong> give tools preconditions that turn ambiguity into errors.</p><ul style="margin:18px 0 0; padding:0 0 0 20px; display:grid; gap:10px; font-size:17px; line-height:1.7; color:#2C2B27"><li style="padding-left:2px; text-wrap:pretty">A <code style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:0.86em; padding:1px 4px; border-radius:4px; background:#EFEDE8; color:#1A1917">post_adjustment</code> action refuses unless the break is in an accepted state and the amount matches the accepted explanation.</li><li style="padding-left:2px; text-wrap:pretty">A <code style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:0.86em; padding:1px 4px; border-radius:4px; background:#EFEDE8; color:#1A1917">propose_break_explanation</code> tool refuses without evidence identifiers attached.</li><li style="padding-left:2px; text-wrap:pretty">A payment release refuses without a valid approval from someone other than the preparer.</li></ul><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Strict tools convert ambiguity into errors, and errors into investigation. Lenient tools convert ambiguity into data.</p></section>
+
+    <section id="context-is-a-budget-and-memory-lives-in-files" data-screen-label="Context is a budget, and memory lives in files" style="padding:64px 0 0; scroll-margin-top:120px"><div style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#6E6D67; margin:0 0 10px">04</div><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Context is a budget, and memory lives in files</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Coding agents treat the context window as scarce. They read files on demand rather than loading whole repositories. When the window fills, they summarise older history. And they keep durable rules in a project instructions file instead of relying on the conversation to remember them. For long tasks, state lives outside the chat altogether. Anthropic's harness for long-running agents uses a progress file and the version history as the source of truth about what has been done<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-1" style="color:#157F52; padding:0 1px">1</a></sup>.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">For operations:</strong> keep a run ledger for every case, holding its status, open questions, decisions and evidence. The system reads its state from the ledger, not from chat history. Put standing policies, such as house conventions and escalation rules, into versioned configuration. They should not be restated in every prompt and then forgotten when the conversation is compacted.</p><div style="margin:44px 0 0; box-sizing:border-box; display:flex; flex-wrap:wrap; gap:16px 28px; align-items:center; justify-content:space-between; padding:22px 24px; border-radius:16px; background:#1A1917; color:#F4F3F0"><div style="flex:1 1 340px; min-width:0"><div style="font-size:18px; letter-spacing:-0.018em; line-height:1.3">Talk to the team</div><p style="margin:6px 0 0; font-size:13.5px; line-height:1.55; color:rgba(244,243,240,0.8); text-wrap:pretty">Thirty minutes on one workflow: where its errors come from today, and what a harness would check before anything is relied on.</p></div><a href="{{ ctaHref }}" style="flex:none; display:inline-flex; align-items:center; height:40px; padding:0 18px; box-sizing:border-box; background:#F4F3F0; color:#1A1917; border-radius:6px; font-size:13.5px; font-weight:500" style-hover="background:#FFFFFF; color:#1A1917">{{ cta }}</a></div></section>
+
+    <section id="sub-tasks-get-their-own-workspace" data-screen-label="Sub-tasks get their own workspace" style="padding:64px 0 0; scroll-margin-top:120px"><div style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#6E6D67; margin:0 0 10px">05</div><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Sub-tasks get their own workspace</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Coding agents can hand a scoped job, such as searching a large codebase or reviewing a change, to a sub-agent with its own context window. The sub-agent returns a condensed result. That keeps noisy exploration out of the main thread and lets independent work run in parallel.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">This is powerful and easy to overdo. A 2025 study of seven open-source multi-agent frameworks found failure rates between 41% and 86.7% across 1,642 traces<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-2" style="color:#157F52; padding:0 1px">2</a></sup>. OpenAI's guide to building agents recommends starting with a single agent and adding more only when the task demands it<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-3" style="color:#157F52; padding:0 1px">3</a></sup>. Delegation works best when the sub-task is well scoped and its result can be verified.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">For operations:</strong> a natural fit is one extraction worker per document, each returning a typed record to an orchestrator that validates it before anything downstream uses it.</p></section>
+
+    <section id="permissions-are-explicit-and-undo-is-cheap" data-screen-label="Permissions are explicit, and undo is cheap" style="padding:64px 0 0; scroll-margin-top:120px"><div style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#6E6D67; margin:0 0 10px">06</div><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Permissions are explicit, and undo is cheap</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Coding agents run under explicit permission settings. Risky commands wait for a person to approve them. Behind all of it sits version control, which makes most mistakes reversible: a bad change is one revert away.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Operations has actions with no revert. A released wire, a capital call notice in an investor's inbox and a regulatory filing cannot be taken back with a command. So the permission design has to be stricter than a coding agent's. Tools are tiered into read, propose and execute. Execute actions run under a named person's identity, never the model's, and with four eyes wherever money moves.</p></section>
+
+    <section id="the-plan-is-an-artefact" data-screen-label="The plan is an artefact" style="padding:64px 0 0; scroll-margin-top:120px"><div style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; color:#6E6D67; margin:0 0 10px">07</div><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">The plan is an artefact</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">For larger tasks, coding agents commonly write a plan before they act: what they intend to change, in what order, and how they will know it worked. Some tools make this a separate mode, in which the person reviews and edits the plan before any code is touched. The plan then stays visible, often as a to-do list the agent updates as it goes, so a long task does not lose its thread.</p><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">For operations:</strong> write the run plan down, and for high-stakes cases review it before the work starts. A covenant test plan might list the definitions to resolve, the figures to extract from the certificate, the amendments to check and the tests to run, with the order and the evidence each step should produce. Reviewing a plan takes a credit analyst two minutes. Unpicking a test built on the wrong definition takes much longer. The plan also belongs in the run record, because it explains what the system meant to do as well as what it did.</p></section>
+
+    <section id="where-the-analogy-breaks" data-screen-label="Where the analogy breaks" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">Where the analogy breaks</h2><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">The comparison is useful, but it is not exact.</p><ul style="margin:18px 0 0; padding:0 0 0 20px; display:grid; gap:10px; font-size:17px; line-height:1.7; color:#2C2B27"><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Ground truth is contractual.</strong> In software, tests encode what the code is supposed to do. In operations, correct is defined by credit agreements, partnership agreements, side letters and policies, which are sometimes ambiguous and often amended. Someone has to decide what correct means for each clause, and write it down.</li><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">Consistency matters more than peak performance.</strong> A coding agent can retry until the tests pass. An operations process runs every day and must be right every day. METR's 2026 measurements show how much reliability costs. Frontier models' task horizons at 80% reliability were several times shorter than at 50%: for Claude Opus 4.6, 69.9 minutes against 718.8<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-4" style="color:#157F52; padding:0 1px">4</a></sup>. Long, unsupervised tasks at high reliability remain hard.</li><li style="padding-left:2px; text-wrap:pretty"><strong style="font-weight:500; color:#1A1917">The record has to satisfy a regulator, not just a reviewer.</strong> A coding agent's history lives in version control. An operations run needs a retained record of its inputs, model version, outputs and approvals, of the kind supervisors now expect<sup style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:0; margin-left:1px"><a href="#ref-5" style="color:#157F52; padding:0 1px">5</a>,<a href="#ref-6" style="color:#157F52; padding:0 1px">6</a></sup>.</li></ul></section>
+
+    <section id="what-to-borrow" data-screen-label="What to borrow" style="padding:64px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:clamp(24px, 2.3vw, 30px); font-weight:400; letter-spacing:-0.028em; line-height:1.15; text-wrap:balance">What to borrow</h2><ol style="list-style:none; margin:20px 0 0; padding:0; display:grid; gap:12px"><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">01</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty">Make every step produce evidence that can be checked outside the model.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">02</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty">Build the checks before you automate the work.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">03</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty">Make tools strict, and let them fail loudly.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">04</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty">Keep state and rules in files and ledgers, not in conversation.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">05</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty">Delegate only scoped sub-tasks whose results can be verified.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">06</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty">Wherever an action cannot be undone, replace "undo" with approval.</span></li><li style="display:flex; gap:14px; align-items:baseline"><span style="flex:none; min-width:24px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6E6D67">07</span><span style="min-width:0; font-size:17px; line-height:1.7; color:#2C2B27; text-wrap:pretty">Write the plan down, review it when the stakes are high, and keep it in the record.</span></li></ol><p style="margin:18px 0 0; font-size:17px; line-height:1.75; color:#2C2B27; text-wrap:pretty">Coding agents look like a triumph of models. Look closer and they are a triumph of environments. The back office can have an environment like that too, but nobody will ship it pre-installed. It has to be built.</p><a href="Loan Ops Ledger.dc.html" style="margin:40px 0 0; box-sizing:border-box; display:flex; flex-wrap:wrap; align-items:center; gap:16px 22px; padding:14px; border:1px solid #E8E5DF; border-radius:16px; background:#FBFAF8; color:#1A1917" style-hover="border-color:rgba(20,20,18,0.3); color:#1A1917"><span style="position:relative; flex:0 0 164px; height:88px; border-radius:11px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/loan-ops-ledger.png') center / cover"><span aria-hidden="true" style="position:absolute; left:50%; top:50%; height:52%; aspect-ratio:1 / 1; transform:translate(-50%, -50%); box-sizing:border-box; display:flex; align-items:center; justify-content:center; border-radius:28%; background:rgba(250,249,246,0.62); backdrop-filter:blur(18px) saturate(1.3); border:1px solid rgba(255,255,255,0.72); box-shadow:inset 0 1px 0 rgba(255,255,255,0.85), 0 18px 40px -16px rgba(20,20,18,0.38)"><svg viewBox="0 0 48 48" fill="none" stroke="#1A1917" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style="display:block; width:48%; height:48%"><rect x="10" y="5" width="28" height="38" rx="2"></rect><path d="M16 5v38"></path><path d="M29 5v9l2.5-2 2.5 2V5"></path><path d="M21 22h5M29.5 22H33M21 28h5M29.5 28H33M21 34h5M29.5 34H33"></path></svg></span></span><span style="flex:1 1 300px; min-width:0"><span style="display:block; font-size:12px; color:#6E6D67">Related playbook · Private Credit</span><span style="display:block; margin:4px 0 0; font-size:16px; letter-spacing:-0.015em; line-height:1.3">Loan Ops Ledger</span><span style="display:block; margin:4px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">Agent notices matched to the loan system every day, with each break explained before month end.</span></span><span style="flex:none; font-size:13px; padding:0 0 1px; border-bottom:1px solid rgba(20,20,18,0.3)">Read the playbook →</span></a></section>
+
+    <section id="sources" data-screen-label="Sources" style="padding:72px 0 0; scroll-margin-top:120px"><h2 style="margin:0; font-size:19px; font-weight:500; letter-spacing:-0.018em; line-height:1.3">Sources</h2><ol style="list-style:none; margin:16px 0 0; padding:0; border-top:1px solid #1A1917"><li id="ref-1" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">1</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">Effective harnesses for long-running agents. Anthropic, 2025-11-26. <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">anthropic.com</a></span></li><li id="ref-2" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">2</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">Why Do Multi-Agent LLM Systems Fail? (MAST) (Cemri et al.). NeurIPS 2025 Datasets and Benchmarks Track (spotlight), 2025-03-17. <a href="https://arxiv.org/abs/2503.13657" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">arxiv.org</a></span></li><li id="ref-3" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">3</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">A practical guide to building agents (PDF). OpenAI, 2025 (PDF undated; circulated April 2025). <a href="https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">cdn.openai.com</a></span></li><li id="ref-4" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">4</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">Task-completion time horizons, Time Horizon 1.1 data (benchmark_results_1_1.yaml; page last updated 2026-05-08). METR, 2026-05-08. <a href="https://metr.org/time-horizons/" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">metr.org</a></span></li><li id="ref-5" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">5</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">2026 FINRA Annual Regulatory Oversight Report (PDF), GenAI section. FINRA, 2025-12. <a href="https://www.finra.org/sites/default/files/2025-12/2026-annual-regulatory-oversight-report.pdf" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">finra.org</a></span></li><li id="ref-6" style="display:flex; gap:14px; padding:12px 0; border-bottom:1px solid #E8E5DF; scroll-margin-top:120px"><span style="flex:none; width:22px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67; padding-top:2px">6</span><span style="min-width:0; font-size:13.5px; line-height:1.6; color:#55544E; overflow-wrap:anywhere">17 CFR 275.204-2 Books and records to be maintained by investment advisers. Cornell LII (text of SEC rule), current text. <a href="https://www.law.cornell.edu/cfr/text/17/275.204-2" style="color:#1A1917; text-decoration:underline; text-decoration-color:rgba(20,20,18,0.3); text-underline-offset:2px">law.cornell.edu</a></span></li></ol></section>
+
+  </main>
+</div>
+
+<section data-screen-label="More essays" style="max-width:1048px; margin:0 auto; padding:120px clamp(20px, 4vw, 40px) 0; box-sizing:border-box">
+  <div style="display:flex; flex-wrap:wrap; gap:10px 24px; align-items:baseline; justify-content:space-between; padding:0 0 18px; border-bottom:1px solid #E8E5DF">
+    <h2 style="margin:0; font-size:clamp(22px, 2.2vw, 28px); font-weight:400; letter-spacing:-0.026em; line-height:1.15">More essays</h2>
+    <a href="Essays.dc.html" style="font-size:13.5px; color:#55544E" style-hover="color:var(--a)">All essays →</a>
+  </div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap:28px 20px; margin:24px 0 0">
+    <a href="Essay 01 - An index is not understanding.dc.html" style="display:flex; flex-direction:column; color:#1A1917" style-hover="color:var(--a)">
+      <span aria-hidden="true" style="display:block; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/capital-call-flow.png') center / cover"></span>
+      <span style="margin:14px 0 0; font-size:12px; color:#6E6D67">No. 01 · Engineering</span>
+      <span style="margin:4px 0 0; font-size:17.5px; letter-spacing:-0.02em; line-height:1.25">An index is not understanding</span>
+      <span style="margin:6px 0 0; font-size:13.5px; line-height:1.55; color:#55544E">Structured maps of a credit agreement help an AI system find the right clause faster. They do not make its reading right. Build them as tools the system keeps using, not documents it reads once.</span>
+    </a>
+    <a href="Essay 05 - Review loops that converge.dc.html" style="display:flex; flex-direction:column; color:#1A1917" style-hover="color:var(--a)">
+      <span aria-hidden="true" style="display:block; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/investor-reporting.png') center / cover"></span>
+      <span style="margin:14px 0 0; font-size:12px; color:#6E6D67">No. 05 · Engineering</span>
+      <span style="margin:4px 0 0; font-size:17.5px; letter-spacing:-0.02em; line-height:1.25">Draft, check, repeat: review loops that converge</span>
+      <span style="margin:6px 0 0; font-size:13.5px; line-height:1.55; color:#55544E">Pairing a model that drafts with a model that critiques can lift the quality of AI output. Without a defined bar, checks that run in code and a rule for stopping, the loop mostly burns tokens.</span>
+    </a>
+    <a href="Essay 07 - Define done before you build.dc.html" style="display:flex; flex-direction:column; color:#1A1917" style-hover="color:var(--a)">
+      <span aria-hidden="true" style="display:block; aspect-ratio:16 / 10; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/mandate-guardrails.png') center / cover"></span>
+      <span style="margin:14px 0 0; font-size:12px; color:#6E6D67">No. 07 · Engineering</span>
+      <span style="margin:4px 0 0; font-size:17.5px; letter-spacing:-0.02em; line-height:1.25">Define done before you build</span>
+      <span style="margin:6px 0 0; font-size:13.5px; line-height:1.55; color:#55544E">Prompts drift and model runs vary. An ordered list of events, each with a proof that can be checked against the real system, gives an AI workflow a finish line that holds across rewrites, model changes and restarts.</span>
+    </a>
+  
+  
+  
+  </div>
+</section>
+
+<section data-screen-label="Closing" style="padding:104px clamp(20px, 4vw, 40px); border-bottom:1px solid var(--line2)">
+  <div style="position:relative; overflow:hidden; max-width:968px; margin:0 auto; border:1px solid var(--line); border-radius:18px; background:#E8E2D2 url('assets/valley-pastel.png') center 60% / cover; padding:clamp(40px,5vw,64px) clamp(24px,4vw,56px); display:flex; gap:32px; flex-wrap:wrap; align-items:flex-end; justify-content:space-between">
+    <div style="position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(248,246,240,0.7) 0%, rgba(248,246,240,0.5) 60%, rgba(248,246,240,0.35) 100%)"></div>
+    <div style="position:relative; flex:3 1 420px; min-width:0">
+      <h2 style="margin:0; max-width:620px; font-size:clamp(26px, 2.8vw, 38px); font-weight:400; letter-spacing:-0.032em; line-height:1.08; text-wrap:balance">Bring one process. We will measure it.</h2>
+      <p style="margin:16px 0 0; max-width:520px; font-size:15px; line-height:1.6; color:#2C2B27; text-wrap:pretty">Thirty minutes on one workflow: where its errors come from today, and what a harness would check.</p>
+    </div>
+    <div style="position:relative; display:flex; flex-direction:column; gap:12px; align-items:flex-start">
+      <a href="{{ ctaHref }}" style="display:inline-flex; align-items:center; height:42px; padding:0 20px; background:#1A1917; color:#FFFFFF; border-radius:6px; font-size:14px; font-weight:500; letter-spacing:-0.005em" style-hover="background:var(--a); color:#FFFFFF">{{ cta }}</a>
+    </div>
+  </div>
+</section>
+
+<footer data-screen-label="Footer" style="padding:70px 40px 40px">
+  <div style="max-width:1280px; margin:0 auto">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr))">
+      <div style="padding:0 28px 0 0; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Services</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="AI Engineering.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">AI Engineering</a>
+          <a href="AI Transformation.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">AI Transformation</a>
+          <a href="3264 Home.dc.html#capabilities" style="color:var(--sec)" style-hover="color:var(--a)">Deployment &amp; Run</a>
+          <a href="3264 Home.dc.html#capabilities" style="color:var(--sec)" style-hover="color:var(--a)">Evaluation suites</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Industries</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Private Credit.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Private Credit</a>
+          <a href="Private Equity.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Private Equity</a>
+          <a href="3264 Home.dc.html#industries" style="color:var(--sec)" style-hover="color:var(--a)">Fund Management</a>
+          <a href="3264 Home.dc.html#industries" style="color:var(--sec)" style-hover="color:var(--a)">Asset Management</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Company</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Company.dc.html#who" style="color:var(--sec)" style-hover="color:var(--a)">Who we are</a>
+          <a href="Company.dc.html#how" style="color:var(--sec)" style-hover="color:var(--a)">How we work</a>
+          <a href="3264 Home.dc.html#work" style="color:var(--sec)" style-hover="color:var(--a)">Case studies</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Resources</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="Playbooks.dc.html" style="color:var(--sec)" style-hover="color:var(--a)">Playbooks</a>
+          <a href="3264 Home.dc.html#playbooks" style="color:var(--sec)" style-hover="color:var(--a)">Field notes</a>
+          <a href="Company.dc.html#how" style="color:var(--sec)" style-hover="color:var(--a)">Security</a>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line2); padding:0 28px; min-width:0">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.11em; text-transform:uppercase; color:var(--mut)">Connect</div>
+        <div style="display:grid; gap:13px; margin:22px 0 0; font-size:14.5px; letter-spacing:-0.008em">
+          <a href="AI Engineering.dc.html#engagement" style="color:var(--sec)" style-hover="color:var(--a)">Book a call</a>
+          <a href="mailto:hello@3264.ai" style="color:var(--sec)" style-hover="color:var(--a)">hello@3264.ai</a>
+          <a href="AI Engineering.dc.html#engagement" style="color:var(--sec)" style-hover="color:var(--a)">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin:64px 0 0; padding-top:22px; border-top:1px solid var(--line2); font-size:13px; letter-spacing:-0.005em; color:var(--mut)">
+      <div style="display:flex; align-items:center; gap:11px; min-width:0">
+        <span style="font-size:15px; font-weight:500; letter-spacing:-0.03em; color:#1A1917">3264<span>.ai</span></span>
+        <span>&copy; 2026 Bearing Deployment Company Inc. All rights reserved.</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px">
+        <span style="display:flex; align-items:center; gap:7px"><span style="width:6px; height:6px; border-radius:50%; background:var(--a)"></span>All systems operational</span>
+      </div>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ctaLabel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Book a mapping session&quot;,&quot;Book a two-week audit&quot;],&quot;default&quot;:&quot;Book a mapping session&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Page&quot;},&quot;showBuilt&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Page&quot;},&quot;animateHero&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+class Component extends DCLogic {
+  state = { vw: 1440, mw: 680, act: "top", sub: null, g1: 0, g1h: null, mini: false, notice: false, fq: [true, false, false, false, false, false], g3h: -1, ev: -1, copied: false, readMin: 0, x2: false };
+  mainRef = React.createRef(); railRef = React.createRef(); progRef = React.createRef(); g1Ref = React.createRef();
+
+  SECTIONS = [
+    {"id":"top","label":"Overview"},
+    {"id":"the-loop-runs-on-evidence","num":"01","label":"The loop runs on evidence"},
+    {"id":"the-environment-does-most-of-the-verifying","num":"02","label":"The environment does most of the verifying"},
+    {"id":"tools-fail-loudly","num":"03","label":"Tools fail loudly"},
+    {"id":"context-is-a-budget-and-memory-lives-in-files","num":"04","label":"Context is a budget, and memory lives in files"},
+    {"id":"sub-tasks-get-their-own-workspace","num":"05","label":"Sub-tasks get their own workspace"},
+    {"id":"permissions-are-explicit-and-undo-is-cheap","num":"06","label":"Permissions are explicit, and undo is cheap"},
+    {"id":"the-plan-is-an-artefact","num":"07","label":"The plan is an artefact"},
+    {"id":"where-the-analogy-breaks","label":"Where the analogy breaks"},
+    {"id":"what-to-borrow","label":"What to borrow"},
+    {"id":"sources","label":"Sources"}
+  ];
+
+  G2 = [];
+
+  G3 = [];
+
+  componentDidMount() {
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.measure);
+    if (window.ResizeObserver && this.mainRef.current) { this.ro = new ResizeObserver(() => { this.measure(); this.onScroll(); }); this.ro.observe(this.mainRef.current); }
+    this.measure(); this.spy(); this.startG1();
+    this._rt = setTimeout(() => this.readTime(), 900);
+  }
+  componentDidUpdate() {
+    const st = this.state, anim = this.props.animateHero ?? true, built = this.props.showBuilt ?? true;
+    const key = [st.act, st.sub, st.mw, st.vw, built].join("|");
+    if (key !== this._lastKey) { this._lastKey = key; this.onScroll(); }
+    if (this._lastAnim !== undefined && anim !== this._lastAnim) this.startG1();
+    this._lastAnim = anim;
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll); window.removeEventListener("resize", this.measure);
+    if (this.ro) this.ro.disconnect();
+    this.clearG1(); clearTimeout(this._rt); clearTimeout(this._ct); cancelAnimationFrame(this._raf);
+  }
+
+  measure = () => {
+    const m = this.mainRef.current, vw = window.innerWidth, mw = m ? Math.round(m.getBoundingClientRect().width) : vw;
+    if (vw !== this.state.vw || Math.abs(mw - this.state.mw) > 1) this.setState({ vw, mw });
+  };
+  onScroll = () => { if (!this._raf) this._raf = requestAnimationFrame(() => { this._raf = 0; this.spy(); }); };
+
+  // Scroll-spy: active section, active subsection, top progress bar and the sidebar coverage rail.
+  spy() {
+    const vh = window.innerHeight, line = Math.min(170, vh * 0.3), H = document.documentElement.scrollHeight - vh;
+    const pb = this.progRef.current;
+    if (pb) pb.style.transform = "scaleX(" + (H > 0 ? Math.min(1, Math.max(0, window.scrollY / H)) : 0).toFixed(4) + ")";
+    let act = "top", el = null, sub = null;
+    for (const s of this.SECTIONS) { const e = document.getElementById(s.id); if (e && e.getBoundingClientRect().top <= line) { act = s.id; el = e; } }
+    const S = this.SECTIONS.find((s) => s.id === act);
+    if (S && S.subs && (this.props.showBuilt ?? true)) for (const [id] of S.subs) { const e = document.getElementById(id); if (e && e.getBoundingClientRect().top <= line) sub = id; }
+    const rail = this.railRef.current;
+    if (rail && rail.parentNode) {
+      const it = rail.parentNode.querySelector('[data-toc="' + act + '"]');
+      if (it) {
+        let f = 0;
+        if (el) { const r = el.getBoundingClientRect(); f = Math.min(1, Math.max(0, (line - r.top) / Math.max(1, r.height))); }
+        rail.style.height = (it.offsetTop + f * it.offsetHeight).toFixed(1) + "px";
+      }
+    }
+    if (act !== this.state.act || sub !== this.state.sub) this.setState({ act, sub });
+  }
+
+  // Hero figure: one restrained reveal on scroll-in; any failure or reduced motion shows the end state.
+  clearG1() { (this._g1t || []).forEach(clearTimeout); this._g1t = []; if (this.io) { this.io.disconnect(); this.io = null; } }
+  startG1() {
+    this.clearG1(); this._g1run = false;
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!(this.props.animateHero ?? true) || reduce || !("IntersectionObserver" in window)) { this.setState({ g1: 7 }); return; }
+    const run = () => {
+      this._g1run = true;
+      this.setState({ g1: 0 });
+      [1, 2, 3, 4, 5, 6, 7].forEach((s, i) => this._g1t.push(setTimeout(() => this.setState({ g1: s }), 300 + i * 120)));
+      this._g1t.push(setTimeout(() => { if (this.state.g1 !== 7) this.setState({ g1: 7 }); }, 4000));
+    };
+    const el = this.g1Ref.current;
+    if (!el) { this.setState({ g1: 7 }); return; }
+    this._g1t.push(setTimeout(() => { if (!this._g1run) { if (this.io) { this.io.disconnect(); this.io = null; } if (this.state.g1 !== 7) this.setState({ g1: 7 }); } }, 4000));
+    this.io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { this.io.disconnect(); this.io = null; run(); } }, { threshold: 0, rootMargin: "0px 0px -35% 0px" });
+    this.io.observe(el);
+  }
+
+  readTime() {
+    const m = this.mainRef.current; if (!m) return;
+    const words = (s) => (s || "").trim().split(/\s+/).filter(Boolean).length;
+    let n = words(m.innerText);
+    m.querySelectorAll("[data-fig]").forEach((f) => { n -= words(f.innerText); });
+    const readMin = Math.max(1, Math.round(n / 230));
+    if (readMin !== this.state.readMin) this.setState({ readMin });
+  }
+
+  copyLink = () => {
+    const done = () => { this.setState({ copied: true }); clearTimeout(this._ct); this._ct = setTimeout(() => this.setState({ copied: false }), 1800); };
+    try { navigator.clipboard.writeText(window.location.href).then(done, () => {}); } catch (e) {}
+  };
+  toggleMini = () => this.setState((s) => ({ mini: !s.mini }));
+  closeMini = () => this.setState({ mini: false });
+  toggleNotice = () => this.setState((s) => ({ notice: !s.notice }));
+  toggleFaq = (e) => { const i = +e.currentTarget.getAttribute("data-i"); this.setState((s) => { const fq = s.fq.slice(); fq[i] = !fq[i]; return { fq }; }); };
+  g3Enter = (e) => this.setState({ g3h: +e.currentTarget.getAttribute("data-s") });
+  g3Leave = () => this.setState({ g3h: -1 });
+  evEnter = (e) => this.setState({ ev: +e.currentTarget.getAttribute("data-ev") });
+  evLeave = () => this.setState({ ev: -1 });
+  irEnter = (e) => this.setState({ g1h: e.currentTarget.getAttribute("data-f") });
+  irLeave = () => this.setState({ g1h: null });
+
+  riEnter = (e) => this.setState({ g1h: e.currentTarget.getAttribute("data-c") });
+  riLeave = () => this.setState({ g1h: null });
+  xEnter = () => this.setState({ x2: true });
+  xLeave = () => this.setState({ x2: false });
+  xToggle = () => this.setState({ x2: true });
+
+  renderVals() {
+    const st = this.state, vw = st.vw, mw = st.mw, built = this.props.showBuilt ?? true, flags = this.props.showFlags ?? true;
+    const cta = this.props.ctaLabel === "Book a two-week audit" ? "Book a two-week audit" : "Book a mapping session";
+    const ctaHref = cta === "Book a two-week audit" ? "AI Engineering.dc.html#engagement" : "mailto:hello@3264.ai?subject=Essays";
+    const sideOn = vw >= 1048, idx = Math.max(0, this.SECTIONS.findIndex((s) => s.id === st.act)), cur = this.SECTIONS[idx];
+    const toc = this.SECTIONS.map((s, i) => ({
+      id: s.id, href: "#" + s.id, num: s.num || "", label: s.label,
+      bg: i === idx ? "#EEEBE4" : "transparent", fg: i <= idx ? "#1A1917" : "#6E6D67",
+      hasSubs: !!(s.subs && built && i === idx),
+      subs: (s.subs || []).map(([id, label]) => { const on = st.sub === id; return { href: "#" + id, label, fg: on ? "#1A1917" : "#6E6D67", bd: on ? "#1A1917" : "#D9D6CF" }; })
+    }));
+    const g1 = st.g1, ev = {};
+    for (let i = 0; i < 8; i++) { ev["s" + i] = st.ev === i ? "#F1E6CF" : "transparent"; ev["l" + i] = st.ev === i ? "#1A1917" : "#6E6D67"; }
+    const g4w = mw >= 520, rnw = mw >= 600;
+    const g2rows = this.G2.map((r) => Object.assign({}, r, { dc: r.bad ? "#C4341E" : "#1A1917", sc: r.ok ? "#157F52" : "#C4341E", hasOwn: !!r.own }));
+    const txt = (v) => v ? v.t + (v.sub ? " · " + v.sub : "") + (v.dash ? " (proposal)" : "") : "—";
+    const cell = (v) => ({ has: !!v, none: !v, t: v ? v.t : "", sub: v && v.sub ? v.sub : "", hasSub: !!(v && v.sub), bs: v && v.dash ? "dashed" : "solid" });
+    const g3steps = this.G3.map((s, i) => ({ i, n: String(i + 1), name: s[0], m: txt(s[1]), c: txt(s[2]), p: txt(s[3]), mc: s[1] ? "#1A1917" : "#8A887F", cc: s[2] ? "#1A1917" : "#8A887F", pc: s[3] ? "#1A1917" : "#8A887F" }));
+    const g3rows = this.G3.map((s, i) => ({ i, n: String(i + 1), name: s[0], bg: st.g3h === i ? "#F1EEE8" : "transparent", hc: st.g3h === i ? "#1A1917" : "#55544E", cells: [cell(s[1]), cell(s[2]), cell(s[3])] }));
+    const out = {
+      progRef: this.progRef, mainRef: this.mainRef, railRef: this.railRef, g1Ref: this.g1Ref,
+      sideOn, noSide: !sideOn, toc, curLabel: (cur.num ? cur.num + " " : "") + cur.label,
+      miniOpen: st.mini && !sideOn, miniA: String(st.mini), miniIcon: st.mini ? "−" : "+", toggleMini: this.toggleMini, closeMini: this.closeMini,
+      cta, ctaHref, hasRead: st.readMin > 0, readLabel: st.readMin + " min read", copyLink: this.copyLink, copyLabel: st.copied ? "Link copied" : "Copy link",
+      noticeFull: mw >= 500 || st.notice, noticeToggle: mw < 500, noticeLabel: st.notice ? "Hide full notice" : "Show full notice", toggleNotice: this.toggleNotice,
+      g1Cols: mw >= 560 ? "repeat(4, minmax(0,1fr))" : "repeat(2, minmax(0,1fr))", g1Wide: mw >= 500, g1Narrow: mw < 500,
+      g1Ring: g1 >= 1 ? "0 0 0 1.5px #1A1917" : "0 0 0 1.5px rgba(26,25,23,0)", g1Diff: g1 >= 2 ? 1 : 0, g1Chip: g1 >= 3 ? 1 : 0, g1ChipY: g1 >= 3 ? "none" : "translateY(6px)", g1Dot: g1 >= 4 ? "#157F52" : "#C4341E",
+      g4Cols: g4w ? "minmax(0,1.1fr) minmax(0,1.4fr) minmax(0,0.7fr)" : "minmax(0,1fr) auto", g4In: g4w ? "block" : "none", g4Sub: g4w ? "none" : "block",
+      rnCols: rnw ? "minmax(0,0.62fr) repeat(3, minmax(0,1fr))" : "minmax(0,1fr)", rnHead: rnw ? "grid" : "none", rnLab: rnw ? "none" : "block", rnGap: rnw ? "6px 22px" : "8px",
+      g2Table: mw >= 600, g2Cards: mw < 600, g2rows,
+      ev, evEnter: this.evEnter, evLeave: this.evLeave,
+      built, notBuilt: !built,
+      g3Grid: mw >= 540, g3Cards: mw < 540, g3steps, g3rows, g3Enter: this.g3Enter, g3Leave: this.g3Leave,
+      anWide: mw >= 600, anNarrow: mw < 600, lcWide: mw >= 600, lcNarrow: mw < 600,
+      flags, toggleFaq: this.toggleFaq,
+      ri: (() => { const o = {}, h = st.g1h, g = st.g1, HL = "#F1E6CF", order = [1, 2, 3, 4, 5, 7, 6]; for (let k = 1; k <= 7; k++) { const done = g >= order.indexOf(k) + 1, bad = k === 6 && done; o["s" + k] = bad ? "#C4341E" : done ? "#1A1917" : "#8A887F"; o["n" + k] = bad ? "#C4341E" : "#55544E"; o["h" + k] = h === String(k) ? HL : "transparent"; o["b" + k] = h === String(k) ? HL : bad ? "#F6E3DF" : "transparent"; } o.d6 = g >= 7 ? "#C4341E" : "transparent"; o.u6 = g >= 7 ? "100% 1.5px" : "0% 1.5px"; return o; })(),
+      riEnter: this.riEnter, riLeave: this.riLeave, riTop: mw >= 600 ? "minmax(0,1.45fr) minmax(0,1fr)" : "minmax(0,1fr)", riCols: mw >= 560 ? "22px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr)" : "22px minmax(0,1fr)", riHead: mw >= 560 ? "grid" : "none", riLab: mw >= 560 ? "none" : "block", riSub: mw >= 560 ? "auto" : "2",
+      xCols: mw >= 600 ? "minmax(0,1.05fr) minmax(0,0.95fr) minmax(0,0.8fr) minmax(0,1.1fr) minmax(0,1.2fr)" : "minmax(0,1fr) minmax(0,1fr)", xHead: mw >= 600 ? "grid" : "none", xHide: mw >= 600 ? "block" : "none", xNar: mw >= 600 ? "none" : "block", xDiff: st.x2 ? "block" : "none", xEnter: this.xEnter, xLeave: this.xLeave, xToggle: this.xToggle,
+      fbCols: mw >= 560 ? "150px minmax(0,1fr) 76px" : "minmax(0,1fr)", fbAl: mw >= 560 ? "right" : "left",
+      cwT: mw >= 520 ? "26px minmax(0,1.7fr) minmax(0,0.75fr) minmax(0,0.75fr) minmax(0,0.8fr)" : "22px minmax(0,1fr) auto auto", cwSrc: mw >= 520 ? "block" : "none",
+      cwQ: mw >= 560 ? "repeat(8, minmax(0,1fr))" : "repeat(4, minmax(0,1fr))", cwBr: mw >= 560 ? "5 / span 4" : "1 / -1",
+      cwC: mw >= 560 ? "14px minmax(0,1.25fr) minmax(0,1fr)" : "14px minmax(0,1fr)", cwRc: mw >= 560 ? "auto" : "2 / -1",
+      dtCols: mw >= 560 ? "repeat(3, minmax(0,1fr))" : "minmax(0,1fr)", dtHead: mw >= 560 ? "grid" : "none", dtLab: mw >= 560 ? "none" : "block",
+      sCols: mw >= 640 ? "minmax(0,1.45fr) repeat(5, minmax(0,1fr))" : "minmax(0,1.3fr) repeat(3, minmax(0,1fr))", sHide: mw >= 640 ? "block" : "none",
+      wCols: mw >= 600 ? "minmax(0,1.65fr) repeat(3, minmax(0,0.95fr)) minmax(0,1.3fr)" : "minmax(0,1fr) minmax(0,0.9fr)", wHide: mw >= 600 ? "block" : "none", wSub: mw >= 600 ? "none" : "block", wHead: mw >= 600 ? "grid" : "none",
+      pCols: mw >= 600 ? "minmax(0,1.15fr) minmax(0,0.62fr) minmax(0,1.55fr) minmax(0,1.2fr)" : "minmax(0,1fr)", pHead: mw >= 600 ? "grid" : "none", pLab: mw >= 600 ? "none" : "block", pGap: mw >= 600 ? "4px 12px" : "6px",
+      g1Row: g1 >= 1 ? 1 : 0, g1Exp: g1 >= 2 ? 1 : 0, g1St: g1 >= 2 ? "Break · explained" : "Break",
+      tCols: mw >= 540 ? "minmax(0,1.45fr) minmax(0,1.05fr) minmax(0,1.05fr) minmax(0,0.9fr) minmax(0,1.05fr)" : "minmax(0,1fr) auto",
+      tbCols: mw >= 540 ? "minmax(0,1.75fr) minmax(0,0.55fr) minmax(0,0.65fr) minmax(0,0.95fr) minmax(0,0.9fr)" : "minmax(0,1fr) auto",
+      tHide: mw >= 540 ? "block" : "none", tNar: mw >= 540 ? "none" : "block", tStCol: mw >= 540 ? "auto" : "1 / -1", tHead: mw >= 540 ? "grid" : "none",
+      plCols: mw >= 560 ? "minmax(0,1.2fr) minmax(0,0.95fr) minmax(0,1fr) minmax(0,0.65fr) minmax(0,1.2fr)" : "minmax(0,1fr)", plHead: mw >= 560 ? "grid" : "none", plLab: mw >= 560 ? "none" : "inline", plAl: mw >= 560 ? "right" : "left",
+      lnCols: mw >= 600 ? "minmax(0,0.62fr) repeat(3, minmax(0,1fr))" : "minmax(0,1fr)",
+      scCols: mw >= 600 ? "minmax(0,1.45fr) minmax(0,0.95fr) minmax(0,0.85fr) minmax(0,1.25fr)" : "minmax(0,1fr)", scAl: mw >= 600 ? "right" : "left",
+      irEnter: this.irEnter, irLeave: this.irLeave,
+      ...(() => { const o = {}, h = st.g1h, HL = "#F1E6CF"; [["1", 1], ["2", 2], ["g", 3], ["3", 4], ["4", 5], ["n", 6]].forEach(([k, n]) => { o["g1D" + k] = g1 >= n ? "#157F52" : "#D9D6CF"; o["g1B" + k] = h === k ? HL : (k === "g" || k === "n") ? "#EEEBE4" : "transparent"; }); [["1", 1], ["2", 2], ["3", 4], ["4", 5]].forEach(([k, n]) => { o["g1U" + k] = g1 >= n ? "100% 1.5px" : "0% 1.5px"; o["g1F" + k] = h === k ? HL : "transparent"; }); return o; })(),
+      irCols: mw >= 560 ? "20px minmax(0,0.72fr) minmax(0,1.15fr) minmax(0,1.6fr) minmax(0,0.62fr)" : "20px minmax(0,1fr) auto", irHead: mw >= 560 ? "grid" : "none",
+      irHide: mw >= 560 ? "block" : "none", irNar: mw >= 560 ? "none" : "inline", irAl: mw >= 560 ? "right" : "left", irStCol: mw >= 560 ? "auto" : "3", irStRow: mw >= 560 ? "auto" : "1", irBasisCol: mw >= 560 ? "auto" : "2 / -1", irSrcCol: mw >= 560 ? "3 / 5" : "2 / -1",
+      caCols: mw >= 540 ? "minmax(0,1.3fr) minmax(0,0.75fr) minmax(0,1.5fr)" : "minmax(0,1fr) auto",
+      ddCols: mw >= 560 ? "minmax(0,0.8fr) minmax(0,1.3fr)" : "minmax(0,1fr)", ddDiv: mw >= 560 ? "1px solid #E8E5DF" : "0", ddDivT: mw >= 560 ? "0" : "1px dashed #E8E5DF",
+      ...(() => { const o = {}; for (let k = 1; k <= 5; k++) o["slR" + k] = g1 >= k ? 1 : 0; const red = g1 >= 6; o.s3Bg = red ? "#F6E3DF" : "transparent"; o.s3Sh = red ? "inset 2px 0 0 #C4341E" : "inset 0 0 0 0 transparent"; o.s3Fg = red ? "#C4341E" : "#1A1917"; o.s3Dot = red ? "#C4341E" : "transparent"; o.s3Ring = red ? "#C4341E" : "#8A887F"; return o; })(),
+      slCols: mw >= 560 ? "minmax(0,0.8fr) minmax(0,1.7fr) minmax(0,0.62fr) minmax(0,1.2fr)" : "minmax(0,1fr)",
+      cmCols: mw >= 560 ? "minmax(0,0.62fr) minmax(0,1.6fr) minmax(0,0.9fr) minmax(0,1.05fr)" : "minmax(0,1fr)", cmAl: mw >= 560 ? "right" : "left",
+      mfnWide: mw >= 520, mfnNarrow: mw < 520,
+      g3sCols: mw >= 600 ? "minmax(0,0.85fr) repeat(3, minmax(0,1fr))" : "minmax(0,1fr)",
+      mgU: g1 >= 1 ? "100% 1.5px" : "0% 1.5px", mgN: g1 >= 2 ? 1 : 0, mgPB: g1 >= 3 ? "#E4F0EA" : "#F1EEE8", mgPC: g1 >= 3 ? "#157F52" : "#8A887F", mgPD: g1 >= 3 ? "#157F52" : "#D9D6CF",
+      pcCols: mw >= 560 ? "18px minmax(0,.72fr) minmax(0,1.55fr) minmax(0,.95fr) minmax(0,.95fr) minmax(0,.66fr)" : "18px minmax(0,1fr)",
+      mgL: mw >= 600 ? "repeat(2, minmax(0,1fr))" : "minmax(0,1fr)",
+      btCols: mw >= 540 ? "minmax(0,.85fr) minmax(0,1.9fr) minmax(0,.7fr) minmax(0,.8fr)" : "minmax(0,.9fr) minmax(0,1.6fr) minmax(0,.8fr)",
+      dnCols: mw >= 540 ? "minmax(0,2fr) minmax(0,.8fr) minmax(0,.7fr) minmax(0,.6fr)" : "minmax(0,1fr) auto auto",
+      ...(() => { const o = {}; for (let k = 1; k <= 5; k++) o["crD" + k] = g1 >= k ? 1 : 0; o.crOut = g1 >= 4 ? "0 0 0 1.5px #C4341E" : "0 0 0 1.5px rgba(196,52,30,0)"; o.crS4 = g1 >= 4 ? "100% 1.5px" : "0% 1.5px"; o.crMom = g1 >= 6 ? 1 : 0; return o; })(),
+      crCols: mw >= 540 ? "minmax(0,1fr) 78px 78px 64px" : "minmax(0,1fr) 58px 58px",
+      vbCols: mw >= 540 ? "minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.72fr) minmax(0,.8fr)" : "minmax(0,1fr) auto"
+    };
+    for (let i = 0; i < 6; i++) { out["fq" + i] = !!st.fq[i]; out["fqi" + i] = st.fq[i] ? "−" : "+"; out["fqa" + i] = String(!!st.fq[i]); }
+    return out;
+  }
+}
+</script>
+</body>
+</html>

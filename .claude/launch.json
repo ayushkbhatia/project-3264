@@ -166,6 +166,20 @@
       "port": 4110
     },
     {
+      "name": "design reference: essays",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4111",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_essays"
+      ],
+      "port": 4111
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [
