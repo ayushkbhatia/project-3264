@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { pageMetadata } from "@/app/shared-metadata";
 import { EssayPage } from "@/components/essays/EssayPage";
 import { getEssay, getEssays, summarize } from "@/content/essays-source";
 
@@ -19,22 +20,11 @@ export async function generateMetadata({ params }: PageProps<"/essays/[slug]">):
   const { title: name, dek, date } = essay.front;
   // As the prototypes title them: the essay first, the site after.
   const title = `${name} — 3264.ai`;
-  return {
+  return pageMetadata({
     title,
     description: dek,
-    openGraph: {
-      type: "article",
-      siteName: "3264.ai",
-      locale: "en_US",
-      title,
-      description: dek,
-      url: "./",
-      publishedTime: date,
-      section: essay.front.category,
-      // Setting openGraph replaces the root layout's, share image included: name it again.
-      images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "3264.ai — Deployment is the deliverable." }],
-    },
-  };
+    openGraph: { type: "article", publishedTime: date, section: essay.front.category },
+  });
 }
 
 export default async function EssayRoute({ params }: PageProps<"/essays/[slug]">) {
