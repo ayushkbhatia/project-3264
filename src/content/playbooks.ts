@@ -30,6 +30,7 @@ function siteNav(playbooks: HeaderNavItem): HeaderNavItem[] {
     { label: "Industries", href: "/#industries" },
     { label: "Work", href: "/#work" },
     playbooks,
+    { label: "Essays", href: routes.essays },
     { label: "Company", href: routes.company },
   ];
 }

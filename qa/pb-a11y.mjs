@@ -94,19 +94,25 @@ try {
     await p.goto(PORT, { waitUntil: "networkidle" });
     const btn = p.locator("[data-menu-button]");
     const navHidden = await p.evaluate(() => getComputedStyle(document.querySelector("header nav")).visibility);
+    const navLinks = await p.evaluate(() => document.querySelector("header nav").children.length);
     await btn.click();
     const open = await p.evaluate(() => { const s = document.querySelector("[data-menu-sheet]"); const r = s.getBoundingClientRect(); const rows = [...s.querySelectorAll("a")].map((a) => [a.textContent, a.getBoundingClientRect().height, getComputedStyle(a).fontSize]); return { hidden: s.hidden, top: r.top, w: r.width, rows }; });
     await p.keyboard.press("Escape");
     const after = await p.evaluate(() => ({ hidden: document.querySelector("[data-menu-sheet]").hidden, focus: document.activeElement?.hasAttribute("data-menu-button"), exp: document.querySelector("[data-menu-button]").getAttribute("aria-expanded") }));
-    console.log(`${ok(navHidden === "hidden" && !open.hidden && open.rows.length === 6 && open.rows.every(([, h, fs]) => h === 48 && fs === "16px") && open.w === 390)} menu @390: inline nav ${navHidden}; sheet at y=${open.top}, ${open.w}px wide, rows ${open.rows.map(([t]) => t).join(" · ")} (48px, 16px)`);
+    console.log(`${ok(navHidden === "hidden" && !open.hidden && open.rows.length === navLinks && open.rows.every(([, h, fs]) => h === 48 && fs === "16px") && open.w === 390)} menu @390: inline nav ${navHidden}; sheet at y=${open.top}, ${open.w}px wide, rows ${open.rows.map(([t]) => t).join(" · ")} (48px, 16px)`);
     console.log(`${ok(after.hidden && after.focus && after.exp === "false")} Escape closes (hidden ${after.hidden}), focus back on the button ${after.focus}, aria-expanded ${after.exp}`);
     await ctx.close();
 
     const wide = await browser.newContext({ viewport: { width: 1000, height: 800 } });
     const q = await wide.newPage();
     await q.goto(PORT, { waitUntil: "networkidle" });
-    const vis = await q.evaluate(() => ({ nav: getComputedStyle(document.querySelector("header nav")).visibility, btn: getComputedStyle(document.querySelector("[data-menu-button]")).display, navH: document.querySelector("header nav").getBoundingClientRect().height }));
-    console.log(`${ok(vis.nav === "visible" && vis.btn === "none" && vis.navH < 30)} @1000: inline nav ${vis.nav} on one line (${vis.navH}px), menu button display ${vis.btn}`);
+    // one line: the first and last links share a top (the nav's own box carries focus-ring padding)
+    const vis = await q.evaluate(() => {
+      const nav = document.querySelector("header nav");
+      const top = (el) => Math.round(el.getBoundingClientRect().top);
+      return { nav: getComputedStyle(nav).visibility, btn: getComputedStyle(document.querySelector("[data-menu-button]")).display, oneLine: top(nav.firstElementChild) === top(nav.lastElementChild), links: nav.children.length };
+    });
+    console.log(`${ok(vis.nav === "visible" && vis.btn === "none" && vis.oneLine)} @1000: inline nav ${vis.nav}, ${vis.links} links on one line ${vis.oneLine}, menu button display ${vis.btn}`);
     await wide.close();
   }
 

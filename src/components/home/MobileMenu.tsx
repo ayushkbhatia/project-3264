@@ -79,7 +79,9 @@ export function MobileMenu({ nav, breakpoint }: { nav: HeaderNavItem[]; breakpoi
         id={sheetId}
         hidden={!open}
         data-menu-sheet=""
-        className="absolute inset-x-0 top-full border-b border-line2 bg-page"
+        // At most the screen under the header, scrolling beyond that: on a landscape phone the
+        // seven rows (351px) would otherwise run off the bottom with "Company" out of reach.
+        className="absolute inset-x-0 top-full max-h-[calc(100dvh-69px)] overflow-y-auto overscroll-contain border-b border-line2 bg-page"
       >
         <nav aria-label="Primary" className="mx-auto box-content max-w-[1280px] px-6 pb-2 max-[380px]:px-4 md:px-10">
           <ul className="m-0 list-none p-0">
@@ -89,7 +91,7 @@ export function MobileMenu({ nav, breakpoint }: { nav: HeaderNavItem[]; breakpoi
                   href={item.href}
                   aria-current={navCurrent(item)}
                   onClick={() => setOpen(false)}
-                  className={`flex h-12 items-center text-[16px] tracking-[-0.01em] ${item.current ? "text-ink" : "text-sec"}`}
+                  className={`flex h-12 items-center text-[16px] tracking-[-0.01em] focus-visible:-outline-offset-2 ${item.current ? "text-ink" : "text-sec"}`}
                 >
                   {item.label}
                 </SmartLink>

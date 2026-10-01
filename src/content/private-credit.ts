@@ -21,6 +21,7 @@ export const nav: HeaderNavItem[] = [
   { label: "Industries", href: "#top", current: true },
   { label: "Work", href: "/#work" },
   { label: "Playbooks", href: routes.playbooks },
+  { label: "Essays", href: routes.essays },
   { label: "Company", href: routes.company },
 ];
 
@@ -137,7 +138,7 @@ export const footerColumns: FooterColumn[] = [
     head: "Resources",
     links: [
       { label: "Playbooks", href: routes.playbooks },
-      { label: "Field notes", href: "/#playbooks" },
+      { label: "Essays", href: routes.essays },
       { label: "Security", href: "#servicing" },
     ],
   },
