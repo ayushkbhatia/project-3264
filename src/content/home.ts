@@ -7,6 +7,9 @@
 export type Link = { label: string; href: string };
 
 // Routes for pages that are designed but not built yet. They 404 until those pages ship.
+// There is no Company page: Contact replaced it in the nav (design_handoff_contact, "Site-wide
+// changes"), and the footer's Company links go to the home page's sections and to AI
+// Engineering's platform section (on those pages themselves, to "#company" and so on).
 export const routes = {
   aiEngineering: "/ai-engineering",
   aiTransformation: "/ai-transformation",
@@ -14,9 +17,11 @@ export const routes = {
   privateEquity: "/industries/private-equity",
   playbooks: "/playbooks",
   essays: "/essays",
-  company: "/company",
-  companyWho: "/company#who",
-  companyHow: "/company#how",
+  contact: "/contact",
+  whoWeAre: "/#company",
+  howWeWork: "/#model",
+  caseStudies: "/#work",
+  security: "/ai-engineering#platform",
 } as const;
 
 // Where "book a session" actually happens. The CTAs above the closing pitch (header, hero) go
@@ -32,7 +37,7 @@ export const nav: Link[] = [
   { label: "Work", href: "#work" },
   { label: "Playbooks", href: routes.playbooks },
   { label: "Essays", href: routes.essays },
-  { label: "Company", href: routes.company },
+  { label: "Contact", href: routes.contact },
 ];
 
 export const headerCta: Link = { label: "Book a call", href: "#contact" };
@@ -280,9 +285,10 @@ export const footer = {
     {
       head: "Company",
       links: [
-        { label: "Who we are", href: routes.companyWho },
-        { label: "How we work", href: routes.companyHow },
+        { label: "Who we are", href: "#company" },
+        { label: "How we work", href: "#model" },
         { label: "Case studies", href: "#work" },
+        { label: "Contact", href: routes.contact },
       ],
     },
     {
@@ -290,7 +296,7 @@ export const footer = {
       links: [
         { label: "Playbooks", href: routes.playbooks },
         { label: "Essays", href: routes.essays },
-        { label: "Security", href: routes.companyHow },
+        { label: "Security", href: routes.security },
       ],
     },
     {

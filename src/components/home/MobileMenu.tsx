@@ -80,7 +80,7 @@ export function MobileMenu({ nav, breakpoint }: { nav: HeaderNavItem[]; breakpoi
         hidden={!open}
         data-menu-sheet=""
         // At most the screen under the header, scrolling beyond that: on a landscape phone the
-        // seven rows (351px) would otherwise run off the bottom with "Company" out of reach.
+        // seven rows (351px) would otherwise run off the bottom with "Contact" out of reach.
         className="absolute inset-x-0 top-full max-h-[calc(100dvh-69px)] overflow-y-auto overscroll-contain border-b border-line2 bg-page"
       >
         <nav aria-label="Primary" className="mx-auto box-content max-w-[1280px] px-6 pb-2 max-[380px]:px-4 md:px-10">

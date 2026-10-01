@@ -16,6 +16,14 @@ const nextConfig: NextConfig = {
     // The footer painting is served at 90; 75 stays the default for anything else.
     qualities: [75, 90],
   },
+  async redirects() {
+    return [
+      // The nav's old "Company" link, which never had a page; Contact replaced it
+      // (design_handoff_contact). Temporary, so browsers do not keep it should a Company page
+      // return.
+      { source: "/company", destination: "/contact", permanent: false },
+    ];
+  },
   async headers() {
     return [
       { source: "/:dir(img|logos|fonts|video)/:file*", headers: ASSET_CACHE },

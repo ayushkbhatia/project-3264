@@ -22,7 +22,7 @@ export const nav: HeaderNavItem[] = [
   { label: "Work", href: "/#work" },
   { label: "Playbooks", href: routes.playbooks },
   { label: "Essays", href: routes.essays },
-  { label: "Company", href: routes.company },
+  { label: "Contact", href: routes.contact },
 ];
 
 export const headerCta: Link = { label: "Book a platform review", href: booking.href };
@@ -105,8 +105,9 @@ export const delivery = {
   },
 } as const;
 
-// "Evaluation suites" and "Security" point at #servicing and LinkedIn is a mailto in the
-// prototype: placeholders to confirm before launch.
+// "Evaluation suites" points at #servicing and LinkedIn is a mailto in the prototype:
+// placeholders to confirm before launch. The Company column and Security follow
+// design_handoff_contact's site-wide changes, which override this page's handoff.
 export const footerColumns: FooterColumn[] = [
   {
     head: "Services",
@@ -129,9 +130,10 @@ export const footerColumns: FooterColumn[] = [
   {
     head: "Company",
     links: [
-      { label: "Who we are", href: routes.companyWho },
-      { label: "How we work", href: routes.companyHow },
-      { label: "Case studies", href: "/#work" },
+      { label: "Who we are", href: routes.whoWeAre },
+      { label: "How we work", href: routes.howWeWork },
+      { label: "Case studies", href: routes.caseStudies },
+      { label: "Contact", href: routes.contact },
     ],
   },
   {
@@ -139,7 +141,7 @@ export const footerColumns: FooterColumn[] = [
     links: [
       { label: "Playbooks", href: routes.playbooks },
       { label: "Essays", href: routes.essays },
-      { label: "Security", href: "#servicing" },
+      { label: "Security", href: routes.security },
     ],
   },
   {
