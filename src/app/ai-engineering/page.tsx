@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import { preload } from "react-dom";
+import { pageMetadata } from "@/app/shared-metadata";
 import { HERO_POSTER } from "@/components/ai-engineering/hero-media";
 import { AIEngineering, PauseControl } from "@/components/ai-engineering/Motion";
 import { Footer } from "@/components/home/Footer";
@@ -12,11 +12,7 @@ import { footerColumns, headerCta, meta, nav } from "@/content/ai-engineering";
 // wrapper that owns the footer's pause control (Motion.tsx); the header and footer are the
 // site's shared ones, rendered here on the server and passed in.
 
-export const metadata: Metadata = {
-  title: meta.title,
-  description: meta.description,
-  openGraph: { title: meta.title, description: meta.description, url: "./" },
-};
+export const metadata = pageMetadata({ title: meta.title, description: meta.description });
 
 export default function Page() {
   // The hero video's poster is the LCP. Preloaded from here: a preload() inside the client

@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import { preload } from "react-dom";
+import { pageMetadata } from "@/app/shared-metadata";
 import { Footer } from "@/components/home/Footer";
 import { Header } from "@/components/home/Header";
 import { CategoryRow } from "@/components/playbooks/CategoryRow";
@@ -20,11 +20,7 @@ import { categories, footerColumns, headerCta, meta, nav } from "@/content/playb
 // swaps the browsing sections below for results), the carousel and the subscribe form. The
 // browsing sections render here, on the server, and are handed to Library as `browse`.
 
-export const metadata: Metadata = {
-  title: meta.title,
-  description: meta.description,
-  openGraph: { title: meta.title, description: meta.description, url: "./" },
-};
+export const metadata = pageMetadata({ title: meta.title, description: meta.description });
 
 export default function PlaybooksPage() {
   // The poster shows the moment the video is revealed (or at once under reduced motion).

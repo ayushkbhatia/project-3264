@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/app/shared-metadata";
 import { EssaysIndex } from "@/components/essays/EssaysIndex";
 import { Footer } from "@/components/home/Footer";
 import { Header } from "@/components/home/Header";
@@ -15,20 +15,7 @@ import { getEssays, summarize } from "@/content/essays-source";
 // list, EssaysIndex) and the sign-up form. The sign-up card and the closing tile are the
 // Playbooks page's, with the Essays copy.
 
-export const metadata: Metadata = {
-  title: meta.title,
-  description: meta.description,
-  openGraph: {
-    type: "website",
-    siteName: "3264.ai",
-    locale: "en_US",
-    title: meta.title,
-    description: meta.description,
-    url: "./",
-    // Setting openGraph replaces the root layout's, share image included: name it again.
-    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "3264.ai — Deployment is the deliverable." }],
-  },
-};
+export const metadata = pageMetadata({ title: meta.title, description: meta.description });
 
 /** The sign-up card spans the 1280px column (less 40px gutters, 20px on phones). */
 const SIGN_UP_SIZES = "(min-width: 1360px) 1280px, (min-width: 480px) calc(100vw - 80px), calc(100vw - 40px)";
