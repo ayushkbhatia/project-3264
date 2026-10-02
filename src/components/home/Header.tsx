@@ -10,13 +10,13 @@ export type { HeaderNavItem };
 // over below that width (MobileMenu.tsx, designed with the Playbooks page); without it, the nav is
 // simply hidden there. Since Essays joined the nav (design_handoff_essays) its seven links ease
 // their gaps and type with the viewport, and each collapse width sits above the narrowest width
-// at which that page's links still fit (measured with qa/es-a11y.mjs's nav check), so the nav's
-// sideways-scroll fallback never shows:
-// - "940": the home page, whose short "Book a call" leaves the links fitting down to 861px. 940
+// at which that page's links still fit (qa/es-a11y.mjs's nav check; re-measured when Contact
+// took Company's place, design_handoff_contact), so the nav's sideways-scroll fallback never shows:
+// - "940": the home page, whose short "Book a call" leaves the links fitting down to 850px. 940
 //   is also where Capabilities goes single-column.
-// - "1000": Playbooks and Essays and their article pages (design_handoff_playbooks/specs/08),
-//   "Book an audit": fits down to 910px.
-// - "1024": Private Credit (spec 09), whose longer "Book a platform review" fits down to 993px;
+// - "1000": Playbooks, Essays and Contact, and the article pages (design_handoff_playbooks/specs/08),
+//   "Book an audit": fits down to 879px.
+// - "1024": Private Credit (spec 09), whose longer "Book a platform review" fits down to 980px;
 //   and AI Engineering.
 const COLLAPSE = {
   "940": "max-[940px]:invisible max-[940px]:m-0 max-[940px]:w-0 max-[940px]:overflow-hidden max-[940px]:p-0",

@@ -29,7 +29,7 @@ export const nav: HeaderNavItem[] = [
   { label: "Work", href: "/#work" },
   { label: "Playbooks", href: routes.playbooks },
   { label: "Essays", href: routes.essays },
-  { label: "Company", href: routes.company },
+  { label: "Contact", href: routes.contact },
 ];
 
 export const headerCta: Link = { label: "Book an audit", href: "#engagement" };
@@ -59,9 +59,10 @@ export const footerColumns: FooterColumn[] = [
   {
     head: "Company",
     links: [
-      { label: "Who we are", href: routes.companyWho },
-      { label: "How we work", href: routes.companyHow },
-      { label: "Case studies", href: "/#work" },
+      { label: "Who we are", href: routes.whoWeAre },
+      { label: "How we work", href: routes.howWeWork },
+      { label: "Case studies", href: routes.caseStudies },
+      { label: "Contact", href: routes.contact },
     ],
   },
   {
@@ -69,7 +70,8 @@ export const footerColumns: FooterColumn[] = [
     links: [
       { label: "Playbooks", href: routes.playbooks },
       { label: "Essays", href: routes.essays },
-      { label: "Security", href: routes.companyHow },
+      // this page's own platform section (design_handoff_contact, "Site-wide changes")
+      { label: "Security", href: "#platform" },
     ],
   },
   {

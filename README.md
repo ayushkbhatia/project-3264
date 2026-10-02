@@ -257,6 +257,42 @@ the README.
   `node qa/es-a11y.mjs` (axe, outline, Tab sweep, filter and URL, anchors, copy link, scroll-spy,
   phone bar, overflow, and every page's nav fit at its collapse width).
 
+## Contact page
+
+`/contact` is a port of [`design_handoff_contact/`](design_handoff_contact/README.md) (the
+prototype, `Contact.dc.html`, wins over the README). It replaced the Company page, which was never
+built: the last nav link on every page is now Contact, `/company` redirects to it, and every
+footer's Company column links to the home page's sections plus Contact, with Security on AI
+Engineering's platform section (the handoff's "Site-wide changes").
+
+- Copy in `src/content/contact.ts`; the page in `src/app/contact/page.tsx`; the form, the "Built
+  on" strip and its pause control in `src/components/contact/`. The strip is a CSS loop at the
+  prototype's 32px a second; it holds under the pointer, under the footer's "Pause animations"
+  (WCAG 2.2.2, as on Private Credit and AI Engineering) and under reduced motion.
+- The form posts to `/api/contact` (`src/app/api/contact/route.ts`), a route handler rather than a
+  Server Action so a form left open across a deploy still sends. It checks the origin, size, a
+  hidden honeypot field (bots get a success answer and nothing is sent), a per-address rate limit
+  (5 per 10 minutes per instance) and the form's own rules (`src/components/contact/enquiry.ts`,
+  shared with the form), then delivers. Without script the form still works: the endpoint
+  redirects to `/contact#enquiry-sent` or `#enquiry-failed`, which the card shows from CSS.
+- **Delivery has to be configured before the form can send in production** (the handoff leaves the
+  endpoint, notification address and CRM open). Set, in Vercel's environment variables:
+  - `CONTACT_WEBHOOK_URL`: each enquiry POSTed as JSON (a Slack incoming webhook, or Zapier, Make,
+    n8n or a CRM's inbound webhook); and/or
+  - `RESEND_API_KEY` and `CONTACT_TO` (and `CONTACT_FROM` once a sending domain is verified in
+    Resend): each enquiry emailed, Reply-To the sender.
+
+  With neither set, production answers every enquiry with the failure line ("That didn't send.
+  Write to hello@3264.ai…"), and development only logs it. See `.env.example` and
+  `src/app/api/contact/deliver.ts`.
+- QA: serve the reference on :4112 (`.claude/launch.json`), build and `next start` with
+  `CONTACT_WEBHOOK_URL` pointing at a stand-in receiver, then `node qa/ct-compare.mjs` (the page
+  against the prototype at ten widths: heights, every part's box, text, pixels),
+  `node qa/ct-form.mjs --hook-log <file> [--fail-flag <file>]` (the form's states, also against
+  the prototype; the endpoint's checks and delivery; without script; `/company`) and
+  `node qa/ct-a11y.mjs` (axe in every state, outline, Tab sweep, the direct line's contrast over
+  the painting, the strip's speed and pauses, the header, overflow).
+
 ## Share metadata
 
 A page that sets `openGraph` replaces the root layout's, and with it the share image that

@@ -19,8 +19,9 @@ const TARGETS = [
   ["hero-primary", "#top a[href='#contact']", 0],
   ["hero-secondary", "#top a[href='#model']", 0],
   ["nav-industries", "header nav a", 2],
-  // by its text: the port's nav has Essays before it (seven links), the reference's six do not
-  ["nav-company", 'header nav a:has-text("Company")', 0],
+  // the last link: the reference's "Company", the port's "Contact" (design_handoff_contact), which
+  // follows Essays (seven links; the reference has six)
+  ["nav-last", "header nav a:last-child", 0],
   ["industry-r1", "#industries a", 0],
   ["industry-r4", "#industries a", 3],
   ["playbook-1", "#playbooks a", 0],

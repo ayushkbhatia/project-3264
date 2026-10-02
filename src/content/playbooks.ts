@@ -31,7 +31,7 @@ function siteNav(playbooks: HeaderNavItem): HeaderNavItem[] {
     { label: "Work", href: "/#work" },
     playbooks,
     { label: "Essays", href: routes.essays },
-    { label: "Company", href: routes.company },
+    { label: "Contact", href: routes.contact },
   ];
 }
 
@@ -68,9 +68,10 @@ export function siteFooter(playbooksHref: string, essaysHref: string = routes.es
     {
       head: "Company",
       links: [
-        { label: "Who we are", href: routes.companyWho },
-        { label: "How we work", href: routes.companyHow },
-        { label: "Case studies", href: "/#work" },
+        { label: "Who we are", href: routes.whoWeAre },
+        { label: "How we work", href: routes.howWeWork },
+        { label: "Case studies", href: routes.caseStudies },
+        { label: "Contact", href: routes.contact },
       ],
     },
     {
@@ -79,7 +80,7 @@ export function siteFooter(playbooksHref: string, essaysHref: string = routes.es
         // the reference sets it in the ordinary link colour, not as the current page
         { label: "Playbooks", href: playbooksHref },
         { label: "Essays", href: essaysHref },
-        { label: "Security", href: routes.companyHow },
+        { label: "Security", href: routes.security },
       ],
     },
     {

@@ -180,6 +180,20 @@
       "port": 4111
     },
     {
+      "name": "design reference: contact",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4112",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_contact"
+      ],
+      "port": 4112
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [

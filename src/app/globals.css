@@ -119,6 +119,20 @@
   }
 }
 
+/* The Contact page's "Built on" strip: the track holds two copies of the marks and slides by one
+   (components/contact/Motion.tsx). */
+@keyframes logo-marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* The Contact card after a submission made without script went: the endpoint redirects to
+   /contact#enquiry-sent, whose view stands in for the form (components/contact/ContactForm.tsx). */
+[data-contact-card]:has(> #enquiry-sent:target) > form {
+  display: none;
+}
+
 /*
  * The Private Credit page runs on the prototype's UA defaults: content-box sizing everywhere
  * (its inline sizes assume it, and so does every element the motion module builds). Tailwind's
@@ -378,12 +392,14 @@ html[data-ai-intro="pending"] [data-ai-intro-wrap] {
  * white on white). Unlayered so it outranks the opacity utility. Normal rendering is untouched.
  */
 @media (forced-colors: active) {
-  [data-screen-label="Stack"] img {
+  [data-screen-label="Stack"] img,
+  [data-logo-strip] img {
     opacity: 1;
   }
 }
 @media (forced-colors: active) and (prefers-color-scheme: dark) {
-  [data-screen-label="Stack"] img {
+  [data-screen-label="Stack"] img,
+  [data-logo-strip] img {
     filter: invert(1);
   }
 }

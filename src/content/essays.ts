@@ -66,7 +66,7 @@ function siteNav(essays: HeaderNavItem): HeaderNavItem[] {
     { label: "Work", href: "/#work" },
     { label: "Playbooks", href: routes.playbooks },
     essays,
-    { label: "Company", href: routes.company },
+    { label: "Contact", href: routes.contact },
   ];
 }
 
