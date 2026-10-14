@@ -19,6 +19,12 @@ import type { IndustryCopy } from "../types";
 // The rows are border-box, as buttons are by the browser's default the reference relied on: the
 // page's content-box rule ([data-ind], globals.css) would otherwise push them 28px past the card.
 //
+// A long label wraps beside its value (Asset Management's commentary claim, README). Where even
+// its longest word cannot sit beside the value (Asset Management's "Largest overweight" next to
+// "Technology +4.2 pts", in rows under ~240px wide), the row wraps instead and the value takes a
+// second line, still right-aligned: the label's flex basis is its min-content width, so that is
+// the only case that wraps, and the reference's layout holds everywhere else.
+//
 // Two departures from the reference: the "Traced" pill's green is --ok-ink (#157F52 reads 4.28:1
 // on its #E3EFE7 tint, under AA's 4.5:1), and the section has no scroll-margin of its own (the
 // reference's 68px would double the site-wide scroll-padding that already clears the header;
@@ -61,11 +67,11 @@ export function Trace({ v, c }: { v: IndustryVals; c: NonNullable<IndustryCopy["
                       onClick={v.trPick}
                       aria-pressed={r.on === "true"}
                       className="hover:bg-[rgba(20,20,18,0.035)]!"
-                      style={css(`position:relative; display:flex; justify-content:space-between; align-items:center; gap:16px; width:100%; box-sizing:border-box; padding:13px 12px 13px 16px; border:0; border-top:1px solid ${r.rule}; border-radius:8px; background:${r.bg}; font:inherit; text-align:left; cursor:pointer; color:#1A1917; transition:background 200ms ease`)}
+                      style={css(`position:relative; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:4px 16px; width:100%; box-sizing:border-box; padding:13px 12px 13px 16px; border:0; border-top:1px solid ${r.rule}; border-radius:8px; background:${r.bg}; font:inherit; text-align:left; cursor:pointer; color:#1A1917; transition:background 200ms ease`)}
                     >
                       <span aria-hidden="true" style={css(`position:absolute; left:0; top:8px; bottom:8px; width:3px; border-radius:2px; background:var(--a); opacity:${r.barOp}; transition:opacity 200ms ease`)} />
-                      <span style={css(`min-width:0; font-size:14.5px; letter-spacing:-0.01em; font-weight:${r.fw}`)}>{r.label}</span>
-                      <span style={css("display:flex; align-items:center; gap:10px; flex:none")}>
+                      <span style={css(`flex:1 1 auto; width:min-content; min-width:0; font-size:14.5px; letter-spacing:-0.01em; font-weight:${r.fw}`)}>{r.label}</span>
+                      <span style={css("display:flex; align-items:center; gap:10px; flex:none; margin-left:auto")}>
                         <span style={css(`font-size:14.5px; font-variant-numeric:tabular-nums; font-weight:${r.fw}`)}>{r.amt}</span>
                         <span aria-hidden="true" style={css("width:7px; height:7px; border-radius:50%; background:var(--a); opacity:0.8")} />
                       </span>
