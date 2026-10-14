@@ -278,6 +278,20 @@
       "port": 4118
     },
     {
+      "name": "design reference: evaluation suites",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4119",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_evaluation_suites/reference"
+      ],
+      "port": 4119
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [
