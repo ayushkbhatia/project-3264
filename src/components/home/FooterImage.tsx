@@ -3,10 +3,23 @@ import { footerImage } from "@/content/home";
 import footerNocturne from "../../../public/img/footer-nocturne.png";
 import { Button, Wordmark } from "./primitives";
 
-export function FooterImage() {
+export type FooterImageContent = {
+  title: string;
+  cta: { label: string; href: string };
+  positioning: string;
+  sequence: string;
+};
+
+/**
+ * The night-sky closing image. Home's copy by default; a page passes its own (Private Equity).
+ * `flush`: the Private Equity reference's spacing, which sets the frame directly under the
+ * section above (whose bottom rule it shares, so no rule or top padding of its own) and adds
+ * 40px beneath it.
+ */
+export function FooterImage({ content = footerImage, flush = false }: { content?: FooterImageContent; flush?: boolean } = {}) {
   return (
-    <section data-screen-label="Footer image" className="relative border-t border-line2 px-6 md:px-10">
-      <div className="mx-auto max-w-[1280px] pt-[72px] md:pt-24">
+    <section data-screen-label={flush ? "Closing" : "Footer image"} className={`relative px-6 md:px-10 ${flush ? "pb-10" : "border-t border-line2"}`}>
+      <div className={`mx-auto max-w-[1280px] ${flush ? "" : "pt-[72px] md:pt-24"}`}>
         {/* DEVIATION (phones): the reference never considered widths under 580px, where the
             1672/941 frame drops below 300px tall and the centred copy runs into the wordmark.
             There the frame holds a fixed 300px instead (at 580px the ratio already gives ~298px,
@@ -43,16 +56,16 @@ export function FooterImage() {
               the side padding outside it, which is what keeps the h2 on one line at 1440. */}
           <div className="absolute top-1/2 left-0 box-content max-w-[min(560px,62%)] -translate-y-1/2 px-[clamp(28px,5%,80px)]">
             <h2 className="m-0 text-[clamp(30px,3.6vw,54px)] leading-[1.04] font-normal tracking-[-0.034em] text-balance text-white">
-              {footerImage.title}
+              {content.title}
             </h2>
-            <Button href={footerImage.cta.href} variant="onImage" className="mt-7">
-              {footerImage.cta.label}
+            <Button href={content.cta.href} variant="onImage" className="mt-7">
+              {content.cta.label}
             </Button>
           </div>
         </div>
         <div className="mt-4 flex flex-wrap items-baseline justify-between gap-6">
-          <p className="m-0 max-w-[620px] text-[14.5px] leading-[1.55] text-mut">{footerImage.positioning}</p>
-          <span className="text-[13px] tracking-[-0.005em] text-mut">{footerImage.sequence}</span>
+          <p className="m-0 max-w-[620px] text-[14.5px] leading-[1.55] text-mut">{content.positioning}</p>
+          <span className="text-[13px] tracking-[-0.005em] text-mut">{content.sequence}</span>
         </div>
       </div>
     </section>
