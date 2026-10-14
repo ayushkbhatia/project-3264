@@ -250,6 +250,20 @@
       "port": 4116
     },
     {
+      "name": "design reference: asset management",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4117",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_asset_management/reference"
+      ],
+      "port": 4117
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [
