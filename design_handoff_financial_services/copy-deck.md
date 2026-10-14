@@ -1,0 +1,486 @@
+# Copy deck: Financial Services page
+
+Visible strings in page order, extracted from `reference/Financial Services.dc.html`.
+
+## Hero
+- Financial Services
+- Every file complete. / Every decision on record.
+- We rebuild the document-heavy work inside banks and lenders, from credit memos and KYC files to complaints and regulatory requests, onto one production platform in your environment. Every workflow has an owner, a measured baseline and an audit trail your second line, internal audit and regulator can follow.
+- Book an operations audit
+- See the first 100 days
+
+## Premise
+- data-screen-label="Premise" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 01 / Premise
+- Every file is assembled by hand. / Very little of it is reusable.
+- Credit, onboarding and compliance teams build each file from core systems, PDFs and email. The work is careful and slow, and it depends on who is on the desk. What is missing is the engineering that turns it into a process: measured, owned and evidenced.
+- What every desk has
+- Workload tracker — Commercial banking · Q3
+- Workflow
+- Team
+- Status
+- Credit memo drafting
+- Word template, figures re-keyed
+- Credit
+- Manual
+- KYC refresh
+- Checklist in a shared drive
+- Onboarding
+- Manual
+- Covenant monitoring
+- A spreadsheet per borrower
+- Portfolio
+- Manual
+- Complaints triage
+- Shared inbox, 1,900 a month
+- Customer ops
+- Backlog
+- Model documentation
+- Last validation pack, edited
+- Model risk
+- Copy-paste
+- Regulator requests
+- Collated by email
+- Compliance
+- Overdue
+- 6 workflows ·
+- 0 automated
+- · 0 measured
+- What the CRO sees
+- Control dashboard — all desks · Q3
+- Turnaround by desk
+- As reported by the first line
+- Desk
+- Days
+- Manual steps
+- Exceptions
+- Evidence
+- Commercial credit
+- 11
+- 64
+- 12
+- Email
+- SME lending
+- 6
+- 41
+- 7
+- Workbook
+- Onboarding and KYC
+- 14
+- 58
+- 9
+- Email
+- Complaints
+- 9
+- 33
+- 4
+- None
+- Model risk
+- 23
+- 47
+- 6
+- Workbook
+- Regulatory reporting
+- 19
+- 22
+- 3
+- None
+- All desks
+- 14 avg
+- 265
+- 41
+- —
+- Internal audit finding: “
+- inconsistent evidence of review
+- across desks.”
+- What did not change
+- Supervisory calendar — 2026
+- Reporting year · bank
+- Q1 returns
+- Apr
+- Q2 returns
+- Jul
+- Q3 returns
+- Oct
+- Internal audit
+- Feb
+- Regulator visit
+- Mar
+- Regulator and audit requests · draft
+- Evidence behind every credit decision in the sample
+- Requested
+- KYC refresh status, by customer risk rating
+- Requested
+- Controls over model changes and overrides
+- Requested
+- Complaints closed within the required time
+- Requested
+- Who reviewed each exception, and when
+- Requested
+- 5 of 5 open · supervisory visit in March
+
+## Operations audit
+- id="audit" data-screen-label="Operations audit" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 02 / Operations audit
+- In two weeks, we walk every document-heavy workflow and rank where automation returns the most time and removes the most risk.
+- Build first
+- 0.4 FTE
+- 0.8 FTE
+- 1.2 FTE
+- Capacity released ↑
+- 2 wks
+- 4
+- 6
+- 8
+- 10 wks
+- Effort to ship →
+- Estimated FTE released per quarter
+- 0.1
+- 1.2
+- Shortlisted
+- Commercial · credit memos
+- Model risk · model docs
+- Complaints · case files
+- SME · credit memos
+- Onboarding · KYC files
+- First builds · commercial bank
+- Day 10
+- 01
+- Commercial credit
+- Credit memo drafting
+- 1.2 FTE
+- 6 wks
+- 02
+- Model risk
+- Model documentation
+- 0.8 FTE
+- 5 wks
+- 03
+- Complaints
+- Complaint case files
+- 0.7 FTE
+- 4 wks
+- 04
+- SME lending
+- Credit memos, from build 01
+- 0.6 FTE
+- 3 wks
+- 05
+- Onboarding
+- KYC case files
+- 0.9 FTE
+- 8 wks
+- 4.2 FTE released across five builds
+- Build 04 reuses build 01
+- Days 1–6
+- Walk-throughs with credit, onboarding, complaints and the second line
+- → workflow map
+- Days 7–9
+- Each workflow scored on hours, error risk, data readiness and control gaps
+- → scored matrix
+- Day 10
+- A ranked, costed plan for each desk and one for the platform
+- → first builds
+- Illustrative bank. Real audits score every workflow on hours, error risk, data readiness and control gaps, with the working attached.
+
+## CTA · operations audit
+- data-screen-label="CTA · operations audit" style="padding:56px 40px">
+- First step
+- Start with a two-week operations audit.
+- Book an audit
+- →
+- The process map is yours, whether we build or not
+
+## First 100 days
+- id="plan" data-screen-label="First 100 days" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 03 / First 100 days
+- The first hundred days, / as a build log.
+- One senior squad works alongside your credit and operations teams. Each workflow ships behind an evaluation suite and reports against a baseline your COO signed before we started. By day 100 the platform runs in your own cloud and the first desk works on it.
+- Build log — Commercial credit · Q3
+- 0
+- 20
+- 40
+- 60
+- 80
+- 100
+- Audit
+- Days 0–14
+- Platform
+- Days 8–30
+- Credit memo drafting
+- Days 14–42
+- KYC case files
+- Days 36–64
+- Complaint case files
+- Days 56–86
+- Evaluation and handover
+- Days 70–100
+- Day 0
+- Log
+- D03
+- Baseline signed by the COO: 11 days per credit memo, 6.2 FTE on drafting
+- D14
+- Audit closed. Three workflows, fortnightly releases
+- D30
+- Platform live in the bank’s own Azure tenant
+- D42
+- Credit memos live · every figure cited to its source page
+- D64
+- KYC files live · refresh packs assembled in minutes
+- D86
+- Complaints live · cases classified and drafted on arrival
+- D100
+- Evaluation suites handed over · memo turnaround measured at 3 days
+- Days per credit memo
+- 11 days
+- Against the baseline signed on day 3
+- Hours back / qtr
+- 0
+- Live
+- 0 of 3
+- Desk checklist · Q3
+- Credit memo drafting
+- Planned
+- KYC case files
+- Planned
+- Complaint case files
+- Planned
+- Every figure comes from the platform’s own logs, reconciled to the core systems each month.
+
+## Traceability
+- id="trace" data-screen-label="Traceability" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Traceability
+- Click any figure. / See where it came from.
+- Every number in a memo, a KYC file or a regulatory return carries its lineage: the source document, the system line it was matched to, the policy it was checked against and the person who signed it off. Your second line and your regulator follow the same trail.
+- Credit memo — Halden Logistics Ltd · Q3 2026
+- Borrower 20931
+- £ · FY2025 · at 30 Jun
+- Lineage
+- Traced · 4 of 4 checks
+- Same trail in the regulator’s sample
+- Illustrative credit memo for one borrower. Names, references and figures are examples.
+
+## Across desks
+- id="portfolio" data-screen-label="Across desks" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 04 / Across desks
+- Built once. Run across every desk. /
+- Each desk goes live faster than the last.
+- A workflow built for one desk goes into a shared library on the platform. The next desk installs it, maps it to its own systems and credit policy, and goes live in weeks.
+- Workflow library
+- 0 capabilities
+- Credit memo drafting
+- from Commercial credit · v1.4
+- Time to live
+- 6 weeks → 1 week
+- 0
+- 2
+- 4
+- 6
+- 8 wks
+- Commercial credit
+- Corporate lending · built here
+- SME lending
+- Business banking · installed
+- Real estate
+- Property finance · installed
+- Asset finance
+- Equipment lending · installed
+- Leveraged finance
+- Sponsor lending · installed
+- —
+- First build
+- —
+- −50%
+- —
+- −67%
+- —
+- −75%
+- —
+- −83%
+- Credit memos
+- Illustrative five-desk programme. Timings depend on each desk’s systems and policies.
+
+## Fund playbooks
+- id="playbooks" data-screen-label="Fund playbooks" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Playbooks
+- Four workflows, / written up from delivery.
+- What we measure first, what we build and how each one is checked. Read them before the audit, or bring them to it.
+- All nine playbooks →
+- Playbook
+- Covenant Watch
+- Borrower certificates recomputed from the credit agreement's own definitions, with headroom, add-back caps and cure rights tracked every test date.
+- Read the playbook →
+- Playbook
+- Loan Ops Ledger
+- Agent notices matched to the loan system every day, with each break explained before month end.
+- Read the playbook →
+- Playbook
+- Mandate Guardrails
+- Investment guidelines turned into approved, versioned rules, tested before and after each trade, with every breach and override on record.
+- Read the playbook →
+- Playbook
+- Research Intake
+- Overnight house-format notes from filings, transcripts and broker research. Every figure and quotation carries a source.
+- Read the playbook →
+
+## Value
+- id="value" data-screen-label="Value" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 05 / Value
+- Capacity you can bridge, / line by line.
+- Every workflow reports against a baseline your COO signed before the build. The management report carries measured numbers, and the same evidence answers internal audit and the regulator.
+- Management report — commercial bank · Q3 update
+- Credit files completed per analyst, per month
+- files · axis starts at 12.0
+- 14.2 →
+- 14.2
+- +0.0%
+- 16
+- 15
+- 14
+- 13
+- 12
+- 14.2
+- +1.2
+- +0.5
+- +0.2
+- +0.3
+- 16.4
+- Baseline capacity
+- before the build
+- Credit memos
+- 11 → 3 days
+- KYC case files
+- packs in minutes
+- Complaint cases
+- drafted on arrival
+- Model docs
+- 3 weeks → 4 days
+- Capacity
+- measured at month 6
+- +2.2 files per analyst a month × 120 analysts
+- ≈
+- 0
+- more files a year
+- Illustrative bridge for one bank. Each line is measured against a baseline signed before the build.
+
+## Related work
+- id="work" data-screen-label="Related work" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Related work
+- Measured against the week / before we arrived.
+- Client names are withheld under mandate. Each engagement reports the baseline instrumented at the diagnostic and the figure at the third monthly review.
+- Financial Services · AI Engineering
+- Credit memo preparation across a $6.4B book
+- Every figure is extracted with a citation back to the page it came from. Credit officers review exceptions only, and the audit trail satisfied the bank’s model risk function without amendment.
+- Time per memo
+- 6 hrs → 40 min
+- Memos prepared
+- 1,240
+- Field-level citations
+- 100%
+- Read the case study →
+- Lending · AI Engineering
+- Covenant monitoring across a direct lending book
+- Borrower compliance certificates were checked by hand against each credit agreement. Covenants are now recomputed from the agreements’ own definitions, and an analyst signs off every test.
+- Quarterly test cycle
+- 15 days → 3 days
+- Facilities tested in full
+- 30 → 140
+- Ratios re-keyed by hand
+- None
+- Read the case study →
+- All work →
+
+## Engagement
+- id="engagement" data-screen-label="Engagement" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 06 / Engagement
+- Three ways in. / Each one earns the next.
+- Engagement 01
+- 2 weeks · fixed fee
+- The operations audit
+- We walk every document-heavy workflow across up to six desks, read the systems and policies and interview the team. You get a ranked, costed plan for each desk and one for the platform.
+- Covers
+- Up to six desks
+- Access
+- Read-only
+- Output
+- Ranked, costed plan
+- Book an audit
+- Engagement 02
+- 100 days · per workflow
+- The first build
+- A senior squad ships the top-ranked workflows onto a production platform in your own cloud. Each one reports against a baseline your COO signed.
+- Runs in
+- Your cloud
+- Releases
+- Fortnightly
+- Measured
+- Against baseline
+- Book a call
+- Engagement 03
+- Ongoing · per desk
+- The platform rollout
+- What worked for the first desk is installed for the next, mapped to its systems and policies, with an evaluation suite and a named owner for each. The evidence is ready when the regulator asks for it.
+- Reuses
+- Platform and library
+- Owner
+- Named per desk
+- At audit
+- Evidence on file
+- Book a call
+
+## Closing
+- data-screen-label="Closing" style="padding:0 40px 40px">
+- 3264
+- .ai
+- Make every file stand up.
+- Book an operations audit
+- Credit, onboarding and compliance workflows rebuilt on one production platform, with every decision on record.
+- 32 → 64
+
+## Premise statements
+- Every desk assembles its files by hand. Most of the evidence lives in inboxes.
+- Six desks, six ways of working. Nobody can say what a credit file costs.
+- The regulator still samples the files, and every decision in them has to stand up.
+
+## Traceability data (trData)
+
+**Revenue, FY2025 · £142.6m**
+- Source: Audited accounts FY2025 (Halden-FY25-accounts.pdf · p. 14)
+- Matched to: Spread into the credit model (Model v3 · row 4)
+- Check: Ties to the audited figure to the pound (Rule SP-01 · passed)
+- Reviewed: Credit analyst (6 Oct 2026 · 09:12)
+
+**EBITDA, FY2025 · £21.4m**
+- Source: Audited accounts plus management add-backs (p. 16 · add-back schedule)
+- Matched to: Model row 12, add-backs listed separately (Model v3 · rows 12–15)
+- Check: Add-backs within the 15% cap in the term sheet (Policy CR-4.2 · passed)
+- Reviewed: Credit analyst (6 Oct 2026 · 10:03)
+
+**Net debt, 30 Jun · £58.9m**
+- Source: Bank confirmations and loan schedule (Confirmations pack · 4 lenders)
+- Matched to: Model row 22 (Model v3 · row 22)
+- Check: Agrees to the existing lenders’ confirmations (Rule SP-07 · passed)
+- Reviewed: Credit analyst (6 Oct 2026 · 10:41)
+
+**Leverage · 2.75x**
+- Source: Computed: net debt ÷ EBITDA (Computed by the platform)
+- Matched to: Leverage definition in the draft facility agreement (Facility agreement · cl. 21.1)
+- Check: Below the 3.50x policy limit for this rating (Policy CR-2.1 · passed)
+- Reviewed: Credit manager (7 Oct 2026 · 08:30)
+
+**Interest cover · 4.8x**
+- Source: Computed: EBITDA ÷ pro forma interest (Pricing grid · 2.25% over SONIA)
+- Matched to: Interest cover definition, facility agreement (Facility agreement · cl. 21.2)
+- Check: Above the 3.0x policy floor (Policy CR-2.3 · passed)
+- Reviewed: Credit manager (7 Oct 2026 · 08:41)
+
+**Recommended limit · £18,000,000**
+- Source: Term loan £12m plus revolving facility £6m (Structure section · memo p. 2)
+- Matched to: Limit request in the credit system (Credit system · ref CR-20931)
+- Check: Within the approver’s delegated authority (Delegated authority matrix · passed)
+- Reviewed: Credit committee (8 Oct 2026 · 17:05)
+
+## Intro overlay
+- map the files · rank by hours and risk · ship the first workflow · carry it to the next desk
+- 5 desks live · day 100
+- Bank log · click to skip

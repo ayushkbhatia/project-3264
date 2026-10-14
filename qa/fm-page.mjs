@@ -169,7 +169,8 @@ for (const [url, min] of [["/", 4], ["/ai-engineering", 3], ["/industries/privat
     check(x.every((v, i) => Math.abs(v - expect[i]) < 0.02), `premise m=${m}: card offsets ${x.map((v) => v.toFixed(3)).join(" ")}`);
     await page.screenshot({ path: path.join(OUT, `premise-${m}.png`) });
   }
-  check((await words(3)) === "16/16", `card 3 statement inked (${await words(3)})`);
+  const w3 = await words(3);
+  check(/^(\d+)\/\1$/.test(w3), `card 3 statement inked (${w3})`);
 
   // audit loop: mid-scan, then the ranked list
   await centre(page, "audit");

@@ -19,8 +19,10 @@ import { routes } from "@/content/home";
 const GRACE_MS = 1500;
 
 export const PE_INTRO_ATTR = "data-pe-intro";
+export const FS_INTRO_ATTR = "data-fs-intro";
 export const FM_INTRO_ATTR = "data-fm-intro";
 
 /** Inlined by app/layout.tsx (each runs on every page and acts on its route only). */
 export const PE_INTRO_GATE_SCRIPT = introGateScript(PE_INTRO_ATTR, GRACE_MS, routes.privateEquity);
+export const FS_INTRO_GATE_SCRIPT = introGateScript(FS_INTRO_ATTR, GRACE_MS, routes.financialServices);
 export const FM_INTRO_GATE_SCRIPT = introGateScript(FM_INTRO_ATTR, GRACE_MS, routes.fundManagement);

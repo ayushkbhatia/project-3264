@@ -163,6 +163,7 @@ export const menus: Menu[] = [
         items: [
           { title: "Private Credit", desc: "Covenant monitoring, agent notices and loan operations.", href: routes.privateCredit, thumb: img("thumb-covenant-watch") },
           { title: "Private Equity", desc: "Capital calls, LP reporting and portfolio monitoring.", href: routes.privateEquity, thumb: img("thumb-capital-call-flow") },
+          { title: "Financial Services", desc: "Credit memos, KYC files, complaints and regulatory requests.", href: routes.financialServices, thumb: img("thumb-research-intake") },
           { title: "Fund Management", desc: "LP reporting cycles, distributions and side-letter obligations.", href: routes.fundManagement, thumb: img("thumb-side-letter-register") },
           { title: "Asset Management", desc: "Research synthesis, mandate compliance and client reporting.", href: "/#industries", thumb: img("thumb-mandate-guardrails") },
         ],

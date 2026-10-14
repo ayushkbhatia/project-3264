@@ -288,7 +288,7 @@ for (const [w, h, shot] of [[390, 844, "phone"], [834, 1112, "tablet"]]) {
   await page.screenshot({ path: path.join(OUT, `${shot}-transformation.png`) });
   await page.tap('button[aria-controls="mobile-group-industries"]');
   const ind = await rows("industries");
-  check(ind.items.join() === "[40],[40],[40],[40]" && ind.over === "All industries →", `@${w} Industries: thumbnails ${ind.items.join(" ")}`);
+  check(ind.items.join() === "[40],[40],[40],[40],[40]" && ind.over === "All industries →", `@${w} Industries: thumbnails ${ind.items.join(" ")}`);
   await page.screenshot({ path: path.join(OUT, `${shot}-industries.png`) });
   await axe(page, `@${w} open sheet`);
   await page.tap('button[aria-controls="mobile-group-industries"]');
