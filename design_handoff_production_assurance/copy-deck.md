@@ -1,0 +1,495 @@
+# Copy deck: Production Assurance page
+
+Visible strings in page order, extracted from `reference/Production Assurance.dc.html`.
+
+## Hero
+- Production Assurance
+- Go-live is day one. / We keep it right from there.
+- AI systems drift. Models change underneath them, costs creep and the people who built them move on. We hold every live system to an agreed accuracy floor, catch problems before your team does, and keep the runbooks current, so the system stays trusted long after launch.
+- Book a health review
+- See how incidents are handled
+
+## Premise
+- data-screen-label="Premise" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 01 / Premise
+- Launch is the easy part. / Month three is where systems fail.
+- A pilot goes live with a demo that works. Then the model provider ships an update, document formats change, and the one engineer who understood the system leaves. Nobody notices the accuracy slipping until a client or an auditor does.
+- Launch day
+- Go-live checklist — Credit memo assistant
+- Check
+- Owner
+- Status
+- Demo to the credit committee
+- Signed off on 2 June
+- Sponsor
+- Done
+- Pilot accuracy
+- 91% on 200 sample memos
+- Vendor
+- Done
+- Launch email to the desk
+- Sent to 64 analysts
+- Sponsor
+- Done
+- Monitoring
+- To be agreed after launch
+- IT
+- Not set
+- Evaluation suite
+- The pilot sample only
+- Vendor
+- Partial
+- Runbook and on-call
+- Held by one engineer
+- Vendor
+- Not set
+- 6 checks ·
+- 0 owners after launch
+- · live
+- Month three
+- Production health — Credit memo assistant
+- Health by week
+- Reconstructed after the incident
+- Week
+- Accuracy
+- Cost / case
+- Incidents
+- Owner
+- Week 1
+- 91%
+- £0.42
+- 0
+- Vendor
+- Week 4
+- 90%
+- £0.44
+- 0
+- Vendor
+- Week 7
+- 88%
+- £0.51
+- 1
+- IT
+- Week 9
+- 86%
+- £0.58
+- 2
+- —
+- Week 11
+- 81%
+- £0.66
+- 3
+- —
+- Week 13
+- 79%
+- £0.71
+- 4
+- Left the firm
+- Since launch
+- −12 pts
+- +69%
+- 10
+- —
+- First noticed by: “
+- a client querying a figure
+- in their facility letter.”
+- What did not change
+- Accountability — Credit memo assistant
+- System life · 2026
+- Pilot
+- Apr
+- Go-live
+- Jun
+- Model update
+- Aug
+- Internal audit
+- Nov
+- Renewal
+- Jan
+- Internal audit requests · draft
+- Who approved the model update on 14 Aug
+- Requested
+- Accuracy since launch, by memo type
+- Requested
+- Access granted and removed since go-live
+- Requested
+- The runbook for an outage
+- Requested
+- The named owner today
+- Requested
+- 5 of 5 open · audit fieldwork in November
+
+## Health review
+- id="audit" data-screen-label="Health review" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 02 / Health review
+- In two weeks, we review every AI system already in production, ours or anyone’s, and rank what to fix first by risk to the business.
+- Fix first
+- Low
+- Medium
+- High
+- Risk to the business ↑
+- 2 wks
+- 4
+- 6
+- 8
+- 10 wks
+- Effort to fix →
+- Risk score, 0.1 to 1.2
+- 0.1
+- 1.2
+- Shortlisted
+- Memo assistant · accuracy drift
+- Report drafter · access
+- Complaint drafter · cost per case
+- KYC builder · accuracy drift
+- Research notes · cost per case
+- Fix first · live systems
+- Day 10
+- 01
+- Credit memo assistant
+- Re-baseline and add a nightly suite
+- High
+- 6 wks
+- 02
+- Client report drafter
+- Remove shared service account
+- High
+- 5 wks
+- 03
+- Complaint drafter
+- Route simple cases to a smaller model
+- Medium
+- 4 wks
+- 04
+- KYC file builder
+- Nightly suite, from fix 01
+- Medium
+- 3 wks
+- 05
+- Research notes
+- Cache repeat sources
+- Medium
+- 8 wks
+- Five fixes, ranked by risk and effort
+- Fix 04 reuses fix 01
+- Days 1–6
+- Logs, access lists and run costs read for every live system
+- → system inventory
+- Days 7–9
+- Each system scored on accuracy, drift, cost, access and ownership
+- → scored matrix
+- Day 10
+- A ranked fix list and a run plan for every system
+- → fix list
+- Illustrative estate of six live systems. Real reviews score each one on accuracy, drift, cost, access and ownership, with the evidence attached.
+
+## CTA · health review
+- data-screen-label="CTA · health review" style="padding:56px 40px">
+- First step
+- Start with a two-week health review.
+- Book an audit
+- →
+- The fix list is yours, whether we run it or not
+
+## First 100 days in production
+- id="plan" data-screen-label="First 100 days in production" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 03 / First 100 days in production
+- The first hundred days, / as a run log.
+- We take over monitoring, evaluation and on-call for your live systems, fix the highest risks first, and leave a runbook your team has rehearsed. Every change is scored against the suite before it ships.
+- Run log — live systems · Q3
+- 0
+- 20
+- 40
+- 60
+- 80
+- 100
+- Health review
+- Days 0–14
+- Monitoring live
+- Days 8–30
+- Memo assistant re-baselined
+- Days 14–42
+- Model migration
+- Days 36–64
+- Cost tuning
+- Days 56–86
+- Evaluation and handover
+- Days 70–100
+- Day 0
+- Log
+- D03
+- Baseline signed: 11 open incidents, accuracy 79% against a 92% floor
+- D14
+- Review closed. Fix list agreed, on-call rota live
+- D30
+- Monitoring and nightly suites live in your own tenant
+- D42
+- Memo assistant back above the floor · 93%
+- D64
+- Model migrated · scored on the suite before release
+- D86
+- Cost per case down from £0.71 to £0.38
+- D100
+- Runbooks rehearsed with your team · 3 incidents open
+- Open incidents
+- 11
+- Against the baseline signed on day 3
+- Rework hours saved / qtr
+- 0
+- Live
+- 0 of 3
+- Run checklist · Q3
+- Memo assistant re-baselined
+- Planned
+- Model migration
+- Planned
+- Cost tuning
+- Planned
+- Every figure comes from the platform’s own logs, reported to you monthly.
+
+## Traceability
+- id="trace" data-screen-label="Traceability" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Traceability
+- Click any incident. / See how it was handled.
+- Every event in production is detected, contained, fixed and signed off, and each step is recorded. Your risk team and your auditor read the same log we do.
+- Run log — Credit memo assistant · September 2026
+- System CMA-01
+- 1–30 Sep
+- Handling
+- Closed · 4 of 4 steps
+- Same log in the monthly run report
+- Illustrative month for one system. Names, references and figures are examples.
+
+## Across systems
+- id="portfolio" data-screen-label="Across systems" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 04 / Across systems
+- Set up once. Run across every system. /
+- Each system comes under watch faster than the last.
+- The monitoring, evaluation and runbook pack set up for the first system goes into a shared library. The next system adopts it, adds its own test cases, and is under watch in days rather than weeks.
+- Run library
+- 0 run packs
+- Monitoring pack
+- from Credit memo assistant · v1.4
+- Time to watch
+- 6 weeks → 1 week
+- 0
+- 2
+- 4
+- 6
+- 8 wks
+- Credit memo assistant
+- Credit · set up here
+- KYC file builder
+- Onboarding · adopted
+- Complaint drafter
+- Customer ops · adopted
+- Client report drafter
+- Client service · adopted
+- Research notes
+- Research · adopted
+- —
+- First setup
+- —
+- −50%
+- —
+- −67%
+- —
+- −75%
+- —
+- −83%
+- Monitoring pack
+- Illustrative five-system estate. Timings depend on each system’s logs and test data.
+
+## Playbooks
+- id="playbooks" data-screen-label="Playbooks" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Playbooks
+- Four systems we run, / written up from delivery.
+- What we measure first, what we build and how each one is checked. Read them before the audit, or bring them to it.
+- All nine playbooks →
+- Playbook
+- Mandate Guardrails
+- Investment guidelines turned into approved, versioned rules, tested before and after each trade, with every breach and override on record.
+- Read the playbook →
+- Playbook
+- Client Reporting Flow
+- Client reports built from reconciled books, each figure tied out and each commentary claim checked against attribution before release.
+- Read the playbook →
+- Playbook
+- Research Intake
+- Overnight house-format notes from filings, transcripts and broker research. Every figure and quotation carries a source.
+- Read the playbook →
+- Playbook
+- Investor Reporting
+- Letters, statements and DDQ answers drafted from your books, with every figure traced to source before release.
+- Read the playbook →
+
+## Value
+- id="value" data-screen-label="Value" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 05 / Value
+- Accuracy you can bridge, / line by line.
+- Every system reports against the floor agreed at handover. The monthly run report shows what moved accuracy and why, and the same evidence answers your risk team and your auditor.
+- Monthly run report — Credit memo assistant · month 6
+- Cases right first time
+- % · axis starts at 92
+- 94.2% →
+- 94.2%
+- +0.0 pts
+- 96
+- 95
+- 94
+- 93
+- 92
+- 94.2%
+- +1.2 pts
+- +0.5 pts
+- +0.2 pts
+- +0.3 pts
+- 96.4%
+- At handover
+- month 0
+- Model migration
+- scored before release
+- Drift alerts
+- caught within a day
+- New formats
+- added to the suite
+- Reviewer feedback
+- fed back weekly
+- Accuracy
+- measured at month 6
+- +2.2 pts on 41,000 cases a quarter
+- ≈
+- 0
+- fewer cases reworked a quarter
+- Illustrative bridge for one system. Each line is measured against the floor agreed at handover.
+
+## Related work
+- id="work" data-screen-label="Related work" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Related work
+- Measured against the week / before we arrived.
+- Client names are withheld under mandate. Each engagement reports the baseline instrumented at the diagnostic and the figure at the third monthly review.
+- Private Credit · Production Assurance
+- Daily agent-notice reconciliation for a loan operations team
+- Agent notices were reconciled to the loan system at month end, so breaks piled up. Notices are now matched every day, and each break carries an explanation before close.
+- Breaks open at month end
+- 86 → 4
+- Notices matched each day
+- 1,900
+- Breaks without an owner
+- None
+- Read the case study →
+- Asset Management · Production Assurance
+- Client reporting across an institutional book
+- Quarterly client reports took six people most of a month. Reports are now built from reconciled books, and each commentary claim is checked against attribution before release.
+- Report production
+- 18 days → 5 days
+- Reports per quarter
+- 640
+- Claims checked against attribution
+- 100%
+- Read the case study →
+- All work →
+
+## CTA · book an audit
+- data-screen-label="CTA · book an audit" style="padding:56px 40px">
+- Not live yet?
+- Start with a two-week workflows & processes audit.
+- We map what your teams do today, measure the baseline and rank what is worth building, before anything goes into production.
+- Book an audit
+- →
+- The process map is yours, whether we build or not
+
+## Engagement
+- id="engagement" data-screen-label="Engagement" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 06 / Engagement
+- Three ways in. / Each one earns the next.
+- Engagement 01
+- 2 weeks · fixed fee
+- The health review
+- We review every AI system you already run, ours or anyone’s: accuracy, drift, cost per case, access and ownership. You get a ranked fix list and a run plan for each system.
+- Covers
+- Every live system
+- Access
+- Read-only
+- Output
+- Fix list and run plan
+- Book an audit
+- Engagement 02
+- 30 days · per system
+- The handover / to production
+- We take over monitoring, evaluation and on-call, fix the top risks first and agree the accuracy floor each system is held to.
+- Runs in
+- Your cloud
+- On-call
+- From day one
+- Floor
+- Agreed per system
+- Book a call
+- Engagement 03
+- Monthly · per system
+- Ongoing assurance
+- We hold the floor and drive cost per case down, with a one-page report every month. Your team can take it in-house at any point; the runbooks assume you will.
+- Report
+- Monthly, one page
+- Notice
+- One month
+- Exit
+- Rehearsed handover
+- Book a call
+
+## Closing
+- data-screen-label="Closing" style="padding:0 40px 40px">
+- 3264
+- .ai
+- Keep it right after go-live.
+- Book a health review
+- Monitoring, evaluation and runbooks for AI systems in production, held to an agreed accuracy floor.
+- 32 → 64
+
+## Premise statements
+- The pilot went live with a launch email and a demo that worked.
+- Three months later, the model changed, costs crept up and the engineer who built it left.
+- The business still relies on it, and the auditor still asks who is accountable.
+
+## Incident data (trData)
+
+**Model provider update · Day 4**
+- Detected: Provider released a new model version overnight (Version watch · 04:10)
+- Contained: New version held back; system pinned to the approved one (Change gate CG-2 · held)
+- Fixed: New version scored on the 1,200-case suite: 93.8%, above the floor (Suite run S-0904)
+- Signed off: Risk owner approved the migration (6 Sep · 09:12)
+
+**Accuracy below the floor · Day 11**
+- Detected: Nightly score fell to 91.6% against a 92% floor (Nightly suite · 02:00)
+- Contained: Leverage section routed to analysts until fixed (Fallback rule FB-3 · on)
+- Fixed: New add-back format added to the parser and the suite (Release R-0912 · 94.1%)
+- Signed off: Credit manager (12 Sep · 16:40)
+
+**Cost spike · Day 15**
+- Detected: Cost per case rose 38% in a day (Spend monitor · 11:30)
+- Contained: Retry loop on long documents found and capped (Hotfix H-0915)
+- Fixed: Long documents split before drafting (Release R-0916 · £0.39 per case)
+- Signed off: Service owner (16 Sep · 10:05)
+
+**Access review · Day 20**
+- Detected: Quarterly review found two leavers with access (Access report AR-Q3)
+- Contained: Both accounts removed within the hour (Identity provider · 14:22)
+- Fixed: Access now tied to the HR leaver feed (Change C-0921)
+- Signed off: Information security (21 Sep · 09:00)
+
+**New document format · Day 26**
+- Detected: Reviewer flagged a new auditor template (Feedback queue · case 4,812)
+- Contained: Affected memos marked for full human review (Fallback rule FB-5 · on)
+- Fixed: Template added; 40 new cases added to the suite (Suite v2.7 · 1,240 cases)
+- Signed off: Credit analyst lead (27 Sep · 15:30)
+
+**Monthly run report · Day 30**
+- Detected: Accuracy 94.6% · cost £0.38 · 5 events, all closed (Run report RR-09)
+- Contained: No event reached a client or a decision (Incident log · September)
+- Fixed: Two suite additions, one parser change, one access control (Change log · 4 items)
+- Signed off: Risk committee (2 Oct · 10:00)
+
+## Intro overlay
+- review what is live · rank by risk · fix the first system · carry it to the next one
+- 5 systems on watch · day 100
+- Run log · click to skip

@@ -264,6 +264,20 @@
       "port": 4117
     },
     {
+      "name": "design reference: production assurance",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4118",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_production_assurance/reference"
+      ],
+      "port": 4118
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [
