@@ -3,8 +3,8 @@ import { pageMetadata } from "@/app/shared-metadata";
 import { HERO_POSTER } from "@/components/ai-engineering/hero-media";
 import { AIEngineering, PauseControl } from "@/components/ai-engineering/Motion";
 import { Footer } from "@/components/home/Footer";
-import { Header } from "@/components/home/Header";
-import { footerColumns, headerCta, meta, nav } from "@/content/ai-engineering";
+import { SiteHeader } from "@/components/site-header/SiteHeader";
+import { footerColumns, meta } from "@/content/ai-engineering";
 
 // AI Engineering — the service page, ported from design_handoff_ai_engineering (its reference
 // prototype is the source of truth). The page itself is one client component that extends the
@@ -20,7 +20,7 @@ export default function Page() {
   preload(HERO_POSTER, { as: "image", fetchPriority: "high" });
   return (
     <AIEngineering
-      header={<Header nav={nav} cta={headerCta} homeHref="/" collapseBelow="1024" />}
+      header={<SiteHeader />}
       footer={<Footer columns={footerColumns} extra={<PauseControl />} />}
     />
   );

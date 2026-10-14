@@ -6,9 +6,8 @@
 // "Recently updated" is PLACEHOLDER content (illustrative dates and notes). Replace it with the
 // real changelog before launch; see `recentlyUpdated` below.
 
-import type { HeaderNavItem } from "@/components/home/Header";
 import type { FooterColumn } from "@/components/home/Footer";
-import { routes, type Link } from "./home";
+import { routes } from "./home";
 
 export const route = routes.playbooks;
 
@@ -22,25 +21,6 @@ export const meta = {
 // "Book an audit" and "Book a two-week audit" land on the AI Engineering page's engagement
 // cards, where the audit is described and booked.
 const audit = `${routes.aiEngineering}#engagement`;
-
-function siteNav(playbooks: HeaderNavItem): HeaderNavItem[] {
-  return [
-    { label: "AI Engineering", href: routes.aiEngineering },
-    { label: "AI Transformation", href: routes.aiTransformation },
-    { label: "Industries", href: "/#industries" },
-    { label: "Work", href: "/#work" },
-    playbooks,
-    { label: "Essays", href: routes.essays },
-    { label: "Contact", href: routes.contact },
-  ];
-}
-
-export const nav = siteNav({ label: "Playbooks", href: "#top", current: true });
-
-/** The playbook pages (/playbooks/<slug>): "Playbooks" in ink, linking back to the library. */
-export const articleNav = siteNav({ label: "Playbooks", href: routes.playbooks, current: "section" });
-
-export const headerCta: Link = { label: "Book an audit", href: audit };
 
 // "Deployment & Run", "Evaluation suites" and LinkedIn are placeholders in the handoff too. The
 // Essays pages share this footer (design_handoff_essays), with Essays in place of the handoffs'

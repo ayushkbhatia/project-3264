@@ -30,18 +30,6 @@ export const routes = {
 // Swapping that in is this one line; SmartLink opens an http(s) URL in a new tab.
 export const booking = { href: "mailto:hello@3264.ai?subject=Mapping%20session" } as const;
 
-export const nav: Link[] = [
-  { label: "AI Engineering", href: routes.aiEngineering },
-  { label: "AI Transformation", href: routes.aiTransformation },
-  { label: "Industries", href: "#industries" },
-  { label: "Work", href: "#work" },
-  { label: "Playbooks", href: routes.playbooks },
-  { label: "Essays", href: routes.essays },
-  { label: "Contact", href: routes.contact },
-];
-
-export const headerCta: Link = { label: "Book a call", href: "#contact" };
-
 export const hero = {
   titleLines: ["Deployment is", "the deliverable."],
   standfirst:

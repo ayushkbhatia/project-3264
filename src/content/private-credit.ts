@@ -5,27 +5,14 @@
 //
 // All names, figures, funds and deals on this page are illustrative designed content.
 
-import type { HeaderNavItem } from "@/components/home/Header";
 import type { FooterColumn } from "@/components/home/Footer";
-import { routes, type Link } from "./home";
+import { routes } from "./home";
 
 export const route = "/industries/private-credit";
 
 // Every "Book a platform review" / "Start with the audit" CTA. The prototype uses the
 // studio's email; swap in the booking URL when there is one (one line).
 export const booking = { href: "mailto:hello@3264.ai" } as const;
-
-export const nav: HeaderNavItem[] = [
-  { label: "AI Engineering", href: routes.aiEngineering },
-  { label: "AI Transformation", href: routes.aiTransformation },
-  { label: "Industries", href: "#top", current: true },
-  { label: "Work", href: "/#work" },
-  { label: "Playbooks", href: routes.playbooks },
-  { label: "Essays", href: routes.essays },
-  { label: "Contact", href: routes.contact },
-];
-
-export const headerCta: Link = { label: "Book a platform review", href: booking.href };
 
 export const hero = {
   crumb: { label: "Industries", href: "/#industries" },

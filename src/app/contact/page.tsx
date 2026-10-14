@@ -4,9 +4,9 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { LogoMarquee } from "@/components/contact/LogoMarquee";
 import { ContactMotion, PauseControl } from "@/components/contact/Motion";
 import { Footer } from "@/components/home/Footer";
-import { Header } from "@/components/home/Header";
+import { SiteHeader } from "@/components/site-header/SiteHeader";
 import { GridTexture } from "@/components/home/primitives";
-import { directLine, email, footerColumns, headerCta, intro, meta, nav } from "@/content/contact";
+import { directLine, email, footerColumns, intro, meta } from "@/content/contact";
 
 // Contact — 3264's one place for new enquiries, ported from design_handoff_contact (its prototype,
 // Contact.dc.html, is the source of truth; copy in src/content/contact.ts). It replaced the Company
@@ -37,7 +37,7 @@ const PANEL_SIZES = "(min-width: 880px) max(50vw, calc((100vh - 69px) * 1.48), 1
 export default function ContactPage() {
   return (
     <>
-      <Header nav={nav} cta={headerCta} homeHref="/" collapseBelow="1000" menu />
+      <SiteHeader />
       <ContactMotion>
         <main>
           <section

@@ -6,8 +6,7 @@
 // the article), loaded on the server by essays-source.ts. This module is client-safe: it holds
 // the fixed strings, the nav and footer, and the types the pages pass to their client islands.
 
-import type { HeaderNavItem } from "@/components/home/Header";
-import { routes, type Link } from "./home";
+import { routes } from "./home";
 import { siteFooter } from "./playbooks";
 
 export const route = routes.essays;
@@ -58,25 +57,6 @@ export function longDate(iso: string): string {
 
 const audit = `${routes.aiEngineering}#engagement`;
 
-function siteNav(essays: HeaderNavItem): HeaderNavItem[] {
-  return [
-    { label: "AI Engineering", href: routes.aiEngineering },
-    { label: "AI Transformation", href: routes.aiTransformation },
-    { label: "Industries", href: "/#industries" },
-    { label: "Work", href: "/#work" },
-    { label: "Playbooks", href: routes.playbooks },
-    essays,
-    { label: "Contact", href: routes.contact },
-  ];
-}
-
-/** The index: "Essays" is this page. */
-export const nav = siteNav({ label: "Essays", href: "#top", current: true });
-
-/** An essay page: "Essays" in ink, linking back to the index. */
-export const articleNav = siteNav({ label: "Essays", href: routes.essays, current: "section" });
-
-export const headerCta: Link = { label: "Book an audit", href: audit };
 
 /** The Playbooks pages' footer, with Essays linking to the top of the index on the index. */
 export const footerColumns = siteFooter(routes.playbooks, "#top");
