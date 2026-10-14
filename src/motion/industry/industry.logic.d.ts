@@ -43,8 +43,13 @@ export interface IndustryLogicData {
     /** The footer's counted-up figure, from 0 to 1. */
     ev: (p: number) => string;
   };
-  /** Traceability rows (Fund Management only). */
+  /** Traceability rows (not on Private Equity). */
   trace?: TraceRow[];
+  /** The rollout library's counter before and after the first capability lands. Default
+      ["0 capabilities", "1 capability"]. */
+  pfCount?: [string, string];
+  /** What Traceability's hint asks to click ("click any figure"). Default "figure". */
+  trNoun?: string;
 }
 
 export interface IndustryLogicProps {

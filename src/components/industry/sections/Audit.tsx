@@ -23,7 +23,7 @@ export function Audit({ v, c }: { v: IndustryVals; c: IndustryCopy["audit"] }) {
             <div ref={v.dgScan} style={css("position:absolute; left:182px; top:4px; width:126px; height:450px; box-sizing:border-box; border-radius:10px; background:rgba(255,255,255,0.34); border:1px solid rgba(255,255,255,0.8); opacity:0")} />
             <div ref={v.dgAxes} style={css("position:absolute; left:0; top:0; width:720px; height:470px; opacity:0")}>
               <div style={css("position:absolute; left:80px; top:40px; width:330px; height:260px; box-sizing:border-box; border-radius:4px; background:color-mix(in srgb, var(--a) 9%, transparent); border:1px dashed color-mix(in srgb, var(--a) 45%, transparent)")} />
-              <div style={css("position:absolute; left:92px; top:50px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--a)")}>Build first</div>
+              <div style={css("position:absolute; left:92px; top:50px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--a)")}>{c.quadrant ?? "Build first"}</div>
               <div style={css("position:absolute; left:80px; top:251px; width:600px; border-top:1px dashed rgba(20,20,18,0.16)")} />
               <div style={css("position:absolute; left:80px; top:82px; width:600px; border-top:1px dashed rgba(20,20,18,0.16)")} />
               <div style={css("position:absolute; left:80px; top:40px; width:1px; height:380px; background:rgba(20,20,18,0.4)")} />
@@ -33,7 +33,7 @@ export function Audit({ v, c }: { v: IndustryVals; c: IndustryCopy["audit"] }) {
               <div style={css("position:absolute; left:0; top:75px; width:70px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#55544E")}>{c.yTicks[2]}</div>
               <div style={css("position:absolute; left:80px; top:14px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:#2C2B27")}>{c.yAxis}</div>
               <div style={css("position:absolute; left:80px; top:430px; width:600px; display:flex; justify-content:space-between; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#55544E")}><span>2 wks</span><span>4</span><span>6</span><span>8</span><span>10 wks</span></div>
-              <div style={css("position:absolute; left:480px; top:448px; width:200px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:#2C2B27")}>Effort to ship →</div>
+              <div style={css("position:absolute; left:480px; top:448px; width:200px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:#2C2B27")}>{c.xAxis ?? "Effort to ship →"}</div>
             </div>
             <div data-dg-chrome="" style={css("position:absolute; left:186px; top:8px; display:grid; grid-template-columns:repeat(6, 118px); column-gap:8px")}>
               {v.dgWf.map((wf, i) => (<div key={i} style={css("height:48px; box-sizing:border-box; padding:0 0 8px 2px; display:flex; align-items:flex-end; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; line-height:1.35; letter-spacing:0.06em; text-transform:uppercase; color:#2C2B27")}>{wf}</div>))}

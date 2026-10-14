@@ -25,7 +25,7 @@ export function Engagement({ v, c }: { v: IndustryVals; c: IndustryCopy["engagem
             <div style={css("position:relative; flex:1; display:flex; flex-direction:column; gap:28px; padding:clamp(24px,2.6vw,36px)")}>
               <div style={css("display:flex; justify-content:space-between; gap:12px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; letter-spacing:0.04em; text-transform:uppercase; color:#1A1917")}><span>{c.cards[0].head[0]}</span><span>{c.cards[0].head[1]}</span></div>
               <div style={css("flex:1; display:flex; flex-direction:column; justify-content:center")}>
-                <div style={css("font-size:clamp(34px, 3.2vw, 46px); letter-spacing:-0.04em; line-height:1")}>{c.cards[0].title}</div>
+                <div style={css("font-size:clamp(34px, 3.2vw, 46px); letter-spacing:-0.04em; line-height:1")}>{typeof c.cards[0].title === "string" ? c.cards[0].title : <Br lines={c.cards[0].title} />}</div>
                 <p style={css("margin:18px 0 0; font-size:16.5px; line-height:1.5; letter-spacing:-0.01em; color:#2C2B27; text-wrap:pretty")}>{c.cards[0].body}</p>
               </div>
               <div style={css("display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; padding:16px 0 0; border-top:1px solid rgba(20,20,18,0.22)")}>
@@ -41,7 +41,7 @@ export function Engagement({ v, c }: { v: IndustryVals; c: IndustryCopy["engagem
             <div style={css("position:relative; flex:1; display:flex; flex-direction:column; gap:28px; padding:clamp(24px,2.6vw,36px)")}>
               <div style={css("display:flex; justify-content:space-between; gap:12px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; letter-spacing:0.04em; text-transform:uppercase; color:#1A1917")}><span>{c.cards[1].head[0]}</span><span>{c.cards[1].head[1]}</span></div>
               <div style={css("flex:1; display:flex; flex-direction:column; justify-content:center")}>
-                <div style={css("font-size:clamp(34px, 3.2vw, 46px); letter-spacing:-0.04em; line-height:1")}>{c.cards[1].title}</div>
+                <div style={css("font-size:clamp(34px, 3.2vw, 46px); letter-spacing:-0.04em; line-height:1")}>{typeof c.cards[1].title === "string" ? c.cards[1].title : <Br lines={c.cards[1].title} />}</div>
                 <p style={css("margin:18px 0 0; font-size:16.5px; line-height:1.5; letter-spacing:-0.01em; color:#2C2B27; text-wrap:pretty")}>{c.cards[1].body}</p>
               </div>
               <div style={css("display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; padding:16px 0 0; border-top:1px solid rgba(20,20,18,0.22)")}>
@@ -57,7 +57,7 @@ export function Engagement({ v, c }: { v: IndustryVals; c: IndustryCopy["engagem
             <div style={css("position:relative; flex:1; display:flex; flex-direction:column; gap:28px; padding:clamp(24px,2.6vw,36px)")}>
               <div style={css("display:flex; justify-content:space-between; gap:12px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11.5px; letter-spacing:0.04em; text-transform:uppercase; color:#1A1917")}><span>{c.cards[2].head[0]}</span><span>{c.cards[2].head[1]}</span></div>
               <div style={css("flex:1; display:flex; flex-direction:column; justify-content:center")}>
-                <div style={css("font-size:clamp(34px, 3.2vw, 46px); letter-spacing:-0.04em; line-height:1")}>{c.cards[2].title}</div>
+                <div style={css("font-size:clamp(34px, 3.2vw, 46px); letter-spacing:-0.04em; line-height:1")}>{typeof c.cards[2].title === "string" ? c.cards[2].title : <Br lines={c.cards[2].title} />}</div>
                 <p style={css("margin:18px 0 0; font-size:16.5px; line-height:1.5; letter-spacing:-0.01em; color:#2C2B27; text-wrap:pretty")}>{c.cards[2].body}</p>
               </div>
               <div style={css("display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; padding:16px 0 0; border-top:1px solid rgba(20,20,18,0.22)")}>

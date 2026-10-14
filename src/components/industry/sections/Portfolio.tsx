@@ -7,7 +7,7 @@ import type { IndustryCopy } from "../types";
 // 04 Portfolio: a 16s loop (stepPort). The capability is built at Helix, carried into the
 // library as a chip, then installed at four more companies, each live faster than the last.
 
-export function Portfolio({ v, c }: { v: IndustryVals; c: IndustryCopy["portfolio"] }) {
+export function Portfolio({ v, c, count = "0 capabilities" }: { v: IndustryVals; c: IndustryCopy["portfolio"]; count?: string }) {
   return (
     <section id="portfolio" data-screen-label={c.label} style={css("padding:118px 40px; border-bottom:1px solid var(--line2)")}>
       <div style={css("position:relative; overflow:hidden; max-width:1280px; margin:0 auto; box-sizing:border-box; border-radius:12px; box-shadow:0 30px 90px rgba(20,20,18,0.20); border:1px solid var(--line); background:#0A0A0A; padding:clamp(40px,6.25vw,80px) clamp(24px,6.25vw,80px)")}>
@@ -23,7 +23,7 @@ export function Portfolio({ v, c }: { v: IndustryVals; c: IndustryCopy["portfoli
             <div ref={v.pfStage} aria-hidden="true" style={css("position:absolute; left:0; top:0; width:1120px; height:520px; transform-origin:0 0; opacity:0")}>
               <div style={css("position:absolute; left:330px; top:0; width:460px; height:92px; box-sizing:border-box; border-radius:12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); backdrop-filter:blur(10px)")}>
                 <div style={css("position:absolute; left:18px; top:13px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.55)")}>{c.library}</div>
-                <div data-pf-count="" style={css("position:absolute; right:18px; top:13px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; letter-spacing:0.06em; color:rgba(255,255,255,0.55)")}>0 capabilities</div>
+                <div data-pf-count="" style={css("position:absolute; right:18px; top:13px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; letter-spacing:0.06em; color:rgba(255,255,255,0.55)")}>{count}</div>
                 <div style={css("position:absolute; left:20px; right:20px; top:40px; height:34px; box-sizing:border-box; border-radius:8px; border:1px dashed rgba(255,255,255,0.22)")} />
                 <div data-pf-slot="" style={css("position:absolute; left:20px; right:20px; top:40px; height:34px; box-sizing:border-box; padding:0 14px; border-radius:8px; background:linear-gradient(96deg,#A8C8E8 0%,#E9E4CF 30%,#F3C9A8 62%,#D9C3E8 100%); display:flex; align-items:center; justify-content:space-between; opacity:0")}><span style={css("font-size:13px; font-weight:500; color:#1A1917")}>{c.slot[0]}</span><span style={css("font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#2C2B27")}>{c.slot[1]}</span></div>
               </div>

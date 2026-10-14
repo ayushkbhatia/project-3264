@@ -8,6 +8,9 @@ export type FooterImageContent = {
   cta: { label: string; href: string };
   positioning: string;
   sequence: string;
+  /** The positioning line takes the row's full width rather than 620px, so a long one holds one
+      line on desktop and wraps only on narrow screens (Production Assurance). */
+  wide?: boolean;
 };
 
 /**
@@ -64,7 +67,7 @@ export function FooterImage({ content = footerImage, flush = false }: { content?
           </div>
         </div>
         <div className="mt-4 flex flex-wrap items-baseline justify-between gap-6">
-          <p className="m-0 max-w-[620px] text-[14.5px] leading-[1.55] text-mut">{content.positioning}</p>
+          <p className={`m-0 text-[14.5px] leading-[1.55] text-mut ${content.wide ? "min-w-0 flex-[1_1_auto] text-pretty" : "max-w-[620px]"}`}>{content.positioning}</p>
           <span className="text-[13px] tracking-[-0.005em] text-mut">{content.sequence}</span>
         </div>
       </div>

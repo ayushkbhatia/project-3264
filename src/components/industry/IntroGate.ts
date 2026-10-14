@@ -1,4 +1,4 @@
-// The industry pages' intro first-paint gates. Same mechanism as the Private Credit and AI
+// The industry pages' (and Production Assurance's) intro first-paint gates. Same mechanism as the Private Credit and AI
 // Engineering pages' (components/private-credit/IntroGate.ts documents it): an inline <head>
 // script decides before the server HTML paints whether the build-log intro will play and, if so,
 // marks <html data-…-intro="pending">, which shows the server-rendered (display:none) overlay,
@@ -22,9 +22,11 @@ export const PE_INTRO_ATTR = "data-pe-intro";
 export const FS_INTRO_ATTR = "data-fs-intro";
 export const FM_INTRO_ATTR = "data-fm-intro";
 export const AM_INTRO_ATTR = "data-am-intro";
+export const PA_INTRO_ATTR = "data-pa-intro";
 
 /** Inlined by app/layout.tsx (each runs on every page and acts on its route only). */
 export const PE_INTRO_GATE_SCRIPT = introGateScript(PE_INTRO_ATTR, GRACE_MS, routes.privateEquity);
 export const FS_INTRO_GATE_SCRIPT = introGateScript(FS_INTRO_ATTR, GRACE_MS, routes.financialServices);
 export const FM_INTRO_GATE_SCRIPT = introGateScript(FM_INTRO_ATTR, GRACE_MS, routes.fundManagement);
 export const AM_INTRO_GATE_SCRIPT = introGateScript(AM_INTRO_ATTR, GRACE_MS, routes.assetManagement);
+export const PA_INTRO_GATE_SCRIPT = introGateScript(PA_INTRO_ATTR, GRACE_MS, routes.productionAssurance);

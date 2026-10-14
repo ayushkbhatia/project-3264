@@ -172,13 +172,13 @@ for (const url of PAGES) {
   await page.keyboard.press("Enter");
   await wait(page, 50);
   const stops = [];
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 13; i++) {
     await page.keyboard.press("Tab");
     stops.push((await active(page)).text);
   }
   const lastIdx = stops.findIndex((t) => t.startsWith("AI Transformation"));
   check(
-    stops[0] === "Overview →" && stops[1] === "Two-week audit" + "We assess your systems and processes, then price the rebuild.".slice(0, 26) && lastIdx === 11,
+    stops[0] === "Overview →" && stops[1] === "Two-week audit" + "We assess your systems and processes, then price the rebuild.".slice(0, 26) && lastIdx === 12,
     `Tab order: ${stops.map((s) => s.slice(0, 18)).join(" → ")}`,
   );
   check((await expanded(page, "engineering")) === "false", "Tab past the panel's last link closes it");
@@ -279,7 +279,7 @@ for (const [w, h, shot] of [[390, 844, "phone"], [834, 1112, "tablet"]]) {
     }, key);
   await page.tap('button[aria-controls="mobile-group-engineering"]');
   const eng = await rows("engineering");
-  check(eng.shown && eng.items.length === 4 && eng.over === "AI Engineering overview →", `@${w} AI Engineering: ${eng.items.length} rows, "${eng.over}"`);
+  check(eng.shown && eng.items.length === 5 && eng.over === "AI Engineering overview →", `@${w} AI Engineering: ${eng.items.length} rows, "${eng.over}"`);
   await page.screenshot({ path: path.join(OUT, `${shot}-engineering.png`) });
   await page.tap('button[aria-controls="mobile-group-transformation"]');
   const tra = await rows("transformation");

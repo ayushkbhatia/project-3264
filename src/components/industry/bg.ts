@@ -14,4 +14,5 @@ export const BG = {
   auditWash: bgImage("/img/industry/audit-wash.webp", 1344 / 752),
   ctaD: bgImage("/img/ai-engineering/cta-d.avif", 3420 / 2317),
   ctaB: bgImage("/img/ai-engineering/cta-b.avif", 2048 / 1570),
+  ctaC: bgImage("/img/industry/cta-c.webp", 810 / 638),
 };

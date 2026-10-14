@@ -30,7 +30,7 @@ export function Hero({ v, c }: { v: IndustryVals; c: IndustryCopy["hero"] }) {
         <p style={css("margin:22px 0 0; max-width:640px; font-size:clamp(15.5px, 1.2vw, 17px); line-height:1.55; color:#2C2B27; text-wrap:pretty")}>{c.lede}</p>
         <div style={css("display:flex; gap:12px; margin:28px 0 0; flex-wrap:wrap; justify-content:center")}>
           <a href="#engagement" style={css("display:inline-flex; align-items:center; height:46px; padding:0 24px; background:#1A1917; color:#FFFFFF; border-radius:6px; font-size:15px; font-weight:500; letter-spacing:-0.01em")} className="hover:bg-a! hover:text-white!">{c.primary}</a>
-          <a href="#plan" style={css("display:inline-flex; align-items:center; height:46px; padding:0 24px; box-sizing:border-box; border:1px solid var(--line); background:rgba(255,255,255,0.85); color:#1A1917; border-radius:6px; font-size:15px; font-weight:500; letter-spacing:-0.01em")} className="hover:border-a! hover:text-a!">{c.secondary}</a>
+          <a href={c.secondaryHref ?? "#plan"} style={css("display:inline-flex; align-items:center; height:46px; padding:0 24px; box-sizing:border-box; border:1px solid var(--line); background:rgba(255,255,255,0.85); color:#1A1917; border-radius:6px; font-size:15px; font-weight:500; letter-spacing:-0.01em")} className="hover:border-a! hover:text-a!">{c.secondary}</a>
         </div>
       </div>
     </section>
