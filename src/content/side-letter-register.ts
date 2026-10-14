@@ -25,8 +25,7 @@ export const sideLetterRegister: PlaybookArticle = {
   },
   reviewed: { iso: "2026-09-28", label: "Reviewed 28 September 2026" },
   hero: {
-    // There is no Fund Management industry page yet: the handoff links the Playbooks index's row.
-    category: { label: "Fund Management", href: `${routes.playbooks}#fund-management` },
+    category: { label: "Fund Management", href: routes.fundManagement },
     title: "Side-Letter Register",
     oneLiner: "Every promise in your LPAs and side letters, tracked to its clause, owner and proof of delivery.",
     standfirst:

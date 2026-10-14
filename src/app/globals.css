@@ -184,7 +184,7 @@ html[data-motion="off"] [data-sh-sheet] {
 }
 
 /*
- * The Private Credit page (and AI Engineering, [data-ai], and Private Equity, [data-pe]) runs on the prototype's UA defaults: content-box sizing everywhere
+ * The Private Credit page (and AI Engineering, [data-ai], and the industry pages, [data-ind]) runs on the prototype's UA defaults: content-box sizing everywhere
  * (its inline sizes assume it, and so does every element the motion module builds). Tailwind's
  * preflight makes everything border-box, which would change the size of every bordered window,
  * tile and card on the page. Unlayered, so it outranks preflight; inline styles that ask for
@@ -199,23 +199,24 @@ html[data-motion="off"] [data-sh-sheet] {
 [data-ai] :not([data-site-header], [data-site-header] *),
 [data-ai] :not([data-site-header] *)::before,
 [data-ai] :not([data-site-header] *)::after,
-[data-pe],
-[data-pe] :not([data-site-header], [data-site-header] *),
-[data-pe] :not([data-site-header] *)::before,
-[data-pe] :not([data-site-header] *)::after {
+[data-ind],
+[data-ind] :not([data-site-header], [data-site-header] *),
+[data-ind] :not([data-site-header] *)::before,
+[data-ind] :not([data-site-header] *)::after {
   box-sizing: content-box;
 }
-/* The Private Credit, AI Engineering and Private Equity intros' first-paint covers (IntroGate.ts in each
+/* The Private Credit, AI Engineering and industry pages' intros' first-paint covers (IntroGate.ts in each
    page's components). !important: the overlay's server-rendered display:none is inline. */
 html[data-pc-intro="pending"] [data-pc-intro-wrap],
 html[data-ai-intro="pending"] [data-ai-intro-wrap],
-html[data-pe-intro="pending"] [data-pe-intro-wrap] {
+html[data-pe-intro="pending"] [data-ind-intro-wrap],
+html[data-fm-intro="pending"] [data-ind-intro-wrap] {
   display: flex !important;
 }
 /* Nor does it balance paragraphs globally: only where its inline styles say `pretty`. */
 [data-pc] p,
 [data-ai] p,
-[data-pe] p {
+[data-ind] p {
   text-wrap: wrap;
 }
 
@@ -294,30 +295,30 @@ html[data-pe-intro="pending"] [data-pe-intro-wrap] {
 }
 
 /*
- * Private Equity below 768px (the handoff's "cards and text stack cleanly below 768px"). The
+ * The industry pages below 768px (the handoffs' "cards and text stack cleanly below 768px"). The
  * pinned tracks stay pinned. Each premise card stacks its statement over its window, which then
  * fits the space left below it (the logic's fit() measures the column); and the 100-day frame
  * takes its stage's proportions (1120×620 plus the 28px fit padding) instead of the full
  * pinned height. !important: the layout is inline.
  */
 @media (max-width: 767.98px) {
-  [data-pe] [data-pe-card] {
+  [data-ind] [data-ind-card] {
     flex-direction: column !important;
     gap: 22px !important;
     padding: 28px 24px !important;
   }
-  [data-pe] [data-pe-copy] {
+  [data-ind] [data-ind-copy] {
     flex: none !important;
     gap: 14px !important;
   }
-  [data-pe] [data-pe-copy] p {
+  [data-ind] [data-ind-copy] p {
     font-size: clamp(24px, 6.6vw, 30px) !important;
   }
-  [data-pe] [data-pe-win] {
+  [data-ind] [data-ind-win] {
     flex: 1 1 auto !important;
     min-height: 0 !important;
   }
-  [data-pe] [data-pe-plan-frame] {
+  [data-ind] [data-ind-plan-frame] {
     height: auto !important;
     aspect-ratio: 1176 / 676;
   }

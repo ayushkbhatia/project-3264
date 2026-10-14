@@ -107,7 +107,7 @@ for (const url of ["/", "/ai-engineering", "/industries/private-credit", "/conta
   const at = async (ms) => {
     await page.waitForFunction((ms) => performance.now() >= ms, ms);
     return page.evaluate(() => {
-      const wrap = document.querySelector("[data-pe-intro-wrap]");
+      const wrap = document.querySelector("[data-ind-intro-wrap]");
       const rows = [...wrap.querySelectorAll(":scope > div:first-child > div > div")].slice(0, 4).map((r) => +getComputedStyle(r).opacity);
       return { display: getComputedStyle(wrap).display, mark: +getComputedStyle(wrap.children[1]).opacity, rows, wrap: +getComputedStyle(wrap).opacity };
     });
@@ -116,7 +116,7 @@ for (const url of ["/", "/ai-engineering", "/industries/private-credit", "/conta
   const early = await at(t0 + 200);
   check(early.display === "flex" && early.rows.length === 4, `intro showing, 4 rows (${early.rows.map((x) => x.toFixed(2)).join(" ")})`);
   await page.screenshot({ path: path.join(OUT, "intro.png") });
-  const done = await page.waitForFunction(() => getComputedStyle(document.querySelector("[data-pe-intro-wrap]")).display === "none", null, { timeout: 8000 }).then(() => page.evaluate(() => performance.now()));
+  const done = await page.waitForFunction(() => getComputedStyle(document.querySelector("[data-ind-intro-wrap]")).display === "none", null, { timeout: 8000 }).then(() => page.evaluate(() => performance.now()));
   check(done - t0 < 6000, `intro gone after ${Math.round(done - t0)}ms (lifts at 4.26s + 0.56s)`);
   await ctx.close();
 }
@@ -125,7 +125,7 @@ for (const url of ["/", "/ai-engineering", "/industries/private-credit", "/conta
   await wait(page, 600);
   await page.mouse.click(700, 450);
   await wait(page, 500);
-  const d = await page.$eval("[data-pe-intro-wrap]", (e) => getComputedStyle(e).display);
+  const d = await page.$eval("[data-ind-intro-wrap]", (e) => getComputedStyle(e).display);
   check(d === "none", `a click skips the intro (${d})`);
   await ctx.close();
 }
@@ -151,8 +151,8 @@ for (const url of ["/", "/ai-engineering", "/industries/private-credit", "/conta
   await page.screenshot({ path: path.join(OUT, "hero.png"), clip: { x: 0, y: 0, width: 1440, height: 700 } });
 
   // premise stack at its windows
-  const tf = () => page.$$eval("[data-pe-card]", (els) => els.map((e) => new DOMMatrix(getComputedStyle(e).transform).m41 / e.offsetWidth));
-  const words = (n) => page.$eval(`[data-pe-card]:nth-of-type(${n}) p`, (p) => [...p.children].filter((s) => +s.style.opacity > 0.99).length + "/" + p.children.length);
+  const tf = () => page.$$eval("[data-ind-card]", (els) => els.map((e) => new DOMMatrix(getComputedStyle(e).transform).m41 / e.offsetWidth));
+  const words = (n) => page.$eval(`[data-ind-card]:nth-of-type(${n}) p`, (p) => [...p.children].filter((s) => +s.style.opacity > 0.99).length + "/" + p.children.length);
   for (const [m, expect] of [[0.2, [0, 1.08, 1.08]], [0.5, [-0.03, 0, 1.08]], [0.9, [-0.05, -0.03, 0]]]) {
     await scrub(page, STACK, m);
     await wait(page, 200);
@@ -214,7 +214,7 @@ for (const url of ["/", "/ai-engineering", "/industries/private-credit", "/conta
 /* -------------------------------------------------------------- reduced motion */
 {
   const { ctx, page } = await open(1440, 900, { reducedMotion: "reduce" }, "");
-  const intro = await page.$eval("[data-pe-intro-wrap]", (e) => getComputedStyle(e).display);
+  const intro = await page.$eval("[data-ind-intro-wrap]", (e) => getComputedStyle(e).display);
   await centre(page, "audit");
   await wait(page, 600);
   const list = await page.$eval("#audit [data-li]:last-child", (e) => +e.style.opacity);
@@ -226,7 +226,7 @@ for (const url of ["/", "/ai-engineering", "/industries/private-credit", "/conta
   const vl = await texts(page, "#value [data-vl-run], #value [data-vl-evn]");
   await scrub(page, STACK, 0.05);
   await wait(page, 200);
-  const inked = await page.$eval("[data-pe-card] p", (p) => [...p.children].every((s) => +s.style.opacity > 0.99));
+  const inked = await page.$eval("[data-ind-card] p", (p) => [...p.children].every((s) => +s.style.opacity > 0.99));
   check(intro === "none" && list > 0.99 && kpi[0] === "£1.90m" && vl.join() === "£16.4m,£19.8m" && inked,
     `reduced motion: no intro (${intro}), audit list ${list}, day-100 KPI ${kpi[0]} at 10% of the track, bridge ${vl.join(" ")}, statements inked ${inked}`);
   await page.addScriptTag({ content: AXE });
