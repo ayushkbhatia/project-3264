@@ -33,9 +33,8 @@ export const closing = {
 } as const;
 
 // The prototype's footer, with this site's routes for its links (README, "Linkage"): Production
-// Assurance, in Services, is this page; "Evaluation suites" still goes to the home page's
-// capabilities (an open decision in the handoff); Case studies is the home page's selected
-// engagements until a /work page exists; Essays stands in for "Field notes", as on every other
+// Assurance, in Services, is this page; Case studies is the home page's selected engagements until
+// a /work page exists; Essays stands in for "Field notes", as on every other
 // page. "Book a call" and LinkedIn (no URL yet) are this page's engagement cards.
 export const footerColumns: FooterColumn[] = [
   {
@@ -45,7 +44,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "AI Transformation", href: routes.aiTransformation },
       // not marked current: the reference sets it in the ordinary link colour
       { label: "Production Assurance", href: "#top" },
-      { label: "Evaluation suites", href: "/#capabilities" },
+      { label: "Evaluation Suites", href: routes.evaluationSuites },
     ],
   },
   {

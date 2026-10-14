@@ -1,0 +1,495 @@
+# Copy deck: Evaluation Suites page
+
+Visible strings in page order, extracted from `reference/Evaluation Suites.dc.html`.
+
+## Hero
+- Evaluation Suites
+- Accuracy is a number. / We measure it every night.
+- A demo score tells you how a system did on someone else’s examples. We build a test suite from your own cases, labelled by your experts, and score every system against it every night and before every change. Your risk team gets evidence, not an opinion.
+- Book an evaluation review
+- See a nightly run
+
+## Premise
+- data-screen-label="Premise" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 01 / Premise
+- “91% accurate” means nothing. / Which 9% fails, and does it matter?
+- Vendors quote one headline number from a sample they chose. In production the errors are not spread evenly: they cluster in the cases that matter most, and nobody is measuring them by type or by severity.
+- The demo
+- Vendor scorecard — Document extraction
+- Claim
+- Source
+- Status
+- Headline accuracy
+- 91% on the vendor’s sample
+- Vendor
+- Claimed
+- Test set
+- 200 documents the vendor chose
+- Vendor
+- Claimed
+- Case mix
+- Not compared with your book
+- Vendor
+- Claimed
+- Error severity
+- Every error counted the same
+- Vendor
+- Not set
+- Your own cases
+- None tested
+- Vendor
+- Unseen
+- Re-test after changes
+- Not offered
+- Vendor
+- Not set
+- 1 number ·
+- 0 of your cases
+- · signed
+- In production
+- Errors by case type — month two
+- Where the 9% went
+- Reconstructed from reviewer corrections
+- Case type
+- Share
+- Accuracy
+- Severe
+- Caught by
+- Standard invoices
+- 62%
+- 98%
+- 0
+- Reviewer
+- Credit notes
+- 11%
+- 90%
+- 0
+- Reviewer
+- Multi-currency
+- 9%
+- 81%
+- 1
+- Reviewer
+- Handwritten
+- 7%
+- 64%
+- 2
+- Client
+- Amended terms
+- 6%
+- 58%
+- 3
+- Auditor
+- Side agreements
+- 5%
+- 49%
+- 4
+- Nobody
+- All cases
+- 100%
+- 91%
+- 10
+- —
+- “91%” was true.
+- Most severe errors sat in 18% of cases
+- .
+- What did not change
+- Model risk review — Document extraction
+- Validation year · 2026
+- Vendor demo
+- Apr
+- Go-live
+- Jun
+- Model update
+- Aug
+- Validation
+- Nov
+- Renewal
+- Jan
+- Model risk requests · draft
+- Accuracy on our own cases, by case type
+- Requested
+- Error severity, not just error rate
+- Requested
+- Evidence the model update was re-tested
+- Requested
+- The agreed accuracy floor and who set it
+- Requested
+- What happens when the score drops
+- Requested
+- 5 of 5 open · validation due in November
+
+## Evaluation review
+- id="audit" data-screen-label="Evaluation review" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 02 / Evaluation review
+- In two weeks, we test every AI system you run or are buying against your own cases, and rank where the evidence is thinnest.
+- Test first
+- Low
+- Medium
+- High
+- Gap in evidence ↑
+- 2 wks
+- 4
+- 6
+- 8
+- 10 wks
+- Effort to test →
+- Evidence gap, 0.1 to 1.2
+- 0.1
+- 1.2
+- Shortlisted
+- Memo assistant · severity
+- Report drafter · citations
+- Complaint drafter · edge cases
+- KYC builder · severity
+- Research notes · edge cases
+- Test first · your systems
+- Day 10
+- 01
+- Credit memo assistant
+- Severity-weighted suite, 1,200 cases
+- High
+- 6 wks
+- 02
+- Client report drafter
+- Citation check on every figure
+- High
+- 5 wks
+- 03
+- Complaint drafter
+- Add 300 edge cases from history
+- Medium
+- 4 wks
+- 04
+- KYC file builder
+- Severity suite, from test 01
+- Medium
+- 3 wks
+- 05
+- Research notes
+- Add unsupported-claim cases
+- Medium
+- 8 wks
+- Five suites, ranked by evidence gap
+- Suite 04 reuses suite 01
+- Days 1–6
+- A sample of your historic cases drawn for every system
+- → case sample
+- Days 7–9
+- Each system scored on accuracy, severity, citations, refusals and edge cases
+- → scored matrix
+- Day 10
+- A scored report and a suite plan for every system
+- → suite plan
+- Illustrative estate of six systems. Real reviews score each one against your own cases, with every failure attached.
+
+## CTA · health review
+- data-screen-label="CTA · health review" style="padding:56px 40px">
+- First step
+- Start with a two-week evaluation review.
+- Book an audit
+- →
+- The scored report is yours, whatever you decide
+
+## Building the suite
+- id="plan" data-screen-label="Building the suite" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 03 / Building the suite
+- From your history / to a nightly score.
+- We draw cases from your own history, your experts label the right answers, and the suite runs every night from then on. Every prompt, model or rule change is scored against it before release.
+- Suite log — Credit memo assistant · Q3
+- 0
+- 20
+- 40
+- 60
+- 80
+- 100
+- Case sampling
+- Days 0–14
+- Expert labelling
+- Days 8–30
+- Severity scoring
+- Days 14–42
+- Citation checks
+- Days 36–64
+- Nightly runs and floor
+- Days 56–86
+- Evaluation and handover
+- Days 70–100
+- Day 0
+- Log
+- D03
+- Baseline: 11 case types untested, one headline score of 91%
+- D14
+- Sample closed: 1,200 cases drawn from 18 months
+- D30
+- Labelling complete with four credit analysts
+- D42
+- Severity weights agreed with the risk owner
+- D64
+- Every figure checked for a source citation
+- D86
+- Nightly runs live · floor set at 92%
+- D100
+- Change gate live · suite handed to your team
+- Case types untested
+- 11
+- Against the baseline signed on day 3
+- Cases labelled
+- 0
+- Live
+- 0 of 3
+- Suite checklist · Q3
+- Severity scoring
+- Planned
+- Citation checks
+- Planned
+- Nightly runs and floor
+- Planned
+- Every figure comes from the platform’s own logs, scored again every night.
+
+## Traceability
+- id="trace" data-screen-label="Traceability" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Traceability
+- Click any score. / See what is behind it.
+- Every score in a nightly run can be opened: what was measured, what it was compared with, the cases behind it and who reviewed it. Your model risk team reads the same run we do.
+- Evaluation run — Credit memo assistant · night 22
+- Suite v2.7 · 1,240 cases
+- 22 Sep · 02:00
+- Behind the score
+- Evidenced · 4 of 4
+- Same run in the model risk file
+- Illustrative run for one system. Names, references and figures are examples.
+
+## Across systems
+- id="portfolio" data-screen-label="Across systems" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 04 / Across systems
+- Built once. Scored across every system. /
+- Each system gets its first score faster than the last.
+- The scoring, severity weights and change gate built for the first system go into a shared library. The next system adds its own cases and gets its first nightly score in days rather than weeks.
+- Evaluation library
+- 0 evaluation packs
+- Evaluation pack
+- from Credit memo assistant · v1.4
+- Time to first score
+- 6 weeks → 1 week
+- 0
+- 2
+- 4
+- 6
+- 8 wks
+- Credit memo assistant
+- Credit · built here
+- KYC file builder
+- Onboarding · adopted
+- Complaint drafter
+- Customer ops · adopted
+- Client report drafter
+- Client service · adopted
+- Research notes
+- Research · adopted
+- —
+- First setup
+- —
+- −50%
+- —
+- −67%
+- —
+- −75%
+- —
+- −83%
+- Evaluation pack
+- Illustrative five-system estate. Timings depend on how many cases each system needs labelled.
+
+## Playbooks
+- id="playbooks" data-screen-label="Playbooks" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Playbooks
+- Four systems we run, / written up from delivery.
+- What we measure first, what we build and how each one is checked. Read them before the audit, or bring them to it.
+- All nine playbooks →
+- Playbook
+- Mandate Guardrails
+- Investment guidelines turned into approved, versioned rules, tested before and after each trade, with every breach and override on record.
+- Read the playbook →
+- Playbook
+- Client Reporting Flow
+- Client reports built from reconciled books, each figure tied out and each commentary claim checked against attribution before release.
+- Read the playbook →
+- Playbook
+- Research Intake
+- Overnight house-format notes from filings, transcripts and broker research. Every figure and quotation carries a source.
+- Read the playbook →
+- Playbook
+- Investor Reporting
+- Letters, statements and DDQ answers drafted from your books, with every figure traced to source before release.
+- Read the playbook →
+
+## Value
+- id="value" data-screen-label="Value" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 05 / Value
+- Errors caught you can bridge, / line by line.
+- Each addition to the suite catches errors that used to reach a reviewer or a client. The model risk file shows which addition caught what.
+- Suite report — Credit memo assistant · month 6
+- Errors caught before a person sees them
+- % · axis starts at 92
+- 94.2% →
+- 94.2%
+- +0.0 pts
+- 96
+- 95
+- 94
+- 93
+- 92
+- 94.2%
+- +1.2 pts
+- +0.5 pts
+- +0.2 pts
+- +0.3 pts
+- 96.4%
+- Headline suite
+- month 0
+- Severity weights
+- severe errors first
+- Edge cases
+- 300 from history
+- Citation checks
+- every figure
+- Change gate
+- before every release
+- Caught
+- measured at month 6
+- +2.2 pts on 41,000 cases a quarter
+- ≈
+- 0
+- fewer errors reaching reviewers a quarter
+- Illustrative bridge for one system. Each line is measured on the same 1,240-case suite.
+
+## Related work
+- id="work" data-screen-label="Related work" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Related work
+- Measured against the week / before we arrived.
+- Client names are withheld under mandate. Each engagement reports the baseline instrumented at the diagnostic and the figure at the third monthly review.
+- Financial Services · Evaluation suites
+- Credit memo preparation across a $6.4B book
+- Every figure is extracted with a citation back to the page it came from. The suite scores citations nightly, and the audit trail satisfied the bank’s model risk function without amendment.
+- Time per memo
+- 6 hrs → 40 min
+- Memos prepared
+- 1,240
+- Field-level citations
+- 100%
+- Read the case study →
+- Asset Management · Evaluation suites
+- Overnight research intake for an equity team
+- Analysts started each day reading filings and broker notes. House-format notes are now ready overnight, and the suite holds back any statement without a source.
+- Morning reading
+- 2 hrs → 25 min
+- Sources read each night
+- 300+
+- Unsourced statements published
+- None
+- Read the case study →
+- All work →
+
+## CTA · book an audit
+- data-screen-label="CTA · book an audit" style="padding:56px 40px">
+- Not built yet?
+- Start with a two-week workflows & processes audit.
+- We map what your teams do today, measure the baseline and rank what is worth building, before anything goes into production.
+- Book an audit
+- →
+- The process map is yours, whether we build or not
+
+## Engagement
+- id="engagement" data-screen-label="Engagement" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 06 / Engagement
+- Three ways in. / Each one earns the next.
+- Engagement 01
+- 2 weeks · fixed fee
+- The evaluation review
+- We test any AI system you run or are buying, ours or anyone’s, against a sample of your own cases. You get a scored report showing where it fails and how badly.
+- Covers
+- Any system, any vendor
+- Access
+- Read-only
+- Output
+- Scored report
+- Book an audit
+- Engagement 02
+- 6 weeks · per system
+- The suite build / for production
+- We build a suite from your own history, labelled by your experts, weighted by severity, and agree the floor each system is held to.
+- Runs in
+- Your cloud
+- Cases
+- Your history
+- Floor
+- Agreed per system
+- Book a call
+- Engagement 03
+- Monthly · per system
+- Nightly evaluation
+- Every system is scored every night and every change is scored before release. The suite is yours from day one, and your team can run it without us.
+- Report
+- Monthly, one page
+- Notice
+- One month
+- Exit
+- Suite handed over
+- Book a call
+
+## Closing
+- data-screen-label="Closing" style="padding:0 40px 40px">
+- 3264
+- .ai
+- Know it works. Every night.
+- Book an evaluation review
+- Evaluation suites built from your own cases, run every night and before every change.
+- 32 → 64
+
+## Premise statements
+- The vendor quoted one number, measured on examples they chose.
+- In production, the errors clustered in the cases that matter most.
+- Model risk still asks how you know it works, and a headline number is not an answer.
+
+## Nightly run data (trData)
+
+**Overall accuracy · 94.6%**
+- Measured: 1,173 of 1,240 cases right, weighted by severity (Run S-0922 · 02:00)
+- Compared with: Floor 92% · last night 94.4% (Floor agreed 3 Jul)
+- Evidence: Every case, answer and expected answer stored with the run (Run S-0922 · case list)
+- Reviewed: Model owner (22 Sep 2026 · 08:30)
+
+**Leverage section · 91.2%**
+- Measured: Case type below its own floor of 92% (Run S-0922 · slice LV)
+- Compared with: Last night 94.0% · new add-back format in 6 cases (Diff against S-0921)
+- Evidence: The six failing cases, with the expected answers (Cases 4,801–4,806)
+- Reviewed: Credit analyst lead · section routed to people until fixed (22 Sep 2026 · 09:05)
+
+**Citation coverage · 99.4%**
+- Measured: Figures with a source page that contains them (Run S-0922 · citation check)
+- Compared with: Floor 99% · last night 99.5% (Floor agreed 3 Jul)
+- Evidence: Seven uncited figures, each flagged in the draft (Citation report C-0922)
+- Reviewed: Model owner (22 Sep 2026 · 08:34)
+
+**Severe errors · 0.1%**
+- Measured: Errors that would change a credit decision (Severity weight 10×)
+- Compared with: Limit 0.5% · last night 0.1% (Severity policy SV-1)
+- Evidence: One case, reviewed and corrected (Case 2,214)
+- Reviewed: Risk owner (22 Sep 2026 · 10:00)
+
+**Refusals · 1.8%**
+- Measured: Cases the system declined to answer and sent to a person (Run S-0922 · refusals)
+- Compared with: Target under 3% · last night 1.7% (Run history · 30 nights)
+- Evidence: Each refusal with the reason given (Refusal log R-0922)
+- Reviewed: Model owner (22 Sep 2026 · 08:40)
+
+**Release gate · Passed**
+- Measured: Candidate release R-0923 scored on the full suite (Gate run G-0923)
+- Compared with: Must not lower any case type by more than 0.5 pts (Change policy CG-2)
+- Evidence: Before and after scores for all 18 case types (Gate report G-0923)
+- Reviewed: Change approver (23 Sep 2026 · 11:15)
+
+## Intro overlay
+- sample your cases · label with your experts · score every night · gate every change
+- 5 systems scored · day 100
+- Eval log · click to skip

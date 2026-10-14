@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: new URL("/", origin).href, changeFrequency: "monthly", priority: 1 },
     { url: new URL("/ai-engineering", origin).href, changeFrequency: "monthly", priority: 0.8 },
     { url: new URL("/production-assurance", origin).href, changeFrequency: "monthly", priority: 0.8 },
+    { url: new URL("/evaluation-suites", origin).href, changeFrequency: "monthly", priority: 0.8 },
     { url: new URL("/industries/private-credit", origin).href, changeFrequency: "monthly", priority: 0.8 },
     { url: new URL("/industries/private-equity", origin).href, changeFrequency: "monthly", priority: 0.8 },
     { url: new URL("/industries/financial-services", origin).href, changeFrequency: "monthly", priority: 0.8 },

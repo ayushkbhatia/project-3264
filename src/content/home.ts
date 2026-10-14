@@ -14,6 +14,7 @@ export const routes = {
   aiEngineering: "/ai-engineering",
   aiTransformation: "/ai-transformation",
   productionAssurance: "/production-assurance",
+  evaluationSuites: "/evaluation-suites",
   privateCredit: "/industries/private-credit",
   privateEquity: "/industries/private-equity",
   financialServices: "/industries/financial-services",
@@ -262,7 +263,7 @@ export const footer = {
         { label: "AI Engineering", href: routes.aiEngineering },
         { label: "AI Transformation", href: routes.aiTransformation },
         { label: "Production Assurance", href: routes.productionAssurance },
-        { label: "Evaluation suites", href: "#capabilities" },
+        { label: "Evaluation Suites", href: routes.evaluationSuites },
       ],
     },
     {

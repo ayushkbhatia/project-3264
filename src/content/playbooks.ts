@@ -22,7 +22,7 @@ export const meta = {
 // cards, where the audit is described and booked.
 const audit = `${routes.aiEngineering}#engagement`;
 
-// "Evaluation suites" and LinkedIn are placeholders in the handoff too. The
+// LinkedIn is a placeholder in the handoff too. The
 // Essays pages share this footer (design_handoff_essays), with Essays in place of the handoffs'
 // "Field notes": `playbooksHref` and `essaysHref` are "#top" on their own index pages.
 export function siteFooter(playbooksHref: string, essaysHref: string = routes.essays): FooterColumn[] {
@@ -33,7 +33,7 @@ export function siteFooter(playbooksHref: string, essaysHref: string = routes.es
         { label: "AI Engineering", href: routes.aiEngineering },
         { label: "AI Transformation", href: routes.aiTransformation },
         { label: "Production Assurance", href: routes.productionAssurance },
-        { label: "Evaluation suites", href: "/#capabilities" },
+        { label: "Evaluation Suites", href: routes.evaluationSuites },
       ],
     },
     {
