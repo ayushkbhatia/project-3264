@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</helmet>
+<header ref="{{ rootRef }}" onMouseLeave="{{ leave }}" onMouseEnter="{{ stay }}" onKeyDown="{{ onKey }}" style="position:relative; z-index:100; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); background:rgba(246,245,242,0.86); border-bottom:1px solid rgba(20,20,18,0.075); font-family:'Instrument Sans','Helvetica Neue',Helvetica,sans-serif; color:#1A1917; -webkit-font-smoothing:antialiased">
+  <sc-if value="{{ desk }}" hint-placeholder-val="{{ true }}">
+  <div style="max-width:1280px; margin:0 auto; padding:0 40px; height:68px; display:flex; align-items:center; gap:clamp(20px, 3vw, 48px)">
+    <a href="3264 Home.dc.html" style="font-size:19px; font-weight:500; letter-spacing:-0.03em; color:#1A1917; text-decoration:none">3264<span>.ai</span></a>
+    <nav aria-label="Main" style="display:flex; align-items:center; gap:clamp(14px, 1.9vw, 30px); white-space:nowrap; min-width:0; flex:1; font-size:clamp(13px, 1.5vw, 14px); color:#55544E">
+      <button type="button" data-m="engineering" onClick="{{ toggle }}" onMouseEnter="{{ hover }}" aria-expanded="{{ eng.exp }}" aria-controls="menu-engineering" style="display:flex; align-items:center; gap:7px; height:68px; padding:0; background:none; border:0; font:inherit; color:{{ eng.fg }}; cursor:pointer" style-hover="color:#1A1917">AI Engineering<span aria-hidden="true" style="width:5px; height:5px; margin-top:{{ eng.mt }}; border-right:1.4px solid currentColor; border-bottom:1.4px solid currentColor; transform:{{ eng.rot }}; transition:transform 200ms ease, margin 200ms ease"></span></button>
+      <button type="button" data-m="transformation" onClick="{{ toggle }}" onMouseEnter="{{ hover }}" aria-expanded="{{ tra.exp }}" aria-controls="menu-transformation" style="display:flex; align-items:center; gap:7px; height:68px; padding:0; background:none; border:0; font:inherit; color:{{ tra.fg }}; cursor:pointer" style-hover="color:#1A1917">AI Transformation<span aria-hidden="true" style="width:5px; height:5px; margin-top:{{ tra.mt }}; border-right:1.4px solid currentColor; border-bottom:1.4px solid currentColor; transform:{{ tra.rot }}; transition:transform 200ms ease, margin 200ms ease"></span></button>
+      <button type="button" data-m="industries" onClick="{{ toggle }}" onMouseEnter="{{ hover }}" aria-expanded="{{ ind.exp }}" aria-controls="menu-industries" style="display:flex; align-items:center; gap:7px; height:68px; padding:0; background:none; border:0; font:inherit; color:{{ ind.fg }}; cursor:pointer" style-hover="color:#1A1917">Industries<span aria-hidden="true" style="width:5px; height:5px; margin-top:{{ ind.mt }}; border-right:1.4px solid currentColor; border-bottom:1.4px solid currentColor; transform:{{ ind.rot }}; transition:transform 200ms ease, margin 200ms ease"></span></button>
+      <a href="Work.dc.html" onMouseEnter="{{ hoverOff }}" style="color:#55544E; text-decoration:none" style-hover="color:#1A1917">Work</a>
+      <a href="Playbooks.dc.html" onMouseEnter="{{ hoverOff }}" style="color:#55544E; text-decoration:none" style-hover="color:#1A1917">Playbooks</a>
+      <a href="Essays.dc.html" onMouseEnter="{{ hoverOff }}" style="color:#55544E; text-decoration:none" style-hover="color:#1A1917">Essays</a>
+      <a href="Contact.dc.html" onMouseEnter="{{ hoverOff }}" style="color:#55544E; text-decoration:none" style-hover="color:#1A1917">Contact</a>
+    </nav>
+    <a href="AI Engineering.dc.html#engagement" style="flex:none; white-space:nowrap; display:flex; align-items:center; height:36px; padding:0 16px; border:1px solid rgba(20,20,18,0.13); border-radius:6px; background:#FFFFFF; font-size:13.5px; letter-spacing:-0.01em; color:#1A1917; text-decoration:none" style-hover="border-color:#157F52; color:#157F52">Book an audit</a>
+  </div>
+
+  <div aria-hidden="{{ panelHidden }}" style="position:absolute; left:0; right:0; top:100%; margin-top:1px; background:#FBFAF8; border-bottom:1px solid rgba(20,20,18,0.09); box-shadow:0 40px 60px -40px rgba(20,20,18,0.28); opacity:{{ pOp }}; transform:{{ pTf }}; visibility:{{ pVis }}; transition:opacity 180ms ease, transform 220ms cubic-bezier(0.2,0.7,0.2,1), visibility 0s linear {{ pVisDelay }}">
+
+    <sc-if value="{{ eng.on }}" hint-placeholder-val="{{ false }}">
+    <div id="menu-engineering" style="max-width:1280px; margin:0 auto; padding:30px 40px 36px; box-sizing:border-box">
+      <div style="display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:8px 32px; padding:0 0 20px; border-bottom:1px solid rgba(20,20,18,0.08)">
+        <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 18px; min-width:0">
+          <span style="font-size:21px; letter-spacing:-0.026em">AI Engineering</span>
+          <span style="font-size:14px; color:#55544E">Prototypes your team built, rebuilt to hold in production.</span>
+        </div>
+        <a href="AI Engineering.dc.html" style="font-size:13.5px; color:#1A1917; text-decoration:none" style-hover="color:#157F52">Overview →</a>
+      </div>
+      <div style="display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1.05fr); gap:32px; margin:22px 0 0">
+        <div style="min-width:0">
+          <div style="padding:0 14px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67">How it works</div>
+          <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:4px; margin:10px 0 0">
+            <a href="AI Engineering.dc.html#audit" style="display:block; padding:12px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9">
+              <span style="display:block; font-size:15.5px; letter-spacing:-0.012em">Two-week audit</span>
+              <span style="display:block; margin:5px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">We assess your systems and processes, then price the rebuild.</span>
+            </a>
+            <a href="AI Engineering.dc.html#rebuild" style="display:block; padding:12px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9">
+              <span style="display:block; font-size:15.5px; letter-spacing:-0.012em">Rebuild</span>
+              <span style="display:block; margin:5px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">The prototype rebuilt to production standard, with tests and evaluation suites.</span>
+            </a>
+            <a href="AI Engineering.dc.html#platform" style="display:block; padding:12px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9">
+              <span style="display:block; font-size:15.5px; letter-spacing:-0.012em">Platform</span>
+              <span style="display:block; margin:5px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">Runs in your cloud, under your access controls and audit trail.</span>
+            </a>
+            <a href="AI Engineering.dc.html#engagement" style="display:block; padding:12px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9">
+              <span style="display:block; font-size:15.5px; letter-spacing:-0.012em">Engagement</span>
+              <span style="display:block; margin:5px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">Two ways in. Neither starts with a platform licence.</span>
+            </a>
+          </div>
+        </div>
+        <div style="min-width:0">
+          <div style="padding:0 14px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67">Built from playbooks</div>
+          <div style="display:grid; gap:2px; margin:10px 0 0">
+            <a href="Loan Ops Ledger.dc.html" style="display:flex; align-items:center; gap:12px; padding:9px 14px; border-radius:10px; font-size:14.5px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9"><span aria-hidden="true" style="flex:none; width:28px; height:28px; border-radius:7px; background:#E2DFD8 url('assets/playbooks/loan-ops-ledger.png') center / cover"></span>Loan Ops Ledger</a>
+            <a href="Covenant Watch.dc.html" style="display:flex; align-items:center; gap:12px; padding:9px 14px; border-radius:10px; font-size:14.5px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9"><span aria-hidden="true" style="flex:none; width:28px; height:28px; border-radius:7px; background:#E2DFD8 url('assets/playbooks/covenant-watch.png') center / cover"></span>Covenant Watch</a>
+            <a href="NAV Pack Review.dc.html" style="display:flex; align-items:center; gap:12px; padding:9px 14px; border-radius:10px; font-size:14.5px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9"><span aria-hidden="true" style="flex:none; width:28px; height:28px; border-radius:7px; background:#E2DFD8 url('assets/playbooks/nav-pack-review.png') center / cover"></span>NAV Pack Review</a>
+            <a href="Mandate Guardrails.dc.html" style="display:flex; align-items:center; gap:12px; padding:9px 14px; border-radius:10px; font-size:14.5px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9"><span aria-hidden="true" style="flex:none; width:28px; height:28px; border-radius:7px; background:#E2DFD8 url('assets/playbooks/mandate-guardrails.png') center / cover"></span>Mandate Guardrails</a>
+            <a href="Playbooks.dc.html" style="display:block; padding:9px 14px; font-size:13.5px; color:#55544E; text-decoration:none" style-hover="color:#157F52">All nine playbooks →</a>
+          </div>
+        </div>
+        <a href="AI Engineering.dc.html#audit" style="position:relative; min-width:0; min-height:236px; display:flex; flex-direction:column; justify-content:flex-end; padding:20px; border-radius:14px; overflow:hidden; background:#E8E2D2 url('assets/valley-pastel.png') center 60% / cover; color:#1A1917; text-decoration:none">
+          <span aria-hidden="true" style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(248,246,240,0.15) 0%, rgba(248,246,240,0.82) 70%)"></span>
+          <span style="position:relative; font-size:12.5px; color:#2C2B27">Start here</span>
+          <span style="position:relative; margin:6px 0 0; font-size:20px; letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">Measure one workflow before anything is built.</span>
+          <span style="position:relative; align-self:flex-start; margin:14px 0 0; display:inline-flex; align-items:center; height:36px; padding:0 14px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-size:13px; font-weight:500">Book a two-week audit</span>
+        </a>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ tra.on }}" hint-placeholder-val="{{ false }}">
+    <div id="menu-transformation" style="max-width:1280px; margin:0 auto; padding:30px 40px 36px; box-sizing:border-box">
+      <div style="display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:8px 32px; padding:0 0 20px; border-bottom:1px solid rgba(20,20,18,0.08)">
+        <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 18px; min-width:0">
+          <span style="font-size:21px; letter-spacing:-0.026em">AI Transformation</span>
+          <span style="font-size:14px; color:#55544E">Move a cost line, not just a pilot.</span>
+        </div>
+        <a href="AI Transformation.dc.html" style="font-size:13.5px; color:#1A1917; text-decoration:none" style-hover="color:#157F52">Overview →</a>
+      </div>
+      <div style="display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1.05fr); gap:32px; margin:22px 0 0">
+        <div style="min-width:0">
+          <div style="padding:0 14px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67">The programme</div>
+          <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:4px; margin:10px 0 0">
+            <a href="AI Transformation.dc.html#discover" style="display:flex; gap:12px; padding:12px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9">
+              <span style="flex:none; padding:3px 0 0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67">01</span>
+              <span style="min-width:0"><span style="display:block; font-size:15.5px; letter-spacing:-0.012em">Discover</span><span style="display:block; margin:5px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">Four weeks, fixed fee. Know what the process costs first.</span></span>
+            </a>
+            <a href="AI Transformation.dc.html#rewire" style="display:flex; gap:12px; padding:12px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9">
+              <span style="flex:none; padding:3px 0 0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67">02</span>
+              <span style="min-width:0"><span style="display:block; font-size:15.5px; letter-spacing:-0.012em">Rewire</span><span style="display:block; margin:5px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">Rebuild the process instead of bolting AI onto it.</span></span>
+            </a>
+            <a href="AI Transformation.dc.html#run" style="display:flex; gap:12px; padding:12px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9">
+              <span style="flex:none; padding:3px 0 0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67">03</span>
+              <span style="min-width:0"><span style="display:block; font-size:15.5px; letter-spacing:-0.012em">Run</span><span style="display:block; margin:5px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">Agents run it. Your people hold the decisions.</span></span>
+            </a>
+            <a href="AI Transformation.dc.html#optimise" style="display:flex; gap:12px; padding:12px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9">
+              <span style="flex:none; padding:3px 0 0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67">04</span>
+              <span style="min-width:0"><span style="display:block; font-size:15.5px; letter-spacing:-0.012em">Optimise</span><span style="display:block; margin:5px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">Every cycle should cost less than the last.</span></span>
+            </a>
+          </div>
+        </div>
+        <div style="min-width:0">
+          <div style="padding:0 14px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67">Foundations</div>
+          <div style="display:grid; gap:2px; margin:10px 0 0">
+            <a href="AI Transformation.dc.html#integration" style="display:block; padding:10px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9"><span style="display:block; font-size:14.5px">Integration</span><span style="display:block; margin:3px 0 0; font-size:13px; color:#55544E">Runs on top of the systems you already have.</span></a>
+            <a href="AI Transformation.dc.html#control" style="display:block; padding:10px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9"><span style="display:block; font-size:14.5px">Control</span><span style="display:block; margin:3px 0 0; font-size:13px; color:#55544E">Every change evidenced for risk and audit.</span></a>
+            <a href="AI Transformation.dc.html#engagement" style="display:block; padding:10px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9"><span style="display:block; font-size:14.5px">Engagement</span><span style="display:block; margin:3px 0 0; font-size:13px; color:#55544E">Three ways in, each ending with something you keep.</span></a>
+          </div>
+        </div>
+        <a href="Work.dc.html" style="position:relative; min-width:0; min-height:236px; display:flex; flex-direction:column; justify-content:flex-end; padding:20px; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-nav-pack-review.png') center / cover; color:#1A1917; text-decoration:none">
+          <span aria-hidden="true" style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(248,246,240,0.1) 0%, rgba(248,246,240,0.86) 72%)"></span>
+          <span style="position:relative; font-size:12.5px; color:#2C2B27">Work</span>
+          <span style="position:relative; margin:6px 0 0; font-size:20px; letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">Engagements measured against the week before we arrived.</span>
+          <span style="position:relative; margin:14px 0 0; font-size:13.5px; color:#1A1917">See the work →</span>
+        </a>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ ind.on }}" hint-placeholder-val="{{ false }}">
+    <div id="menu-industries" style="max-width:1280px; margin:0 auto; padding:30px 40px 36px; box-sizing:border-box">
+      <div style="display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:8px 32px; padding:0 0 20px; border-bottom:1px solid rgba(20,20,18,0.08)">
+        <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 18px; min-width:0">
+          <span style="font-size:21px; letter-spacing:-0.026em">Industries</span>
+          <span style="font-size:14px; color:#55544E">Regulated finance, where every figure needs a source.</span>
+        </div>
+        <a href="3264 Home.dc.html#industries" style="font-size:13.5px; color:#1A1917; text-decoration:none" style-hover="color:#157F52">All industries →</a>
+      </div>
+      <div style="display:grid; grid-template-columns:minmax(0,2.5fr) minmax(0,1.05fr); gap:32px; margin:22px 0 0">
+        <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:4px; align-content:start">
+          <a href="Private Credit.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:12px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9">
+            <span aria-hidden="true" style="flex:none; width:52px; height:52px; border-radius:10px; background:#E2DFD8 url('assets/playbooks/covenant-watch.png') center / cover"></span>
+            <span style="min-width:0"><span style="display:block; font-size:15.5px; letter-spacing:-0.012em">Private Credit</span><span style="display:block; margin:5px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">Covenant monitoring, agent notices and loan operations.</span></span>
+          </a>
+          <a href="Private Equity.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:12px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9">
+            <span aria-hidden="true" style="flex:none; width:52px; height:52px; border-radius:10px; background:#E2DFD8 url('assets/playbooks/capital-call-flow.png') center / cover"></span>
+            <span style="min-width:0"><span style="display:block; font-size:15.5px; letter-spacing:-0.012em">Private Equity</span><span style="display:block; margin:5px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">Capital calls, LP reporting and portfolio monitoring.</span></span>
+          </a>
+          <a href="Fund Management.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:12px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9">
+            <span aria-hidden="true" style="flex:none; width:52px; height:52px; border-radius:10px; background:#E2DFD8 url('assets/playbooks/side-letter-register.png') center / cover"></span>
+            <span style="min-width:0"><span style="display:block; font-size:15.5px; letter-spacing:-0.012em">Fund Management</span><span style="display:block; margin:5px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">LP reporting cycles, distributions and side-letter obligations.</span></span>
+          </a>
+          <a href="3264 Home.dc.html#industries" style="display:flex; gap:14px; align-items:flex-start; padding:12px 14px; border-radius:10px; color:#1A1917; text-decoration:none" style-hover="background:#F0EEE9">
+            <span aria-hidden="true" style="flex:none; width:52px; height:52px; border-radius:10px; background:#E2DFD8 url('assets/playbooks/mandate-guardrails.png') center / cover"></span>
+            <span style="min-width:0"><span style="display:block; font-size:15.5px; letter-spacing:-0.012em">Asset Management</span><span style="display:block; margin:5px 0 0; font-size:13.5px; line-height:1.5; color:#55544E; text-wrap:pretty">Research synthesis, mandate compliance and client reporting.</span></span>
+          </a>
+        </div>
+        <a href="Playbooks.dc.html" style="position:relative; min-width:0; min-height:200px; display:flex; flex-direction:column; justify-content:flex-end; padding:20px; border-radius:14px; overflow:hidden; background:#E2DFD8 url('assets/playbooks/feat-covenant-watch.png') center / cover; color:#1A1917; text-decoration:none">
+          <span aria-hidden="true" style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(248,246,240,0.1) 0%, rgba(248,246,240,0.86) 72%)"></span>
+          <span style="position:relative; font-size:12.5px; color:#2C2B27">Playbooks</span>
+          <span style="position:relative; margin:6px 0 0; font-size:20px; letter-spacing:-0.024em; line-height:1.2; text-wrap:balance">Nine workflows, filed by industry.</span>
+          <span style="position:relative; margin:14px 0 0; font-size:13.5px; color:#1A1917">Browse playbooks →</span>
+        </a>
+      </div>
+    </div>
+    </sc-if>
+
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ compact }}" hint-placeholder-val="{{ false }}">
+  <div style="height:68px; padding:0 20px; box-sizing:border-box; display:flex; align-items:center; gap:10px">
+    <a href="3264 Home.dc.html" onClick="{{ closeMenu }}" style="font-size:19px; font-weight:500; letter-spacing:-0.03em; color:#1A1917; text-decoration:none">3264<span>.ai</span></a>
+    <span style="flex:1 1 auto"></span>
+    <sc-if value="{{ barCta }}" hint-placeholder-val="{{ false }}">
+    <a href="AI Engineering.dc.html#engagement" style="flex:none; display:flex; align-items:center; height:40px; padding:0 16px; border:1px solid rgba(20,20,18,0.13); border-radius:999px; background:#FFFFFF; font-size:14px; letter-spacing:-0.01em; color:#1A1917; text-decoration:none">Book an audit</a>
+    </sc-if>
+    <button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuExp }}" aria-controls="mobile-menu" style="flex:none; height:44px; padding:0 16px 0 18px; display:flex; align-items:center; gap:10px; border-radius:999px; border:1px solid {{ mbBd }}; background:{{ mbBg }}; color:{{ mbFg }}; font:inherit; font-size:14.5px; letter-spacing:-0.01em; cursor:pointer; transition:background 180ms ease, color 180ms ease">
+      <span>{{ menuWord }}</span>
+      <span aria-hidden="true" style="position:relative; display:block; width:14px; height:10px">
+        <span style="position:absolute; left:0; right:0; top:{{ l1t }}; height:1.5px; border-radius:1px; background:currentColor; transform:{{ l1r }}; transition:transform 220ms ease, top 220ms ease"></span>
+        <span style="position:absolute; left:0; right:0; top:{{ l2t }}; height:1.5px; border-radius:1px; background:currentColor; transform:{{ l2r }}; transition:transform 220ms ease, top 220ms ease"></span>
+      </span>
+    </button>
+  </div>
+
+  <div id="mobile-menu" aria-hidden="{{ sheetHidden }}" style="position:absolute; left:0; right:0; top:100%; margin-top:1px; height:{{ sheetH }}; box-sizing:border-box; display:flex; flex-direction:column; background:#F6F5F2; opacity:{{ sOp }}; transform:{{ sTf }}; visibility:{{ sVis }}; transition:opacity 200ms ease, transform 260ms cubic-bezier(0.2,0.7,0.2,1), visibility 0s linear {{ sVisDelay }}">
+    <nav aria-label="Main" style="flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; padding:4px 20px 28px">
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+      <div style="border-bottom:1px solid rgba(20,20,18,0.09)">
+        <button type="button" data-g="{{ g.key }}" onClick="{{ toggleGroup }}" aria-expanded="{{ g.exp }}" style="width:100%; min-height:60px; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:0; background:none; border:0; font:inherit; font-size:22px; letter-spacing:-0.026em; color:#1A1917; cursor:pointer; text-align:left">
+          <span>{{ g.label }}</span>
+          <span aria-hidden="true" style="position:relative; flex:none; display:block; width:14px; height:14px; color:#55544E">
+            <span style="position:absolute; left:0; right:0; top:6.25px; height:1.5px; background:currentColor"></span>
+            <span style="position:absolute; top:0; bottom:0; left:6.25px; width:1.5px; background:currentColor; transform:{{ g.vRot }}; transition:transform 220ms ease"></span>
+          </span>
+        </button>
+        <sc-if value="{{ g.on }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:0 0 20px">
+          <p style="margin:0; font-size:14px; line-height:1.5; color:#55544E; text-wrap:pretty">{{ g.blurb }}</p>
+          <div style="display:grid; margin:12px 0 0">
+            <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
+            <a href="{{ it.href }}" onClick="{{ closeMenu }}" style="display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-top:1px solid rgba(20,20,18,0.06); color:#1A1917; text-decoration:none">
+              <sc-if value="{{ it.hasNum }}" hint-placeholder-val="{{ false }}"><span style="flex:none; width:22px; padding:3px 0 0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; color:#6E6D67">{{ it.num }}</span></sc-if>
+              <sc-if value="{{ it.hasImg }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="flex:none; width:40px; height:40px; border-radius:9px; background-color:#E2DFD8; background-image:{{ it.img }}; background-size:cover; background-position:center"></span></sc-if>
+              <span style="min-width:0">
+                <span style="display:block; font-size:16px; letter-spacing:-0.012em; line-height:1.3">{{ it.title }}</span>
+                <span style="display:block; margin:3px 0 0; font-size:13.5px; line-height:1.45; color:#55544E; text-wrap:pretty">{{ it.desc }}</span>
+              </span>
+            </a>
+            </sc-for>
+          </div>
+          <a href="{{ g.overHref }}" onClick="{{ closeMenu }}" style="margin:8px 0 0; display:inline-flex; align-items:center; height:40px; padding:0 16px; border-radius:999px; border:1px solid rgba(20,20,18,0.13); background:#FFFFFF; font-size:14px; color:#1A1917; text-decoration:none">{{ g.overLabel }}</a>
+        </div>
+        </sc-if>
+      </div>
+      </sc-for>
+      <a href="Work.dc.html" onClick="{{ closeMenu }}" style="display:flex; align-items:center; min-height:60px; border-bottom:1px solid rgba(20,20,18,0.09); font-size:22px; letter-spacing:-0.026em; color:#1A1917; text-decoration:none">Work</a>
+      <a href="Playbooks.dc.html" onClick="{{ closeMenu }}" style="display:flex; align-items:center; min-height:60px; border-bottom:1px solid rgba(20,20,18,0.09); font-size:22px; letter-spacing:-0.026em; color:#1A1917; text-decoration:none">Playbooks</a>
+      <a href="Essays.dc.html" onClick="{{ closeMenu }}" style="display:flex; align-items:center; min-height:60px; border-bottom:1px solid rgba(20,20,18,0.09); font-size:22px; letter-spacing:-0.026em; color:#1A1917; text-decoration:none">Essays</a>
+      <a href="Contact.dc.html" onClick="{{ closeMenu }}" style="display:flex; align-items:center; min-height:60px; border-bottom:1px solid rgba(20,20,18,0.09); font-size:22px; letter-spacing:-0.026em; color:#1A1917; text-decoration:none">Contact</a>
+    </nav>
+    <div style="flex:none; display:grid; gap:12px; padding:14px 20px calc(16px + env(safe-area-inset-bottom)); border-top:1px solid rgba(20,20,18,0.09); background:#F6F5F2">
+      <a href="AI Engineering.dc.html#engagement" onClick="{{ closeMenu }}" style="display:flex; align-items:center; justify-content:center; height:50px; border-radius:8px; background:#1A1917; color:#FFFFFF; font-size:15px; font-weight:500; letter-spacing:-0.01em; text-decoration:none">Book a two-week audit</a>
+      <a href="mailto:hello@3264.ai" style="text-align:center; font-size:13.5px; color:#55544E; text-decoration:none">hello@3264.ai</a>
+    </div>
+  </div>
+  </sc-if>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 520 },
+  &quot;forceLayout&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;&quot;, &quot;desktop&quot;, &quot;compact&quot;], &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Layout&quot; },
+  &quot;forceOpen&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;&quot;, &quot;engineering&quot;, &quot;transformation&quot;, &quot;industries&quot;], &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Desktop&quot; },
+  &quot;hoverOpen&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Desktop&quot; },
+  &quot;forceMenu&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Compact&quot; },
+  &quot;forceGroup&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;&quot;, &quot;engineering&quot;, &quot;transformation&quot;, &quot;industries&quot;], &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Compact&quot; },
+  &quot;frameHeight&quot;: { &quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 0, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Compact&quot; }
+}">
+class Component extends DCLogic {
+  state = { open: undefined, w: null, menu: undefined, group: undefined };
+
+  // Compact (phone/tablet) menu content. Mirrors the desktop panels.
+  GROUPS = [
+    { key: "engineering", label: "AI Engineering", blurb: "Prototypes your team built, rebuilt to hold in production.", overHref: "AI Engineering.dc.html", overLabel: "AI Engineering overview →", items: [
+      ["Two-week audit", "We assess your systems and processes, then price the rebuild.", "AI Engineering.dc.html#audit"],
+      ["Rebuild", "The prototype rebuilt to production standard, with tests and evaluation suites.", "AI Engineering.dc.html#rebuild"],
+      ["Platform", "Runs in your cloud, under your access controls and audit trail.", "AI Engineering.dc.html#platform"],
+      ["Engagement", "Two ways in. Neither starts with a platform licence.", "AI Engineering.dc.html#engagement"]] },
+    { key: "transformation", label: "AI Transformation", blurb: "Move a cost line, not just a pilot.", overHref: "AI Transformation.dc.html", overLabel: "AI Transformation overview →", num: true, items: [
+      ["Discover", "Four weeks, fixed fee. Know what the process costs first.", "AI Transformation.dc.html#discover"],
+      ["Rewire", "Rebuild the process instead of bolting AI onto it.", "AI Transformation.dc.html#rewire"],
+      ["Run", "Agents run it. Your people hold the decisions.", "AI Transformation.dc.html#run"],
+      ["Optimise", "Every cycle should cost less than the last.", "AI Transformation.dc.html#optimise"],
+      ["Integration", "Runs on top of the systems you already have.", "AI Transformation.dc.html#integration"],
+      ["Control", "Every change evidenced for risk and audit.", "AI Transformation.dc.html#control"]] },
+    { key: "industries", label: "Industries", blurb: "Regulated finance, where every figure needs a source.", overHref: "3264 Home.dc.html#industries", overLabel: "All industries →", items: [
+      ["Private Credit", "Covenant monitoring, agent notices and loan operations.", "Private Credit.dc.html", "covenant-watch"],
+      ["Private Equity", "Capital calls, LP reporting and portfolio monitoring.", "Private Equity.dc.html", "capital-call-flow"],
+      ["Fund Management", "LP reporting cycles, distributions and side-letter obligations.", "Fund Management.dc.html", "side-letter-register"],
+      ["Asset Management", "Research synthesis, mandate compliance and client reporting.", "3264 Home.dc.html#industries", "mandate-guardrails"]] }
+  ];
+
+  menuOn() { return this.state.menu !== undefined ? this.state.menu : !!this.props.forceMenu; }
+  grp() { return this.state.group !== undefined ? this.state.group : (this.props.forceGroup || null); }
+  toggleMenu = () => this.setState({ menu: !this.menuOn() });
+  closeMenu = () => this.setState({ menu: false });
+  toggleGroup = (e) => { const g = e.currentTarget.getAttribute("data-g"); this.setState({ group: this.grp() === g ? null : g }); };
+  rootRef = React.createRef();
+
+  compactNow() { const f = this.props.forceLayout; if (f === "desktop") return false; if (f === "compact") return true; return this.state.w != null && this.state.w < 1024; }
+  cur() { return this.state.open !== undefined ? this.state.open : (this.props.forceOpen || null); }
+  set(m) { clearTimeout(this._t); this.setState({ open: m }); }
+  toggle = (e) => { const m = e.currentTarget.getAttribute("data-m"); this.set(this.cur() === m ? null : m); };
+  hover = (e) => { if (this.props.hoverOpen === false) return; const m = e.currentTarget.getAttribute("data-m"); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ open: m }), this.cur() ? 0 : 90); };
+  hoverOff = () => { if (this.props.hoverOpen === false) return; clearTimeout(this._t); this._t = setTimeout(() => this.setState({ open: null }), 120); };
+  leave = () => { if (this.props.hoverOpen === false) return; clearTimeout(this._t); this._t = setTimeout(() => this.setState({ open: null }), 180); };
+  stay = () => { if (this.cur()) clearTimeout(this._t); };
+  onKey = (e) => { if (e.key === "Escape" && this.menuOn()) { this.setState({ menu: false }); return; } if (e.key === "Escape" && this.cur()) { const m = this.cur(); this.set(null); const b = this.rootRef.current && this.rootRef.current.querySelector('[data-m="' + m + '"]'); if (b) b.focus(); } };
+
+  componentDidMount() {
+    this.onDoc = (e) => { const r = this.rootRef.current; if (r && this.cur() && !r.contains(e.target) && !this.compactNow()) this.set(null); };
+    document.addEventListener("mousedown", this.onDoc);
+    const r = this.rootRef.current;
+    const measure = () => { const el = this.rootRef.current; if (el) { const w = el.offsetWidth; if (w !== this.state.w) this.setState({ w }); } };
+    if (window.ResizeObserver && r) { this.ro = new ResizeObserver(measure); this.ro.observe(r); }
+    window.addEventListener("resize", measure); this.measure = measure; measure();
+  }
+  componentDidUpdate() {
+    // Lock page scroll behind the sheet on real pages (not in preview frames).
+    const lock = this.menuOn() && this.state.w != null && this.state.w < 1024 && !this.props.frameHeight;
+    if (lock !== this._locked) { this._locked = lock; document.documentElement.style.overflow = lock ? "hidden" : ""; }
+    if (this.state.w != null && this.state.w >= 1024 && this.state.menu) this.setState({ menu: false });
+  }
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.onDoc); window.removeEventListener("resize", this.measure); clearTimeout(this._t);
+    if (this.ro) this.ro.disconnect();
+    if (this._locked) document.documentElement.style.overflow = "";
+  }
+
+  renderVals() {
+    const o = this.cur();
+    const t = (m) => { const on = o === m; return { on, exp: String(on), fg: on ? "#1A1917" : "#55544E", rot: on ? "rotate(-135deg)" : "rotate(45deg)", mt: on ? "3px" : "-3px" }; };
+    const compact = this.compactNow(), m = compact && this.menuOn(), g = this.grp(), w = this.state.w || 0;
+    const groups = this.GROUPS.map((G) => ({
+      key: G.key, label: G.label, blurb: G.blurb, overHref: G.overHref, overLabel: G.overLabel,
+      on: g === G.key, exp: String(g === G.key), vRot: g === G.key ? "rotate(90deg)" : "rotate(0deg)",
+      items: G.items.map(([title, desc, href, img], i) => ({ title, desc, href, hasNum: !!G.num && i < 4, num: "0" + (i + 1), hasImg: !!img, img: img ? "url('assets/playbooks/" + img + ".png')" : "none" }))
+    }));
+    const fh = this.props.frameHeight;
+    return {
+      desk: !compact, compact, barCta: w >= 600, groups,
+      toggleMenu: this.toggleMenu, closeMenu: this.closeMenu, toggleGroup: this.toggleGroup,
+      menuExp: String(m), menuWord: m ? "Close" : "Menu",
+      mbBg: m ? "#1A1917" : "#FFFFFF", mbFg: m ? "#FFFFFF" : "#1A1917", mbBd: m ? "#1A1917" : "rgba(20,20,18,0.13)",
+      l1t: m ? "4.25px" : "1.5px", l2t: m ? "4.25px" : "7px", l1r: m ? "rotate(45deg)" : "rotate(0deg)", l2r: m ? "rotate(-45deg)" : "rotate(0deg)",
+      sheetHidden: String(!m), sheetH: fh ? (fh - 69) + "px" : "calc(100dvh - 69px)",
+      sOp: m ? "1" : "0", sTf: m ? "translateY(0)" : "translateY(-8px)", sVis: m ? "visible" : "hidden", sVisDelay: m ? "0s" : "260ms",
+      rootRef: this.rootRef, toggle: this.toggle, hover: this.hover, hoverOff: this.hoverOff, leave: this.leave, stay: this.stay, onKey: this.onKey,
+      eng: t("engineering"), tra: t("transformation"), ind: t("industries"),
+      panelHidden: String(!o), pOp: o ? "1" : "0", pTf: o ? "translateY(0)" : "translateY(-6px)", pVis: o ? "visible" : "hidden", pVisDelay: o ? "0s" : "220ms"
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -222,6 +222,20 @@
       "port": 4114
     },
     {
+      "name": "design reference: fund management",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4115",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_fund_management/reference"
+      ],
+      "port": 4115
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [

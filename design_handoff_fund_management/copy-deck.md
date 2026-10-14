@@ -1,0 +1,486 @@
+# Copy deck: Fund Management page
+
+Visible strings in page order, extracted from `reference/Fund Management.dc.html`.
+
+## Hero
+- Fund Management
+- Quarter-end, closed in days. / Every figure traced to source.
+- We rebuild the fund operations that run on spreadsheets and email, from NAV review and capital activity to LP reporting and side-letter obligations, onto one production platform in your environment. Every process has an owner, a measured baseline and an audit trail your administrator, auditor and LPs can follow.
+- Book an operations audit
+- See the first quarter-end
+
+## Premise
+- data-screen-label="Premise" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 01 / Premise
+- Every quarter-end is a project. / Very little of it is repeatable.
+- Fund finance teams close each quarter on spreadsheets, administrator files and inboxes. The work gets done, by the same few people, every quarter. What is missing is the engineering that turns it into a process: measured, owned and auditable.
+- What every fund team has
+- Quarter-end tracker — Fund III · Q3
+- Process
+- Team
+- Status
+- NAV pack tie-out
+- Workbook with 14 tabs, rebuilt each quarter
+- Fund finance
+- Manual
+- Capital call notices
+- Mail merge from a spreadsheet
+- Investor ops
+- Manual
+- LP quarterly letters
+- Drafted in Word, figures pasted in
+- IR
+- Manual
+- Side-letter MFN checks
+- A folder of PDFs and memory
+- Legal
+- No register
+- DDQ responses
+- Last year’s answers, edited
+- IR
+- Copy-paste
+- Administrator queries
+- 47 email threads this quarter
+- Fund finance
+- Overdue
+- 6 processes ·
+- 0 automated
+- · 0 measured
+- What the CFO sees
+- Close calendar — all vehicles · Q3
+- Quarter-end close by vehicle
+- As reported by fund finance
+- Vehicle
+- Days
+- Manual steps
+- Breaks open
+- Evidence
+- Fund III
+- 18
+- 64
+- 12
+- Email
+- Fund III Parallel
+- 16
+- 41
+- 7
+- Workbook
+- Fund II
+- 21
+- 58
+- 9
+- Email
+- Co-invest I
+- 14
+- 33
+- 4
+- None
+- Credit Opps II
+- 23
+- 47
+- 6
+- Workbook
+- Cayman Feeder
+- 19
+- 22
+- 3
+- None
+- All vehicles
+- 19 avg
+- 265
+- 41
+- —
+- Auditor’s management letter: “continued
+- reliance on manual reconciliations
+- .”
+- What did not change
+- Fund calendar — Fund III
+- Reporting year · Fund III
+- Q1 close
+- Apr
+- Q2 close
+- Jul
+- Q3 close
+- Oct
+- Annual audit
+- Feb
+- LP AGM
+- Mar
+- Auditor and LP requests · draft
+- Support for every figure in the capital account statements
+- Requested
+- Evidence of side-letter compliance, by investor
+- Requested
+- Controls over NAV review and sign-off
+- Requested
+- ILPA-format fee and expense reporting
+- Requested
+- Who reviewed each break, and when
+- Requested
+- 5 of 5 open · audit fieldwork starts in February
+
+## Operations audit
+- id="audit" data-screen-label="Operations audit" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 02 / Operations audit
+- In two weeks, we walk every fund operations process and rank where automation returns the most time and removes the most risk.
+- Build first
+- 0.4 FTE
+- 0.8 FTE
+- 1.2 FTE
+- Capacity released ↑
+- 2 wks
+- 4
+- 6
+- 8
+- 10 wks
+- Effort to ship →
+- Estimated FTE released per quarter
+- 0.1
+- 1.2
+- Shortlisted
+- Fund III · NAV review
+- Credit Opps II · side letters
+- Co-invest I · investor queries
+- Cayman Feeder · NAV review
+- Fund II · investor queries
+- First builds · fund operations
+- Day 10
+- 01
+- Fund III
+- NAV pack tie-out
+- 1.2 FTE
+- 6 wks
+- 02
+- Credit Opps II
+- Side-letter register
+- 0.8 FTE
+- 5 wks
+- 03
+- Co-invest I
+- Investor query drafting
+- 0.7 FTE
+- 4 wks
+- 04
+- Cayman Feeder
+- NAV tie-out, from build 01
+- 0.6 FTE
+- 3 wks
+- 05
+- Fund II
+- LP query drafting
+- 0.9 FTE
+- 8 wks
+- 4.2 FTE released across five builds
+- Build 04 reuses build 01
+- Days 1–6
+- Walk-throughs with fund finance, IR and the administrator
+- → process map
+- Days 7–9
+- Each process scored on hours, error risk, data readiness and control gaps
+- → scored matrix
+- Day 10
+- A ranked, costed plan for each vehicle and one for the platform
+- → first builds
+- Illustrative fund platform. Real audits score every process on hours, error risk, data readiness and control gaps, with the working attached.
+
+## CTA · operations audit
+- data-screen-label="CTA · operations audit" style="padding:56px 40px">
+- First step
+- Start with a two-week operations audit.
+- Book an audit
+- →
+- The process map is yours, whether we build or not
+
+## First quarter-end
+- id="plan" data-screen-label="First quarter-end" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 03 / First quarter-end
+- The first quarter-end, / as a build log.
+- One senior squad works alongside your fund finance team. Each process ships behind an evaluation suite and reports against a baseline your CFO signed before we started. By day 100 the platform runs in your own cloud and the next quarter-end closes on it.
+- Build log — Fund III · Q3 close
+- 0
+- 20
+- 40
+- 60
+- 80
+- 100
+- Audit
+- Days 0–14
+- Platform
+- Days 8–30
+- NAV pack tie-out
+- Days 14–42
+- Capital activity and notices
+- Days 36–64
+- LP quarterly reporting
+- Days 56–86
+- Evaluation and handover
+- Days 70–100
+- Day 0
+- Log
+- D03
+- Baseline signed by the CFO: 19 days to close, 4.6 FTE on tie-out
+- D14
+- Audit closed. Three processes, fortnightly releases
+- D30
+- Platform live in the manager’s own Azure tenant
+- D42
+- NAV tie-out live · 3,400 lines matched, 11 breaks explained
+- D64
+- Capital activity live · notices sent and wires matched same day
+- D86
+- LP reporting live · letters drafted with every figure sourced
+- D100
+- Evaluation suites handed over · close measured at 8 days
+- Days to close the quarter
+- 19 days
+- Against the baseline signed on day 3
+- Hours back / qtr
+- 0
+- Live
+- 0 of 3
+- Close checklist · Q3
+- NAV pack tie-out
+- Planned
+- Capital activity and notices
+- Planned
+- LP quarterly reporting
+- Planned
+- Every figure comes from the platform’s own logs, reconciled to the administrator each month.
+
+## Traceability
+- id="trace" data-screen-label="Traceability" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Traceability
+- Click any figure. / See where it came from.
+- Every number the platform produces carries its lineage: the source document, the ledger line it was matched to, the rule it was checked against and the person who signed it off. Your auditor and your LPs follow the same trail.
+- Capital account statement — Fund III · Q3 2026
+- Investor 0042
+- £ · 1 Jul – 30 Sep
+- Lineage
+- Traced · 4 of 4 checks
+- Same trail in the auditor’s view
+- Illustrative statement for one investor. Names, references and figures are examples.
+
+## Across vehicles
+- id="portfolio" data-screen-label="Across vehicles" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 04 / Across vehicles
+- Built once. Run across every vehicle. /
+- Each fund goes live faster than the last.
+- A process built for one fund goes into a shared library on the platform. The next vehicle installs it, maps it to its own administrator files and chart of accounts, and goes live in weeks.
+- Process library
+- 0 capabilities
+- NAV pack tie-out
+- from Fund III · v1.4
+- Time to live
+- 6 weeks → 1 week
+- 0
+- 2
+- 4
+- 6
+- 8 wks
+- Fund III
+- Buyout · built here
+- Fund III Parallel
+- Parallel vehicle · installed
+- Credit Opps II
+- Private credit · installed
+- Co-invest I
+- Co-investment · installed
+- Cayman Feeder
+- Feeder fund · installed
+- —
+- First build
+- —
+- −50%
+- —
+- −67%
+- —
+- −75%
+- —
+- −83%
+- NAV tie-out
+- Illustrative five-vehicle programme. Timings depend on each administrator’s files and formats.
+
+## Fund playbooks
+- id="playbooks" data-screen-label="Fund playbooks" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Playbooks
+- Four fund operations, / written up from delivery.
+- What we measure first, what we build and how each one is checked. Read them before the audit, or bring them to it.
+- All nine playbooks →
+- Playbook
+- NAV Pack Review
+- Administrator NAV packs tied out line by line to your books, with every break explained before the CFO signs.
+- Read the playbook →
+- Playbook
+- Capital Call Flow
+- Calls computed from the LPA and side letters, sent per investor, and matched to the wires that arrive.
+- Read the playbook →
+- Playbook
+- Investor Reporting
+- Letters, capital account statements and DDQ answers drafted from your books, with every figure traced to source before release.
+- Read the playbook →
+- Playbook
+- Side-Letter Register
+- Every promise in your LPAs and side letters, tracked to its clause, owner and proof of delivery.
+- Read the playbook →
+
+## Value
+- id="value" data-screen-label="Value" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 05 / Value
+- Margin you can bridge, / line by line.
+- Every process reports against a baseline your fund finance team signed before the build. The management report carries measured numbers, and the same evidence answers the auditor and the LP.
+- Management report — fund operations · Q3 update
+- Operating margin on management fees
+- % · axis starts at 12.0
+- 14.2% →
+- 14.2%
+- +0.0 pts
+- 16
+- 15
+- 14
+- 13
+- 12
+- 14.2%
+- +1.2 pts
+- +0.5 pts
+- +0.2 pts
+- +0.3 pts
+- 16.4%
+- Baseline margin
+- before the build
+- NAV pack tie-out
+- 4.6 → 1.2 FTE
+- Capital activity
+- notices same day
+- LP reporting
+- cycle 12 → 4 days
+- Investor queries
+- response 5 → 1 day
+- Operating margin
+- measured at month 6
+- +2.2 pts of margin on £48m of management fees
+- ≈
+- £0.0m
+- a year
+- Illustrative bridge for one manager. Each line is measured against a baseline signed before the build. Fee income is the manager’s own forecast.
+
+## Related work
+- id="work" data-screen-label="Related work" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Related work
+- Measured against the quarter / before we arrived.
+- Client names are withheld under mandate. Each engagement reports the baseline instrumented at the diagnostic and the figure at the third monthly review.
+- Fund Management · AI Engineering
+- NAV pack tie-out for a multi-strategy manager
+- The finance team ticked each administrator NAV pack against the books by hand. Packs are now tied out line by line, and only explained breaks reach the CFO.
+- NAV review
+- 6 days → 1 day
+- Lines tied out per pack
+- 3,400
+- Breaks unexplained at sign-off
+- None
+- Read the case study →
+- Fund Management · AI Transformation
+- An operating model for AI across fund operations
+- Operations had a long list of AI ideas and no way to rank them. We measured twelve processes, ranked them by cost and risk, and shipped the first build: a register of every side-letter obligation.
+- Obligations with a named owner
+- 40% → 100%
+- Processes measured
+- 12
+- Obligations without proof of delivery
+- None
+- Read the case study →
+- All work →
+
+## Engagement
+- id="engagement" data-screen-label="Engagement" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 06 / Engagement
+- Three ways in. / Each one earns the next.
+- Engagement 01
+- 2 weeks · fixed fee
+- The operations audit
+- We walk every fund operations process across up to six vehicles, read the administrator files and interview the team. You get a ranked, costed plan for each vehicle and one for the platform.
+- Covers
+- Up to six vehicles
+- Access
+- Read-only
+- Output
+- Ranked, costed plan
+- Book an audit
+- Engagement 02
+- 100 days · per process
+- The first build
+- A senior squad ships the top-ranked processes onto a production platform in your own cloud. Each one reports against a baseline your CFO signed.
+- Runs in
+- Your cloud
+- Releases
+- Fortnightly
+- Measured
+- Against baseline
+- Book a call
+- Engagement 03
+- Ongoing · per vehicle
+- The platform rollout
+- What worked for the first fund is installed for the next, mapped to its administrator and data, with an evaluation suite and a named owner for each. The evidence is ready when the auditor asks for it.
+- Reuses
+- Platform and library
+- Owner
+- Named per vehicle
+- At audit
+- Evidence on file
+- Book a call
+
+## Closing
+- data-screen-label="Closing" style="padding:0 40px 40px">
+- 3264
+- .ai
+- Close the quarter in days.
+- Book an operations audit
+- Fund operations rebuilt on one production platform, with every figure traced to source.
+- 32 → 64
+
+## Premise statements
+- Every fund team closes the quarter. Most of it lives in spreadsheets and inboxes.
+- Six vehicles, six close processes. Nobody can say what a quarter-end costs.
+- LPs still expect the letter on time, and the auditor still tests every number in it.
+
+## Traceability data (trData)
+
+**Opening capital account · £24,180,412**
+- Source: Q2 capital account statement, signed 14 Jul 2026 (Administrator file FIII-Q2-CAS.pdf · p. 3)
+- Matched to: Q2 closing balance in the capital roll-forward (Investor 0042 · row 42)
+- Check: Rolls forward from the prior quarter to the penny (Rule CA-01 · passed)
+- Reviewed: Fund accountant (6 Oct 2026 · 09:12)
+
+**Contributions · £1,250,000**
+- Source: Capital call notice FIII-CC-14, issued 2 Sep (Notice register · call 14)
+- Matched to: Wire received 9 Sep, ref NB-55102 (Bank statement · line 41)
+- Check: 2.5% of a £50m commitment, per LPA §4.2 (Rule CC-03 · passed)
+- Reviewed: Investor operations (6 Oct 2026 · 10:03)
+
+**Distributions · (£820,000)**
+- Source: Distribution notice FIII-D-07, issued 18 Aug (Notice register · distribution 7)
+- Matched to: Outgoing wire 22 Aug (Bank statement · line 17)
+- Check: Pro rata to commitments, withholding per side letter §3 (Rule DS-02 · passed)
+- Reviewed: Fund accountant (6 Oct 2026 · 10:41)
+
+**Management fee · (£218,750)**
+- Source: Administrator fee schedule, Q3 (FIII-fees.xlsx · Q3 tab · row 12)
+- Matched to: GL 6100 management fees, journal J-3381 (General ledger · Fund III)
+- Check: 1.75% a year on commitments, less the 10% side-letter discount (Rule MF-01 · passed)
+- Reviewed: CFO (7 Oct 2026 · 08:30)
+
+**Net investment gain · £1,612,904**
+- Source: Q3 valuation pack, 14 portfolio companies (Valuation committee pack · v3)
+- Matched to: Unrealised gain, GL 4200, allocated by commitment share (Allocation run A-0921)
+- Check: Ties to the NAV pack: 3,400 lines matched, 0 open breaks (Rule NV-04 · passed)
+- Reviewed: Valuation committee (8 Oct 2026)
+
+**Closing capital account · £26,004,566**
+- Source: Sum of the five lines above (Computed by the platform)
+- Matched to: Administrator closing balance for investor 0042 (Administrator file FIII-Q3-CAS.pdf · p. 3)
+- Check: Agrees to the administrator to the penny (Rule CA-02 · passed)
+- Reviewed: CFO sign-off (8 Oct 2026 · 17:05)
+
+## Intro overlay
+- audit the close · rank by hours and risk · ship the first process · carry it to the next vehicle
+- 5 vehicles live · day 100
+- Fund log · click to skip
