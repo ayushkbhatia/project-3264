@@ -1,0 +1,378 @@
+# Copy deck: Private Equity page
+
+Visible strings in page order, extracted from `reference/Private Equity.dc.html`. Diagram-internal labels are included under each section.
+
+## Hero
+- ref="{{ heroSec }}" id="top" data-screen-label="Hero" style="position:relative; padding:0 40px; overflow:hidden; height:clamp(560px, 44vw, calc(100vh - 68px)); border-bottom:1px solid var(--line2)">
+- Private Equity
+- The value creation plan, / in production by day 100.
+- We find the workflows in each portfolio company where AI moves EBITDA, ship them onto one production platform, and carry what works to the next company. Every capability has an owner, a measured baseline and the evidence a buyer will ask for at exit.
+- Book a portfolio audit
+- See the first 100 days
+
+## Premise
+- data-screen-label="Premise" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 01 / Premise
+- Every portfolio company is experimenting. / Very little of it reaches EBITDA.
+- Operating partners are asked for an AI plan at every board meeting. The pilots are real and the intent is right. What is missing is the engineering that takes a pilot into production, measures it, and carries it to the next company.
+- What every company has
+- AI initiatives — Helix Logistics
+- Initiative
+- Team
+- Status
+- Invoice matching bot
+- Python script on a finance laptop
+- Finance
+- Owner left
+- Copilot rollout
+- 240 seats · 11% weekly active
+- IT
+- Low use
+- Pricing model.xlsx
+- Refreshed by hand every month
+- Commercial
+- Spreadsheet
+- Customer email triage
+- Personal ChatGPT accounts
+- Service
+- Unapproved
+- Route planning pilot
+- Vendor trial ends 30 Nov
+- Operations
+- Trial
+- Board pack drafting
+- Raised at the Q2 board
+- CFO office
+- Idea
+- 6 initiatives ·
+- 0 in production
+- · 0 measured
+- What the fund sees
+- Value creation tracker — Fund III · Q3 board
+- AI initiatives by company
+- As reported by management teams
+- Company
+- Initiatives
+- In production
+- EBITDA impact
+- Evidence
+- Helix Logistics
+- 6
+- 0
+- —
+- None
+- Ardent Dental Group
+- 3
+- 1
+- TBC
+- Slide
+- Northfield Foods
+- 9
+- 0
+- —
+- None
+- Corvid Software
+- 4
+- 2
+- £0.4m est.
+- Email
+- Beacon Claims
+- 2
+- 0
+- —
+- None
+- Tallis Engineering
+- 5
+- 0
+- —
+- None
+- Portfolio
+- 29
+- 3
+- Not reported
+- —
+- LP update, Q3: “AI programme
+- progressing
+- across the portfolio.”
+- What did not change
+- Hold plan — Helix Logistics
+- Hold period · Fund III
+- Entry
+- 2024
+- 100-day plan
+- 2024
+- Value creation
+- 2025–27
+- Vendor diligence
+- 2028
+- Exit
+- 2029
+- Buyer’s request list · draft
+- Evidence behind the AI-driven margin in the model
+- Requested
+- Owner and run cost for every system in production
+- Requested
+- Model, data and access controls
+- Requested
+- Dependence on individuals and outside vendors
+- Requested
+- Baselines behind every value creation number
+- Requested
+- 5 of 5 open · diligence starts in 2028
+
+## Portfolio audit
+- id="audit" data-screen-label="Portfolio audit" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 02 / Portfolio audit
+- In two weeks, we walk the workflows in each portfolio company and rank where AI moves EBITDA.
+- Build first
+- £0.4m
+- £0.8m
+- £1.2m
+- EBITDA impact ↑
+- 2 wks
+- 4
+- 6
+- 8
+- 10 wks
+- Effort to ship →
+- Estimated run-rate EBITDA, £m
+- 0.1
+- 1.2
+- Shortlisted
+- Helix · invoice matching
+- Beacon · claims triage
+- Corvid · renewal signals
+- Tallis · invoice matching
+- Northfield · promotion pricing
+- First builds · Fund III
+- Day 10
+- 01
+- Helix Logistics
+- Freight invoice matching
+- £1.2m
+- 6 wks
+- 02
+- Beacon Claims
+- Claims triage
+- £0.8m
+- 5 wks
+- 03
+- Corvid Software
+- Renewal risk signals
+- £0.7m
+- 4 wks
+- 04
+- Tallis Engineering
+- Invoice matching, from build 01
+- £0.6m
+- 3 wks
+- 05
+- Northfield Foods
+- Promotion pricing
+- £0.9m
+- 8 wks
+- £4.2m run-rate EBITDA across five builds
+- Build 04 reuses build 01
+- Days 1–6
+- Interviews and system walk-throughs in every company
+- → workflow map
+- Days 7–9
+- Each workflow scored on impact, effort, data readiness and adoption risk
+- → scored matrix
+- Day 10
+- A ranked, costed plan for each company and one for the fund
+- → first builds
+- Illustrative portfolio. Real audits score every workflow on EBITDA impact, effort, data readiness and adoption risk, with the working attached.
+
+## First 100 days
+- id="plan" data-screen-label="First 100 days" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 03 / First 100 days
+- The first hundred days, / as a build log.
+- One senior squad works inside one portfolio company. Each capability ships behind an evaluation suite and reports against a baseline the company’s CFO signed before we started. By day 100 the platform runs in the company’s own cloud and the run-rate has been measured against that baseline.
+- Build log — Helix Logistics · Fund III
+- 0
+- 20
+- 40
+- 60
+- 80
+- 100
+- Audit
+- Days 0–14
+- Platform
+- Days 8–30
+- Freight invoice matching
+- Days 14–42
+- Carrier rate checks
+- Days 36–64
+- Month-end accruals
+- Days 56–86
+- Evaluation and handover
+- Days 70–100
+- Day 0
+- Log
+- D03
+- Baseline signed by the CFO: 11.4 FTE on invoice matching
+- D14
+- Audit closed. Three capabilities, fortnightly releases
+- D30
+- Platform live in Helix’s own Azure tenant
+- D42
+- Invoice matching live · 93% matched without a person in week one
+- D64
+- Rate checks live · £38k of carrier overcharges flagged in month one
+- D86
+- Accruals live · month-end close down from 9 days to 6
+- D100
+- Evaluation suites handed over · run-rate measured at £1.9m
+- Run-rate EBITDA impact
+- £0.00m
+- Against the baseline signed on day 3
+- Hours back / wk
+- 0
+- Live
+- 0 of 3
+- Board pack · Q3
+- Freight invoice matching
+- Planned
+- Carrier rate checks
+- Planned
+- Month-end accruals
+- Planned
+- Every figure comes from the platform’s own logs, reconciled to the ledger each month.
+
+## Portfolio
+- id="portfolio" data-screen-label="Portfolio" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 04 / Portfolio
+- Built once. Carried across the portfolio. /
+- Each company goes live faster than the last.
+- A capability built at one company goes into a shared library on the platform. The next company installs it, adapts it to its own systems and data, and goes live in weeks.
+- Capability library
+- 0 capabilities
+- Invoice matching
+- from Helix Logistics · v1.4
+- Time to live
+- 6 weeks → 1 week
+- 0
+- 2
+- 4
+- 6
+- 8 wks
+- Helix Logistics
+- Logistics · built here
+- Tallis Engineering
+- Industrial services · installed
+- Northfield Foods
+- Food distribution · installed
+- Beacon Claims
+- Insurance services · installed
+- Ardent Dental Group
+- Healthcare · installed
+- —
+- First build
+- —
+- −50%
+- —
+- −67%
+- —
+- −75%
+- —
+- −83%
+- Invoice matching
+- Illustrative five-company programme. Timings depend on each company’s systems and data.
+
+## Value
+- id="value" data-screen-label="Value" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 05 / Value
+- Value you can bridge, / line by line.
+- Every capability reports against a baseline the portfolio company signed before the build. The value creation plan carries measured numbers, and the same evidence goes into the data room at exit.
+- Board pack — Helix Logistics · Q3 value creation update
+- EBITDA bridge, run-rate
+- £m · axis starts at 12.0
+- £14.2m →
+- £14.2m
+- +0.0%
+- 16
+- 15
+- 14
+- 13
+- 12
+- £14.2m
+- +£1.2m
+- +£0.5m
+- +£0.2m
+- +£0.3m
+- £16.4m
+- Entry EBITDA
+- at acquisition
+- Invoice matching
+- 11.4 → 3.1 FTE
+- Carrier rate checks
+- £38k a month recovered
+- Month-end accruals
+- close 9 → 6 days
+- Service triage
+- response 14h → 2h
+- Run-rate EBITDA
+- measured at day 180
+- +£2.2m run-rate EBITDA × 9.0× exit multiple
+- ≈
+- £0.0m
+- of enterprise value
+- Illustrative bridge for one portfolio company. Each line is measured against a baseline signed before the build. The multiple is the fund’s own exit assumption.
+
+## Engagement
+- id="engagement" data-screen-label="Engagement" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 06 / Engagement
+- Three ways in. / Each one earns the next.
+- Engagement 01
+- 2 weeks · fixed fee
+- The portfolio audit
+- We walk the workflows in up to six portfolio companies, read the systems and interview the operators. You get a ranked, costed plan for each company and one for the fund.
+- Covers
+- Up to six companies
+- Access
+- Read-only
+- Output
+- Ranked, costed plan
+- Book an audit
+- Engagement 02
+- 100 days · per capability
+- The first build
+- A senior squad ships the top-ranked capabilities in one company onto a production platform in its own cloud. Each one reports against a baseline the CFO signed.
+- Runs in
+- The company’s cloud
+- Releases
+- Fortnightly
+- Measured
+- Against baseline
+- Book a call
+- Engagement 03
+- Ongoing · per company
+- The portfolio rollout
+- What worked at the first company is installed at the next, adapted to its systems, with an evaluation suite and a named owner at each. The evidence is ready when the buyer asks for it.
+- Reuses
+- Platform and library
+- Owner
+- Named per company
+- At exit
+- Evidence in the data room
+- Book a call
+
+## Closing
+- data-screen-label="Closing" style="padding:0 40px 40px">
+- 3264
+- .ai
+- Bring the evidence to exit.
+- Book a portfolio audit
+- AI value creation for private equity portfolios, measured from the baseline to exit.
+- 32 → 64
+
+## Premise statements (word-highlight)
+- Every portfolio company has AI pilots. Most of them live on one person’s laptop.
+- Six companies, six approaches. None of it rolls up into the board pack.
+- The hold is still five years, and every number in the plan gets diligenced at exit.
+
+## Intro overlay
+- audit the portfolio · rank by EBITDA impact · ship the first build · carry it to the next company
+- 5 companies live · day 100
+- Portfolio log · click to skip

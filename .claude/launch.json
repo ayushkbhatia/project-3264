@@ -208,6 +208,20 @@
       "port": 4113
     },
     {
+      "name": "design reference: private equity",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4114",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_private_equity/reference"
+      ],
+      "port": 4114
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [

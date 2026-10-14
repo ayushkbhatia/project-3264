@@ -38,6 +38,7 @@ export const footerColumns: FooterColumn[] = [
     head: "Industries",
     links: [
       { label: "Private Credit", href: routes.privateCredit },
+      { label: "Private Equity", href: routes.privateEquity },
       { label: "Financial Services", href: "/#industries" },
       { label: "Fund Management", href: "/#industries" },
       { label: "Asset Management", href: "/#industries" },
