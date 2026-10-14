@@ -236,6 +236,20 @@
       "port": 4115
     },
     {
+      "name": "design reference: financial services",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4116",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "design_handoff_financial_services/reference"
+      ],
+      "port": 4116
+    },
+    {
       "name": "project-3264 prod",
       "runtimeExecutable": "npx",
       "runtimeArgs": [
