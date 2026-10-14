@@ -21,8 +21,8 @@ export const meta = {
 // footer CTAs go to #engagement, where those two cards are.
 export const booking = { href: "mailto:hello@3264.ai" } as const;
 
-// "Deployment & Run" and "Evaluation suites" point at the home page's capabilities, and
-// LinkedIn at #engagement, in the prototype: placeholders to confirm before launch.
+// "Evaluation suites" points at the home page's capabilities, and LinkedIn at #engagement, in the
+// prototype: placeholders to confirm before launch.
 export const footerColumns: FooterColumn[] = [
   {
     head: "Services",
@@ -30,7 +30,7 @@ export const footerColumns: FooterColumn[] = [
       // not marked current: the reference sets it in the ordinary link colour
       { label: "AI Engineering", href: "#top" },
       { label: "AI Transformation", href: routes.aiTransformation },
-      { label: "Deployment & Run", href: "/#capabilities" },
+      { label: "Production Assurance", href: routes.productionAssurance },
       { label: "Evaluation suites", href: "/#capabilities" },
     ],
   },

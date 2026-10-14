@@ -13,6 +13,7 @@ export type Link = { label: string; href: string };
 export const routes = {
   aiEngineering: "/ai-engineering",
   aiTransformation: "/ai-transformation",
+  productionAssurance: "/production-assurance",
   privateCredit: "/industries/private-credit",
   privateEquity: "/industries/private-equity",
   financialServices: "/industries/financial-services",
@@ -260,7 +261,7 @@ export const footer = {
       links: [
         { label: "AI Engineering", href: routes.aiEngineering },
         { label: "AI Transformation", href: routes.aiTransformation },
-        { label: "Deployment & Run", href: "#capabilities" },
+        { label: "Production Assurance", href: routes.productionAssurance },
         { label: "Evaluation suites", href: "#capabilities" },
       ],
     },

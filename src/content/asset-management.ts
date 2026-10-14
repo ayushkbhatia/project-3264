@@ -42,7 +42,7 @@ export const footerColumns: FooterColumn[] = [
     links: [
       { label: "AI Engineering", href: routes.aiEngineering },
       { label: "AI Transformation", href: routes.aiTransformation },
-      { label: "Deployment & Run", href: "/#capabilities" },
+      { label: "Production Assurance", href: routes.productionAssurance },
       { label: "Evaluation suites", href: "/#capabilities" },
     ],
   },
@@ -408,7 +408,7 @@ export const page: IndustryPageData = {
         {
           href: routes.caseStudies,
           image: "/img/playbooks/client-reporting-flow.webp",
-          eyebrow: "Asset Management · Deployment & Run",
+          eyebrow: "Asset Management · Production Assurance",
           title: "Client reporting across an institutional book",
           summary: "Quarterly client reports took six people most of a month. Reports are now built from reconciled books, and each commentary claim is checked against attribution before release.",
           metrics: [
