@@ -87,7 +87,7 @@ export function Trace({ v, c }: { v: IndustryVals; c: NonNullable<IndustryCopy["
               </div>
             </div>
             <div aria-live="polite" style={css("min-width:0; border-radius:11px; background:rgba(252,251,249,0.94); border:1px solid rgba(255,255,255,0.9); box-shadow:0 24px 60px -18px rgba(20,20,18,0.28); padding:22px 24px 20px; display:flex; flex-direction:column")}>
-              <div style={css(`${MONO}; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67`)}>Lineage</div>
+              <div style={css(`${MONO}; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67`)}>{c.panel ?? "Lineage"}</div>
               <div style={css("display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; margin:10px 0 0")}>
                 <span style={css("font-size:18px; letter-spacing:-0.02em")}>{v.trSel.label}</span>
                 <span style={css("font-size:clamp(24px,2.4vw,32px); letter-spacing:-0.03em; font-variant-numeric:tabular-nums")}>{v.trSel.amt}</span>

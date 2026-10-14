@@ -12,7 +12,7 @@ const MONO = "font-family:'IBM Plex Mono', ui-monospace, monospace";
 
 export function Playbooks({ c }: { c: NonNullable<IndustryCopy["playbooks"]> }) {
   return (
-    <section id="playbooks" data-screen-label="Fund playbooks" style={css("padding:118px 40px; border-bottom:1px solid var(--line2)")}>
+    <section id="playbooks" data-screen-label={c.label ?? "Fund playbooks"} style={css("padding:118px 40px; border-bottom:1px solid var(--line2)")}>
       <div style={css("max-width:1280px; margin:0 auto")}>
         <div style={css("display:flex; gap:28px 72px; flex-wrap:wrap; align-items:flex-end; justify-content:space-between")}>
           <div style={css("flex:3 1 480px; min-width:0")}>

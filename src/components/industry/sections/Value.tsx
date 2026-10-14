@@ -10,6 +10,7 @@ import type { IndustryCopy } from "../types";
 // value line counts up.
 
 export function Value({ v, c }: { v: IndustryVals; c: IndustryCopy["value"] }) {
+  const ticks = c.ticks ?? ["16", "15", "14", "13", "12"];
   return (
     <section id="value" data-screen-label="Value" style={css("padding:118px 40px; border-bottom:1px solid var(--line2)")}>
       <div style={css("max-width:1280px; margin:0 auto")}>
@@ -35,11 +36,11 @@ export function Value({ v, c }: { v: IndustryVals; c: IndustryCopy["value"] }) {
                   <div style={css("position:absolute; left:80px; top:290px; width:1000px; border-top:1px dashed rgba(20,20,18,0.12)")} />
                   <div style={css("position:absolute; left:80px; top:360px; width:1000px; border-top:1px dashed rgba(20,20,18,0.12)")} />
                   <div style={css("position:absolute; left:80px; top:430px; width:1000px; height:1px; background:rgba(20,20,18,0.45)")} />
-                  <div style={css("position:absolute; left:36px; top:143px; width:34px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#6E6D67")}>16</div>
-                  <div style={css("position:absolute; left:36px; top:213px; width:34px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#6E6D67")}>15</div>
-                  <div style={css("position:absolute; left:36px; top:283px; width:34px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#6E6D67")}>14</div>
-                  <div style={css("position:absolute; left:36px; top:353px; width:34px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#6E6D67")}>13</div>
-                  <div style={css("position:absolute; left:36px; top:423px; width:34px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#6E6D67")}>12</div>
+                  <div style={css("position:absolute; left:36px; top:143px; width:34px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#6E6D67")}>{ticks[0]}</div>
+                  <div style={css("position:absolute; left:36px; top:213px; width:34px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#6E6D67")}>{ticks[1]}</div>
+                  <div style={css("position:absolute; left:36px; top:283px; width:34px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#6E6D67")}>{ticks[2]}</div>
+                  <div style={css("position:absolute; left:36px; top:353px; width:34px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#6E6D67")}>{ticks[3]}</div>
+                  <div style={css("position:absolute; left:36px; top:423px; width:34px; text-align:right; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:10px; color:#6E6D67")}>{ticks[4]}</div>
                 </div>
                 <div data-vl-con="" style={css("position:absolute; left:214px; top:276px; width:54px; border-top:1px dashed rgba(20,20,18,0.4); transform-origin:left center; transform:scaleX(0)")} />
                 <div data-vl-con="" style={css("position:absolute; left:372px; top:192px; width:54px; border-top:1px dashed rgba(20,20,18,0.4); transform-origin:left center; transform:scaleX(0)")} />

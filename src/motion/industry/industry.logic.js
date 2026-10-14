@@ -1,5 +1,6 @@
 /*
- * The industry pages (Private Equity, Fund Management): intro, hero veil, 01 Premise stack, 02 Audit loop,
+ * The industry pages (Private Equity, Fund Management, Financial Services, Asset Management) and Production
+ * Assurance, the service page built on the same framework: intro, hero veil, 01 Premise stack, 02 Audit loop,
  * 03 build-log scrub, Traceability, 04 rollout loop, 05 value bridge, 06 Engagement entry. One class for both pages,
  * as both handoffs ask ("build both from one shared set of components with page-specific content passed in as data").
  *
@@ -10,8 +11,10 @@
  *   * `extends DCLogic` -> `extends React.Component`, exported.
  *   * Each line the two prototypes wrote with their own data reads it from `this.props.data` (IndustryLogicData in
  *     industry.logic.d.ts) instead: the audit matrix (dgData), the plan's KPI steps and how its headline reads, the
- *     bridge's three running figures, the intro's steps and "live" line, the three premise statements and the trace
- *     rows. With Private Equity's data each of those lines is the Private Equity prototype's line.
+ *     bridge's three running figures, the intro's steps and "live" line, the three premise statements, the trace
+ *     rows, and two strings Production Assurance words for itself: the rollout's library counter ("1 capability"
+ *     there "1 run pack") and the noun in Traceability's hint ("figure", there "incident"). With Private Equity's
+ *     data each of those lines is the Private Equity prototype's line.
  *   * renderVals tolerates a page without trace rows (Private Equity): the selection falls back to an empty row.
  *   * maybeIntro also skips on ?intro=off (the QA flag the other ported pages carry).
  *   * initVeil reads the hero painting from public/ (HERO_SRC, components/industry/media.ts, the same file as the
@@ -200,7 +203,8 @@ export class IndustryLogic extends React.Component {
       this.css(dls[k], "opacity", live.toFixed(3));
     });
     this.css(this.q(stg, "[data-pf-slot]")[0], "opacity", this.sm(5.2, 5.5, t).toFixed(3));
-    this.txt(this.q(stg, "[data-pf-count]")[0], t >= 5.3 ? "1 capability" : "0 capabilities");
+    const pfCount = this.props.data.pfCount || ["0 capabilities", "1 capability"]; // PORT SHIM: the page's words
+    this.txt(this.q(stg, "[data-pf-count]")[0], t >= 5.3 ? pfCount[1] : pfCount[0]);
     this.css(this.q(stg, "[data-pf-sum]")[0], "opacity", this.sm(12.0, 12.6, t).toFixed(3));
     const chip = this.pfChip.current;
     if (!chip) return;
@@ -493,7 +497,7 @@ export class IndustryLogic extends React.Component {
           trRows: T.map((x, i) => ({ i: String(i), label: x[0], amt: x[1], on: String(i === cur), bg: i === cur ? "rgba(21,127,82,0.07)" : "transparent", barOp: i === cur ? "1" : "0", fw: i === cur || i === 5 ? "500" : "400", rule: i === 5 ? "#1A1917" : "rgba(20,20,18,0.07)" })),
           trSel: { label: sel[0], amt: sel[1] },
           trSteps: sel[2].map(([k, v, m]) => ({ k, v, m })),
-          trHint: this._trHold ? "Paused · click any figure" : "Auto-playing · click any figure"
+          trHint: (this._trHold ? "Paused · click any " : "Auto-playing · click any ") + (this.props.data.trNoun || "figure") // PORT SHIM: the page's noun
         };
       })(),
       w1: this.props.data.statements[0].split(" "),
