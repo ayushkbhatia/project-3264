@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas" />
+<title>Header menus — 3264.ai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+html, body { margin:0; padding:0; }
+body { background:#E9E7E2; color:#1A1917; font-family:"Instrument Sans","Helvetica Neue",Helvetica,sans-serif; -webkit-font-smoothing:antialiased; }
+a { color:inherit; text-decoration:none; }
+a:hover { color:#157F52; }
+</style>
+</helmet>
+
+<section data-screen-label="Mobile menu" style="padding:64px 64px 24px">
+  <div style="max-width:880px">
+    <div style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67">Site header · Phone and tablet</div>
+    <h1 style="margin:14px 0 0; font-size:40px; font-weight:400; letter-spacing:-0.035em; line-height:1.05">One Menu button, one sheet, three accordions</h1>
+    <p style="margin:14px 0 0; max-width:700px; font-size:16px; line-height:1.6; color:#55544E; text-wrap:pretty">Below 1024px the nav collapses into a Menu button. The sheet fills the screen under the header: the three menus open as accordions, one at a time, the other four pages sit beneath as plain links, and the audit button stays pinned at the bottom within thumb reach. <a href="#2a" style="border-bottom:1px solid rgba(20,20,18,0.25)">2a</a> is live.</p>
+  </div>
+  <div style="display:flex; flex-wrap:wrap; gap:48px; margin:48px 0 0; align-items:flex-start">
+
+    <div id="2a" style="flex:none; width:390px">
+      <div style="display:flex; align-items:center; gap:12px; margin:0 0 14px"><span style="display:inline-flex; align-items:center; height:24px; padding:0 9px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">2a</span><span style="font-size:15px">Live · phone</span></div>
+      <div style="position:relative; width:390px; height:844px; border-radius:36px; overflow:hidden; background:#F6F5F2; box-shadow:0 0 0 8px #1A1917, 0 40px 90px -40px rgba(20,20,18,0.5)">
+        <div aria-hidden="true" style="position:absolute; left:20px; right:20px; top:150px; font-size:42px; letter-spacing:-0.038em; line-height:1.02">Deployment is the deliverable.</div>
+        <div aria-hidden="true" style="position:absolute; left:20px; right:20px; top:270px; font-size:16px; line-height:1.55; color:#55544E">3264 builds and runs AI systems inside banking, fund management and asset management.</div>
+        <dc-import name="Site Header" force-layout="compact" frame-height="{{ 844 }}" hint-size="100%,69px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2b" style="flex:none; width:390px">
+      <div style="display:flex; align-items:center; gap:12px; margin:0 0 14px"><span style="display:inline-flex; align-items:center; height:24px; padding:0 9px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">2b</span><span style="font-size:15px">Menu open</span></div>
+      <div style="position:relative; width:390px; height:844px; border-radius:36px; overflow:hidden; background:#F6F5F2; box-shadow:0 0 0 8px #1A1917, 0 40px 90px -40px rgba(20,20,18,0.5)">
+        <dc-import name="Site Header" force-layout="compact" force-menu="{{ true }}" frame-height="{{ 844 }}" hint-size="100%,69px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2c" style="flex:none; width:390px">
+      <div style="display:flex; align-items:center; gap:12px; margin:0 0 14px"><span style="display:inline-flex; align-items:center; height:24px; padding:0 9px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">2c</span><span style="font-size:15px">AI Engineering expanded</span></div>
+      <div style="position:relative; width:390px; height:844px; border-radius:36px; overflow:hidden; background:#F6F5F2; box-shadow:0 0 0 8px #1A1917, 0 40px 90px -40px rgba(20,20,18,0.5)">
+        <dc-import name="Site Header" force-layout="compact" force-menu="{{ true }}" force-group="engineering" frame-height="{{ 844 }}" hint-size="100%,69px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2d" style="flex:none; width:390px">
+      <div style="display:flex; align-items:center; gap:12px; margin:0 0 14px"><span style="display:inline-flex; align-items:center; height:24px; padding:0 9px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">2d</span><span style="font-size:15px">Industries expanded</span></div>
+      <div style="position:relative; width:390px; height:844px; border-radius:36px; overflow:hidden; background:#F6F5F2; box-shadow:0 0 0 8px #1A1917, 0 40px 90px -40px rgba(20,20,18,0.5)">
+        <dc-import name="Site Header" force-layout="compact" force-menu="{{ true }}" force-group="industries" frame-height="{{ 844 }}" hint-size="100%,69px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2e" style="flex:none; width:834px">
+      <div style="display:flex; align-items:center; gap:12px; margin:0 0 14px"><span style="display:inline-flex; align-items:center; height:24px; padding:0 9px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">2e</span><span style="font-size:15px">Tablet · AI Transformation expanded</span><span style="font-size:13.5px; color:#6E6D67">"Book an audit" stays in the bar from 600px</span></div>
+      <div style="position:relative; width:834px; height:844px; border-radius:28px; overflow:hidden; background:#F6F5F2; box-shadow:0 0 0 8px #1A1917, 0 40px 90px -40px rgba(20,20,18,0.5)">
+        <dc-import name="Site Header" force-layout="compact" force-menu="{{ true }}" force-group="transformation" frame-height="{{ 844 }}" hint-size="100%,69px"></dc-import>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section data-screen-label="Header menus" style="padding:64px">
+  <div style="max-width:880px">
+    <div style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E6D67">Site header · Menus</div>
+    <h1 style="margin:14px 0 0; font-size:40px; font-weight:400; letter-spacing:-0.035em; line-height:1.05">Dropdowns for AI Engineering, AI Transformation and Industries</h1>
+    <p style="margin:14px 0 0; max-width:680px; font-size:16px; line-height:1.6; color:#55544E; text-wrap:pretty"><a href="#1a" style="border-bottom:1px solid rgba(20,20,18,0.25)">1a</a> is live: hover or click a menu, press Escape or click outside to close. <a href="#1b" style="border-bottom:1px solid rgba(20,20,18,0.25)">1b</a>–<a href="#1d" style="border-bottom:1px solid rgba(20,20,18,0.25)">1d</a> show each panel open.</p>
+  </div>
+
+  <div style="display:flex; flex-wrap:wrap; gap:56px; margin:48px 0 0; align-items:flex-start">
+
+    <div id="1a" style="flex:none; width:1280px">
+      <div style="display:flex; align-items:center; gap:12px; margin:0 0 14px"><span style="display:inline-flex; align-items:center; height:24px; padding:0 9px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">1a</span><span style="font-size:15px">Live header</span></div>
+      <div style="position:relative; height:560px; border-radius:12px; overflow:hidden; background:#F6F5F2; box-shadow:0 30px 80px -40px rgba(20,20,18,0.35)">
+        <div aria-hidden="true" style="position:absolute; inset:0; opacity:0.34; background-image:linear-gradient(to right, rgba(20,20,18,0.07) 1px, transparent 1px), linear-gradient(to bottom, rgba(20,20,18,0.05) 1px, transparent 1px); background-size:calc(100% / 16) 68px; mask-image:linear-gradient(to bottom, #000 0%, transparent 90%); -webkit-mask-image:linear-gradient(to bottom, #000 0%, transparent 90%)"></div>
+        <div aria-hidden="true" style="position:absolute; left:0; right:0; top:200px; text-align:center; font-size:72px; letter-spacing:-0.038em; line-height:1.0">Deployment is<br />the deliverable.</div>
+        <dc-import name="Site Header" force-layout="desktop" frame-height="{{ 560 }}" hint-size="100%,69px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1b" style="flex:none; width:1280px">
+      <div style="display:flex; align-items:center; gap:12px; margin:0 0 14px"><span style="display:inline-flex; align-items:center; height:24px; padding:0 9px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">1b</span><span style="font-size:15px">AI Engineering open</span><span style="font-size:13.5px; color:#6E6D67">How it works · Playbooks · Audit</span></div>
+      <div style="position:relative; height:500px; border-radius:12px; overflow:hidden; background:#F6F5F2; box-shadow:0 30px 80px -40px rgba(20,20,18,0.35)">
+        <div aria-hidden="true" style="position:absolute; left:0; right:0; top:360px; text-align:center; font-size:72px; letter-spacing:-0.038em; line-height:1.0; color:#C9C6BE">The prototype works.</div>
+        <dc-import name="Site Header" force-layout="desktop" force-open="engineering" hover-open="{{ false }}" hint-size="100%,69px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1c" style="flex:none; width:1280px">
+      <div style="display:flex; align-items:center; gap:12px; margin:0 0 14px"><span style="display:inline-flex; align-items:center; height:24px; padding:0 9px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">1c</span><span style="font-size:15px">AI Transformation open</span><span style="font-size:13.5px; color:#6E6D67">Programme · Foundations · Work</span></div>
+      <div style="position:relative; height:500px; border-radius:12px; overflow:hidden; background:#F6F5F2; box-shadow:0 30px 80px -40px rgba(20,20,18,0.35)">
+        <div aria-hidden="true" style="position:absolute; left:0; right:0; top:360px; text-align:center; font-size:72px; letter-spacing:-0.038em; line-height:1.0; color:#C9C6BE">AI is already in your firm.</div>
+        <dc-import name="Site Header" force-layout="desktop" force-open="transformation" hover-open="{{ false }}" hint-size="100%,69px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1d" style="flex:none; width:1280px">
+      <div style="display:flex; align-items:center; gap:12px; margin:0 0 14px"><span style="display:inline-flex; align-items:center; height:24px; padding:0 9px; border-radius:6px; background:#1A1917; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">1d</span><span style="font-size:15px">Industries open</span><span style="font-size:13.5px; color:#6E6D67">Four industries · Playbooks</span></div>
+      <div style="position:relative; height:440px; border-radius:12px; overflow:hidden; background:#F6F5F2; box-shadow:0 30px 80px -40px rgba(20,20,18,0.35)">
+        <div aria-hidden="true" style="position:absolute; left:0; right:0; top:330px; text-align:center; font-size:72px; letter-spacing:-0.038em; line-height:1.0; color:#C9C6BE">Deployment is the deliverable.</div>
+        <dc-import name="Site Header" force-layout="desktop" force-open="industries" hover-open="{{ false }}" hint-size="100%,69px"></dc-import>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+</body>
+</html>

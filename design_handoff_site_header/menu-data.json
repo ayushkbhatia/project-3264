@@ -1,0 +1,72 @@
+{
+  "breakpoints": { "desktop": 1024, "barCta": 600 },
+  "primary": [
+    { "type": "menu", "key": "engineering", "label": "AI Engineering" },
+    { "type": "menu", "key": "transformation", "label": "AI Transformation" },
+    { "type": "menu", "key": "industries", "label": "Industries" },
+    { "type": "link", "label": "Work", "href": "/work" },
+    { "type": "link", "label": "Playbooks", "href": "/playbooks" },
+    { "type": "link", "label": "Essays", "href": "/essays" },
+    { "type": "link", "label": "Contact", "href": "/contact" }
+  ],
+  "cta": {
+    "bar": { "label": "Book an audit", "href": "/ai-engineering#engagement" },
+    "sheet": { "label": "Book a two-week audit", "href": "/ai-engineering#engagement" },
+    "email": "hello@3264.ai"
+  },
+  "menus": {
+    "engineering": {
+      "title": "AI Engineering",
+      "tagline": "Prototypes your team built, rebuilt to hold in production.",
+      "overview": { "desktopLabel": "Overview →", "mobileLabel": "AI Engineering overview →", "href": "/ai-engineering" },
+      "columns": [
+        { "label": "How it works", "layout": "grid-2", "items": [
+          { "title": "Two-week audit", "desc": "We assess your systems and processes, then price the rebuild.", "href": "/ai-engineering#audit" },
+          { "title": "Rebuild", "desc": "The prototype rebuilt to production standard, with tests and evaluation suites.", "href": "/ai-engineering#rebuild" },
+          { "title": "Platform", "desc": "Runs in your cloud, under your access controls and audit trail.", "href": "/ai-engineering#platform" },
+          { "title": "Engagement", "desc": "Two ways in. Neither starts with a platform licence.", "href": "/ai-engineering#engagement" }
+        ]},
+        { "label": "Built from playbooks", "layout": "thumb-list", "desktopOnly": true, "items": [
+          { "title": "Loan Ops Ledger", "href": "/playbooks/loan-ops-ledger", "thumb": "assets/playbooks/loan-ops-ledger.png" },
+          { "title": "Covenant Watch", "href": "/playbooks/covenant-watch", "thumb": "assets/playbooks/covenant-watch.png" },
+          { "title": "NAV Pack Review", "href": "/playbooks/nav-pack-review", "thumb": "assets/playbooks/nav-pack-review.png" },
+          { "title": "Mandate Guardrails", "href": "/playbooks/mandate-guardrails", "thumb": "assets/playbooks/mandate-guardrails.png" }
+        ], "more": { "label": "All nine playbooks →", "href": "/playbooks" } }
+      ],
+      "feature": { "eyebrow": "Start here", "title": "Measure one workflow before anything is built.", "cta": "Book a two-week audit", "ctaStyle": "button", "href": "/ai-engineering#audit", "image": "assets/valley-pastel.png", "imagePosition": "center 60%" }
+    },
+    "transformation": {
+      "title": "AI Transformation",
+      "tagline": "Move a cost line, not just a pilot.",
+      "overview": { "desktopLabel": "Overview →", "mobileLabel": "AI Transformation overview →", "href": "/ai-transformation" },
+      "columns": [
+        { "label": "The programme", "layout": "grid-2-numbered", "items": [
+          { "num": "01", "title": "Discover", "desc": "Four weeks, fixed fee. Know what the process costs first.", "href": "/ai-transformation#discover" },
+          { "num": "02", "title": "Rewire", "desc": "Rebuild the process instead of bolting AI onto it.", "href": "/ai-transformation#rewire" },
+          { "num": "03", "title": "Run", "desc": "Agents run it. Your people hold the decisions.", "href": "/ai-transformation#run" },
+          { "num": "04", "title": "Optimise", "desc": "Every cycle should cost less than the last.", "href": "/ai-transformation#optimise" }
+        ]},
+        { "label": "Foundations", "layout": "compact-list", "items": [
+          { "title": "Integration", "desc": "Runs on top of the systems you already have.", "href": "/ai-transformation#integration" },
+          { "title": "Control", "desc": "Every change evidenced for risk and audit.", "href": "/ai-transformation#control" },
+          { "title": "Engagement", "desc": "Three ways in, each ending with something you keep.", "href": "/ai-transformation#engagement", "desktopOnly": true }
+        ]}
+      ],
+      "feature": { "eyebrow": "Work", "title": "Engagements measured against the week before we arrived.", "cta": "See the work →", "ctaStyle": "text", "href": "/work", "image": "assets/playbooks/feat-nav-pack-review.png" }
+    },
+    "industries": {
+      "title": "Industries",
+      "tagline": "Regulated finance, where every figure needs a source.",
+      "overview": { "desktopLabel": "All industries →", "mobileLabel": "All industries →", "href": "/#industries" },
+      "columns": [
+        { "label": null, "layout": "grid-2-thumb", "items": [
+          { "title": "Private Credit", "desc": "Covenant monitoring, agent notices and loan operations.", "href": "/private-credit", "thumb": "assets/playbooks/covenant-watch.png" },
+          { "title": "Private Equity", "desc": "Capital calls, LP reporting and portfolio monitoring.", "href": "/private-equity", "thumb": "assets/playbooks/capital-call-flow.png" },
+          { "title": "Fund Management", "desc": "LP reporting cycles, distributions and side-letter obligations.", "href": "/#industries", "thumb": "assets/playbooks/side-letter-register.png", "note": "No page yet" },
+          { "title": "Asset Management", "desc": "Research synthesis, mandate compliance and client reporting.", "href": "/#industries", "thumb": "assets/playbooks/mandate-guardrails.png", "note": "No page yet" }
+        ]}
+      ],
+      "feature": { "eyebrow": "Playbooks", "title": "Nine workflows, filed by industry.", "cta": "Browse playbooks →", "ctaStyle": "text", "href": "/playbooks", "image": "assets/playbooks/feat-covenant-watch.png" }
+    }
+  }
+}
