@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: new URL("/industries/private-equity", origin).href, changeFrequency: "monthly", priority: 0.8 },
     { url: new URL("/industries/financial-services", origin).href, changeFrequency: "monthly", priority: 0.8 },
     { url: new URL("/industries/fund-management", origin).href, changeFrequency: "monthly", priority: 0.8 },
+    { url: new URL("/industries/asset-management", origin).href, changeFrequency: "monthly", priority: 0.8 },
     { url: new URL("/playbooks", origin).href, changeFrequency: "weekly", priority: 0.8 },
     { url: new URL("/playbooks/covenant-watch", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },
     { url: new URL("/playbooks/loan-ops-ledger", origin).href, lastModified: "2026-09-28", changeFrequency: "monthly", priority: 0.7 },

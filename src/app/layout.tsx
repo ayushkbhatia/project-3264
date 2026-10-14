@@ -2,7 +2,12 @@ import type { Metadata, Viewport } from "next";
 import { INTRO_GATE_SCRIPT, INTRO_GATE_STYLE } from "@/components/home/IntroGate";
 import { AI_INTRO_GATE_SCRIPT } from "@/components/ai-engineering/IntroGate";
 import { PC_INTRO_GATE_SCRIPT } from "@/components/private-credit/IntroGate";
-import { FM_INTRO_GATE_SCRIPT, FS_INTRO_GATE_SCRIPT, PE_INTRO_GATE_SCRIPT } from "@/components/industry/IntroGate";
+import {
+  AM_INTRO_GATE_SCRIPT,
+  FM_INTRO_GATE_SCRIPT,
+  FS_INTRO_GATE_SCRIPT,
+  PE_INTRO_GATE_SCRIPT,
+} from "@/components/industry/IntroGate";
 import { PB_REVEAL_GATE_SCRIPT, PB_REVEAL_GATE_STYLE } from "@/components/playbooks/article/reveal";
 import "./globals.css";
 
@@ -62,6 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: PE_INTRO_GATE_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: FS_INTRO_GATE_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: FM_INTRO_GATE_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: AM_INTRO_GATE_SCRIPT }} />
         {/* The playbook pages' hero reveal holds its parts from the first frame when it will
             play, rather than showing them and then hiding them to play (reveal.ts). */}
         <script dangerouslySetInnerHTML={{ __html: PB_REVEAL_GATE_SCRIPT }} />

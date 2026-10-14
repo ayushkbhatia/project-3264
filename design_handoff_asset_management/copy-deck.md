@@ -1,0 +1,486 @@
+# Copy deck: Asset Management page
+
+Visible strings in page order, extracted from `reference/Asset Management.dc.html`.
+
+## Hero
+- Asset Management
+- Every mandate checked. / Every claim sourced.
+- We rebuild the document-heavy work inside asset managers, from guideline checks and client reporting to research intake and RFP responses, onto one production platform in your environment. Every workflow has an owner, a measured baseline and an audit trail your compliance team, clients and consultants can follow.
+- Book an operations audit
+- See the first 100 days
+
+## Premise
+- data-screen-label="Premise" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 01 / Premise
+- Every client report is a project. / Very little of it is reusable.
+- Investment, compliance and client teams build each report, check and response from order systems, PDFs and email. The work is careful and slow, and it depends on who is on the desk. What is missing is the engineering that turns it into a process: measured, owned and evidenced.
+- What every team has
+- Workload tracker — Global equity · Q3
+- Workflow
+- Team
+- Status
+- Guideline checks
+- Rules held in mandate PDFs
+- Compliance
+- Manual
+- Client reports
+- Rebuilt in slides each quarter
+- Client service
+- Manual
+- Attribution commentary
+- Drafted from a spreadsheet
+- Investment
+- Manual
+- RFP and DDQ answers
+- Last year’s answers, edited
+- Sales
+- Backlog
+- Research notes
+- Read overnight, summarised by hand
+- Research
+- Copy-paste
+- Consultant requests
+- Collated by email
+- Client service
+- Overdue
+- 6 workflows ·
+- 0 automated
+- · 0 measured
+- What the COO sees
+- Control dashboard — all strategies · Q3
+- Turnaround by strategy
+- As reported by each team
+- Strategy
+- Days
+- Manual steps
+- Exceptions
+- Evidence
+- Global equity
+- 11
+- 64
+- 12
+- Email
+- UK equity income
+- 6
+- 41
+- 7
+- Workbook
+- Multi-asset
+- 14
+- 58
+- 9
+- Email
+- Fixed income
+- 9
+- 33
+- 4
+- None
+- Emerging markets
+- 23
+- 47
+- 6
+- Workbook
+- Liquid alternatives
+- 19
+- 22
+- 3
+- None
+- All strategies
+- 14 avg
+- 265
+- 41
+- —
+- Consultant review: “
+- inconsistent evidence of review
+- across strategies.”
+- What did not change
+- Client calendar — 2026
+- Reporting year · manager
+- Q1 reports
+- Apr
+- Q2 reports
+- Jul
+- Q3 reports
+- Oct
+- Consultant review
+- Feb
+- Mandate review
+- Mar
+- Client and consultant requests · draft
+- Evidence of every guideline check, by mandate
+- Requested
+- Support for every performance figure in the report
+- Requested
+- Controls over trade overrides
+- Requested
+- Attribution behind each commentary claim
+- Requested
+- Who reviewed each exception, and when
+- Requested
+- 5 of 5 open · consultant review in February
+
+## Operations audit
+- id="audit" data-screen-label="Operations audit" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 02 / Operations audit
+- In two weeks, we walk every document-heavy workflow and rank where automation returns the most time and removes the most risk.
+- Build first
+- 0.4 FTE
+- 0.8 FTE
+- 1.2 FTE
+- Capacity released ↑
+- 2 wks
+- 4
+- 6
+- 8
+- 10 wks
+- Effort to ship →
+- Estimated FTE released per quarter
+- 0.1
+- 1.2
+- Shortlisted
+- Global equity · guideline checks
+- EM · attribution
+- Fixed income · client reports
+- UK income · guideline checks
+- Multi-asset · client reports
+- First builds · asset manager
+- Day 10
+- 01
+- Global equity
+- Pre-trade guideline checks
+- 1.2 FTE
+- 6 wks
+- 02
+- Emerging markets
+- Attribution commentary
+- 0.8 FTE
+- 5 wks
+- 03
+- Fixed income
+- Client report drafting
+- 0.7 FTE
+- 4 wks
+- 04
+- UK equity income
+- Guideline checks, from build 01
+- 0.6 FTE
+- 3 wks
+- 05
+- Multi-asset
+- Client report drafting
+- 0.9 FTE
+- 8 wks
+- 4.2 FTE released across five builds
+- Build 04 reuses build 01
+- Days 1–6
+- Walk-throughs with investment, compliance and client service
+- → workflow map
+- Days 7–9
+- Each workflow scored on hours, error risk, data readiness and control gaps
+- → scored matrix
+- Day 10
+- A ranked, costed plan for each strategy and one for the platform
+- → first builds
+- Illustrative asset manager. Real audits score every workflow on hours, error risk, data readiness and control gaps, with the working attached.
+
+## CTA · operations audit
+- data-screen-label="CTA · operations audit" style="padding:56px 40px">
+- First step
+- Start with a two-week operations audit.
+- Book an audit
+- →
+- The process map is yours, whether we build or not
+
+## First 100 days
+- id="plan" data-screen-label="First 100 days" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 03 / First 100 days
+- The first hundred days, / as a build log.
+- One senior squad works alongside your investment and client teams. Each workflow ships behind an evaluation suite and reports against a baseline your COO signed before we started. By day 100 the platform runs in your own cloud and the first strategy works on it.
+- Build log — Global equity · Q3
+- 0
+- 20
+- 40
+- 60
+- 80
+- 100
+- Audit
+- Days 0–14
+- Platform
+- Days 8–30
+- Pre-trade guideline checks
+- Days 14–42
+- Client report drafting
+- Days 36–64
+- Attribution commentary
+- Days 56–86
+- Evaluation and handover
+- Days 70–100
+- Day 0
+- Log
+- D03
+- Baseline signed by the COO: 11 days per client report, 6.2 FTE on drafting
+- D14
+- Audit closed. Three workflows, fortnightly releases
+- D30
+- Platform live in the manager’s own Azure tenant
+- D42
+- Guideline checks live · 420 rules tested before every trade
+- D64
+- Client reports live · every figure tied to the books
+- D86
+- Commentary live · each claim checked against attribution
+- D100
+- Evaluation suites handed over · report turnaround measured at 3 days
+- Days per client report
+- 11 days
+- Against the baseline signed on day 3
+- Hours back / qtr
+- 0
+- Live
+- 0 of 3
+- Quarter checklist · Q3
+- Pre-trade guideline checks
+- Planned
+- Client report drafting
+- Planned
+- Attribution commentary
+- Planned
+- Every figure comes from the platform’s own logs, reconciled to the books each month.
+
+## Traceability
+- id="trace" data-screen-label="Traceability" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Traceability
+- Click any figure. / See where it came from.
+- Every number and claim in a client report carries its lineage: the source in the books or the order system, the attribution it was matched to, the guideline it was checked against and the person who signed it off. Your compliance team and your clients follow the same trail.
+- Client report — Global Equity Fund · Q3 2026
+- Mandate GE-07
+- Quarter to 30 Sep
+- Lineage
+- Traced · 4 of 4 checks
+- Same trail in the consultant’s review
+- Illustrative client report for one mandate. Names, references and figures are examples.
+
+## Across strategies
+- id="portfolio" data-screen-label="Across strategies" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 04 / Across strategies
+- Built once. Run across every strategy. /
+- Each strategy goes live faster than the last.
+- A workflow built for one strategy goes into a shared library on the platform. The next strategy installs it, maps it to its own mandates and data, and goes live in weeks.
+- Workflow library
+- 0 capabilities
+- Guideline checks
+- from Global equity · v1.4
+- Time to live
+- 6 weeks → 1 week
+- 0
+- 2
+- 4
+- 6
+- 8 wks
+- Global equity
+- Long-only · built here
+- UK equity income
+- Income · installed
+- Fixed income
+- Credit and rates · installed
+- Multi-asset
+- Solutions · installed
+- Emerging markets
+- EM equity · installed
+- —
+- First build
+- —
+- −50%
+- —
+- −67%
+- —
+- −75%
+- —
+- −83%
+- Guideline checks
+- Illustrative five-strategy programme. Timings depend on each strategy’s mandates and data.
+
+## Fund playbooks
+- id="playbooks" data-screen-label="Fund playbooks" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Playbooks
+- Four workflows, / written up from delivery.
+- What we measure first, what we build and how each one is checked. Read them before the audit, or bring them to it.
+- All nine playbooks →
+- Playbook
+- Mandate Guardrails
+- Investment guidelines turned into approved, versioned rules, tested before and after each trade, with every breach and override on record.
+- Read the playbook →
+- Playbook
+- Client Reporting Flow
+- Client reports built from reconciled books, each figure tied out and each commentary claim checked against attribution before release.
+- Read the playbook →
+- Playbook
+- Research Intake
+- Overnight house-format notes from filings, transcripts and broker research. Every figure and quotation carries a source.
+- Read the playbook →
+- Playbook
+- Investor Reporting
+- Letters, statements and DDQ answers drafted from your books, with every figure traced to source before release.
+- Read the playbook →
+
+## Value
+- id="value" data-screen-label="Value" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 05 / Value
+- Capacity you can bridge, / line by line.
+- Every workflow reports against a baseline your COO signed before the build. The management report carries measured numbers, and the same evidence answers compliance and your clients.
+- Management report — asset manager · Q3 update
+- Client reports completed per analyst, per quarter
+- reports · axis starts at 12.0
+- 14.2 →
+- 14.2
+- +0.0%
+- 16
+- 15
+- 14
+- 13
+- 12
+- 14.2
+- +1.2
+- +0.5
+- +0.2
+- +0.3
+- 16.4
+- Baseline capacity
+- before the build
+- Client reports
+- 11 → 3 days
+- Guideline checks
+- before every trade
+- Commentary
+- checked on drafting
+- RFP and DDQ
+- answers in a day
+- Capacity
+- measured at month 6
+- +2.2 reports per analyst a quarter × 40 analysts
+- ≈
+- 0
+- more reports a year
+- Illustrative bridge for one asset manager. Each line is measured against a baseline signed before the build.
+
+## Related work
+- id="work" data-screen-label="Related work" style="padding:118px 40px; border-bottom:1px solid var(--line2); scroll-margin-top:68px">
+- Related work
+- Measured against the week / before we arrived.
+- Client names are withheld under mandate. Each engagement reports the baseline instrumented at the diagnostic and the figure at the third monthly review.
+- Asset Management · AI Engineering
+- Pre-trade mandate checks for a multi-asset manager
+- Investment guidelines lived in PDFs and in the compliance team’s heads. They are now approved, versioned rules, tested before and after every trade.
+- Post-trade breach review
+- 2 days → Same day
+- Rules under version control
+- 420
+- Overrides without a record
+- None
+- Read the case study →
+- Asset Management · Deployment & Run
+- Client reporting across an institutional book
+- Quarterly client reports took six people most of a month. Reports are now built from reconciled books, and each commentary claim is checked against attribution before release.
+- Report production
+- 18 days → 5 days
+- Reports per quarter
+- 640
+- Claims checked against attribution
+- 100%
+- Read the case study →
+- All work →
+
+## Engagement
+- id="engagement" data-screen-label="Engagement" style="padding:118px 40px; border-bottom:1px solid var(--line2)">
+- 06 / Engagement
+- Three ways in. / Each one earns the next.
+- Engagement 01
+- 2 weeks · fixed fee
+- The operations audit
+- We walk every document-heavy workflow across up to six strategies, read the systems and mandates and interview the team. You get a ranked, costed plan for each strategy and one for the platform.
+- Covers
+- Up to six strategies
+- Access
+- Read-only
+- Output
+- Ranked, costed plan
+- Book an audit
+- Engagement 02
+- 100 days · per workflow
+- The first build
+- A senior squad ships the top-ranked workflows onto a production platform in your own cloud. Each one reports against a baseline your COO signed.
+- Runs in
+- Your cloud
+- Releases
+- Fortnightly
+- Measured
+- Against baseline
+- Book a call
+- Engagement 03
+- Ongoing · per strategy
+- The platform rollout
+- What worked for the first strategy is installed for the next, mapped to its mandates and data, with an evaluation suite and a named owner for each. The evidence is ready when the client or consultant asks for it.
+- Reuses
+- Platform and library
+- Owner
+- Named per strategy
+- At audit
+- Evidence on file
+- Book a call
+
+## Closing
+- data-screen-label="Closing" style="padding:0 40px 40px">
+- 3264
+- .ai
+- Put every claim on record.
+- Book an operations audit
+- Guideline checks, client reporting and research workflows rebuilt on one production platform, with every claim sourced.
+- 32 → 64
+
+## Premise statements
+- Every team assembles its reports by hand. Most of the evidence lives in inboxes.
+- Six strategies, six ways of working. Nobody can say what a client report costs.
+- Clients still expect the report on time, and every claim in it has to stand up.
+
+## Traceability data (trData)
+
+**Fund return, Q3 · +3.4%**
+- Source: Daily NAV series from the fund accountant (NAV file GE-NAV-Q3 · 64 days)
+- Matched to: Time-weighted return, net of fees (Performance engine · run P-0930)
+- Check: Agrees to the published NAV for every day in the quarter (Rule PF-01 · passed)
+- Reviewed: Performance analyst (3 Oct 2026 · 09:12)
+
+**Benchmark return · +2.1%**
+- Source: Benchmark index, total return in GBP (Index vendor feed · 30 Sep close)
+- Matched to: Benchmark named in the mandate schedule (IMA schedule 2 · cl. 1.3)
+- Check: Same index, currency and return type as the mandate (Rule PF-04 · passed)
+- Reviewed: Performance analyst (3 Oct 2026 · 09:40)
+
+**Active return · +1.3 pts**
+- Source: Computed: fund less benchmark (Computed by the platform)
+- Matched to: Attribution: selection +1.0, allocation +0.3 (Attribution run A-0930)
+- Check: Attribution effects sum to the active return (Rule AT-02 · passed)
+- Reviewed: Portfolio manager (4 Oct 2026 · 11:05)
+
+**Largest overweight · Technology +4.2 pts**
+- Source: Holdings at 30 Sep from the order system (OMS holdings export · 30 Sep)
+- Matched to: Sector weights against the benchmark (Exposure report E-0930)
+- Check: Within the ±5 pt sector limit in the guidelines (Guideline G-11 · passed)
+- Reviewed: Compliance (4 Oct 2026 · 14:20)
+
+**Commentary: “selection in technology led” · +0.8 pts**
+- Source: Draft commentary, paragraph 2 (Client report draft v2 · p. 3)
+- Matched to: Technology selection effect in the attribution (Attribution run A-0930 · sector 45)
+- Check: Largest positive selection effect in the quarter (Rule CM-01 · passed)
+- Reviewed: Portfolio manager (5 Oct 2026 · 10:15)
+
+**Guideline breaches · None**
+- Source: Pre- and post-trade checks on 1,240 orders (Guardrails log · Q3)
+- Matched to: Approved mandate rules, version 14 (Rule set GE-07 · v14)
+- Check: No breach or unrecorded override in the quarter (Rule GR-09 · passed)
+- Reviewed: Head of compliance (8 Oct 2026 · 17:05)
+
+## Intro overlay
+- map the mandates · rank by hours and risk · ship the first workflow · carry it to the next strategy
+- 5 strategies live · day 100
+- Mandate log · click to skip
