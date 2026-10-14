@@ -15,6 +15,7 @@ export const routes = {
   aiTransformation: "/ai-transformation",
   privateCredit: "/industries/private-credit",
   privateEquity: "/industries/private-equity",
+  financialServices: "/industries/financial-services",
   fundManagement: "/industries/fund-management",
   playbooks: "/playbooks",
   essays: "/essays",
@@ -147,7 +148,7 @@ export const industries = {
       code: "R2",
       name: "Financial Services",
       body: "Credit memos, KYC and onboarding files, model lifecycle documentation, complaints triage and regulatory response.",
-      href: "#industries",
+      href: routes.financialServices,
     },
     {
       code: "R3",
@@ -267,7 +268,7 @@ export const footer = {
       links: [
         { label: "Private Credit", href: routes.privateCredit },
         { label: "Private Equity", href: routes.privateEquity },
-        { label: "Financial Services", href: "#industries" },
+        { label: "Financial Services", href: routes.financialServices },
         { label: "Fund Management", href: routes.fundManagement },
         { label: "Asset Management", href: "#industries" },
       ],

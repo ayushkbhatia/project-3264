@@ -50,7 +50,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "Private Credit", href: routes.privateCredit },
       // not marked current: the reference sets it in the ordinary link colour
       { label: "Private Equity", href: "#top" },
-      { label: "Financial Services", href: "/#industries" },
+      { label: "Financial Services", href: routes.financialServices },
       { label: "Fund Management", href: routes.fundManagement },
       { label: "Asset Management", href: "/#industries" },
     ],

@@ -90,7 +90,11 @@ function ThumbItem({ item, pathname, primed }: LinkProps) {
 const LAYOUT = {
   "grid-2": { list: "grid grid-cols-2 gap-1", Item: DescItem },
   "grid-2-numbered": { list: "grid grid-cols-2 gap-1", Item: DescItem },
-  "grid-2-thumb": { list: "grid grid-cols-2 content-start gap-1", Item: ThumbItem },
+  // Five industries (Financial Services joined): three columns where the items still read well,
+  // from 1200px; below that two, leaving the fifth on its own row (design_handoff_financial_services,
+  // "Desktop panel layout": three columns preferred if they fit, and at 1024px they would not,
+  // squeezing each description into a ~117px column).
+  "grid-2-thumb": { list: "grid grid-cols-2 content-start gap-1 min-[1200px]:grid-cols-3", Item: ThumbItem },
   "compact-list": { list: "grid gap-0.5", Item: CompactItem },
   "thumb-list": { list: "grid gap-0.5", Item: ThumbRow },
 } as const;

@@ -210,6 +210,7 @@ html[data-motion="off"] [data-sh-sheet] {
 html[data-pc-intro="pending"] [data-pc-intro-wrap],
 html[data-ai-intro="pending"] [data-ai-intro-wrap],
 html[data-pe-intro="pending"] [data-ind-intro-wrap],
+html[data-fs-intro="pending"] [data-ind-intro-wrap],
 html[data-fm-intro="pending"] [data-ind-intro-wrap] {
   display: flex !important;
 }
