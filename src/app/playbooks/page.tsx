@@ -1,7 +1,7 @@
 import { preload } from "react-dom";
 import { pageMetadata } from "@/app/shared-metadata";
 import { Footer } from "@/components/home/Footer";
-import { Header } from "@/components/home/Header";
+import { SiteHeader } from "@/components/site-header/SiteHeader";
 import { CategoryRow } from "@/components/playbooks/CategoryRow";
 import { ClosingCta } from "@/components/playbooks/ClosingCta";
 import { FeaturedCarousel } from "@/components/playbooks/FeaturedCarousel";
@@ -10,7 +10,7 @@ import { Library } from "@/components/playbooks/Library";
 import { LibraryCtas } from "@/components/playbooks/LibraryCtas";
 import { HERO_POSTER } from "@/components/playbooks/media";
 import { RecentList } from "@/components/playbooks/RecentList";
-import { categories, footerColumns, headerCta, meta, nav } from "@/content/playbooks";
+import { categories, footerColumns, meta } from "@/content/playbooks";
 
 // Playbooks — the library of 3264's nine automation playbooks, ported from
 // design_handoff_playbooks (its reference prototype, reference/Playbooks.dc.html, is the source
@@ -28,7 +28,7 @@ export default function PlaybooksPage() {
   preload(HERO_POSTER, { as: "image" });
   return (
     <>
-      <Header nav={nav} cta={headerCta} homeHref="/" collapseBelow="1000" menu />
+      <SiteHeader />
       <main>
         <Hero />
         <Library

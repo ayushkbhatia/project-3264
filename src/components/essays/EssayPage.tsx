@@ -1,9 +1,9 @@
 import { Footer } from "@/components/home/Footer";
-import { Header } from "@/components/home/Header";
+import { SiteHeader } from "@/components/site-header/SiteHeader";
 import { ArticleShell } from "@/components/playbooks/article/ArticleShell";
 import { ArticleClosing } from "@/components/playbooks/article/ArticleEnd";
 import type { TocEntry } from "@/components/playbooks/article/types";
-import { articleFooterColumns, articleNav, essayCta, essayHref, headerCta, page, type EssaySummary } from "@/content/essays";
+import { articleFooterColumns, essayCta, essayHref, page, type EssaySummary } from "@/content/essays";
 import type { Essay } from "@/content/essays-source";
 import { EssayBody } from "./EssayBody";
 import { EssayHero } from "./EssayHero";
@@ -67,7 +67,7 @@ export function EssayPage({ essay, all }: { essay: Essay; all: EssaySummary[] })
   const current = all.find((e) => e.slug === front.slug)!;
   return (
     <>
-      <Header nav={articleNav} cta={headerCta} homeHref="/" collapseBelow="1000" menu progress />
+      <SiteHeader progress />
       <ArticleShell toc={tocFor(essay)} back={page.back} card={page.sidebarCard} cta={cta}>
         <EssayHero front={front} readMinutes={readMinutes} image={image} />
         <EssayBody front={front} doc={doc} image={image} cta={cta} />

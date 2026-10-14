@@ -1,10 +1,10 @@
 import { pageMetadata } from "@/app/shared-metadata";
 import { EssaysIndex } from "@/components/essays/EssaysIndex";
 import { Footer } from "@/components/home/Footer";
-import { Header } from "@/components/home/Header";
+import { SiteHeader } from "@/components/site-header/SiteHeader";
 import { ClosingCta } from "@/components/playbooks/ClosingCta";
 import { SubscribeCard } from "@/components/playbooks/SubscribeCard";
-import { footerColumns, headerCta, indexClosing, meta, nav, signUp } from "@/content/essays";
+import { footerColumns, indexClosing, meta, signUp } from "@/content/essays";
 import { getEssays, summarize } from "@/content/essays-source";
 
 // Essays — 3264's field notes, ported from design_handoff_essays (its prototype, Essays.dc.html,
@@ -24,7 +24,7 @@ export default function EssaysPage() {
   const essays = getEssays().map(summarize);
   return (
     <>
-      <Header nav={nav} cta={headerCta} homeHref="/" collapseBelow="1000" menu />
+      <SiteHeader />
       <main>
         <EssaysIndex essays={essays} />
         <section data-screen-label="Subscribe" className="px-10 pt-24 max-[479.98px]:px-5">

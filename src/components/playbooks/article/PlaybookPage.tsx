@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Footer } from "@/components/home/Footer";
-import { Header } from "@/components/home/Header";
-import { articleFooterColumns, articleNav, headerCta } from "@/content/playbooks";
+import { SiteHeader } from "@/components/site-header/SiteHeader";
+import { articleFooterColumns } from "@/content/playbooks";
 import { ArticleShell } from "./ArticleShell";
 import { ArticleClosing, MorePlaybooks } from "./ArticleEnd";
 import { ArticleHero } from "./ArticleHero";
@@ -106,7 +106,7 @@ export function PlaybookPage({
   const ctx: BlockContext = { figures, cta, blockLabels: article.blockLabels };
   return (
     <>
-      <Header nav={articleNav} cta={headerCta} homeHref="/" collapseBelow="1000" menu progress />
+      <SiteHeader progress />
       <ArticleShell toc={tocFor(article, showBuilt)} back={article.back} card={article.sidebarCard} cta={cta}>
         <ArticleHero
           article={article}

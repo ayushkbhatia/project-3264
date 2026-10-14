@@ -5,9 +5,8 @@
 //
 // All names, funds, figures and code on this page are illustrative designed content.
 
-import type { HeaderNavItem } from "@/components/home/Header";
 import type { FooterColumn } from "@/components/home/Footer";
-import { routes, type Link } from "./home";
+import { routes } from "./home";
 
 export const route = routes.aiEngineering;
 
@@ -21,18 +20,6 @@ export const meta = {
 // email in the prototype; swap in the booking URL when there is one. The header, hero and
 // footer CTAs go to #engagement, where those two cards are.
 export const booking = { href: "mailto:hello@3264.ai" } as const;
-
-export const nav: HeaderNavItem[] = [
-  { label: "AI Engineering", href: "#top", current: true },
-  { label: "AI Transformation", href: routes.aiTransformation },
-  { label: "Industries", href: "/#industries" },
-  { label: "Work", href: "/#work" },
-  { label: "Playbooks", href: routes.playbooks },
-  { label: "Essays", href: routes.essays },
-  { label: "Contact", href: routes.contact },
-];
-
-export const headerCta: Link = { label: "Book an audit", href: "#engagement" };
 
 // "Deployment & Run" and "Evaluation suites" point at the home page's capabilities, and
 // LinkedIn at #engagement, in the prototype: placeholders to confirm before launch.

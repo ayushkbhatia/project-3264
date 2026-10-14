@@ -2,7 +2,7 @@ import { Capabilities } from "@/components/home/Capabilities";
 import { ClosingCta } from "@/components/home/ClosingCta";
 import { Footer } from "@/components/home/Footer";
 import { FooterImage } from "@/components/home/FooterImage";
-import { Header } from "@/components/home/Header";
+import { SiteHeader } from "@/components/site-header/SiteHeader";
 import { Hero } from "@/components/home/Hero";
 import { Industries } from "@/components/home/Industries";
 import { Intro } from "@/components/home/Intro";
@@ -17,7 +17,7 @@ export default function Home() {
     <>
       <Intro />
       <div>
-        <Header />
+        <SiteHeader />
         <main>
           <Hero />
           <Model />

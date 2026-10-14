@@ -119,6 +119,56 @@
   }
 }
 
+/*
+ * The site header's desktop panels and phone sheet (components/site-header). Opening fades and
+ * slides them in; closing fades them out and only then hides them (visibility waits out the
+ * fade), so a closing panel cannot take a click. Switching straight between panels swaps the
+ * content with no transition ([data-sh-instant]). Reduced motion keeps a short fade, no slide.
+ */
+[data-sh-panel] {
+  opacity: 0;
+  transform: translateY(-6px);
+  visibility: hidden;
+  transition:
+    opacity 180ms ease,
+    transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 0s linear 220ms;
+}
+[data-sh-sheet] {
+  opacity: 0;
+  transform: translateY(-8px);
+  visibility: hidden;
+  transition:
+    opacity 200ms ease,
+    transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 0s linear 260ms;
+}
+[data-sh-panel][data-open],
+[data-sh-sheet][data-open] {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  transition-delay: 0s;
+}
+[data-sh-instant] [data-sh-panel],
+html[data-motion="off"] [data-sh-panel],
+html[data-motion="off"] [data-sh-sheet] {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-sh-panel],
+  [data-sh-sheet] {
+    transform: none;
+    transition:
+      opacity 120ms ease,
+      visibility 0s linear 120ms;
+  }
+  [data-sh-panel][data-open],
+  [data-sh-sheet][data-open] {
+    transition-delay: 0s;
+  }
+}
+
 /* The Contact page's "Built on" strip: the track holds two copies of the marks and slides by one
    (components/contact/Motion.tsx). */
 @keyframes logo-marquee {
@@ -138,16 +188,17 @@
  * (its inline sizes assume it, and so does every element the motion module builds). Tailwind's
  * preflight makes everything border-box, which would change the size of every bordered window,
  * tile and card on the page. Unlayered, so it outranks preflight; inline styles that ask for
- * border-box still win.
+ * border-box still win. The shared site header is exempt: it is built on preflight's
+ * border-box, like every other page's.
  */
 [data-pc],
-[data-pc] *,
-[data-pc] ::before,
-[data-pc] ::after,
+[data-pc] :not([data-site-header], [data-site-header] *),
+[data-pc] :not([data-site-header] *)::before,
+[data-pc] :not([data-site-header] *)::after,
 [data-ai],
-[data-ai] *,
-[data-ai] ::before,
-[data-ai] ::after {
+[data-ai] :not([data-site-header], [data-site-header] *),
+[data-ai] :not([data-site-header] *)::before,
+[data-ai] :not([data-site-header] *)::after {
   box-sizing: content-box;
 }
 /* The Private Credit and AI Engineering intros' first-paint covers (IntroGate.ts in each

@@ -6,9 +6,8 @@
 // enquiry to whichever delivery is configured (src/app/api/contact/deliver.ts); the handoff
 // leaves the endpoint, notification address and CRM open.
 
-import type { HeaderNavItem } from "@/components/home/Header";
 import type { FooterColumn } from "@/components/home/Footer";
-import { routes, stack, type Link } from "./home";
+import { routes, stack } from "./home";
 
 export const route = routes.contact;
 
@@ -18,18 +17,6 @@ export const meta = {
 } as const;
 
 export const email = "hello@3264.ai";
-
-export const nav: HeaderNavItem[] = [
-  { label: "AI Engineering", href: routes.aiEngineering },
-  { label: "AI Transformation", href: routes.aiTransformation },
-  { label: "Industries", href: "/#industries" },
-  { label: "Work", href: "/#work" },
-  { label: "Playbooks", href: routes.playbooks },
-  { label: "Essays", href: routes.essays },
-  { label: "Contact", href: "#top", current: true },
-];
-
-export const headerCta: Link = { label: "Book an audit", href: `${routes.aiEngineering}#engagement` };
 
 export const intro = {
   title: "Get in touch",

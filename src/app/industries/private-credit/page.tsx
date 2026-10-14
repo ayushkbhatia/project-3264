@@ -1,6 +1,6 @@
 import { pageMetadata } from "@/app/shared-metadata";
 import { Footer } from "@/components/home/Footer";
-import { Header } from "@/components/home/Header";
+import { SiteHeader } from "@/components/site-header/SiteHeader";
 import { CtaBand } from "@/components/private-credit/primitives";
 import { Delivery } from "@/components/private-credit/Delivery";
 import { Hero } from "@/components/private-credit/Hero";
@@ -11,7 +11,7 @@ import { PauseControl } from "@/components/private-credit/PauseControl";
 import { Platform } from "@/components/private-credit/Platform";
 import { Reality } from "@/components/private-credit/Reality";
 import { Servicing } from "@/components/private-credit/Servicing";
-import { footerColumns, headerCta, hero, nav } from "@/content/private-credit";
+import { footerColumns, hero } from "@/content/private-credit";
 import { PrivateCreditMotionRoot } from "@/motion/private-credit/react";
 
 // Private Credit — the industry page for private credit funds, ported from
@@ -30,7 +30,7 @@ export default function PrivateCreditPage() {
       <PrivateCreditMotionRoot options={{ accent: "#157F52" }}>
         <Intro />
         <div style={{ position: "relative" }}>
-          <Header nav={nav} cta={headerCta} homeHref="/" collapseBelow="1024" />
+          <SiteHeader />
           <main>
             <Hero />
             <Reality />
