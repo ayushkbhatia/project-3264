@@ -41,7 +41,7 @@ export function siteFooter(playbooksHref: string, essaysHref: string = routes.es
       links: [
         { label: "Private Credit", href: routes.privateCredit },
         { label: "Private Equity", href: routes.privateEquity },
-        { label: "Fund Management", href: "/#industries" },
+        { label: "Fund Management", href: routes.fundManagement },
         { label: "Asset Management", href: "/#industries" },
       ],
     },
@@ -111,11 +111,11 @@ export type RecentItem = {
   note: string;
 };
 
-// Fund Management and Asset Management have no industry page yet: their "How we work" links
-// point at the home page's industries section, as in the handoff.
+// Asset Management has no industry page yet: its "How we work" link points at the home page's
+// industries section, as in the handoff.
 export const categories: Category[] = [
   { id: "private-credit", label: "Private Credit", linkLabel: "How we work in Private Credit", href: routes.privateCredit },
-  { id: "fund-management", label: "Fund Management", linkLabel: "How we work in Fund Management", href: "/#industries" },
+  { id: "fund-management", label: "Fund Management", linkLabel: "How we work in Fund Management", href: routes.fundManagement },
   { id: "asset-management", label: "Asset Management", linkLabel: "How we work in Asset Management", href: "/#industries" },
 ];
 

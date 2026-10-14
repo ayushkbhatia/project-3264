@@ -25,8 +25,7 @@ export const investorReporting: PlaybookArticle = {
   },
   reviewed: { iso: "2026-09-28", label: "Reviewed 28 September 2026" },
   hero: {
-    // There is no Fund Management industry page yet: the Playbooks library's row stands in.
-    category: { label: "Fund Management", href: `${routes.playbooks}#fund-management` },
+    category: { label: "Fund Management", href: routes.fundManagement },
     title: "Investor Reporting",
     oneLiner:
       "Letters, capital account statements and DDQ answers drafted from your books, with every figure traced to source before release.",
