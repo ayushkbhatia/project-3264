@@ -21,8 +21,7 @@ export const meta = {
 // footer CTAs go to #engagement, where those two cards are.
 export const booking = { href: "mailto:hello@3264.ai" } as const;
 
-// "Evaluation suites" points at the home page's capabilities, and LinkedIn at #engagement, in the
-// prototype: placeholders to confirm before launch.
+// LinkedIn points at #engagement in the prototype: a placeholder to confirm before launch.
 export const footerColumns: FooterColumn[] = [
   {
     head: "Services",
@@ -31,7 +30,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "AI Engineering", href: "#top" },
       { label: "AI Transformation", href: routes.aiTransformation },
       { label: "Production Assurance", href: routes.productionAssurance },
-      { label: "Evaluation suites", href: "/#capabilities" },
+      { label: "Evaluation Suites", href: routes.evaluationSuites },
     ],
   },
   {

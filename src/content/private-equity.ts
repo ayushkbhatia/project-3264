@@ -41,7 +41,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "AI Engineering", href: routes.aiEngineering },
       { label: "AI Transformation", href: routes.aiTransformation },
       { label: "Production Assurance", href: routes.productionAssurance },
-      { label: "Evaluation suites", href: "/#capabilities" },
+      { label: "Evaluation Suites", href: routes.evaluationSuites },
     ],
   },
   {

@@ -80,8 +80,10 @@ export const menus: Menu[] = [
           { title: "Rebuild", desc: "The prototype rebuilt to production standard, with tests and evaluation suites.", href: `${ai}#rebuild` },
           { title: "Platform", desc: "Runs in your cloud, under your access controls and audit trail.", href: `${ai}#platform` },
           { title: "Engagement", desc: "Two ways in. Neither starts with a platform licence.", href: `${ai}#engagement` },
-          // design_handoff_production_assurance, "Linkage": the service page, recommended here
+          // design_handoff_production_assurance and _evaluation_suites, "Linkage": the two service
+          // pages, recommended here
           { title: "Production Assurance", desc: "Held to an accuracy floor after go-live.", href: routes.productionAssurance },
+          { title: "Evaluation Suites", desc: "Scored on your own cases, every night.", href: routes.evaluationSuites },
         ],
       },
       {

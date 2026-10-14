@@ -92,8 +92,7 @@ export const delivery = {
   },
 } as const;
 
-// "Evaluation suites" points at #servicing and LinkedIn is a mailto in the prototype:
-// placeholders to confirm before launch. The Company column and Security follow
+// LinkedIn is a mailto in the prototype: a placeholder to confirm before launch. The Company column and Security follow
 // design_handoff_contact's site-wide changes, which override this page's handoff.
 export const footerColumns: FooterColumn[] = [
   {
@@ -103,7 +102,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "AI Transformation", href: routes.aiTransformation },
       { label: "Production Assurance", href: routes.productionAssurance },
       { label: "Platform build", href: "#platform" },
-      { label: "Evaluation suites", href: "#servicing" },
+      { label: "Evaluation Suites", href: routes.evaluationSuites },
     ],
   },
   {
