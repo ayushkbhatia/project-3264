@@ -211,7 +211,8 @@ html[data-pc-intro="pending"] [data-pc-intro-wrap],
 html[data-ai-intro="pending"] [data-ai-intro-wrap],
 html[data-pe-intro="pending"] [data-ind-intro-wrap],
 html[data-fs-intro="pending"] [data-ind-intro-wrap],
-html[data-fm-intro="pending"] [data-ind-intro-wrap] {
+html[data-fm-intro="pending"] [data-ind-intro-wrap],
+html[data-am-intro="pending"] [data-ind-intro-wrap] {
   display: flex !important;
 }
 /* Nor does it balance paragraphs globally: only where its inline styles say `pretty`. */

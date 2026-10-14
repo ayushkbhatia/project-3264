@@ -51,7 +51,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "Financial Services", href: routes.financialServices },
       // not marked current: the reference sets it in the ordinary link colour
       { label: "Fund Management", href: "#top" },
-      { label: "Asset Management", href: "/#industries" },
+      { label: "Asset Management", href: routes.assetManagement },
     ],
   },
   {

@@ -26,8 +26,7 @@ export const mandateGuardrails: PlaybookArticle = {
   },
   reviewed: { iso: "2026-09-28", label: "Reviewed 28 September 2026" },
   hero: {
-    // There is no Asset Management industry page yet: the handoff links the Playbooks index's row.
-    category: { label: "Asset Management", href: `${routes.playbooks}#asset-management` },
+    category: { label: "Asset Management", href: routes.assetManagement },
     title: "Mandate Guardrails",
     oneLiner:
       "Investment guidelines turned into approved, versioned rules, tested before and after each trade, with every breach and override on record.",

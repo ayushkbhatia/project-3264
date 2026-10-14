@@ -4,12 +4,9 @@
 // reorder. One source for both layouts, so the panels and the accordions cannot drift apart.
 //
 // Hrefs are this site's routes, not the handoff's suggested ones (its route map is a guide):
-// - Private Credit and Private Equity live under /industries (Private Equity 404s until built,
-//   as AI Transformation does, like every designed-but-unbuilt route in `routes`).
+// - The five industry pages live under /industries.
 // - Work has no page yet; it goes to the home page's case studies, as the old nav did. Swap in
 //   "/work" here when that page ships.
-// - Asset Management goes to the home page's industries until its page exists (README, "Open
-//   items").
 
 import { routes } from "./home";
 
@@ -165,7 +162,7 @@ export const menus: Menu[] = [
           { title: "Private Equity", desc: "Capital calls, LP reporting and portfolio monitoring.", href: routes.privateEquity, thumb: img("thumb-capital-call-flow") },
           { title: "Financial Services", desc: "Credit memos, KYC files, complaints and regulatory requests.", href: routes.financialServices, thumb: img("thumb-research-intake") },
           { title: "Fund Management", desc: "LP reporting cycles, distributions and side-letter obligations.", href: routes.fundManagement, thumb: img("thumb-side-letter-register") },
-          { title: "Asset Management", desc: "Research synthesis, mandate compliance and client reporting.", href: "/#industries", thumb: img("thumb-mandate-guardrails") },
+          { title: "Asset Management", desc: "Research synthesis, mandate compliance and client reporting.", href: routes.assetManagement, thumb: img("thumb-mandate-guardrails") },
         ],
       },
     ],

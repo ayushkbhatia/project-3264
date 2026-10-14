@@ -42,7 +42,7 @@ export function siteFooter(playbooksHref: string, essaysHref: string = routes.es
         { label: "Private Credit", href: routes.privateCredit },
         { label: "Private Equity", href: routes.privateEquity },
         { label: "Fund Management", href: routes.fundManagement },
-        { label: "Asset Management", href: "/#industries" },
+        { label: "Asset Management", href: routes.assetManagement },
       ],
     },
     {
@@ -111,12 +111,10 @@ export type RecentItem = {
   note: string;
 };
 
-// Asset Management has no industry page yet: its "How we work" link points at the home page's
-// industries section, as in the handoff.
 export const categories: Category[] = [
   { id: "private-credit", label: "Private Credit", linkLabel: "How we work in Private Credit", href: routes.privateCredit },
   { id: "fund-management", label: "Fund Management", linkLabel: "How we work in Fund Management", href: routes.fundManagement },
-  { id: "asset-management", label: "Asset Management", linkLabel: "How we work in Asset Management", href: "/#industries" },
+  { id: "asset-management", label: "Asset Management", linkLabel: "How we work in Asset Management", href: routes.assetManagement },
 ];
 
 // Order matters: the rows show them in this order, three per category.

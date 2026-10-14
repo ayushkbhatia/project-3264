@@ -79,7 +79,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "Private Equity", href: routes.privateEquity },
       { label: "Financial Services", href: routes.financialServices },
       { label: "Fund Management", href: routes.fundManagement },
-      { label: "Asset Management", href: "/#industries" },
+      { label: "Asset Management", href: routes.assetManagement },
     ],
   },
   {
